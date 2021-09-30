@@ -47,7 +47,8 @@ public class BlogController {
         if (!postRepository.existsById(id)) {
             return "redirect:/blog-main";
         }
-//      находим и передаем єту одну запись на вюшку
+//      находим и передаем   єту одну запись на    вюшку
+//
         Optional<Post> post = postRepository.findById(id);
         ArrayList<Post> res = new ArrayList<>();
         post.ifPresent(res::add);
