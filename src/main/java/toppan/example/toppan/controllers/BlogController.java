@@ -3,10 +3,7 @@ package toppan.example.toppan.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import toppan.example.toppan.models.Post;
 import toppan.example.toppan.models.repo.PostRepository;
 
@@ -36,8 +33,7 @@ public class BlogController {
 
     @PostMapping("/blog-add")
     public String blogPostAdd(@RequestParam String title, @RequestParam String anons,@RequestParam String full_text, HttpServletRequest request, Model model) {
-        HttpServletRequest.
-        Post post = new Post(title,anons,full_text);
+        Post post = new Post(title,anons,full_text,request.getLocalName());
         postRepository.save(post);
         return "redirect:/blog-main";
     }
@@ -55,6 +51,7 @@ public class BlogController {
         return "blog-details";
     }
 
+//    @RequestMapping
     @GetMapping("/blog/{id}/edit")
     public String blogEdit(@PathVariable("id") long id, Model model) {
         if (!postRepository.existsById(id)) {
