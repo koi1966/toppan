@@ -36,7 +36,7 @@ public class BlogController {
 
     @PostMapping("/blog-add")
     public String blogPostAdd(@RequestParam String title, @RequestParam String anons,@RequestParam String full_text, HttpServletRequest request, Model model) {
-        HttpServletRequest.
+//        HttpServletRequest.
         Post post = new Post(title,anons,full_text);
         postRepository.save(post);
         return "redirect:/blog-main";
