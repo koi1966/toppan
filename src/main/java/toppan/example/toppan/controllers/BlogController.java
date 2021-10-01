@@ -20,6 +20,7 @@ public class BlogController {
     @Autowired
     private PostRepository postRepository;
     private String full_text;
+    private PostRepository repository;
 
     @GetMapping("/blog-main")
   public String blogMain(Model model) {
@@ -38,6 +39,9 @@ public class BlogController {
     public String blogPostAdd(@RequestParam String title, @RequestParam String anons,@RequestParam String full_text, HttpServletRequest request, Model model) {
         Post post = new Post(title,anons,full_text,request.getRemoteAddr());
         postRepository.save(post);
+//        openTransactionSession();
+
+//        repository.toString();
         return "redirect:/blog-main";
     }
 
@@ -47,6 +51,7 @@ public class BlogController {
             return "redirect:/blog-main";
         }
 //      находим и передаем єту одну запись на вюшку
+//        postRepository.toString()
         Optional<Post> post = postRepository.findById(id);
         ArrayList<Post> res = new ArrayList<>();
         post.ifPresent(res::add);
