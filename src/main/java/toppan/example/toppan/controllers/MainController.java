@@ -25,10 +25,4 @@ public class MainController {
         return "about";
     }
 
-//    public ModelAndView inputRequiredInfo(HttpServletRequest request) {
-//        Map map = newRequest.loadAllUserDomainType();
-//        request.setAttribute("mylist", map);
-//        return new ModelAndView("request/selectDomainUser");
-//    }
-
 }
