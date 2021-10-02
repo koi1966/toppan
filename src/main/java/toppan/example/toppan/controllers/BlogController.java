@@ -53,8 +53,12 @@ public class BlogController {
         }
 //      находим и передаем єту одну запись на вюшку
 //        postRepository.toString()
+//        все запист получают в post от  Optional<Post> post . С обктом на основе Optional работаьб сложно поєтому его преобразуем в
+//        обект ArrayList.
         Optional<Post> post = postRepository.findById(id);
-        ArrayList<Post> res = new ArrayList<>();
+        ArrayList<Post> res = new ArrayList<>(); // выделли свободную память " res = new ArrayList<>()" ;
+//        ifPresent - переводит все из класа Optional<> в клас ArrayList<>
+//        ifPresent - у нее такой ситакис.
         post.ifPresent(res::add);
         model.addAttribute("post",res);
         return "blog-details";
