@@ -88,12 +88,18 @@ public class BlogController {
         postRepository.save(post);
         return "redirect:/blog-main";
     }
-
     @PostMapping("/blog/{id}/remove")
     public String blogPostDelete(@PathVariable("id") long id, Model model) {
 //       Находим запись в базе и заталкиваем о объект
         Post post = postRepository.findById(id).orElseThrow();
-        postRepository.delete(post);
+        postRepository.deleteById(id);
+//        postRepository.delete(post);
         return "redirect:/blog-main";
+        //    Post post = postRepository.findById(id).orElseThrow() -  компилятор не пропускает с пустой скобкой, просит exception supplier
+//    У кого выпала такая ошибка надо прописать: orElseThrow(IllegalStateException::new)
+//     Post post = postRepository.findById(id).<RuntimeException>orElseThrow(() -> {
+//            throw new AssertionError();
+//        }); Если так пропишешь то ошибка уходить
     }
 }
+

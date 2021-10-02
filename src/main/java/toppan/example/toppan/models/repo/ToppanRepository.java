@@ -12,10 +12,12 @@ import java.util.Collection;
 import java.util.stream.Stream;
 
 public interface ToppanRepository extends CrudRepository<toppan,String> {
-    @Query(nativeQuery = true,
-            value = "select * from toppan t where t.sn = :sn")
+//    @Query(nativeQuery = true,
+//            value = "select * from toppan t where t.sn = :sn")
+//
+//    Stream findAllRecodToppan(@Param("sn") String sn);
 
-    Stream findAllRecodToppan(@Param("sn") String sn);
+// ===============================================================================
 
 //    @Query(
 //            nativeQuery = true,
