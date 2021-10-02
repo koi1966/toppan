@@ -47,8 +47,9 @@ public class BlogController {
 
     @GetMapping("/blog/{id}")
     public String blogDetails(@PathVariable("id") long id, Model model) {
+//      смотри или есть такая запись
         if (!postRepository.existsById(id)) {
-            return "redirect:/blog-main";
+            return "redirect:/blog-main";  // если нет то на главную
         }
 //      находим и передаем єту одну запись на вюшку
 //        postRepository.toString()
