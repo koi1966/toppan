@@ -17,6 +17,10 @@ public class MainController {
 //    public String blog(Model model) {
 //        model.addAttribute("title", "Єто блог");
 //        return "blog";
+//
+//    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
+//
+//
 //    }
 
     @GetMapping("/about")
@@ -26,5 +30,7 @@ public class MainController {
     }
 
 //   токен - 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
+
+//    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
 
 }

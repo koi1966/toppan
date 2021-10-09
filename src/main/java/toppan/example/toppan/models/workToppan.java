@@ -10,7 +10,6 @@ import java.util.Date;
 public class workToppan {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private Date date;
     private String title, anons, full_text,ip;
