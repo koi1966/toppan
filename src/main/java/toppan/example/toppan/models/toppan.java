@@ -11,7 +11,7 @@ public class toppan {
     @Id
     private String sn;
 //    Дата ввода в експлуатацию, комплектность, номенклатурный код
-    private String work, completeness,code;
+    private String gata_work, completeness, code;
 
     public String getSn() {
         return sn;
@@ -21,12 +21,12 @@ public class toppan {
         this.sn = sn;
     }
 
-    public String getWork() {
-        return work;
+    public String getgata_work() {
+        return gata_work;
     }
 
-    public void setWork(String work) {
-        this.work = work;
+    public void setgata_work(String gata_work) {
+        this.gata_work = gata_work;
     }
 
     public String getCompleteness() {
@@ -45,9 +45,9 @@ public class toppan {
         this.code = code;
     }
 
-    public toppan(String sn, String work, String completeness, String code) {
+    public toppan(String sn, String gata_work, String completeness, String code) {
         this.sn = sn;
-        this.work = work;
+        this.gata_work = gata_work;
         this.completeness = completeness;
         this.code = code;
     }
