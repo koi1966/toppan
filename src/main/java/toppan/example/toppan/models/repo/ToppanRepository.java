@@ -2,9 +2,9 @@ package toppan.example.toppan.models.repo;
 
 
 import org.springframework.data.repository.CrudRepository;
-import toppan.example.toppan.models.toppan;
+import toppan.example.toppan.models.Toppan;
 
-public interface ToppanRepository extends CrudRepository<toppan, String> {
+public interface ToppanRepository extends CrudRepository<Toppan, String> {
 
 //    @Query(nativeQuery = true,
 //            value = "select * from toppan t where t.sn = :sn")

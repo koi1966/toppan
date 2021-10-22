@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
-public class toppan {
+public class Toppan {
     //    серийный номер принтера Toppan CP500
     @Id
     private String sn;
@@ -43,14 +43,14 @@ public class toppan {
         this.code = code;
     }
 
-    public toppan(String sn, String datawork, String completeness, String code) {
+    public Toppan(String sn, String datawork, String completeness, String code) {
         this.sn = sn;
         this.datawork = datawork;
         this.completeness = completeness;
         this.code = code;
     }
 
-    public toppan() {
+    public Toppan() {
     }
 }
 

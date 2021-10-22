@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import java.util.Date;
 
 @Entity
-public class workToppan {
+public class WorkToppan {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -16,7 +16,7 @@ public class workToppan {
     //  Sn -Прнтенра
     private String Sn, TotalCount, RepairStartDate, RepairEndDate, Price, TSC, Prim, ip;
 
-    public workToppan() {
+    public WorkToppan() {
     }
 
     public Long getId() {
@@ -99,7 +99,7 @@ public class workToppan {
         this.ip = ip;
     }
 
-    public workToppan(Date date, String sn, String totalCount, String repairStartDate, String repairEndDate, String price, String TSC, String prim, String ip) {
+    public WorkToppan(Date date, String sn, String totalCount, String repairStartDate, String repairEndDate, String price, String TSC, String prim, String ip) {
         this.date = date;
         Sn = sn;
         TotalCount = totalCount;
