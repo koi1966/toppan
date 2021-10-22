@@ -23,12 +23,12 @@ public class BlogController {
     private PostRepository repository;
 
     @GetMapping("/blog-main")
-  public String blogMain(Model model) {
+    public String blogMain(Model model) {
 //      находим и передаем все записи на вюшку
-      Iterable<Post> posts = postRepository.findAll();
-      model.addAttribute("post",posts);
-      return "blog-main";
-  }
+        Iterable<Post> posts = postRepository.findAll();
+        model.addAttribute("post", posts);
+        return "blog-main";
+    }
 
     @GetMapping("/blog-add")
     public String blogAdd(Model model) {
@@ -36,8 +36,9 @@ public class BlogController {
     }
 
     @PostMapping("/blog-add")
-    public String blogPostAdd(@RequestParam String title, @RequestParam String anons,@RequestParam String full_text, HttpServletRequest request, Model model) {
-        Post post = new Post(title,anons,full_text,request.getRemoteAddr());
+    public String blogPostAdd(@RequestParam String title, @RequestParam String anons, @RequestParam String full_text, HttpServletRequest request, Model model) {
+        Post post = new Post(title, anons, full_text, request.getRemoteAddr());
+        //  request.getRemoteAddr()  -  вытягивает IP копма с которого вносят информацию
         postRepository.save(post);
 //        openTransactionSession();
 
@@ -60,7 +61,7 @@ public class BlogController {
 //        ifPresent - переводит все из класа Optional<> в клас ArrayList<>
 //        ifPresent - у нее такой ситакис.
         post.ifPresent(res::add);
-        model.addAttribute("post",res);
+        model.addAttribute("post", res);
         return "blog-details";
     }
 
@@ -69,11 +70,12 @@ public class BlogController {
         if (!postRepository.existsById(id)) {
             return "redirect:/blog-main";
         }
+
 //      находим и передаем єту одну запись на вюшку
         Optional<Post> post = postRepository.findById(id);
         ArrayList<Post> res = new ArrayList<>();
         post.ifPresent(res::add);
-        model.addAttribute("post",res);
+        model.addAttribute("post", res);
         return "blog-edit";
     }
 
@@ -88,6 +90,7 @@ public class BlogController {
         postRepository.save(post);
         return "redirect:/blog-main";
     }
+
     @PostMapping("/blog/{id}/remove")
     public String blogPostDelete(@PathVariable("id") long id, Model model) {
 //       Находим запись в базе и заталкиваем о объект

@@ -10,7 +10,7 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String title, anons, full_text,ip;
+    private String title, anons, full_text, ip;
     private int views;
 
     public Post(String title, String anons, String full_text, String ip) {
@@ -67,9 +67,6 @@ public class Post {
     public void setViews(int views) {
         this.views = views;
     }
-
-
-
 
 
     public Post() {

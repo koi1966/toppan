@@ -1,22 +1,18 @@
 package toppan.example.toppan.models.repo;
 
 
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
 import toppan.example.toppan.models.toppan;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Stream;
+public interface ToppanRepository extends CrudRepository<toppan, String> {
 
-public interface ToppanRepository extends CrudRepository<toppan,String> {
+//    @Query(nativeQuery = true,
+//            value = "select * from toppan t where t.sn = :sn")
+//    List findByEmailReturnStream(@Param("sn") String toppan);
 
-    @Query(nativeQuery = true,
-            value = "select * from toppan t where t.sn = :sn")
-    List findByEmailReturnStream(@Param("sn") String toppan);
+
+
+
 //
 //    @Query(
 //            nativeQuery = true,

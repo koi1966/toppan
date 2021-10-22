@@ -14,7 +14,7 @@ public class workToppan {
     private Long id;
     private Date date; // Дата  информации  ( 01 -число каждого месяца )
     //  Sn -Прнтенра
-    private String Sn,TotalCount, RepairStartDate, RepairEndDate, Price, TSC, Prim, ip;
+    private String Sn, TotalCount, RepairStartDate, RepairEndDate, Price, TSC, Prim, ip;
 
     public workToppan() {
     }
@@ -99,6 +99,15 @@ public class workToppan {
         this.ip = ip;
     }
 
-
-
+    public workToppan(Date date, String sn, String totalCount, String repairStartDate, String repairEndDate, String price, String TSC, String prim, String ip) {
+        this.date = date;
+        Sn = sn;
+        TotalCount = totalCount;
+        RepairStartDate = repairStartDate;
+        RepairEndDate = repairEndDate;
+        Price = price;
+        this.TSC = TSC;
+        Prim = prim;
+        this.ip = ip;
+    }
 }

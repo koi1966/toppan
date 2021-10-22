@@ -12,7 +12,6 @@ public class MainController {
         model.addAttribute("title", "Главная страница");
         return "Home";
     }
-
 //    @GetMapping("/blog")
 //    public String blog(Model model) {
 //        model.addAttribute("title", "Єто блог");

@@ -1,8 +1,8 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<!--    <title th:text="${title}"/>-->
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--    <title th:text="${title}"/>-->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css">
 </head>
 <body>
@@ -18,8 +18,8 @@
 <div class="container py-3">
     <header th:insert="blocks/header.html::header"></header>
     <div class="container mt-2">
-        <h1>Блог  сайта</h1>
-<!--        <div th:each="el:${post}" class="alert alert-info mt-2">               -->
+        <h1>Блог сайта</h1>
+        <!--        <div th:each="el:${post}" class="alert alert-info mt-2">               -->
         <div th:each="el:${post}" class="alert alert-info mt-2">
 
             <h3 th:text="${el.title}"/>
