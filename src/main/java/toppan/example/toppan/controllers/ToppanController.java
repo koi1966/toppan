@@ -10,6 +10,7 @@ import toppan.example.toppan.createDoc.CreateExcel;
 import toppan.example.toppan.models.Toppan;
 import toppan.example.toppan.models.repo.ToppanRepository;
 
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -25,7 +26,13 @@ public class ToppanController {
 //      находим и передаем все записи на вюшку
         List<Toppan> toppanList = (List<Toppan>) toppanRepository.findAll();
         model.addAttribute("toppan", toppanList);
-        createExcel.
+
+        try {
+            createExcel.CreateF();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         return "printer/toppan";
     }
 

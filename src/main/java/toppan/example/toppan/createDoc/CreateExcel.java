@@ -7,6 +7,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
+import org.springframework.stereotype.Component;
 import toppan.example.toppan.models.Employee;
 import toppan.example.toppan.models.EmployeeDAO;
 
@@ -16,6 +17,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
+@Component
 public class CreateExcel {
 
     private static HSSFCellStyle createStyleForTitle(HSSFWorkbook workbook) {
@@ -26,7 +28,7 @@ public class CreateExcel {
         return style;
     }
 
-private CreateF() throws IOException {
+public void CreateF() throws IOException {
     HSSFWorkbook workbook = new HSSFWorkbook();
     HSSFSheet sheet = workbook.createSheet("Employees sheet");
 
