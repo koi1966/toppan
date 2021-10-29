@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Ьлог ,, сайта</title>
+    <title>Блог РСЦ</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css">
 </head>
@@ -15,22 +15,23 @@
     </symbol>
 </svg>
 
-<div class="container mt-5 mb-5">
+<div class="container py-3">
     <header th:insert="blocks/header.html :: header"></header>
 
     <div class="container mt-5">
         <h1>Внести принтер Toppan CP 500</h1>
-        <form action="/toppan-add" method="post">
+        <form action="../printer/toppan-add" method="post">
             <input type="text" name="sn" placeholder="Серийній номер" class="form-control"><br>
             <input type="text" name="code" placeholder="Номенклатурный номер" class="form-control"><br>
             <input type="text" name="datawork" placeholder="Дата ввеения в эксплуатацию" class="form-control"><br>
+            <input type="text" name="pidrozdil" placeholder="Підрозділ" class="form-control"><br>
             <textarea name="completeness" placeholder="Комплектность" class="form-control"></textarea><br>
             <button type="submit" class="btn btn-success">Записать</button>
         </form>
 
     </div>
 
-    <!--    <div th:insert="blocks/footer.html :: footer"></div>-->
+        <div th:insert="blocks/footer.html :: footer"></div>
 
 </div>
 </body>

@@ -9,7 +9,7 @@ public class Toppan {
     @Id
     private String sn;
     //    Дата ввода в експлуатацию, комплектность, номенклатурный код
-    private String datawork, completeness, code;
+    private String datawork, completeness, code, pidrozdil;
 
     public String getSn() {
         return sn;
@@ -43,11 +43,20 @@ public class Toppan {
         this.code = code;
     }
 
-    public Toppan(String sn, String datawork, String completeness, String code) {
+    public String getPidrozdil() {
+        return pidrozdil;
+    }
+
+    public void setPidrozdil(String pidrozdil) {
+        this.pidrozdil = pidrozdil;
+    }
+
+    public Toppan(String sn, String datawork, String completeness, String code, String pidrozdil) {
         this.sn = sn;
         this.datawork = datawork;
         this.completeness = completeness;
         this.code = code;
+        this.pidrozdil = pidrozdil;
     }
 
     public Toppan() {

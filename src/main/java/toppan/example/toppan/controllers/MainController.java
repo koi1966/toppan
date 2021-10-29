@@ -9,7 +9,7 @@ public class MainController {
 
     @GetMapping("/")
     public String home(Model model) {
-        model.addAttribute("title", "Главная страница");
+        model.addAttribute("title", "главной странице");
         return "Home";
     }
 //    @GetMapping("/blog")
@@ -24,7 +24,7 @@ public class MainController {
 
     @GetMapping("/about")
     public String about(Model model) {
-        model.addAttribute("title", "Cтраница про нас");
+        model.addAttribute("title", "Про ГСЦ РСЦ В Житомирской области");
         return "about";
     }
 
