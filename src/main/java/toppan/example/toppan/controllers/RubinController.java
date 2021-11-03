@@ -10,6 +10,7 @@ import toppan.example.toppan.models.repo.PidrozdilRepository;
 import toppan.example.toppan.models.repo.RubinRepository;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -52,8 +53,9 @@ public class RubinController {
         String ip_user = request.getRemoteAddr();
 //        List<RubinP> tscP =
         String tsc = pidrozdilRepository.setNamePidrozdil(ip_user);
-
-        model.addAttribute("tsс", tsc);
+        ArrayList<String> tscs = new ArrayList<>(); // выделли свободную память " res = new ArrayList<>()" ;
+        tscs.add(tsc);
+        model.addAttribute("tsс", tscs);
 
 //        rubinRepository.toString();
         return "rubin/rubin-add";
