@@ -6,8 +6,7 @@ import toppan.example.toppan.models.Toppan;
 
 public interface ToppanRepository extends CrudRepository<Toppan, String> {
 
-//    @Query(nativeQuery = true,
-//            value = "select * from toppan t where t.sn = :sn")
+//    @Query(nativeQuery = true, //            value = "select * from toppan t where t.sn = :sn")
 //    List findByEmailReturnStream(@Param("sn") String toppan);
 
 

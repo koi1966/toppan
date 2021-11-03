@@ -19,10 +19,11 @@
     <header th:insert="blocks/header.html :: header"></header>
     <div class="container mt-5">
         <!--        <h1>Toppan CP 500</h1>-->
-        <div th:each="top:${toppan}" class="alert alert-info mt-2">
-
-            <h3 th:text="${'S/n '+ top.sn +'  № ' +top.code }"/>
-            <p th:text="${'Введено в дію: '+top.datawork +', комплект : '+ top.completeness}"/>
+        <div th:each="rubin:${rubinList}" class="alert alert-info mt-2">
+            <h4 th:text="${rubin.pidrozdil + ' ....  ' + #dates.format(rubin.data_v, 'dd.MM.yyyy') }"/>
+<!--            <p th:text="${#dates.format(rubin.data_v, 'dd-MMM-yyyy')}"></p>-->
+            <p th:text="${'звернень тиждень ' +rubin.week + ' з початку року '+rubin.year  }"/>
+            <p th:text="${'виданих '+rubin.week_1 +', з початку року : '+ rubin.year_1 }"/>
             <!--            <a th:href="'/blog/'+ ${el.sn}" class="btn btn-warning">Детальнее</a>-->
         </div>
     </div>

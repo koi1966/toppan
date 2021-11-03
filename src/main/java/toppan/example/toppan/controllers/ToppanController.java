@@ -10,7 +10,6 @@ import toppan.example.toppan.createDoc.CreateExcel;
 import toppan.example.toppan.models.Toppan;
 import toppan.example.toppan.models.repo.ToppanRepository;
 
-import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -27,11 +26,11 @@ public class ToppanController {
         List<Toppan> toppanList = (List<Toppan>) toppanRepository.findAll();
         model.addAttribute("toppan", toppanList);
 
-        try {
-            createExcel.CreateF();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            createExcel.CreateF();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
         return "printer/toppan";
     }
@@ -50,6 +49,11 @@ public class ToppanController {
     @GetMapping("/printer/toppan-add")
     public String Toppanadd(Model model) {
         return "printer/toppan-add";
+    }
+
+    @GetMapping("/printer/Total_Count")
+    public String TotalCountAdd(Model model) {
+        return"printer/Total_Count";
     }
 
 }

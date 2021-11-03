@@ -1,5 +1,52 @@
 <div th:fragment="header">
+
     <div class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
+<!--    <link rel="stylesheet" href="main.css">-->
+        <style>
+        body {
+            font-family: sans-serif;
+        }
+
+        ul {
+        display: flex;
+        padding-left: 0;
+        list-style: none;
+        }
+
+        li {
+        position: relative;
+        }
+
+        li:hover .submenu{
+        display: flex;
+        }
+
+        a {
+        display: block;
+        color: black;
+        text-decoration: none;
+        background-color: #eaebee;
+        padding: 1em;
+        white-space: nowrap;
+        }
+
+        a:hover {
+        background-color: #b0c7c1;
+        }
+
+        a:focus{
+        outline: none;
+            background-color: yellow;
+        }
+
+        .submenu{
+        display: none;
+        flex-direction: column ;
+        position: absolute;
+        }
+        </style>
+
+
         <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
             <svg xmlns="http://www.w3.org/2000/svg" width="40" height="32" class="me-2" viewBox="0 0 118 94" role="img">
                 <title>РСЦ ГСЦ МВС в Житомирській області</title>
@@ -11,12 +58,27 @@
         </a>
 
         <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
-            <a class="me-3 py-2 text-dark text-decoration-none" href="/">Главная</a>
-            <a class="me-3 py-2 text-dark text-decoration-none" href="../printer/toppan">Принтера</a>
-            <a class="me-3 py-2 text-dark text-decoration-none" href="../printer/toppan-add">Добавим принтер</a>
-            <a class="me-3 py-2 text-dark text-decoration-none" href="/">Довідки суд..</a>
+<!--            <ul class="menu">-->
+            <ul>
+            <li><a class="me-3 py-2 text-dark text-decoration-none" href="/">Главная</a></li>
+            <li><a class="me-3 py-2 text-dark text-decoration-none" href="">Toppan CP 500</a>
+                <ul class="submenu">
+                    <li><a class="me-3 py-2 text-dark text-decoration-none" href="../printer/toppan">Принтера</a> </li>
+                    <li><a class="me-3 py-2 text-dark text-decoration-none" href="../printer/toppan-add">Добавим принтер</a> </li>
+                    <li><a class="me-3 py-2 text-dark text-decoration-none" href="../printer/Total_Count">Total Count</a> </li>
+                </ul>
+            </li>
+
+            <li><a class="me-3 py-2 text-dark text-decoration-none" href="/">Довідки суд..</a>
+                <ul class="submenu">
+                    <li><a class="me-3 py-2 text-dark text-decoration-none" href="../rubin/rubin-view">Довідки</a> </li>
+                    <li><a class="me-3 py-2 text-dark text-decoration-none" href="../rubin/rubin-add">Звіт</a> </li>
+                </ul>
+            </li>
+
 <!--            <a class="me-3 py-2 text-dark text-decoration-none" href="/about">Про нас</a>-->
 <!--            <a class="me-3 py-2 text-dark text-decoration-none" href="/toppan">Toppan CP 500</a>-->
+            </ul>
         </nav>
     </div>
 </div>

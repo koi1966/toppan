@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeDAO {
+
     public static List<Employee> listEmployees() {
         List<Employee> list = new ArrayList<Employee>();
 
