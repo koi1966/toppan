@@ -8,16 +8,19 @@
 
 <body data-hasqtip="0">
 
-<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
-    <symbol id="check" viewBox="0 0 16 16">
-        <title>Check</title>
-        <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"></path>
-    </symbol>
-</svg>
+<!--<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">-->
+<!--    <symbol id="check" viewBox="0 0 16 16">-->
+<!--        <title>Check</title>-->
+<!--        <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"></path>-->
+<!--    </symbol>-->
+<!--</svg>-->
 
 <div class="container py-3">
+    <!--/*@thymesVar id="tsc" type="toppan"*/-->
+
     <header th:insert="blocks/header.html :: header"></header>
     <div class="container mt-5">
+        <h4 th:text="${tsc}"></h4>
         <!--        <h1>Toppan CP 500</h1>-->
         <div th:each="rubin:${rubinList}" class="alert alert-info mt-2">
             <h4 th:text="${rubin.pidrozdil + ' ....  ' + #dates.format(rubin.data_v, 'dd.MM.yyyy') }"/>

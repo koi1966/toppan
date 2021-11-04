@@ -1,41 +1,35 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Блог РСЦ топан адд</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../main.css">
+    <meta charset="UTF-8">
+    <title>Проверка</title>
 </head>
+<body>
+<!--/*@thymesVar id="tit" type=""*/-->
+<div>  <header th:insert="blocks/header.html :: header"></header>
+<!--    // week -   за неділю           Кількість звернень громадян щодо видачі довідок про відсутність (наявність) судимості-->
+<!--    // week_1 - за неділю           Кількість виданих довідок про відсутність (наявність) судимості-->
+<!--    //-->
+<!--    // year -   З початку року   Кількість звернень громадян щодо видачі довідок про відсутність (наявність) судимості-->
+<!--    // year_1 - З початку року   Кількість виданих довідок про відсутність (наявність) судимості-->
+    <form action="../rubin/rubin-add" method="post">
+        <label for="pidrozdil">ТСЦ : </label>
+<!--        <input type="text" th:value="${tsc}" disabled name="pidrozdil" placeholder="Підрозділ" class="form-control" id="pidrozdil"><br>-->
+        <input type="text" th:value="${tsc}" name="pidrozdil" placeholder="Підрозділ" class="form-control" id="pidrozdil"><br>
+        <label for="data_v">Дата : </label>
+        <input type="date" name="data_v" placeholder="Дата внесення" class="form-control" id="data_v" ><br>
+        <label for="week">Кількість звернень за тиждень : </label>
+        <input type="text" name="week" placeholder="звернень за тиждень" class="form-control" id="week"><br>
+        <label for="week_1">Кількість виданих.. за тиждень : </label>
+        <input type="text" name="week_1" placeholder="виданих за тиждень" class="form-control" id="week_1"><br>
+        <label for="year">Кількість звернень за рік : </label>
+        <input type="text" name="year" placeholder="Кількість звернень за рік" class="form-control" id="year"><br>
+        <label for="year_1">Кількість виданих.. за рік : </label>
+        <input type="text" name="year_1" placeholder="Кількість виданих.. за рік" class="form-control" id="year_1"><br>
 
-<body data-hasqtip="0">
-
-<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
-    <symbol id="check" viewBox="0 0 16 16">
-        <title>Check</title>
-        <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"></path>
-    </symbol>
-</svg>
-
-<div class="container py-3">
-    <header th:insert="blocks/header.html :: header"></header>
-
-    <div class="container mt-5">
-<!--        <p th:text="${tsс}"></p>-->
-<!--        <p th:text="'Привет, ' + ${tsс} + '!'"/>-->
-<!--        <h1 th:text="${tsс}">Внести інформацію по РУБІНУ </h1>-->
-<!--        <form action="../printer/toppan-add" method="post">-->
-<!--            <input type="text" name="sn" placeholder="Серийній номер" class="form-control"><br>-->
-<!--            <input type="text" name="code" placeholder="Номенклатурный номер" class="form-control"><br>-->
-<!--            <input type="text" name="datawork" placeholder="Дата ввеения в эксплуатацию" class="form-control"><br>-->
-<!--            <input type="text" name="pidrozdil" placeholder="Підрозділ" class="form-control"><br>-->
-<!--            <textarea name="completeness" placeholder="Комплектность" class="form-control"></textarea><br>-->
-<!--            <button type="submit" class="btn btn-success">Записать</button>-->
-<!--        </form>-->
-
-
-        <div th:insert="blocks/footer.html :: footer"></div>
-
-    </div>
+<!--        <textarea name="completeness" placeholder="Комплектность" class="form-control"></textarea><br>-->
+        <button type="submit" class="btn btn-success">Записать</button>
+    </form>
 </div>
 </body>
 </html>

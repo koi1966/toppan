@@ -10,7 +10,6 @@ import toppan.example.toppan.models.repo.PidrozdilRepository;
 import toppan.example.toppan.models.repo.RubinRepository;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -36,7 +35,7 @@ public class RubinController {
     }
 
     @PostMapping("/rubin/rubin-add")
-    public String rubin_add(@RequestParam String pidrozdil,@RequestParam int week, @RequestParam int week_1, @RequestParam int year, @RequestParam int year_1,  @RequestParam Date data_v, HttpServletRequest request,Model model) {
+    public String rubinadd(@RequestParam String pidrozdil, @RequestParam int week, @RequestParam int week_1, @RequestParam int year, @RequestParam int year_1, @RequestParam Date data_v, HttpServletRequest request, Model model) {
 //       String ip_user = request.getRemoteAddr();
 //       String host = request.getRemoteHost();
         Rubin rubin = new Rubin(pidrozdil,week,week_1, year, year_1, data_v);
@@ -49,16 +48,24 @@ public class RubinController {
     }
 
     @GetMapping("/rubin/rubin-add")
-    public String rubin_add(HttpServletRequest request,Model model) {
-        String ip_user = request.getRemoteAddr();
-//        List<RubinP> tscP =
-        String tsc = pidrozdilRepository.setNamePidrozdil(ip_user);
-        ArrayList<String> tscs = new ArrayList<>(); // выделли свободную память " res = new ArrayList<>()" ;
-        tscs.add(tsc);
-        model.addAttribute("tsс", tscs);
-
+    public String rubinadd(HttpServletRequest request, Model model) {
+//        String ip_user = request.getRemoteAddr();
+//        вытягивает IP копма с которого вносят информацию
+        String tsc = pidrozdilRepository.setNamePidrozdil(request.getRemoteAddr());
+//        ArrayList<String> tscs = new ArrayList<>(); // выделли свободную память " res = new ArrayList<>()" ;
+//        tscs.add(tsc);
+        if (tsc.isEmpty()) {return "redirect:/";}
+        model.addAttribute("tsc", pidrozdilRepository.setNamePidrozdil(request.getRemoteAddr()));
 //        rubinRepository.toString();
         return "rubin/rubin-add";
+    }
+
+    @GetMapping("/rubin/rubin")
+    public String rubin_Test(HttpServletRequest request,Model model){
+//        String ip_user = request.getRemoteAddr();
+//        String tsc = pidrozdilRepository.setNamePidrozdil(request.getRemoteAddr());
+        model.addAttribute("tsc", pidrozdilRepository.setNamePidrozdil(request.getRemoteAddr()));
+        return "rubin/rubin";
     }
 
 }
