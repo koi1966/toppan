@@ -8,26 +8,28 @@
 
 <body data-hasqtip="0">
 
-<!--<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">-->
-<!--    <symbol id="check" viewBox="0 0 16 16">-->
-<!--        <title>Check</title>-->
-<!--        <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"></path>-->
-<!--    </symbol>-->
-<!--</svg>-->
-
 <div class="container py-3">
-    <!--/*@thymesVar id="tsc" type="toppan"*/-->
 
     <header th:insert="blocks/header.html :: header"></header>
+    <div>
+        <form action="../rubin/rubin-view" method="post">
+
+            <!--        <input type="text" th:value="${tsc}" disabled name="pidrozdil" placeholder="Підрозділ" class="form-control" id="pidrozdil"><br>-->
+            <label for="data_v" > Дата внесення  : </label>
+            <input type="date" name="data_v" placeholder="Дата внесення" class="form-control" id="data_v" ><br>
+            <button type="submit" class="btn btn-success">Пошук</button>
+            <button type="submit" class="btn btn-success">Друк звіту</button>
+        </form>
+    </div>
+
     <div class="container mt-5">
+        <!--/*@thymesVar id="tsc" type=""*/-->
         <h4 th:text="${tsc}"></h4>
-        <!--        <h1>Toppan CP 500</h1>-->
+
         <div th:each="rubin:${rubinList}" class="alert alert-info mt-2">
             <h4 th:text="${rubin.pidrozdil + ' ....  ' + #dates.format(rubin.data_v, 'dd.MM.yyyy') }"/>
-<!--            <p th:text="${#dates.format(rubin.data_v, 'dd-MMM-yyyy')}"></p>-->
-            <p th:text="${'звернень тиждень ' +rubin.week + ' з початку року '+rubin.year  }"/>
-            <p th:text="${'виданих '+rubin.week_1 +', з початку року : '+ rubin.year_1 }"/>
-            <!--            <a th:href="'/blog/'+ ${el.sn}" class="btn btn-warning">Детальнее</a>-->
+            <p th:text="${'звернень тиждень :' +rubin.week + '  з початку року : '+rubin.year  }"/>
+            <p th:text="${'виданих  тиждень :'+rubin.week_1 +'  з початку року : '+ rubin.year_1 }"/>
         </div>
     </div>
 </div>

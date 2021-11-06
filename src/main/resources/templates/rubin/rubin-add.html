@@ -12,6 +12,8 @@
 <!--    //-->
 <!--    // year -   З початку року   Кількість звернень громадян щодо видачі довідок про відсутність (наявність) судимості-->
 <!--    // year_1 - З початку року   Кількість виданих довідок про відсутність (наявність) судимості-->
+
+    <div>
     <form action="../rubin/rubin-add" method="post">
         <label for="pidrozdil">ТСЦ : </label>
 <!--        <input type="text" th:value="${tsc}" disabled name="pidrozdil" placeholder="Підрозділ" class="form-control" id="pidrozdil"><br>-->
@@ -28,8 +30,9 @@
         <input type="text" name="year_1" placeholder="Кількість виданих.. за рік" class="form-control" id="year_1"><br>
 
 <!--        <textarea name="completeness" placeholder="Комплектность" class="form-control"></textarea><br>-->
-        <button type="submit" class="btn btn-success">Записать</button>
+        <button type="submit" class="btn btn-success">Зберегти</button>
     </form>
+    </div>
 </div>
 </body>
 </html>
