@@ -15,4 +15,8 @@ public interface RubinRepository extends CrudRepository<Rubin, Long> {
             value = "SELECT * from rubin r where r.data_v = :data_v ORDER BY r.pidrozdil")
     List<Rubin> setListDateRubin(@Param("data_v") Date data_v) ;
 
+    @Query(nativeQuery = true,
+            value = "select sum(week) as week, sum(week_1) as week_1 from rubin")
+    List<Rubin> setSumDate();
+
 }
