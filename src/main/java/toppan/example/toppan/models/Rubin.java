@@ -1,6 +1,8 @@
 package toppan.example.toppan.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 
 @Entity
@@ -15,7 +17,20 @@ public class Rubin {
     // year -   З початку року   Кількість звернень громадян щодо видачі довідок про відсутність (наявність) судимості
     // year_1 - З початку року   Кількість виданих довідок про відсутність (наявність) судимості
     private String pidrozdil;
-    private int week, week_1, year, year_1;
+//    @NotNull(message = "Введіть значення")
+    @NotEmpty(message = "Введіть значення")
+    @Min(value = 0, message = "Значення мають бути більше за - 0")
+    private int week;
+    @NotEmpty(message = "Введіть значення")
+    @Min(value = 0, message = "Значення мають бути більше за - 0")
+    private int week_1;
+    @NotEmpty(message = "Введіть значення")
+    @Min(value = 0, message = "Значення мають бути більше за - 0")
+    private int year;
+    @NotEmpty(message = "Введіть значення")
+    @Min(value = 0, message = "Значення мають бути більше за - 0")
+    private int year_1;
+    @NotEmpty( message = "Введіть дату")
     private Date data_v;
 
     public Rubin() {

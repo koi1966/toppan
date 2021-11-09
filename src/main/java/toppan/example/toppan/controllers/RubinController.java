@@ -35,13 +35,40 @@ public class RubinController {
     }
 
     @PostMapping("/rubin/rubin-view")
-    public String rubinViewData(@RequestParam("data_v") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date data_v, Model model){
+    public String rubinViewData(@RequestParam("data_v") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date data_v, Model model) {
 
         List<Rubin> rubinList = (List<Rubin>) rubinRepository.setListDateRubin(data_v);
         model.addAttribute("rubinList", rubinList);
 
         return "rubin/rubin-view";
     }
+
+
+//    @PostMapping("/rubin/rubin-add")
+////    public String rubinadd(@RequestParam String pidrozdil, @RequestParam int week, @RequestParam int week_1, @RequestParam int year, @RequestParam int year_1, @RequestParam("data_v") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date data_v) {
+//    public <rubin> String rubinadd(@Valid Rubin rubin) {
+////        rubinRepository.save(rubin);
+////        return "redirect:/rubin/rubin-view";
+//        return rubinadd(rubin.getPidrozdil(), rubin.getWeek(), rubin.getWeek_1(), rubin.getYear(), rubin.getYear_1(), rubin.getData_v());
+//    }
+
+
+//    @PostMapping("/rubin/rubin-add")
+////    public String rubinadd(@RequestParam String pidrozdil, @RequestParam int week, @RequestParam int week_1, @RequestParam int year, @RequestParam int year_1, @RequestParam("data_v") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date data_v) {
+//    public String rubinadd(@RequestParam String pidrozdil,
+//                                   @RequestParam int week,
+//                                   @RequestParam int week_1,
+//                                   @RequestParam int year,
+//                                   @RequestParam int year_1,
+//                                   @RequestParam("data_v") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date data_v ) {
+//        //       String ip_user = request.getRemoteAddr();
+////       String host = request.getRemoteHost();
+//    Rubin rubin = new Rubin(pidrozdil, week, week_1, year, year_1, data_v);
+////        Rubin rubin = new Rubin();
+//        //  request.getRemoteAddr()  -  вытягивает IP копма с которого вносят информацию
+//        rubinRepository.save(rubin);
+//        return "redirect:/rubin/rubin-view";
+//    }
 
     @PostMapping("/rubin/rubin-add")
     public String rubinadd(@RequestParam String pidrozdil, @RequestParam int week, @RequestParam int week_1, @RequestParam int year, @RequestParam int year_1, @RequestParam("data_v") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date data_v) {
@@ -52,6 +79,7 @@ public class RubinController {
         rubinRepository.save(rubin);
         return "redirect:/rubin/rubin-view";
     }
+
 
     @GetMapping("/rubin/rubin-add")
     public String rubinadd(HttpServletRequest request, Model model) {
