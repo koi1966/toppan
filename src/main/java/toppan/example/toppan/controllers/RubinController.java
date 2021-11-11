@@ -1,17 +1,27 @@
 package toppan.example.toppan.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import toppan.example.toppan.createDoc.CreateExcel;
 import toppan.example.toppan.models.Rubin;
 import toppan.example.toppan.models.repo.PidrozdilRepository;
 import toppan.example.toppan.models.repo.RubinRepository;
 import toppan.example.toppan.utilities.UtilitesSting;
 
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.io.IOException;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
@@ -20,6 +30,9 @@ public class RubinController {
 
     private RubinRepository rubinRepository;
     private final PidrozdilRepository pidrozdilRepository;
+
+    @Autowired
+    private CreateExcel createExcel;
 
     public RubinController(RubinRepository rubinRepository, PidrozdilRepository pidrozdilRepository) {
         this.rubinRepository = rubinRepository;
@@ -34,73 +47,74 @@ public class RubinController {
         return "rubin/rubin-view";
     }
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @PostMapping("/rubin/rubin-view")
     public String rubinViewData(@RequestParam("data_v") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date data_v, Model model) {
 
         List<Rubin> rubinList = (List<Rubin>) rubinRepository.setListDateRubin(data_v);
         model.addAttribute("rubinList", rubinList);
 
+                try {
+            createExcel.CreateF();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         return "rubin/rubin-view";
     }
 
-
-//    @PostMapping("/rubin/rubin-add")
-////    public String rubinadd(@RequestParam String pidrozdil, @RequestParam int week, @RequestParam int week_1, @RequestParam int year, @RequestParam int year_1, @RequestParam("data_v") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date data_v) {
-//    public <rubin> String rubinadd(@Valid Rubin rubin) {
-////        rubinRepository.save(rubin);
-////        return "redirect:/rubin/rubin-view";
-//        return rubinadd(rubin.getPidrozdil(), rubin.getWeek(), rubin.getWeek_1(), rubin.getYear(), rubin.getYear_1(), rubin.getData_v());
-//    }
-
-
-//    @PostMapping("/rubin/rubin-add")
-////    public String rubinadd(@RequestParam String pidrozdil, @RequestParam int week, @RequestParam int week_1, @RequestParam int year, @RequestParam int year_1, @RequestParam("data_v") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date data_v) {
-//    public String rubinadd(@RequestParam String pidrozdil,
-//                                   @RequestParam int week,
-//                                   @RequestParam int week_1,
-//                                   @RequestParam int year,
-//                                   @RequestParam int year_1,
-//                                   @RequestParam("data_v") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date data_v ) {
-//        //       String ip_user = request.getRemoteAddr();
-////       String host = request.getRemoteHost();
-//    Rubin rubin = new Rubin(pidrozdil, week, week_1, year, year_1, data_v);
-////        Rubin rubin = new Rubin();
-//        //  request.getRemoteAddr()  -  вытягивает IP копма с которого вносят информацию
-//        rubinRepository.save(rubin);
-//        return "redirect:/rubin/rubin-view";
-//    }
-
     @PostMapping("/rubin/rubin-add")
-    public String rubinadd(@RequestParam String pidrozdil, @RequestParam int week, @RequestParam int week_1, @RequestParam int year, @RequestParam int year_1, @RequestParam("data_v") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date data_v) {
-//       String ip_user = request.getRemoteAddr();
-//       String host = request.getRemoteHost();
-        Rubin rubin = new Rubin(pidrozdil, week, week_1, year, year_1, data_v);
-        //  request.getRemoteAddr()  -  вытягивает IP копма с которого вносят информацию
+//    public String rubinadd(@RequestParam String pidrozdil,
+//                           @RequestParam int week,
+//                           @RequestParam int week_1,
+//                           @RequestParam int year,
+//                           @RequestParam int year_1, @RequestParam("data_v") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date data_v) {
+    public String rubinadd(@Valid Rubin rubin, BindingResult bindingResult) {
+//        public String rubinadd(Rubin rubin) {
+        if (bindingResult.hasErrors())
+            return "/rubin/rubin-add";
+
+//        Rubin rubin = new Rubin(pidrozdil, week, week_1, year, year_1, data_v);
         rubinRepository.save(rubin);
         return "redirect:/rubin/rubin-view";
     }
-
 
     @GetMapping("/rubin/rubin-add")
     public String rubinadd(HttpServletRequest request, Model model) {
 //        вытягивает IP копма с которого вносят информацию
         String ip_user = request.getRemoteAddr();
-
-//        int end = UtilitesSting.ordinalIndexOf(ip_user, ".", 2);
-//        int start = 0;
         int end = UtilitesSting.ordinalIndexOf(ip_user, ".", 2);
-//        char[] dst=new char[end - start];
-//        ip_user.getChars(start, end,dst, 0);
 //        узнаеп подсеть
         String ip = ip_user.substring(0, end);
 //        по подсети узнаем из какого ТСЦ зашли работать
         String tsc = pidrozdilRepository.setNamePidrozdil(ip);
-//        tscs.add(tsc);
+
         boolean isEmpty = tsc == null || tsc.trim().length() == 0;
         if (isEmpty) {
             return "redirect:/";
         }
-        model.addAttribute("tsc", pidrozdilRepository.setNamePidrozdil(ip));
+
+//        Date date = new Date();
+//        System.out.println("Date is: "+date);
+//
+//        //Getting the default zone id
+        ZoneId defaultZoneId = ZoneId.systemDefault();
+//
+        //Converting the date to Instant
+        Instant instant = date.toInstant();
+
+//        //Converting the Date to LocalDate
+        LocalDate localDate = instant.atZone(defaultZoneId).toLocalDate();
+//        System.out.println("Local Date is: "+localDate);
+
+        Rubin rubin = new Rubin();
+        rubin.setPidrozdil(pidrozdilRepository.setNamePidrozdil(ip));
+        rubin.setData_v(instant.atZone(defaultZoneId).toLocalDate());
+
+//        List<Rubin> rubinList = (List<Rubin>) rubinRepository.findAll();
+        model.addAttribute("rubin", rubin);
+//        model.addAttribute("tsc", pidrozdilRepository.setNamePidrozdil(ip)); // name="pidrozdil"
+//        model.addAttribute("dat", LocalDate.now());
         return "rubin/rubin-add";
     }
 
@@ -111,6 +125,12 @@ public class RubinController {
         model.addAttribute("tsc", pidrozdilRepository.setNamePidrozdil(request.getRemoteAddr()));
         return "rubin/rubin";
     }
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+
+    @Temporal(TemporalType.DATE)
+    private Date date;
+
 
 }
 

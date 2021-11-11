@@ -1,9 +1,12 @@
 package toppan.example.toppan.models;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
-import java.util.Date;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 
 @Entity
 @Table(name ="rubin", indexes = {@Index(name = "data_v", columnList = "data_v",unique = false)})
@@ -17,21 +20,13 @@ public class Rubin {
     // year -   З початку року   Кількість звернень громадян щодо видачі довідок про відсутність (наявність) судимості
     // year_1 - З початку року   Кількість виданих довідок про відсутність (наявність) судимості
     private String pidrozdil;
-//    @NotNull(message = "Введіть значення")
+    @NotNull(message = "Введіть значення")
     @NotEmpty(message = "Введіть значення")
     @Min(value = 0, message = "Значення мають бути більше за - 0")
-    private int week;
-    @NotEmpty(message = "Введіть значення")
-    @Min(value = 0, message = "Значення мають бути більше за - 0")
-    private int week_1;
-    @NotEmpty(message = "Введіть значення")
-    @Min(value = 0, message = "Значення мають бути більше за - 0")
-    private int year;
-    @NotEmpty(message = "Введіть значення")
-    @Min(value = 0, message = "Значення мають бути більше за - 0")
-    private int year_1;
+    private int week, week_1, year, year_1;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotEmpty( message = "Введіть дату")
-    private Date data_v;
+    private LocalDate data_v;
 
     public Rubin() {
     }
@@ -84,15 +79,15 @@ public class Rubin {
         this.year_1 = year_1;
     }
 
-    public Date getData_v() {
+    public LocalDate getData_v() {
         return data_v;
     }
 
-    public void setData_v(Date data_v) {
+    public void setData_v(@NotEmpty(message = "Введіть дату") LocalDate data_v) {
         this.data_v = data_v;
     }
 
-    public Rubin(String pidrozdil, int week, int week_1, int year, int year_1, Date data_v) {
+    public Rubin(String pidrozdil, int week, int week_1, int year, int year_1, LocalDate data_v) {
         this.pidrozdil = pidrozdil;
         this.week = week;
         this.week_1 = week_1;
@@ -101,7 +96,7 @@ public class Rubin {
         this.data_v = data_v;
     }
 
-    public Rubin(Long id, String pidrozdil, int week, int week_1, int year, int year_1, Date data_v) {
+    public Rubin(Long id, String pidrozdil, int week, int week_1, int year, int year_1, LocalDate data_v) {
         this.id = id;
         this.pidrozdil = pidrozdil;
         this.week = week;
