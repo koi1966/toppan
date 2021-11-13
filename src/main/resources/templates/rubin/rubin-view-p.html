@@ -12,28 +12,27 @@
 
     <header th:insert="blocks/header.html :: header"></header>
     <div>
-        <form action="../rubin/rubin-view" method="post">
+        <form action="../rubin/rubin-view-p" method="post">
             <!--        <input type="text" th:value="${tsc}" disabled name="pidrozdil" placeholder="Підрозділ" class="form-control" id="pidrozdil"><br>-->
-            <label for="data_v" > Дата внесення  : </label>
-            <input type="date" name="data_v" placeholder="Дата внесення" class="form-control" id="data_v" ><br>
+            <input type="date" th:value="${dat}" name="data_v" placeholder="Дата внесення" class="form-control" id="data_v" ><br>
 
-            <button type="submit" class="btn btn-success">Пошук</button>
+            <button type="submit" class="btn btn-success">Друк</button>
 
         </form>
     </div>
 
     <div class="container mt-5">
         <!--/*@thymesVar id="tsc" type=""*/-->
-        <h4 th:text="${tsc}"></h4>
+<!--        <h4 th:text="${tsc}"></h4>-->
 
         <div th:each="rubin:${rubinList}" class="alert alert-info mt-2">
-<!--            <h4 th:text="${rubin.pidrozdil + ' ....  ' + #dates.format(rubin.data_v, 'dd.MM.yyyy') }"/>-->
+            <!--            <h4 th:text="${rubin.pidrozdil + ' ....  ' + #dates.format(rubin.data_v, 'dd.MM.yyyy') }"/>-->
             <h4 th:text="${rubin.pidrozdil + ' ....  ' + rubin.data_v}"/>
             <p th:text="${'звернень тиждень :' +rubin.week + '  з початку року : '+rubin.year  }"/>
             <p th:text="${'виданих  тиждень :'+rubin.week_1 +'  з початку року : '+ rubin.year_1 }"/>
-            <ul>
-                <li th:each="err : ${#fields.errors('*')}" th:text="${err}" />
-            </ul>
+<!--            <ul>-->
+<!--                <li th:each="err : ${#fields.errors('*')}" th:text="${err}" />-->
+<!--            </ul>-->
         </div>
     </div>
 </div>

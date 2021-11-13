@@ -17,10 +17,10 @@ public interface RubinRepository extends CrudRepository<Rubin, Long> {
 
 //    Сумы двух полей за период по всем ТСЦ
     @Query(nativeQuery = true,
-            value = "select sum(week) as week, sum(week_1) as week_1 from rubin where r.data_v > :data_v and r.data_v <= :data_k ORDER BY r.data_r")
-    List<Rubin> setSumDate(@Param("data_v") Date data_n, @Param("data_k") Date data_k );
-
-//    year, year_1,
+            value = "select sum(week) as week, sum(week_1) as week_1, sum(year) as year, sum(year_1) as year_1 from rubin" +
+                    "where data_v > :data_v  " +
+                    "ORDER BY data_r")
+    List<Rubin> setSumDate(@Param("data_v") Date data_v);
 
 
 }

@@ -6,6 +6,7 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.RichTextString;
 import org.apache.poi.ss.usermodel.Row;
 import org.springframework.stereotype.Component;
 import toppan.example.toppan.models.Employee;
@@ -29,11 +30,13 @@ public class CreateExcel {
     }
 
 
-public void CreateF() throws IOException {
+public void CreateF(List rubins) throws IOException {
     HSSFWorkbook workbook = new HSSFWorkbook();
     HSSFSheet sheet = workbook.createSheet("Employees sheet");
 
     List<Employee> list = EmployeeDAO.listEmployees();
+
+//    rubinList.setPidrozdil();
 
     int rownum = 0;
     Cell cell;
@@ -45,15 +48,15 @@ public void CreateF() throws IOException {
 
     // EmpNo
     cell = row.createCell(0, CellType.STRING);
-    cell.setCellValue("EmpNo");
+    cell.setCellValue("Вася");
     cell.setCellStyle(style);
     // EmpName
     cell = row.createCell(1, CellType.STRING);
-    cell.setCellValue("EmpNo");
+    cell.setCellValue("Петя");
     cell.setCellStyle(style);
     // Salary
     cell = row.createCell(2, CellType.STRING);
-    cell.setCellValue("Salary");
+    cell.setCellValue("Саня");
     cell.setCellStyle(style);
     // Grade
     cell = row.createCell(3, CellType.STRING);
@@ -65,27 +68,31 @@ public void CreateF() throws IOException {
     cell.setCellStyle(style);
 
     // Data
-    for (Employee emp : list) {
+
+//    for (Employee emp : list) {
+
         rownum++;
         row = sheet.createRow(rownum);
 
         // EmpNo (A)
         cell = row.createCell(0, CellType.STRING);
-        cell.setCellValue(emp.getEmpNo());
+        cell.setCellValue((RichTextString) rubins.get(0));
+//        cell.setCellValue((RichTextString) model.getAttribute(@RequestParam(value = Rubin) new Rubin().getPidrozdil()));
         // EmpName (B)
-        cell = row.createCell(1, CellType.STRING);
-        cell.setCellValue(emp.getEmpName());
-        // Salary (C)
-        cell = row.createCell(2, CellType.NUMERIC);
-        cell.setCellValue(emp.getSalary());
-        // Grade (D)
-        cell = row.createCell(3, CellType.NUMERIC);
-        cell.setCellValue(emp.getGrade());
-        // Bonus (E)
-        String formula = "0.1*C" + (rownum + 1) + "*D" + (rownum + 1);
-        cell = row.createCell(4, CellType.FORMULA);
-        cell.setCellFormula(formula);
-    }
+//        cell = row.createCell(1, CellType.STRING);
+//        cell.setCellValue(emp.getEmpName());
+//        // Salary (C)
+//        cell = row.createCell(2, CellType.NUMERIC);
+//        cell.setCellValue(emp.getSalary());
+//        // Grade (D)
+//        cell = row.createCell(3, CellType.NUMERIC);
+//        cell.setCellValue(emp.getGrade());
+//        // Bonus (E)
+//        String formula = "0.1*C" + (rownum + 1) + "*D" + (rownum + 1);
+//        cell = row.createCell(4, CellType.FORMULA);
+//        cell.setCellFormula(formula);
+//    }
+
     File file = new File("C:/demo/employee.xls");
     file.getParentFile().mkdirs();
 
@@ -96,7 +103,7 @@ public void CreateF() throws IOException {
         e.printStackTrace();
     }
     workbook.write(outFile);
-    System.out.println("Created file: " + file.getAbsolutePath());
+//    System.out.println("Created file: " + file.getAbsolutePath());
 
 }
 

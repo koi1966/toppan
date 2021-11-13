@@ -105,6 +105,13 @@ public class Rubin {
         this.year_1 = year_1;
         this.data_v = data_v;
     }
+
+    public Rubin(int week, int week_1, int year, int year_1) {
+        this.week = week;
+        this.week_1 = week_1;
+        this.year = year;
+        this.year_1 = year_1;
+    }
 }
 
 
