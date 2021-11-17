@@ -6,7 +6,6 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.ss.usermodel.RichTextString;
 import org.apache.poi.ss.usermodel.Row;
 import org.springframework.stereotype.Component;
 import toppan.example.toppan.models.Employee;
@@ -30,13 +29,16 @@ public class CreateExcel {
     }
 
 
-public void CreateF(List rubins) throws IOException {
+public void CreateF(String rubinStr) throws IOException {
     HSSFWorkbook workbook = new HSSFWorkbook();
     HSSFSheet sheet = workbook.createSheet("Employees sheet");
 
     List<Employee> list = EmployeeDAO.listEmployees();
 
 //    rubinList.setPidrozdil();
+//    Создаём на листе строку, используя    createRow();
+//    Создаём в строке ячейку —             createCell();
+//    Задаём значение ячейки через          setCellValue();
 
     int rownum = 0;
     Cell cell;
@@ -46,41 +48,41 @@ public void CreateF(List rubins) throws IOException {
 
     row = sheet.createRow(rownum);
 
-    // EmpNo
-    cell = row.createCell(0, CellType.STRING);
-    cell.setCellValue("Вася");
-    cell.setCellStyle(style);
-    // EmpName
-    cell = row.createCell(1, CellType.STRING);
-    cell.setCellValue("Петя");
-    cell.setCellStyle(style);
-    // Salary
+    // За минулий тиждень
     cell = row.createCell(2, CellType.STRING);
-    cell.setCellValue("Саня");
+    cell.setCellValue("За минулий тиждень");
     cell.setCellStyle(style);
-    // Grade
+    // З початку року
     cell = row.createCell(3, CellType.STRING);
-    cell.setCellValue("Grade");
-    cell.setCellStyle(style);
-    // Bonus
-    cell = row.createCell(4, CellType.STRING);
-    cell.setCellValue("Bonus");
+    cell.setCellValue("З початку року");
     cell.setCellStyle(style);
 
-    // Data
 
-//    for (Employee emp : list) {
+    String[] str = rubinStr.split(",");
 
-        rownum++;
+
+    rownum++;
+    row = sheet.createRow(rownum);
+
+    // EmpNo (A)
+    cell = row.createCell(2, CellType.STRING);
+    cell.setCellValue(str[0]);
+    // EmpName (B)
+    cell = row.createCell(3, CellType.STRING);
+    cell.setCellValue(str[2]);
+
+    rownum++;
+
         row = sheet.createRow(rownum);
 
-        // EmpNo (A)
-        cell = row.createCell(0, CellType.STRING);
-        cell.setCellValue((RichTextString) rubins.get(0));
-//        cell.setCellValue((RichTextString) model.getAttribute(@RequestParam(value = Rubin) new Rubin().getPidrozdil()));
-        // EmpName (B)
-//        cell = row.createCell(1, CellType.STRING);
-//        cell.setCellValue(emp.getEmpName());
+        //  (A)
+        cell = row.createCell(2, CellType.STRING);
+        cell.setCellValue(str[1]);
+//        (B)
+        cell = row.createCell(3, CellType.STRING);
+        cell.setCellValue(str[3]);
+
+
 //        // Salary (C)
 //        cell = row.createCell(2, CellType.NUMERIC);
 //        cell.setCellValue(emp.getSalary());
@@ -93,7 +95,7 @@ public void CreateF(List rubins) throws IOException {
 //        cell.setCellFormula(formula);
 //    }
 
-    File file = new File("C:/demo/employee.xls");
+    File file = new File("C:/demo/rubin.xls");
     file.getParentFile().mkdirs();
 
     FileOutputStream outFile = null;

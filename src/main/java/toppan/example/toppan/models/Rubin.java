@@ -23,7 +23,7 @@ public class Rubin {
     @NotNull(message = "Введіть значення")
     @NotEmpty(message = "Введіть значення")
     @Min(value = 0, message = "Значення мають бути більше за - 0")
-    private int week, week_1, year, year_1;
+    private int week, week_1, year_0, year_1;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotEmpty( message = "Введіть дату")
     private LocalDate data_v;
@@ -63,12 +63,12 @@ public class Rubin {
         this.week_1 = week_1;
     }
 
-    public int getYear() {
-        return year;
+    public int getYear_0() {
+        return year_0;
     }
 
-    public void setYear(int year) {
-        this.year = year;
+    public void setYear_0(int year_0) {
+        this.year_0 = year_0;
     }
 
     public int getYear_1() {
@@ -87,31 +87,7 @@ public class Rubin {
         this.data_v = data_v;
     }
 
-    public Rubin(String pidrozdil, int week, int week_1, int year, int year_1, LocalDate data_v) {
-        this.pidrozdil = pidrozdil;
-        this.week = week;
-        this.week_1 = week_1;
-        this.year = year;
-        this.year_1 = year_1;
-        this.data_v = data_v;
-    }
 
-    public Rubin(Long id, String pidrozdil, int week, int week_1, int year, int year_1, LocalDate data_v) {
-        this.id = id;
-        this.pidrozdil = pidrozdil;
-        this.week = week;
-        this.week_1 = week_1;
-        this.year = year;
-        this.year_1 = year_1;
-        this.data_v = data_v;
-    }
-
-    public Rubin(int week, int week_1, int year, int year_1) {
-        this.week = week;
-        this.week_1 = week_1;
-        this.year = year;
-        this.year_1 = year_1;
-    }
 }
 
 

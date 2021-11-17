@@ -29,7 +29,7 @@
         <div th:each="rubin:${rubinList}" class="alert alert-info mt-2">
 <!--            <h4 th:text="${rubin.pidrozdil + ' ....  ' + #dates.format(rubin.data_v, 'dd.MM.yyyy') }"/>-->
             <h4 th:text="${rubin.pidrozdil + ' ....  ' + rubin.data_v}"/>
-            <p th:text="${'звернень тиждень :' +rubin.week + '  з початку року : '+rubin.year  }"/>
+            <p th:text="${'звернень тиждень :' +rubin.week + '  з початку року : '+rubin.year_0  }"/>
             <p th:text="${'виданих  тиждень :'+rubin.week_1 +'  з початку року : '+ rubin.year_1 }"/>
             <ul>
                 <li th:each="err : ${#fields.errors('*')}" th:text="${err}" />

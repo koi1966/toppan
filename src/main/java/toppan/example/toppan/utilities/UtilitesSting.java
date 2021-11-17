@@ -3,6 +3,9 @@ package toppan.example.toppan.utilities;
 public class UtilitesSting {
 
     // поиск N-го вхождения подстроки в строке
+    // str - строка
+    // substr - разделитель
+    //
     public static int ordinalIndexOf(String str, String substr, int n) {
         int pos = -1;
         do {
