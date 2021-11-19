@@ -46,7 +46,13 @@ public class RubinController {
     @GetMapping("/rubin/rubin-view")
     public String rubinview(Model model) {
 //      находим и передаем все записи на вюшку
-        List<Rubin> rubinList = (List<Rubin>) rubinRepository.findAll();
+
+        LocalDate data_v = LocalDate.now(); // получаем текущую дату
+//        List<Rubin> rubinList = (List<Rubin>) rubinRepository.findAll();
+        List<Rubin> rubinList = (List<Rubin>) rubinRepository.setListDateRubin(data_v);
+        model.addAttribute("rubinList", rubinList);
+        model.addAttribute("dat", data_v);
+
         model.addAttribute("rubinList", rubinList);
         return "rubin/rubin-view";
     }
@@ -64,7 +70,7 @@ public class RubinController {
 
         SimpleDateFormat formatForDateNow = new SimpleDateFormat("yyyy.MM.dd");
 //
-        System.out.println("Текущая дата " + formatForDateNow.format(data_v));
+//        System.out.println("Текущая дата " + formatForDateNow.format(data_v));
 
         List<Rubin> rubinList = (List<Rubin>) rubinRepository.setListDateRubin(data_v);
         model.addAttribute("rubinList", rubinList);
@@ -143,49 +149,27 @@ public class RubinController {
         return "rubin/rubin";
     }
 
-//    @DateTimeFormat(pattern = "yyyy-MM-dd")
-//@GetMapping("/{kart_id}/history")
-//public String AmtHystory( @PathVariable("kart_id") String Kart_id, Model model) {
-//    final List<KartaAMT> AMTHys = kartaDAO.AmtHistory(Kart_id);
-//    model.addAttribute("Amthystory",AMTHys);
-//
-//    return "karta/history";
-
     @PostMapping("/rubin/rubin-view-p")
     public String rubinViewP(@RequestParam("data_v") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date data_v,  Model model) {
 //        model.getAttribute();
 
         SimpleDateFormat formatForDateNow = new SimpleDateFormat("yyyy-MM-dd");
-
-        System.out.println("Текущая дата " + formatForDateNow.format(data_v));
-
-
+//        System.out.println("Текущая дата " + formatForDateNow.format(data_v));
         String rubinStr= rubinRepository.setSumDate(data_v);
-        model.addAttribute("data_v", data_v);
+        model.addAttribute("dat", data_v);
 
-        try {
-            createDoc.CreateDoc();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            createDoc.CreateDoc(rubinStr);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
         try {
             createExcel.CreateF(rubinStr);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return "redirect:/rubin/rubin-view";
-    }
-
-    @PostMapping("/rubin/rubin-print")
-    public String rubin_PrintP(HttpServletRequest request,@RequestParam("data_v") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date data_v, Model model) {
-//        String ip_user = request.getRemoteAddr();
-//        String tsc = pidrozdilRepository.setNamePidrozdil(request.getRemoteAddr());
-//        List<Rubin> rubinList = (List<Rubin>) rubinRepository.setSumDate(data_v);
-//        model.addAttribute("rubinList", rubinList);
-        model.addAttribute("tsc", pidrozdilRepository.setNamePidrozdil(request.getRemoteAddr()));
-        return "rubin/rubin";
     }
 
 //    @PostMapping("/rubin/rubin-view-p")
