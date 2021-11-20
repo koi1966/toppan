@@ -20,5 +20,11 @@ public interface RubinRepository extends CrudRepository<Rubin, Long> {
             value = "select sum(week) as week, sum(week_1) as week_1, sum(year_0) as year_0 , sum(year_1) as year_1 from rubin where data_v = :data_v")
     String setSumDate(@Param("data_v") Date data_v);
 
+    //    Сумы двух полей за период по всем ТСЦ
+//    @Query(nativeQuery = true,
+//            value = "select id, data_v, week, week_1, year_0 , year_1,pidrozdil from rubin
+//                     where pidrozdil = 'ТСЦ 1841' and data_v = (select max(kk.data_v)
+//                     from rubin kk where kk.id = rubin.id)")
+//    String setSumDate(@Param("data_v") Date data_v);
 
 }

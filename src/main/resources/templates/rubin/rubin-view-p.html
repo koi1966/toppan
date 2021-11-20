@@ -14,9 +14,7 @@
     <div>
         <form action="../rubin/rubin-view-p" method="post">
             <!--        <input type="text" th:value="${tsc}" disabled name="pidrozdil" placeholder="Підрозділ" class="form-control" id="pidrozdil"><br>-->
-            <input type="date" id="start" name="data_v"
-                    th:value="${dat}"
-                       min="2018-01-01" max="2031-12-31">
+            <input type="date" id="data_v" name="data_v" th:value="${dat}">
 <!--            <input type="date" th:value="${dat}" name="data_v" placeholder="Дата внесення" class="form-control" id="data_v" ><br>-->
 
             <button type="submit" class="btn btn-success">Друк</button>

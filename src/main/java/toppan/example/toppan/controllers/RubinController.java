@@ -15,11 +15,10 @@ import toppan.example.toppan.models.repo.PidrozdilRepository;
 import toppan.example.toppan.models.repo.RubinRepository;
 import toppan.example.toppan.utilities.UtilitesSting;
 
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -47,13 +46,19 @@ public class RubinController {
     public String rubinview(Model model) {
 //      находим и передаем все записи на вюшку
 
-        LocalDate data_v = LocalDate.now(); // получаем текущую дату
 //        List<Rubin> rubinList = (List<Rubin>) rubinRepository.findAll();
+        String date_s = LocalDate.now().toString();
+
+        Date data_v= null;
+        try {
+            data_v = new SimpleDateFormat("yyyy-MM-dd").parse(date_s);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         List<Rubin> rubinList = (List<Rubin>) rubinRepository.setListDateRubin(data_v);
         model.addAttribute("rubinList", rubinList);
         model.addAttribute("dat", data_v);
-
-        model.addAttribute("rubinList", rubinList);
         return "rubin/rubin-view";
     }
 
@@ -61,15 +66,15 @@ public class RubinController {
     @PostMapping("/rubin/rubin-view")
     public String rubinViewData(@RequestParam("data_v") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date data_v, Model model) {
 
-        Instant instant = data_v.toInstant();
+
 
 //        //Converting the Date to LocalDate
-        ZoneId defaultZoneId = ZoneId.systemDefault();
-        LocalDate localDate = instant.atZone(defaultZoneId).toLocalDate();
-//        System.out.println("Local Date is: "+localDate);
-
-        SimpleDateFormat formatForDateNow = new SimpleDateFormat("yyyy.MM.dd");
+//        ZoneId defaultZoneId = ZoneId.systemDefault();
+//        LocalDate localDate = instant.atZone(defaultZoneId).toLocalDate();
+////        System.out.println("Local Date is: "+localDate);
 //
+//        SimpleDateFormat formatForDateNow = new SimpleDateFormat("yyyy.MM.dd");
+////
 //        System.out.println("Текущая дата " + formatForDateNow.format(data_v));
 
         List<Rubin> rubinList = (List<Rubin>) rubinRepository.setListDateRubin(data_v);
@@ -174,9 +179,9 @@ public class RubinController {
 
 //    @PostMapping("/rubin/rubin-view-p")
 //    public
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Temporal(TemporalType.DATE)
-    private Date date;
+//    @DateTimeFormat(pattern = "yyyy-MM-dd")
+//    @Temporal(TemporalType.DATE)
+//    private Date date;
 
 }
 
