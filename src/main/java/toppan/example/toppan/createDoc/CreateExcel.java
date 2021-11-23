@@ -50,6 +50,8 @@ public void CreateF(String rubinStr) throws IOException {
     wb.write(fileOut);
 //    log.info("Written xls file");
     fileOut.close();
+    wb.close();
+
 
 
 

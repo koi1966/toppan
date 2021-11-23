@@ -5,9 +5,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import toppan.example.toppan.createDoc.CreateDoc;
 import toppan.example.toppan.createDoc.CreateExcel;
 import toppan.example.toppan.models.Rubin;
@@ -27,6 +25,7 @@ import java.util.Date;
 import java.util.List;
 
 @Controller
+@RequestMapping("/rubin")
 public class RubinController {
 
     private final RubinRepository rubinRepository;
@@ -42,7 +41,8 @@ public class RubinController {
         this.pidrozdilRepository = pidrozdilRepository;
     }
 
-    @GetMapping("/rubin/rubin-view")
+
+    @GetMapping("/rubin-view")
     public String rubinview(Model model) {
 //      находим и передаем все записи на вюшку
 
@@ -63,35 +63,17 @@ public class RubinController {
     }
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @PostMapping("/rubin/rubin-view")
+    @PostMapping("/rubin-view")
     public String rubinViewData(@RequestParam("data_v") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date data_v, Model model) {
-
-
-
-//        //Converting the Date to LocalDate
-//        ZoneId defaultZoneId = ZoneId.systemDefault();
-//        LocalDate localDate = instant.atZone(defaultZoneId).toLocalDate();
-////        System.out.println("Local Date is: "+localDate);
-//
-//        SimpleDateFormat formatForDateNow = new SimpleDateFormat("yyyy.MM.dd");
-////
-//        System.out.println("Текущая дата " + formatForDateNow.format(data_v));
 
         List<Rubin> rubinList = (List<Rubin>) rubinRepository.setListDateRubin(data_v);
         model.addAttribute("rubinList", rubinList);
         model.addAttribute("dat", data_v);
 
-
-//                try {
-//            createExcel.CreateF(rubinList);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
         return "rubin/rubin-view-p";
     }
 
-    @PostMapping("/rubin/rubin-add")
+    @PostMapping("/rubin-add")
 //    public String rubinadd(@RequestParam String pidrozdil,
 //                           @RequestParam int week,
 //                           @RequestParam int week_1,
@@ -100,14 +82,14 @@ public class RubinController {
     public String rubinadd(@Valid Rubin rubin, BindingResult bindingResult) {
 //        public String rubinadd(Rubin rubin) {
         if (bindingResult.hasErrors())
-            return "/rubin/rubin-add";
+            return "/rubin-add";
 
 //        Rubin rubin = new Rubin(pidrozdil, week, week_1, year_0, year_1, data_v);
         rubinRepository.save(rubin);
         return "redirect:/rubin/rubin-view";
     }
 
-    @GetMapping("/rubin/rubin-add")
+    @GetMapping("/rubin-add")
     public String rubinadd(HttpServletRequest request, Model model) {
 //        вытягивает IP копма с которого вносят информацию
         String ip_user = request.getRemoteAddr();
@@ -123,30 +105,21 @@ public class RubinController {
         }
 
         Date date = new Date();
-//        System.out.println("Date is: "+date);
-//
 //        //Getting the default zone id
         ZoneId defaultZoneId = ZoneId.systemDefault();
-//
         //Converting the date to Instant
         Instant instant = date.toInstant();
-
-//        //Converting the Date to LocalDate
-//        LocalDate localDate = instant.atZone(defaultZoneId).toLocalDate();
-//        System.out.println("Local Date is: "+localDate);
 
         Rubin rubin = new Rubin();
         rubin.setPidrozdil(pidrozdilRepository.setNamePidrozdil(ip));
         rubin.setData_v(instant.atZone(defaultZoneId).toLocalDate());
 
-//        List<Rubin> rubinList = (List<Rubin>) rubinRepository.findAll();
         model.addAttribute("rubin", rubin);
-//        model.addAttribute("tsc", pidrozdilRepository.setNamePidrozdil(ip)); // name="pidrozdil"
-//        model.addAttribute("dat", LocalDate.now());
+
         return "rubin/rubin-add";
     }
 
-    @GetMapping("/rubin/rubin")
+    @GetMapping("/rubin")
     public String rubin_Test(HttpServletRequest request, Model model) {
 //        String ip_user = request.getRemoteAddr();
 //        String tsc = pidrozdilRepository.setNamePidrozdil(request.getRemoteAddr());
@@ -154,7 +127,7 @@ public class RubinController {
         return "rubin/rubin";
     }
 
-    @PostMapping("/rubin/rubin-view-p")
+    @PostMapping("/rubin-view-p")
     public String rubinViewP(@RequestParam("data_v") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date data_v,  Model model) {
 //        model.getAttribute();
 
@@ -163,19 +136,28 @@ public class RubinController {
         String rubinStr= rubinRepository.setSumDate(data_v);
         model.addAttribute("dat", data_v);
 
-//        try {
-//            createDoc.CreateDoc(rubinStr);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
         try {
             createExcel.CreateF(rubinStr);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "redirect:/rubin/rubin-view";
+        final String s = "redirect:/rubin/rubin-view";
+        return s;
     }
+
+    @GetMapping("/{id}/edit")
+    public String rubinEdit(Model model, @PathVariable("id") long id){
+        model.addAttribute("rubin", rubinRepository.findById(id));
+        return "rubin/rubin-edit";
+    };
+
+    @PatchMapping("{/id}")
+    public String update(@ModelAttribute("rubin") Rubin rubin){
+        rubinRepository.save(rubin);
+        return "redirect:/rubin/rubin-view";
+    };
+
+
 
 //    @PostMapping("/rubin/rubin-view-p")
 //    public
