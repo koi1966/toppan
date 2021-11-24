@@ -86,7 +86,7 @@ public class RubinController {
 
 //        Rubin rubin = new Rubin(pidrozdil, week, week_1, year_0, year_1, data_v);
         rubinRepository.save(rubin);
-        return "redirect:/rubin/rubin-view";
+        return "redirect:/rubin-view";
     }
 
     @GetMapping("/rubin-add")
@@ -127,7 +127,7 @@ public class RubinController {
         return "rubin/rubin";
     }
 
-    @PostMapping("/rubin-view-p")
+    @PostMapping("/rubin/rubin-view-p")
     public String rubinViewP(@RequestParam("data_v") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date data_v,  Model model) {
 //        model.getAttribute();
 
@@ -145,14 +145,16 @@ public class RubinController {
         return s;
     }
 
-    @GetMapping("/{id}/edit")
+//    @GetMapping("/rubin/{id}/edit")
+    @GetMapping("/{id}")
     public String rubinEdit(Model model, @PathVariable("id") long id){
-        model.addAttribute("rubin", rubinRepository.findById(id));
+        model.addAttribute("rubin", rubinRepository.findById(id);
+//       редактируем найденное на вюшке
         return "rubin/rubin-edit";
     };
 
-    @PatchMapping("{/id}")
-    public String update(@ModelAttribute("rubin") Rubin rubin){
+    @PatchMapping("{/id}/edit")
+    public String update(@ModelAttribute("rubin") Rubin rubin, @PathVariable("id") long id){
         rubinRepository.save(rubin);
         return "redirect:/rubin/rubin-view";
     };
