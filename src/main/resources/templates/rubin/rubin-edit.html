@@ -1,24 +1,36 @@
-
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Update person</title>
+    <title>Вмпавлення помилки</title>
 </head>
 <body>
+<div>  <header th:insert="blocks/header.html :: header"></header>
 
-<div class="container mt-5">
-    <h1>Блог сайта</h1>
-    <div th:each="rub:${rubin}" class="alert alert-info mt-2">
-        <h1 th:text="${rubin.}"/>
-        <p th:text="${el.full_text}"/>
-        <p><b>Просмотры:</b> <span th:text="${el.views}"/></p>
-        <a th:href="'/blog/'+ ${el.id} + '/edit'" class="btn btn-warning">Редактировать</a>
-        <form th:action="'/blog/'+ ${el.id} +'/remove'" method="post">
-            <button class="btn btn-warning" type="submit">Удалить</button>
+
+    <div >
+<!--        обработка записи на той-же сранице / методе-->
+        <form th:each="el:${rubin}" method="post">
+
+            <label for="pidrozdil">ТСЦ : </label>
+            <input type="text" th:value="${el.pidrozdil}" name="pidrozdil" placeholder="Підрозділ" class="form-control" id="pidrozdil"><br>
+            <label for="data_v">Дата : </label>
+            <input type="date" th:value="${el.data_v}" name="data_v" placeholder="Дата внесення" class="form-control" id="data_v" ><br>
+            <label for="week">Кількість звернень за тиждень : </label>
+
+            <input type="text" th:field="*{el.week}" id="week" />
+
+            <label for="week_1">Кількість виданих.. за тиждень : </label>
+                   <input type="text" th:field="*{el.week_1}" id="week_1" /><br>
+
+            <label for="year_0">Кількість звернень за рік ......... : </label>
+            <input type="text" th:field="*{el.year_0}" id="year_0" />
+
+            <label for="year_1">Кількість виданих.. за рік ....... . : </label>
+            <input type="text" th:field="*{el.year_1}" id="year_1" /><br>
+            <button type="submit" class="btn btn-success">Обновить</button>
         </form>
     </div>
 </div>
-
 </body>
 </html>

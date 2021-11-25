@@ -21,8 +21,10 @@ import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/rubin")
@@ -33,14 +35,12 @@ public class RubinController {
 
     @Autowired
     private CreateExcel createExcel;
-    @Autowired
     private CreateDoc createDoc;
 
     public RubinController(RubinRepository rubinRepository, PidrozdilRepository pidrozdilRepository) {
         this.rubinRepository = rubinRepository;
         this.pidrozdilRepository = pidrozdilRepository;
     }
-
 
     @GetMapping("/rubin-view")
     public String rubinview(Model model) {
@@ -145,12 +145,17 @@ public class RubinController {
         return s;
     }
 
-//    @GetMapping("/rubin/{id}/edit")
     @GetMapping("/{id}")
-    public String rubinEdit(Model model, @PathVariable("id") long id){
-        model.addAttribute("rubin", rubinRepository.findById(id);
+    public String rubinDetaіls(Model model, @PathVariable(value = "id") long id){
+      //      находим и передаем єту одну запись на вюшку
+        Optional<Rubin> rubin = rubinRepository.findById(id);
+        ArrayList<Rubin> res = new ArrayList<>();
+
+        rubin.ifPresent(res::add);
+        model.addAttribute("rubin", res);
+
 //       редактируем найденное на вюшке
-        return "rubin/rubin-edit";
+        return "rubin/rubin-deteils";
     };
 
     @PatchMapping("{/id}/edit")
@@ -159,13 +164,48 @@ public class RubinController {
         return "redirect:/rubin/rubin-view";
     };
 
+    @GetMapping("/{id}/edit")
+    public String rubinEdit(Model model, @PathVariable(value = "id") long id){
+        //      находим и передаем єту одну запись на вюшку
+        Optional<Rubin> rubin = rubinRepository.findById(id);
+        ArrayList<Rubin> res = new ArrayList<>();
 
+        rubin.ifPresent(res::add);
+        model.addAttribute("rubin", res);
+//       редактируем найденное на вюшке
+        return "rubin/rubin-edit";
+    };
 
-//    @PostMapping("/rubin/rubin-view-p")
-//    public
-//    @DateTimeFormat(pattern = "yyyy-MM-dd")
-//    @Temporal(TemporalType.DATE)
-//    private Date date;
+    @GetMapping("/{id}/edit")
+    public String rubinE(Model model, @PathVariable(value = "id") long id){
+        //      находим и передаем єту одну запись на вюшку
+        Optional<Rubin> rubin = rubinRepository.findById(id);
+        ArrayList<Rubin> res = new ArrayList<>();
+
+        rubin.ifPresent(res::add);
+        model.addAttribute("rubin", res);
+//       редактируем найденное на вюшке
+        return "rubin/rubin-edit";
+    };
+
+    @PostMapping("/{id}/update")
+    public String rubinUpdate(  Rubin rubin
+//                                @PathVariable(value = "id") long id,
+//                                @RequestParam String pidrozdil,
+//                                @RequestParam int week,
+//                                @RequestParam int week_1,
+//                                @RequestParam int year_0,
+//                                @RequestParam int year_1, @RequestParam("data_v") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date data_v
+    ) {
+//        Rubin rubin = rubinRepository.findById(id).orElseThrow();
+//        rubin.setPidrozdil(pidrozdil);
+//        rubin.setWeek(week);
+//        rubin.setWeek_1(week_1);
+//        rubin.setYear_0(year_0);
+//        rubin.setYear_1(year_1);
+        rubinRepository.save(rubin);
+        return "redirect:/rubin-edit";
+    }
 
 }
 

@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Лог рубина</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css">
+</head>
+<body data-hasqtip="0">
+
+    <header th:insert="blocks/header.html :: header"></header>
+
+    <div class="container mt-5">
+        <h1>Виправить помилку або повернутить на головну</h1>
+        <div th:each="el:${rubin}" class="alert alert-info mt-2">
+
+            <h3 th:text="${el.pidrozdil + '   ' + el.data_v}"/>
+            <p th:text="${'звернень тиждень :' +el.week + '  з початку року : '+el.year_0  }"/>
+            <p th:text="${'виданих  тиждень :'+el.week_1 +'  з початку року : '+ el.year_1 }"/>
+            <a th:href="'/rubin/'+ ${el.id} +'/update'"  class="btn btn-warning">Редактировать</a>
+            <a th:href="'/rubin/'+ ${el.id} +'/remove'" class="btn btn-warning">Удалить</a>
+        </div>
+    </div>
+
+    <div th:insert="blocks/footer.html :: footer"></div>
+
+</body>
+</html>

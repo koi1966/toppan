@@ -13,21 +13,19 @@
     <header th:insert="blocks/header.html :: header"></header>
     <div >
         <form action="../rubin/rubin-view" method="post">
-
             <label for="data_v" > Дата внесення  : </label>
             <input type="date" name="data_v" th:value="${dat}" placeholder="Дата внесення" class="form-control" id="data_v" >
-
             <button type="submit" class="btn btn-success">Пошук</button>
         </form>
     </div>
 
-    <div class="container mt-5">
+    <div class="container mt-5 mb-1">
 
 <!--        <h4 th:text="${tsc}"></h4>-->
 
         <div th:each="rubin:${rubinList}" class="alert alert-info mt-2">
 <!--            <h4 th:text="${rubin.pidrozdil + ' ....  ' + #dates.format(rubin.data_v, 'dd.MM.yyyy') }"/>-->
-            <a th:href="@{/rubin/{id}/edit (id=${rubin.getId()})}" th:text="${rubin.pidrozdil + ' ....  ' + rubin.data_v}">user</a>
+            <a th:href="@{/rubin/{id} (id=${rubin.getId()})}" th:text="${rubin.pidrozdil + ' ....  ' + rubin.data_v}">user</a>
 <!--            <h4 th:text="${rubin.pidrozdil + ' ....  ' + rubin.data_v}"/>-->
             <p th:text="${'звернень тиждень :' +rubin.week + '  з початку року : '+rubin.year_0  }"/>
             <p th:text="${'виданих  тиждень :'+rubin.week_1 +'  з початку року : '+ rubin.year_1 }"/>
