@@ -10,6 +10,7 @@ import toppan.example.toppan.createDoc.CreateExcel;
 import toppan.example.toppan.models.Rubin;
 import toppan.example.toppan.models.repo.PidrozdilRepository;
 import toppan.example.toppan.models.repo.RubinRepository;
+import toppan.example.toppan.utilities.EmailSender;
 import toppan.example.toppan.utilities.UtilitesSting;
 
 import javax.servlet.http.HttpServletRequest;
@@ -69,7 +70,7 @@ public class RubinController {
         model.addAttribute("rubinList", rubinList);
         model.addAttribute("dat", data_v);
 
-        return "/rubin/rubin-view-p";
+        return "rubin/rubin-view-p";
     }
 
     @PostMapping("/rubin/rubin-add")
@@ -81,7 +82,7 @@ public class RubinController {
     public String rubinadd(@Valid Rubin rubin, BindingResult bindingResult) {
 //        public String rubinadd(Rubin rubin) {
         if (bindingResult.hasErrors())
-            return "/rubin/rubin-add";
+            return "rubin/rubin-add";
 
 //        Rubin rubin = new Rubin(pidrozdil, week, week_1, year_0, year_1, data_v);
         rubinRepository.save(rubin);
@@ -116,7 +117,7 @@ public class RubinController {
 
         model.addAttribute("rubin", rubin);
 
-        return "/rubin/rubin-add";
+        return "rubin/rubin-add";
     }
 
     @PostMapping("/rubin/rubin-view-p")
@@ -133,6 +134,32 @@ public class RubinController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        EmailSender.send();
+        final String s = "redirect:/rubin/rubin-view";
+        return s;
+    }
+
+    @PostMapping("/rubin/rubin-print")
+    public String rubinPrint(Model model) {
+//       ****************************
+        String date_s = LocalDate.now().toString();
+
+        Date data_v= null;
+        try {
+            data_v = new SimpleDateFormat("yyyy-MM-dd").parse(date_s);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        String rubinStr= rubinRepository.setSumDate(data_v);
+        model.addAttribute("dat", data_v);
+
+        try {
+            createExcel.CreateF(rubinStr);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         final String s = "redirect:/rubin/rubin-view";
         return s;
     }
@@ -147,7 +174,7 @@ public class RubinController {
         model.addAttribute("rubin", res);
 
 //       отображаем найденное на вюшке
-        return "/rubin/rubin-deteils";
+        return "rubin/rubin-deteils";
     }
 
     @PatchMapping("/rubin/{id}/edit")
@@ -166,7 +193,7 @@ public class RubinController {
         rubin.ifPresent(res::add);
         model.addAttribute("rubin", res);
 //       редактируем найденное на вюшке
-        return "/rubin/rubin-edit";
+        return "rubin/rubin-edit";
     }
 
 

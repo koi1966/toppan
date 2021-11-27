@@ -15,8 +15,8 @@
             <h3 th:text="${el.pidrozdil + '   ' + el.data_v}"/>
             <p th:text="${'звернень тиждень :' +el.week + '  з початку року : '+el.year_0  }"/>
             <p th:text="${'виданих  тиждень :'+el.week_1 +'  з початку року : '+ el.year_1 }"/>
-            <a th:href="'/rubin/'+ ${el.id} +'/update'"  class="btn btn-warning">Редактировать</a>
-            <a th:href="'/rubin/'+ ${el.id} +'/remove'" class="btn btn-warning">Удалить</a>
+            <a th:href="'/rubin/'+ ${el.id} +'/update'" role="button" class="btn btn-warning">Редактировать</a>
+            <a th:href="'/rubin/'+ ${el.id} +'/remove'" class="btn btn-warning" aria-pressed="false" >Удалить</a>
         </div>
     </div>
 
