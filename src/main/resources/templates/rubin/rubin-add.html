@@ -25,16 +25,16 @@
                    th:class="${#fields.hasErrors('rubin.week')}? fieldError " id="week" />
 <!--            -->
 <!--            <input type="text" name="week" placeholder="звернень за тиждень" class="form-control" id="week"/>-->
+            <label for="year_0">Кількість звернень за рік ......... : </label>
+
+            <input type="text" th:field="*{rubin.year_0}"
+                   th:class="${#fields.hasErrors('rubin.year_0')}? fieldError " id="year_0" /><br>
 
             <label for="week_1">Кількість виданих.. за тиждень : </label>
 <!--            <input type="text" name="week_1" placeholder="виданих за тиждень" class="form-control" id="week_1"><br>-->
             <input type="text" th:field="*{rubin.week_1}"
-                   th:class="${#fields.hasErrors('rubin.week_1')}? fieldError " id="week_1" /><br>
+                   th:class="${#fields.hasErrors('rubin.week_1')}? fieldError " id="week_1" />
 
-            <label for="year_0">Кількість звернень за рік ......... : </label>
-
-            <input type="text" th:field="*{rubin.year_0}"
-                   th:class="${#fields.hasErrors('rubin.year_0')}? fieldError " id="year_0" />
 
             <label for="year_1">Кількість виданих.. за рік ....... . : </label>
             <input type="text" th:field="*{rubin.year_1}"

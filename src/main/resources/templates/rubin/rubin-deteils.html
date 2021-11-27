@@ -12,7 +12,6 @@
     <div class="container mt-5">
         <h1>Виправить помилку або повернутить на головну</h1>
         <div th:each="el:${rubin}" class="alert alert-info mt-2">
-
             <h3 th:text="${el.pidrozdil + '   ' + el.data_v}"/>
             <p th:text="${'звернень тиждень :' +el.week + '  з початку року : '+el.year_0  }"/>
             <p th:text="${'виданих  тиждень :'+el.week_1 +'  з початку року : '+ el.year_1 }"/>

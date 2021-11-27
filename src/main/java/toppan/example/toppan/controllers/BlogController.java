@@ -41,7 +41,6 @@ public class BlogController {
         //  request.getRemoteAddr()  -  вытягивает IP копма с которого вносят информацию
         postRepository.save(post);
 //        openTransactionSession();
-
 //        repository.toString();
         return "redirect:/blog-main";
     }
@@ -70,7 +69,6 @@ public class BlogController {
         if (!postRepository.existsById(id)) {
             return "redirect:/blog-main";
         }
-
 //      находим и передаем єту одну запись на вюшку
         Optional<Post> post = postRepository.findById(id);
         ArrayList<Post> res = new ArrayList<>();
@@ -98,11 +96,7 @@ public class BlogController {
         postRepository.deleteById(id);
 //        postRepository.delete(post);
         return "redirect:/blog-main";
-        //    Post post = postRepository.findById(id).orElseThrow() -  компилятор не пропускает с пустой скобкой, просит exception supplier
-//    У кого выпала такая ошибка надо прописать: orElseThrow(IllegalStateException::new)
-//     Post post = postRepository.findById(id).<RuntimeException>orElseThrow(() -> {
-//            throw new AssertionError();
-//        }); Если так пропишешь то ошибка уходить
+
     }
 }
 

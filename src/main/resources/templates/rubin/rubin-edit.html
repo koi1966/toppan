@@ -7,30 +7,29 @@
 <body>
 <div>  <header th:insert="blocks/header.html :: header"></header>
 
-
-    <div >
 <!--        обработка записи на той-же сранице / методе-->
         <form th:each="el:${rubin}" method="post">
 
             <label for="pidrozdil">ТСЦ : </label>
+            <!--/*@thymesVar id="pidrozdil" type="toppan"*/-->
             <input type="text" th:value="${el.pidrozdil}" name="pidrozdil" placeholder="Підрозділ" class="form-control" id="pidrozdil"><br>
             <label for="data_v">Дата : </label>
             <input type="date" th:value="${el.data_v}" name="data_v" placeholder="Дата внесення" class="form-control" id="data_v" ><br>
-            <label for="week">Кількість звернень за тиждень : </label>
 
-            <input type="text" th:field="*{el.week}" id="week" />
+            <label for="week">Кількість звернень за тиждень : </label>
+            <input type="text" th:value="${el.week}" name="week" class="form-control" id="week" />
 
             <label for="week_1">Кількість виданих.. за тиждень : </label>
-                   <input type="text" th:field="*{el.week_1}" id="week_1" /><br>
+                   <input type="text" th:value="${el.week_1}" name="week_1" id="week_1" /><br>
 
             <label for="year_0">Кількість звернень за рік ......... : </label>
-            <input type="text" th:field="*{el.year_0}" id="year_0" />
+            <input type="text" th:value="${el.year_0}" name="year_0" id="year_0" />
 
             <label for="year_1">Кількість виданих.. за рік ....... . : </label>
-            <input type="text" th:field="*{el.year_1}" id="year_1" /><br>
+            <input type="text" th:value="${el.year_1}" name="year_1" id="year_1" /><br>
             <button type="submit" class="btn btn-success">Обновить</button>
         </form>
-    </div>
+
 </div>
 </body>
 </html>

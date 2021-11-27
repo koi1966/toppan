@@ -1,6 +1,5 @@
 package toppan.example.toppan.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,22 +26,22 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/rubin")
+//@RequestMapping("/rubin")
 public class RubinController {
 
     private final RubinRepository rubinRepository;
     private final PidrozdilRepository pidrozdilRepository;
 
-    @Autowired
-    private CreateExcel createExcel;
+    private final CreateExcel createExcel;
     private CreateDoc createDoc;
 
-    public RubinController(RubinRepository rubinRepository, PidrozdilRepository pidrozdilRepository) {
+    public RubinController(RubinRepository rubinRepository, PidrozdilRepository pidrozdilRepository, CreateExcel createExcel) {
         this.rubinRepository = rubinRepository;
         this.pidrozdilRepository = pidrozdilRepository;
+        this.createExcel = createExcel;
     }
 
-    @GetMapping("/rubin-view")
+    @GetMapping("/rubin/rubin-view")
     public String rubinview(Model model) {
 //      находим и передаем все записи на вюшку
 
@@ -63,17 +62,17 @@ public class RubinController {
     }
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @PostMapping("/rubin-view")
+    @PostMapping("/rubin/rubin-view")
     public String rubinViewData(@RequestParam("data_v") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date data_v, Model model) {
 
         List<Rubin> rubinList = (List<Rubin>) rubinRepository.setListDateRubin(data_v);
         model.addAttribute("rubinList", rubinList);
         model.addAttribute("dat", data_v);
 
-        return "rubin/rubin-view-p";
+        return "/rubin/rubin-view-p";
     }
 
-    @PostMapping("/rubin-add")
+    @PostMapping("/rubin/rubin-add")
 //    public String rubinadd(@RequestParam String pidrozdil,
 //                           @RequestParam int week,
 //                           @RequestParam int week_1,
@@ -82,14 +81,15 @@ public class RubinController {
     public String rubinadd(@Valid Rubin rubin, BindingResult bindingResult) {
 //        public String rubinadd(Rubin rubin) {
         if (bindingResult.hasErrors())
-            return "/rubin-add";
+            return "/rubin/rubin-add";
 
 //        Rubin rubin = new Rubin(pidrozdil, week, week_1, year_0, year_1, data_v);
         rubinRepository.save(rubin);
-        return "redirect:/rubin-view";
+        final String s = "redirect:/rubin/rubin-view";
+        return s;
     }
 
-    @GetMapping("/rubin-add")
+    @GetMapping("/rubin/rubin-add")
     public String rubinadd(HttpServletRequest request, Model model) {
 //        вытягивает IP копма с которого вносят информацию
         String ip_user = request.getRemoteAddr();
@@ -116,15 +116,7 @@ public class RubinController {
 
         model.addAttribute("rubin", rubin);
 
-        return "rubin/rubin-add";
-    }
-
-    @GetMapping("/rubin")
-    public String rubin_Test(HttpServletRequest request, Model model) {
-//        String ip_user = request.getRemoteAddr();
-//        String tsc = pidrozdilRepository.setNamePidrozdil(request.getRemoteAddr());
-        model.addAttribute("tsc", pidrozdilRepository.setNamePidrozdil(request.getRemoteAddr()));
-        return "rubin/rubin";
+        return "/rubin/rubin-add";
     }
 
     @PostMapping("/rubin/rubin-view-p")
@@ -145,7 +137,7 @@ public class RubinController {
         return s;
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/rubin/{id}")
     public String rubinDetaіls(Model model, @PathVariable(value = "id") long id){
       //      находим и передаем єту одну запись на вюшку
         Optional<Rubin> rubin = rubinRepository.findById(id);
@@ -154,17 +146,18 @@ public class RubinController {
         rubin.ifPresent(res::add);
         model.addAttribute("rubin", res);
 
-//       редактируем найденное на вюшке
-        return "rubin/rubin-deteils";
-    };
+//       отображаем найденное на вюшке
+        return "/rubin/rubin-deteils";
+    }
 
-    @PatchMapping("{/id}/edit")
-    public String update(@ModelAttribute("rubin") Rubin rubin, @PathVariable("id") long id){
+    @PatchMapping("/rubin/{id}/edit")
+    public String update(@ModelAttribute("rubin") Rubin rubin){
         rubinRepository.save(rubin);
-        return "redirect:/rubin/rubin-view";
-    };
+        final String s = "redirect:/rubin/rubin-view";
+        return s;
+    }
 
-    @GetMapping("/{id}/edit")
+    @GetMapping("/rubin/{id}/update") // после НАЖАТИЯ НА кнопкУ редактирование даннЫх
     public String rubinEdit(Model model, @PathVariable(value = "id") long id){
         //      находим и передаем єту одну запись на вюшку
         Optional<Rubin> rubin = rubinRepository.findById(id);
@@ -173,38 +166,27 @@ public class RubinController {
         rubin.ifPresent(res::add);
         model.addAttribute("rubin", res);
 //       редактируем найденное на вюшке
-        return "rubin/rubin-edit";
-    };
+        return "/rubin/rubin-edit";
+    }
 
-    @GetMapping("/{id}/edit")
-    public String rubinE(Model model, @PathVariable(value = "id") long id){
-        //      находим и передаем єту одну запись на вюшку
-        Optional<Rubin> rubin = rubinRepository.findById(id);
-        ArrayList<Rubin> res = new ArrayList<>();
 
-        rubin.ifPresent(res::add);
-        model.addAttribute("rubin", res);
-//       редактируем найденное на вюшке
-        return "rubin/rubin-edit";
-    };
-
-    @PostMapping("/{id}/update")
-    public String rubinUpdate(  Rubin rubin
-//                                @PathVariable(value = "id") long id,
-//                                @RequestParam String pidrozdil,
-//                                @RequestParam int week,
-//                                @RequestParam int week_1,
-//                                @RequestParam int year_0,
-//                                @RequestParam int year_1, @RequestParam("data_v") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date data_v
+    @PostMapping("/rubin/{id}/update")   // после нажатия Зберегти зміни
+    public String rubinUpdate(  Model model,
+                                @PathVariable(value = "id") long id,
+                                @RequestParam String pidrozdil,
+                                @RequestParam int week,
+                                @RequestParam int week_1,
+                                @RequestParam int year_0,
+                                @RequestParam int year_1, @RequestParam("data_v") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date data_v
     ) {
-//        Rubin rubin = rubinRepository.findById(id).orElseThrow();
-//        rubin.setPidrozdil(pidrozdil);
-//        rubin.setWeek(week);
-//        rubin.setWeek_1(week_1);
-//        rubin.setYear_0(year_0);
-//        rubin.setYear_1(year_1);
+        Rubin rubin = rubinRepository.findById(id).orElseThrow();
+        rubin.setPidrozdil(pidrozdil);
+        rubin.setWeek(week);
+        rubin.setWeek_1(week_1);
+        rubin.setYear_0(year_0);
+        rubin.setYear_1(year_1);
         rubinRepository.save(rubin);
-        return "redirect:/rubin-edit";
+        return "redirect:/rubin/rubin-view";
     }
 
 }
