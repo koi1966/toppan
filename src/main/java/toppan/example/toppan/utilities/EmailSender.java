@@ -1,15 +1,13 @@
 package toppan.example.toppan.utilities;
 
 import javax.activation.DataHandler;
+import javax.activation.DataSource;
 import javax.activation.FileDataSource;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Transport;
+import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
-import javax.sql.DataSource;
+import javax.mail.internet.MimeMultipart;
 import java.util.Properties;
 
 public class EmailSender {
@@ -31,21 +29,24 @@ public class EmailSender {
                 message.setFrom(new InternetAddress(from)); // setting header fields
 
                 message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-
-                message.setSubject("Test Mail from Java Program"); // subject line
-
-                // actual mail body
-                message.setText("You can send mail from Java program by using mail API, but you need" +
-                        "couple of more JAR files e.g. smtp.jar and activation.jar");
+                // Create a multipar message
+                Multipart multipart = new MimeMultipart();
+                message.setSubject("Звіт по рубину"); // subject line
+//
+//                // actual mail body
+//                message.setText("You can send mail from Java program by using mail API, but you need" +
+//                        "couple of more JAR files e.g. smtp.jar and activation.jar");
 
                 MimeBodyPart messageBodyPart = new MimeBodyPart();
-                String filename = "file.txt";
-                DataSource source = (DataSource) new FileDataSource(filename);
+                String filename = "C:/demo/rubin.xlsx";
+                DataSource source = new FileDataSource(filename);
                 messageBodyPart.setDataHandler(new DataHandler(source));
                 messageBodyPart.setFileName(filename);
-//                multipart.addBodyPart(messageBodyPart);
-
-                Transport.send(message); System.out.println("Email Sent successfully....");
+                multipart.addBodyPart(messageBodyPart);
+                // Send the complete message parts
+                message.setContent(multipart );
+                Transport.send(message);
+                System.out.println("Email Sent successfully....");
             } catch (MessagingException mex){ mex.printStackTrace(); }
 
         }

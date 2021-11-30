@@ -27,4 +27,34 @@ public interface RubinRepository extends CrudRepository<Rubin, Long> {
 //                     from rubin kk where kk.id = rubin.id)")
 //    String setSumDate(@Param("data_v") Date data_v);
 
+    // ***************************************************************
+    //  поэкспериментировал ..возможно пригодится для отчета..
+    // подумать над сложением результата sum(week0) + year_0 ..
+
+ //  select sum(week) as week0,
+//    sum(week_1) as week_1,
+//       (select r.year_0 from rubin r
+//    where r.data_v = '2021-11-06'
+//    and r.pidrozdil = rr.pidrozdil
+//    GROUP BY r.pidrozdil, r.year_0) as year_0,
+
+//    sum(week) + (select r.year_0 from rubin r
+//    where r.data_v = '2021-10-30'
+//    and r.pidrozdil = rr.pidrozdil
+//    GROUP BY r.pidrozdil, r.year_0) as rrr,
+//
+//       (select r1.year_1 from rubin r1
+//    where r1.data_v = '2021-11-06'
+//    and r1.pidrozdil = rr.pidrozdil
+//    GROUP BY r1.pidrozdil, r1.year_1) as year_1,
+//
+//    pidrozdil
+//
+//    from rubin rr
+//    where rr.data_v>='2021-11-01'
+//    AND rr.data_v<='2021-11-30'
+//    GROUP BY rr.pidrozdil
+//    order by rr.pidrozdil;
+  // ************************************
+
 }

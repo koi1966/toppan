@@ -53,10 +53,6 @@ public void CreateF(String rubinStr) throws IOException {
     wb.close();
 
 
-
-
-
-
 //    POIFSFileSystem fs = new POIFSFileSystem( new FileInputStream("C:/demo/77.xlsx"));
 //    XSSFWorkbook wb = new  XSSFWorkbook(fs, true);
 ////    Загрузит xls, сохранив его структуру (включая macros). Затем вы можете изменить его,
