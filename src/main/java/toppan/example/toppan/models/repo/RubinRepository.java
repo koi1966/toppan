@@ -29,21 +29,16 @@ public interface RubinRepository extends CrudRepository<Rubin, Long> {
 
     // ***************************************************************
     //  поэкспериментировал ..возможно пригодится для отчета..
-    // подумать над сложением результата sum(week0) + year_0 ..
 
- //  select sum(week) as week0,
-//    sum(week_1) as week_1,
-//       (select r.year_0 from rubin r
-//    where r.data_v = '2021-11-06'
-//    and r.pidrozdil = rr.pidrozdil
-//    GROUP BY r.pidrozdil, r.year_0) as year_0,
-
+//      select sum(week) as week0,
+//          sum(week_1) as week_1,
+//
 //    sum(week) + (select r.year_0 from rubin r
 //    where r.data_v = '2021-10-30'
 //    and r.pidrozdil = rr.pidrozdil
-//    GROUP BY r.pidrozdil, r.year_0) as rrr,
+//    GROUP BY r.pidrozdil, r.year_0) as year_0,
 //
-//       (select r1.year_1 from rubin r1
+//    sum(week_1) + (select r1.year_1 from rubin r1
 //    where r1.data_v = '2021-11-06'
 //    and r1.pidrozdil = rr.pidrozdil
 //    GROUP BY r1.pidrozdil, r1.year_1) as year_1,

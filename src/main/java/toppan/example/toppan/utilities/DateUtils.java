@@ -23,3 +23,16 @@ public class DateUtils {
         return Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDateTime();
     }
 }
+
+//        LocalDateTime ldt1 = LocalDateTime.now();
+//        DateTimeFormatter dtf1 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+//// Форматирование ldt1 в строку и вывод: 2019-12-05 20:17:40
+//        String dateStr1 = dtf1.format(ldt1);
+//        System.out.println(dateStr1);
+//
+//        String dateStr2 = "2019-12-05 20:16:42";
+//        DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("гггг-мм-дд чч час мм мин сс секунда");
+//// Разобрать строку даты в дату и вывести: 2019-12-05T20: 16: 42
+//        LocalDateTime ldt2 = LocalDateTime.parse(dateStr2,dtf2);
+//        System.out.println(ldt2);
+//        String str = "2019-12-05";

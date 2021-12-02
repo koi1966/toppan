@@ -5,7 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import toppan.example.toppan.createDoc.CreateDoc;
 import toppan.example.toppan.createDoc.CreateExcel;
 import toppan.example.toppan.models.Rubin;
 import toppan.example.toppan.models.repo.PidrozdilRepository;
@@ -34,7 +33,7 @@ public class RubinController {
     private final PidrozdilRepository pidrozdilRepository;
 
     private final CreateExcel createExcel;
-    private CreateDoc createDoc;
+//    private CreateDoc createDoc;
 
     public RubinController(RubinRepository rubinRepository, PidrozdilRepository pidrozdilRepository, CreateExcel createExcel) {
         this.rubinRepository = rubinRepository;
@@ -45,9 +44,9 @@ public class RubinController {
     @GetMapping("/rubin/rubin-view")
     public String rubinview(Model model) {
 //      находим и передаем все записи на вюшку
-
 //        List<Rubin> rubinList = (List<Rubin>) rubinRepository.findAll();
-        String date_s = LocalDate.now().toString();
+
+        String date_s = LocalDate.now().toString(); // берем локальную дату переводим в String
 
         Date data_v= null;
         try {
@@ -83,7 +82,6 @@ public class RubinController {
 //        public String rubinadd(Rubin rubin) {
         if (bindingResult.hasErrors())
             return "rubin/rubin-add";
-
 //        Rubin rubin = new Rubin(pidrozdil, week, week_1, year_0, year_1, data_v);
         rubinRepository.save(rubin);
         final String s = "redirect:/rubin/rubin-view";

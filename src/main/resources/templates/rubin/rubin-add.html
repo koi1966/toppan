@@ -19,11 +19,11 @@
             <input type="date" th:value="${rubin.data_v}" name="data_v" placeholder="Дата внесення" class="form-control" id="data_v" ><br>
             <!--        <input class="form-con<input class="form-control" type="date" [ngModel] ="dateFrom | date:'yyyy-MM-dd'" (ngModelChange)="$event = dateFrom" name="dateFrom" min="2016-10-01" [value]="2016-10-01" />trol" type="date" [ngModel] ="dateFrom | date:'dd-mm-yyyy'" (ngModelChange)="$event = dateFrom" name="dateFrom" min="01-01-1900" [value]="01-10-2016" />-->
             <label for="week">Кількість звернень за тиждень : </label>
-<!--            -->
+
 <!--            <input type="text" name="week" placeholder="звернень за тиждень" class="form-control" id="week"/>-->
             <input type="text" th:field="*{rubin.week}"
                    th:class="${#fields.hasErrors('rubin.week')}? fieldError " id="week" />
-<!--            -->
+
 <!--            <input type="text" name="week" placeholder="звернень за тиждень" class="form-control" id="week"/>-->
             <label for="year_0">Кількість звернень за рік ......... : </label>
 
@@ -44,10 +44,6 @@
             </ul>
             <button type="submit" class="btn btn-success">Зберегти</button>
         </form>
-    </div>
-</div>
-</body>
-</html>
     </div>
 </div>
 </body>

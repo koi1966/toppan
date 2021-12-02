@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Блог РСЦ</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css">
+</head>
+
+<body data-hasqtip="0">
+
+<div class="container py-3 mb-1">
+
+    <header th:insert="blocks/header.html :: header"></header>
+    <div>
+
+        <form method="post">
+            <label for="data_v"> Дата внесення : </label>
+            <input type="date" name="data_v" th:value="${dat}" placeholder="Дата внесення" class="form-control" id="data_v"><br>
+
+            <!--            <a th:href="'../rubin/rubin-print'" role="button" class="btn btn-warning">Печать</a>-->
+            <!--            <a th:href="'/rubin/'+ ${el.id} +'/remove'" class="btn btn-warning" aria-pressed="false" >Удалить</a>-->
+            <button type="submit" class="btn btn-success">Пошук</button>
+        </form>
+    </div>
+    <div>
+        <div class="container mt-5 mb-1">
+
+            <div th:each="rubin:${rubinList}" class="alert alert-info mt-2">
+                <a th:href="@{/{id} (id=${rubin.getId()})}"
+                   th:text="${rubin.pidrozdil + ' .... ' + rubin.data_v}">user</a>
+                <p th:text="${'звернень за день :' +rubin.week_appeal + '  виданих за день : '+rubin.week_issued  }"/>
+            </div>
+
+        </div>
+        <!--        <a th:href="'../rubin/rubin-print'" role="button" class="btn btn-warning">Печать</a>-->
+    </div>
+</div>
+
+</body>
+
+</html>
