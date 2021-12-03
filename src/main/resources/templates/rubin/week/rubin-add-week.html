@@ -6,24 +6,27 @@
 </head>
 <body>
 
-<div>  <header th:insert="blocks/header.html :: header"></header>
+<div>
+    <header th:insert="blocks/header.html :: header"></header>
 
 
     <div>
         <form method="post">
 
             <label for="pidrozdil">ТСЦ : </label>
-            <input type="text" th:value="${rubin_week.pidrozdil}" name="pidrozdil" placeholder="Підрозділ" class="form-control" id="pidrozdil"><br>
+            <input type="text" th:value="${rubin_week.pidrozdil}" name="pidrozdil" placeholder="Підрозділ"
+                   class="form-control" id="pidrozdil"><br>
 
             <label for="data_v">Дата : </label>
-            <input type="date" th:value="${rubin_week.data_v}" name="data_v" placeholder="Дата внесення" class="form-control" id="data_v" ><br>
-<!--            <input class="form-control" type="date" id="data_v" th:value="${rubin_week.data_v}" [ngModel] ="data_v | date:'yyyy-MM-dd'" (ngModelChange)="$event = data_v" name="data_v" min="2016-10-01" >-->
+            <input type="date" th:value="${rubin_week.data_v}" name="data_v" placeholder="Дата внесення"
+                   class="form-control" id="data_v"><br>
+            <!--            <input class="form-control" type="date" id="data_v" th:value="${rubin_week.data_v}" [ngModel] ="data_v | date:'yyyy-MM-dd'" (ngModelChange)="$event = data_v" name="data_v" min="2016-10-01" >-->
             <!--        <input class="form-con<input class="form-control" type="date" [ngModel] ="dateFrom | date:'yyyy-MM-dd'" (ngModelChange)="$event = dateFrom" name="dateFrom" min="2016-10-01" [value]="2016-10-01" />trol" type="date" [ngModel] ="dateFrom | date:'dd-mm-yyyy'" (ngModelChange)="$event = dateFrom" name="dateFrom" min="01-01-1900" [value]="01-10-2016" />-->
             <label for="week">Кількість звернень за день : </label>
-            <input type="text" th:field="*{rubin_week.week_appeal}" id="week" /><br>
+            <input type="text" th:field="*{rubin_week.week_appeal}" id="week"/><br>
 
             <label for="week_1">Кількість виданих.. за день : </label>
-            <input type="text" th:field="*{rubin_week.week_issued}" id="week_1" /><br>
+            <input type="text" th:field="*{rubin_week.week_issued}" id="week_1"/><br>
 
             <button type="submit" class="btn btn-success">Зберегти</button>
         </form>

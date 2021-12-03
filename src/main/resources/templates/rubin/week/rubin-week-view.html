@@ -14,8 +14,13 @@
     <div>
 
         <form method="post">
-            <label for="data_v"> Дата внесення : </label>
-            <input type="date" name="data_v" th:value="${dat}" placeholder="Дата внесення" class="form-control" id="data_v"><br>
+            <label for="data_v"> Дата внесення з : </label>
+            <input type="date" name="data_v" th:value="${dat}" placeholder="Дата внесення з" class="form-control"
+                   id="data_v"><br>
+
+            <label for="data_v2"> Дата внесення по: </label>
+            <input type="date" name="data_vpo" th:value="${dat_last}" placeholder="Дата внесення по"
+                   class="form-control" id="data_v2"><br>
 
             <!--            <a th:href="'../rubin/rubin-print'" role="button" class="btn btn-warning">Печать</a>-->
             <!--            <a th:href="'/rubin/'+ ${el.id} +'/remove'" class="btn btn-warning" aria-pressed="false" >Удалить</a>-->
@@ -24,15 +29,15 @@
     </div>
     <div>
         <div class="container mt-5 mb-1">
-
+            <!--            <a th:href="@{/people/{id}(id=${person.getId()})}" th:text="${person.getName()}">user</a>-->
             <div th:each="rubin:${rubinList}" class="alert alert-info mt-2">
-                <a th:href="@{/{id} (id=${rubin.getId()})}"
-                   th:text="${rubin.pidrozdil + ' .... ' + rubin.data_v}">user</a>
+                <a th:href="@{/rubin/week/{id}(id=${rubin.getId()})}"
+                   th:text="${rubin.getPidrozdil() + ' .... ' + rubin.getData_v()}">user</a>
                 <p th:text="${'звернень за день :' +rubin.week_appeal + '  виданих за день : '+rubin.week_issued  }"/>
             </div>
 
         </div>
-        <!--        <a th:href="'../rubin/rubin-print'" role="button" class="btn btn-warning">Печать</a>-->
+
     </div>
 </div>
 

@@ -48,7 +48,7 @@ public class RubinController {
 
         String date_s = LocalDate.now().toString(); // берем локальную дату переводим в String
 
-        Date data_v= null;
+        Date data_v = null;
         try {
             data_v = new SimpleDateFormat("yyyy-MM-dd").parse(date_s);
         } catch (ParseException e) {
@@ -119,12 +119,12 @@ public class RubinController {
     }
 
     @PostMapping("/rubin/rubin-view-p")
-    public String rubinViewP(@RequestParam("data_v") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date data_v,  Model model) {
+    public String rubinViewP(@RequestParam("data_v") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date data_v, Model model) {
 //        model.getAttribute();
 
         SimpleDateFormat formatForDateNow = new SimpleDateFormat("yyyy-MM-dd");
 //        System.out.println("Текущая дата " + formatForDateNow.format(data_v));
-        String rubinStr= rubinRepository.setSumDate(data_v);
+        String rubinStr = rubinRepository.setSumDate(data_v);
         model.addAttribute("dat", data_v);
 
         try {
@@ -142,14 +142,14 @@ public class RubinController {
 //       ****************************
         String date_s = LocalDate.now().toString();
 
-        Date data_v= null;
+        Date data_v = null;
         try {
             data_v = new SimpleDateFormat("yyyy-MM-dd").parse(date_s);
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        String rubinStr= rubinRepository.setSumDate(data_v);
+        String rubinStr = rubinRepository.setSumDate(data_v);
         model.addAttribute("dat", data_v);
 
         try {
@@ -163,8 +163,8 @@ public class RubinController {
     }
 
     @GetMapping("/rubin/{id}")
-    public String rubinDetaіls(Model model, @PathVariable(value = "id") long id){
-      //      находим и передаем єту одну запись на вюшку
+    public String rubinDetaіls(Model model, @PathVariable(value = "id") long id) {
+        //      находим и передаем єту одну запись на вюшку
         Optional<Rubin> rubin = rubinRepository.findById(id);
         ArrayList<Rubin> res = new ArrayList<>();
 
@@ -176,14 +176,14 @@ public class RubinController {
     }
 
     @PatchMapping("/rubin/{id}/edit")
-    public String update(@ModelAttribute("rubin") Rubin rubin){
+    public String update(@ModelAttribute("rubin") Rubin rubin) {
         rubinRepository.save(rubin);
         final String s = "redirect:/rubin/rubin-view";
         return s;
     }
 
     @GetMapping("/rubin/{id}/update") // после НАЖАТИЯ НА кнопкУ редактирование даннЫх
-    public String rubinEdit(Model model, @PathVariable(value = "id") long id){
+    public String rubinEdit(Model model, @PathVariable(value = "id") long id) {
         //      находим и передаем єту одну запись на вюшку
         Optional<Rubin> rubin = rubinRepository.findById(id);
         ArrayList<Rubin> res = new ArrayList<>();
@@ -196,13 +196,13 @@ public class RubinController {
 
 
     @PostMapping("/rubin/{id}/update")   // после нажатия Зберегти зміни
-    public String rubinUpdate(  Model model,
-                                @PathVariable(value = "id") long id,
-                                @RequestParam String pidrozdil,
-                                @RequestParam int week,
-                                @RequestParam int week_1,
-                                @RequestParam int year_0,
-                                @RequestParam int year_1, @RequestParam("data_v") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date data_v
+    public String rubinUpdate(Model model,
+                              @PathVariable(value = "id") long id,
+                              @RequestParam String pidrozdil,
+                              @RequestParam int week,
+                              @RequestParam int week_1,
+                              @RequestParam int year_0,
+                              @RequestParam int year_1, @RequestParam("data_v") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date data_v
     ) {
         Rubin rubin = rubinRepository.findById(id).orElseThrow();
         rubin.setPidrozdil(pidrozdil);

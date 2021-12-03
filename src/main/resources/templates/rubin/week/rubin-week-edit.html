@@ -5,22 +5,25 @@
     <title>Випавлення помилки</title>
 </head>
 <body>
-<div>  <header th:insert="blocks/header.html :: header"></header>
+<div>
+    <header th:insert="blocks/header.html :: header"></header>
 
     <!--        обработка записи на той-же сранице / методе-->
     <form th:each="rwe:${rubin_week_edit}" method="post">
 
         <label for="pidrozdil">ТСЦ : </label>
-        <input type="text" th:value="${rwe.pidrozdil}" name="pidrozdil" placeholder="Підрозділ" class="form-control" id="pidrozdil"><br>
+        <input type="text" th:value="${rwe.pidrozdil}" name="pidrozdil" placeholder="Підрозділ" class="form-control"
+               id="pidrozdil"><br>
         <label for="data_v">Дата : </label>
-        <input type="date" th:value="${rwe.data_v}" name="data_v" placeholder="Дата внесення" class="form-control" id="data_v" ><br>
+        <input type="date" th:value="${rwe.data_v}" name="data_v" placeholder="Дата внесення" class="form-control"
+               id="data_v"><br>
 
         <label for="week">Кількість звернень за день : </label>
-        <input type="text" th:value="${rwe.week_appeal}" name="week_appeal" class="form-control" id="week" />
+        <input type="text" th:value="${rwe.week_appeal}" name="week_appeal" class="form-control" id="week"/>
 
         <label for="week_1">Кількість виданих за день : </label>
-        <input type="text" th:value="${rwe.week_issued}" name="week_issued" id="week_1" /><br>
-<!--        <a th:href="'/rubin/week/'+ ${el.id} +'/update'" role="button" class="btn btn-warning">Редактировать</a>-->
+        <input type="text" th:value="${rwe.week_issued}" name="week_issued" id="week_1"/><br>
+        <!--        <a th:href="'/rubin/week/'+ ${el.id} +'/update'" role="button" class="btn btn-warning">Редактировать</a>-->
         <button type="submit" class="btn btn-success">Обновить</button>
     </form>
 
