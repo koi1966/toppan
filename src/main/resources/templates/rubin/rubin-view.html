@@ -26,8 +26,7 @@
         <div class="container mt-5 mb-1">
 
             <div th:each="rubin:${rubinList}" class="alert alert-info mt-2">
-                <a th:href="@{/rubin/{id} (id=${rubin.getId()})}"
-                   th:text="${rubin.pidrozdil + ' ....  ' + rubin.data_v}">user</a>
+                <a th:href="@{/rubin/{id} (id=${rubin.getId()})}" th:text="${rubin.pidrozdil + ' ....  ' + rubin.data_v}">user</a>
                 <p th:text="${'звернень тиждень :' +rubin.week + '  з початку року : '+rubin.year_0  }"/>
                 <p th:text="${'виданих  тиждень :'+rubin.week_1 +'  з початку року : '+ rubin.year_1 }"/>
             </div>

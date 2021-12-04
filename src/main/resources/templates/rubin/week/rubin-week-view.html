@@ -22,6 +22,28 @@
             <input type="date" name="data_vpo" th:value="${dat_last}" placeholder="Дата внесення по"
                    class="form-control" id="data_v2"><br>
 
+            <div class="col-lg-3" th:object="${pidrozdilList}">
+                <select class="form-control" id="testOrder" name="testOrder">
+                    <option value="">Виберіть ТСЦ для друку</option>
+                    <option th:each="tsc : ${pidrozdilList}"
+                            th:value="${tsc.pidrozdil}"
+                            th:text="${tsc.pidrozdil}">
+<!--                            th:text="${tsc.pidrozdil}+' : '+${tsc.ip}">-->
+                    </option>
+                </select>
+            </div>
+<!--            // ****************************************-->
+<!--            <span th:each="tsc:${pidrozdilList}" th:remove="tag">-->
+<!--          <option th:value="${tsc.pidrozdil}" th:text="${tsc.getPidrozdil()}"></option>-->
+<!--            </span>-->
+<!--            // *****************************************-->
+<!--            <div class="form-group col-md-8">-->
+<!--                <label  class="col-form-label">Category </label>-->
+<!--                <select  id="category" name="category" th:field="*{pidrozdil}" >-->
+<!--                    <option th:each="category : ${pidrozdil}" th:value="${category.id}" th:utext="${category.name}"/>-->
+<!--                </select>-->
+<!--            </div>-->
+<!--            // ******************************************-->
             <!--            <a th:href="'../rubin/rubin-print'" role="button" class="btn btn-warning">Печать</a>-->
             <!--            <a th:href="'/rubin/'+ ${el.id} +'/remove'" class="btn btn-warning" aria-pressed="false" >Удалить</a>-->
             <button type="submit" class="btn btn-success">Пошук</button>

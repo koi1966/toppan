@@ -38,7 +38,8 @@ public class EmailSender {
 //                        "couple of more JAR files e.g. smtp.jar and activation.jar");
 
                 MimeBodyPart messageBodyPart = new MimeBodyPart();
-                String filename = "C:/demo/rubin.xlsx";
+//                String filename = "C:/demo/rubin.xlsx";
+                String filename = "c:/RSC1840/rubin.xlsx";
                 DataSource source = new FileDataSource(filename);
                 messageBodyPart.setDataHandler(new DataHandler(source));
                 messageBodyPart.setFileName(filename);

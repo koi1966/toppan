@@ -20,6 +20,9 @@
             li:hover .submenu {
                 display: flex;
             }
+            li:hover .submenu2 {
+                display: flex;
+            }
 
             a {
                 display: block;
@@ -44,6 +47,12 @@
                 flex-direction: column;
                 position: absolute;
             }
+
+            .submenu2 {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+            }
         </style>
 
 
@@ -61,7 +70,7 @@
             <!--            <ul class="menu">-->
             <ul>
                 <li><a class="me-3 py-2 text-dark text-decoration-none" href="/">Главная</a></li>
-                <li><a class="me-3 py-2 text-dark text-decoration-none" href="">Toppan CP 500</a>
+                <li><a class="me-3 py-2 text-dark text-decoration-none" href="/">Toppan CP 500</a>
                     <ul class="submenu">
                         <li><a class="me-3 py-2 text-dark text-decoration-none" href="../printer/toppan">Принтера</a>
                         </li>
@@ -73,14 +82,20 @@
                 </li>
 
                 <li><a class="me-3 py-2 text-dark text-decoration-none" href="/">Довідки суд..</a>
-                    <ul class="submenu">
+                    <ul class="submenu2">
                         <li>
-                            <a class="me-3 py-2 text-dark text-decoration-none" href="../rubin/week/rubin-week-view">Довідки</a>
+                            <a class="me-3 py-2 text-dark text-decoration-none" href="../rubin/week/rubin-week-view">Довідки щоденні</a>
                         </li>
                         <li>
-                            <a class="me-3 py-2 text-dark text-decoration-none" href="../rubin/week/rubin-add-week">Звіт
-                                щоденний</a>
+                            <a class="me-3 py-2 text-dark text-decoration-none" href="../rubin/week/rubin-add-week">Звіт щоденний</a>
                         </li>
+                        <li>
+                            <a class="me-3 py-2 text-dark text-decoration-none" href="../rubin/rubin-view">Довідки щотижневі</a>
+                        </li>
+                        <li>
+                            <a class="me-3 py-2 text-dark text-decoration-none" href="../rubin/rubin-add">Звіт тижневий</a>
+                        </li>
+
                     </ul>
                 </li>
 

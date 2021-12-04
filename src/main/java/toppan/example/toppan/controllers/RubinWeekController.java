@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import toppan.example.toppan.createDoc.CreateExcel;
+import toppan.example.toppan.models.Pidrozdil;
 import toppan.example.toppan.models.Rubin_week;
 import toppan.example.toppan.models.repo.PidrozdilRepository;
 import toppan.example.toppan.models.repo.RubinWeekRepository;
@@ -49,9 +50,14 @@ class RubinWeekController {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
+        List<Pidrozdil> pidrozdilList = (List<Pidrozdil>) pidrozdilRepository.findAll();
+        model.addAttribute("pidrozdilList", pidrozdilList);
+
         model.addAttribute("dat", date_s);
         model.addAttribute("dat_last", date_s);
-        return "rubin/week/rubin-week-view";
+        final String s = "rubin/week/rubin-week-view";
+        return s;
     }
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -79,7 +85,8 @@ class RubinWeekController {
 
         model.addAttribute("dat", data_s);
         model.addAttribute("dat_last", data_last_str);
-        return "rubin/week/rubin-week-view";
+        final String s = "rubin/week/rubin-week-view";
+        return s;
     }
 
     @GetMapping("/rubin/week/rubin-add-week")
@@ -107,9 +114,10 @@ class RubinWeekController {
         rubin_week.setPidrozdil(pidrozdilRepository.setNamePidrozdil(ip));
         rubin_week.setData_v(instant.atZone(defaultZoneId).toLocalDate());
 
-        model.addAttribute("rubin_week", rubin_week);
 
-        return "rubin/week/rubin-add-week";
+        model.addAttribute("rubin_week", rubin_week);
+        final String s= "rubin/week/rubin-add-week";
+        return s;
     }
 
     @PostMapping("/rubin/week/rubin-add-week")
@@ -127,8 +135,9 @@ class RubinWeekController {
         rubin_week.setWeek_issued(week_issued);
         rubinWeekRepository.save(rubin_week);
 
-        final String s = "redirect:/rubin/week/rubin-week-view";
-        return s;
+        return "redirect:/";
+//        final String s = "redirect:rubin/week/rubin-week-view";redirect:/
+//        return s;
     }
 
     //    @GetMapping(value = "/rubin/week/{id}")
@@ -143,14 +152,15 @@ class RubinWeekController {
         model.addAttribute("rubin_week_det", res);
 
 //       отображаем найденное на вюшке
-        return "/rubin/week/rubin-week-deteils";
+        final String s="rubin/week/rubin-week-deteils";
+        return s;
     }
 
     //    @PatchMapping("/rubin/week/{id}/edit")
     @PatchMapping("/rubin/week/{id}/edit")
     public String update(@ModelAttribute("rubin") Rubin_week rubin_week) {
         rubinWeekRepository.save(rubin_week);
-        final String s = "redirect:/rubin/week/rubin-week-view";
+        final String s = "redirect:rubin/week/rubin-week-view";
         return s;
     }
 
@@ -164,7 +174,9 @@ class RubinWeekController {
         rubin_week.ifPresent(res::add);
         model.addAttribute("rubin_week_edit", res);
 //       редактируем найденное на вюшке
-        return "rubin/week/rubin-week-edit";
+
+        final String s="rubin/week/rubin-week-edit";
+        return s;
     }
 
     //    @PostMapping("/rubin/week/{id}/update")   // после нажатия Зберегти зміни
@@ -181,7 +193,7 @@ class RubinWeekController {
         rubin_week_up.setWeek_appeal(week_appeal);
         rubin_week_up.setWeek_issued(week_issued);
         rubinWeekRepository.save(rubin_week_up);
-        final String s = "redirect:/rubin/week/rubin-week-view";
+        final String s = "redirect:rubin/week/rubin-week-view";
         return s;
     }
 }
