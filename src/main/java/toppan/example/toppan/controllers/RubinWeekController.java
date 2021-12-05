@@ -93,9 +93,12 @@ class RubinWeekController {
     public String rubinAddWeek(HttpServletRequest request, Model model) {
 //        вытягивает IP копма с которого вносят информацию
         String ip_user = request.getRemoteAddr();
+        ip_user="172.0.0.0";
         int end = UtilitesSting.ordinalIndexOf(ip_user, ".", 2);
+
 //        узнаеп подсеть
         String ip = ip_user.substring(0, end);
+
 //        по подсети узнаем из какого ТСЦ зашли работать
         String tsc = pidrozdilRepository.setNamePidrozdil(ip);
 
@@ -116,8 +119,8 @@ class RubinWeekController {
 
 
         model.addAttribute("rubin_week", rubin_week);
-        final String s= "rubin/week/rubin-add-week";
-        return s;
+//        final String s= ;
+        return "rubin/week/rubin-add-week";
     }
 
     @PostMapping("/rubin/week/rubin-add-week")
