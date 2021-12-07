@@ -15,9 +15,10 @@ public interface RubinWeekRepository extends CrudRepository<Rubin_week, Long> {
     List<Rubin_week> setListDateRubin(@Param("data_v") Date data_v);
 
     @Query(nativeQuery = true,
-            value = "SELECT * FROM rubin_week r WHERE r.data_v >= :data_v AND r.data_v <= :data_last ORDER BY r.pidrozdil,r.data_v ")
+            value = "SELECT * FROM rubin_week r WHERE r.data_v >= :data_v AND r.data_v <= :data_last and r.pidrozdil = :tsc ORDER BY r.pidrozdil,r.data_v ")
     List<Rubin_week> setListDateRubinWeek(@Param("data_v") Date data_v,
-                                          @Param("data_last") Date data_last);
+                                          @Param("data_last") Date data_last,
+                                          @Param("tsc") String tsc);
 
     @Query(nativeQuery = true,
             value = "select sum(week) as week, sum(week_1) as week_1, sum(year_0) as year_0 , sum(year_1) as year_1 from rubin where data_v = :data_v")

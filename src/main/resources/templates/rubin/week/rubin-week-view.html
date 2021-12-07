@@ -12,7 +12,22 @@
 
     <header th:insert="blocks/header.html :: header"></header>
     <div>
+<!--        ********************************************      -->
+<!--        <form action="#" data-th-action="@{/action/edit}" data-th-object="${model}" method="post">-->
+<!--        <button type="submit" name="action" value="save">save</button>-->
+<!--        <button type="submit" name="action" value="cancel">cancel</button>-->
+<!--        </form>-->
 
+<!--        @RequestMapping(value="/edit", method=RequestMethod.POST, params="action=save")-->
+<!--        public ModelAndView save() {}-->
+
+
+<!--        @RequestMapping(value="/edit", method=RequestMethod.POST, params="action=cancel")-->
+<!--        public ModelAndView cancel() {}-->
+
+<!--        ********************************************       -->
+
+<!--        <form th:action="@{/rubin/week/rubin-week-view}" th:object="${model}" th:method="post">-->
         <form method="post">
             <label for="data_v"> Дата внесення з : </label>
             <input type="date" name="data_v" th:value="${dat}" placeholder="Дата внесення з" class="form-control"
@@ -23,30 +38,22 @@
                    class="form-control" id="data_v2"><br>
 
             <div class="col-lg-3" th:object="${pidrozdilList}">
-                <select class="form-control" id="testOrder" name="testOrder">
+                <select class="form-control" id="p_tsc" name="p_tsc">
                     <option value="">Виберіть ТСЦ для друку</option>
-                    <option th:each="tsc : ${pidrozdilList}"
+                    <option th:each="tsc:${pidrozdilList}"
                             th:value="${tsc.pidrozdil}"
                             th:text="${tsc.pidrozdil}">
 <!--                            th:text="${tsc.pidrozdil}+' : '+${tsc.ip}">-->
                     </option>
                 </select>
             </div>
-<!--            // ****************************************-->
-<!--            <span th:each="tsc:${pidrozdilList}" th:remove="tag">-->
-<!--          <option th:value="${tsc.pidrozdil}" th:text="${tsc.getPidrozdil()}"></option>-->
-<!--            </span>-->
-<!--            // *****************************************-->
-<!--            <div class="form-group col-md-8">-->
-<!--                <label  class="col-form-label">Category </label>-->
-<!--                <select  id="category" name="category" th:field="*{pidrozdil}" >-->
-<!--                    <option th:each="category : ${pidrozdil}" th:value="${category.id}" th:utext="${category.name}"/>-->
-<!--                </select>-->
-<!--            </div>-->
-<!--            // ******************************************-->
-            <!--            <a th:href="'../rubin/rubin-print'" role="button" class="btn btn-warning">Печать</a>-->
-            <!--            <a th:href="'/rubin/'+ ${el.id} +'/remove'" class="btn btn-warning" aria-pressed="false" >Удалить</a>-->
-            <button type="submit" class="btn btn-success">Пошук</button>
+<!--            <button type="submit" name="action" value="save">save</button>-->
+            <button type="submit" class="btn btn-success" name="action" value="search" >Пошук</button>
+            <button type="submit" class="btn btn-success" name="action" value="rrwer" >Пошук55</button>
+<!--            <button type="submit" class="btn btn-success" value="print" >Друк недільний</button>-->
+
+<!--            <a th:href="/rubin/week/rubin-print-week" role="button" class="btn btn-warning">Друк недільний</a>-->
+<!--            <a th:href="'/rubin/week/rubin-print-year'" role="button" class="btn btn-warning">Друк помісячний</a>-->
         </form>
     </div>
     <div>

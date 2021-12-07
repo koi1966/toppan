@@ -22,7 +22,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-//@RequestMapping("/week/rubin")
 @Controller
 class RubinWeekController {
 
@@ -46,7 +45,7 @@ class RubinWeekController {
 
         Date data_v = null;
         try {
-            data_v = new SimpleDateFormat("yyyy-MM-dd").parse(date_s);
+            data_v = new SimpleDateFormat("yyyy-MM-dd").parse(date_s);  //  Локальная дата без времени
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -62,7 +61,11 @@ class RubinWeekController {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @PostMapping("/rubin/week/rubin-week-view")
-    public String rubinViewData(@RequestParam("data_v") String data_s, @RequestParam("data_vpo") String data_last_str, Model model) {
+    public String rubinViewData(@RequestParam("data_v") String data_s,
+                                @RequestParam("data_vpo") String data_last_str,
+                                @RequestParam("p_tsc") String tsc,
+                                @RequestParam(value="action", required=true) String action,
+                                Model model) {
 
         SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
         Date data_v = null;
@@ -79,10 +82,17 @@ class RubinWeekController {
             e.printStackTrace();
         }
 
-        List<Rubin_week> rubinList = rubinWeekRepository.setListDateRubinWeek(data_v, data_last);
+//        boolean isEmpty = tsc == null || tsc.trim().length() == 0;
+//        if (isEmpty) {
+//            List<Pidrozdil> pidrozdilList = (List<Pidrozdil>) rubinWeekRepository.findAll();
+//        }
+
+        List<Pidrozdil> pidrozdilList = (List<Pidrozdil>) pidrozdilRepository.findAll();
+        model.addAttribute("pidrozdilList", pidrozdilList);
+
+        List<Rubin_week> rubinList = rubinWeekRepository.setListDateRubinWeek(data_v, data_last, tsc);
 
         model.addAttribute("rubinList", rubinList);
-
         model.addAttribute("dat", data_s);
         model.addAttribute("dat_last", data_last_str);
         final String s = "rubin/week/rubin-week-view";
@@ -93,7 +103,7 @@ class RubinWeekController {
     public String rubinAddWeek(HttpServletRequest request, Model model) {
 //        вытягивает IP копма с которого вносят информацию
         String ip_user = request.getRemoteAddr();
-        ip_user="172.0.0.0";
+//        ip_user="172.0.0.0";
         int end = UtilitesSting.ordinalIndexOf(ip_user, ".", 2);
 
 //        узнаеп подсеть
@@ -197,6 +207,31 @@ class RubinWeekController {
         rubin_week_up.setWeek_issued(week_issued);
         rubinWeekRepository.save(rubin_week_up);
         final String s = "redirect:rubin/week/rubin-week-view";
+        return s;
+    }
+
+
+    @PostMapping("/rubin/week/rubin-print-week")
+    public String rubinWeekPrint(@RequestParam("data_v") String data_s,
+                                 @RequestParam("data_vpo") String data_last_str,
+                                 @RequestParam("p_tsc") String tsc,
+                                 Model model) {
+//        model.getAttribute();
+
+//************************************************************
+        SimpleDateFormat formatForDateNow = new SimpleDateFormat("yyyy-MM-dd");
+//        System.out.println("Текущая дата " + formatForDateNow.format(data_v));
+//        String rubinStr = rubinRepository.setSumDate(data_v);
+//        model.addAttribute("dat", data_v);
+//  Внесение полученной информации в ексл и отправка его на почту
+//        try {
+//            createExcel.CreateF(rubinStr);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        EmailSender.send();
+//************************************************************
+        final String s = "redirect:/rubin/week/rubin-view";
         return s;
     }
 }

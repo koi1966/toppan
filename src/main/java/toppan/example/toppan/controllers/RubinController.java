@@ -126,7 +126,7 @@ public class RubinController {
 //        System.out.println("Текущая дата " + formatForDateNow.format(data_v));
         String rubinStr = rubinRepository.setSumDate(data_v);
         model.addAttribute("dat", data_v);
-
+//  Внесение полученной информации в ексл и отправка его на почту
         try {
             createExcel.CreateF(rubinStr);
         } catch (IOException e) {

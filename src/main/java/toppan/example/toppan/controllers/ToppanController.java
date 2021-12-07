@@ -40,9 +40,7 @@ public class ToppanController {
         Toppan top = new Toppan(sn, datawork, completeness, code, pidrozdil);
         //  request.getRemoteAddr()  -  вытягивает IP копма с которого вносят информацию
         toppanRepository.save(top);
-//        openTransactionSession();
 
-//        repository.toString();
         return "redirect:/printer/toppan";
     }
 
