@@ -8,7 +8,7 @@ public class Pidrozdil {
     @Id
     private String pidrozdil;
 
-    private String ip;
+    private String ip, email;
 
     public Pidrozdil(String pidrozdil, String ip) {
         this.pidrozdil = pidrozdil;
@@ -29,6 +29,14 @@ public class Pidrozdil {
 
     public void setIp(String ip) {
         this.ip = ip;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Pidrozdil() {

@@ -38,8 +38,9 @@
                    class="form-control" id="data_v2"><br>
 
             <div class="col-lg-3" th:object="${pidrozdilList}">
-                <select class="form-control" id="p_tsc" name="p_tsc">
-                    <option value="">Виберіть ТСЦ для друку</option>
+<!--                <select class="form-control" id="p_tsc" name="p_tsc">-->
+               <select required size = "1" name = "p_tsc" class="form-control" id="p_tsc" >
+                    <option th:value="${p_tsc}">Виберіть підрозділ</option>
                     <option th:each="tsc:${pidrozdilList}"
                             th:value="${tsc.pidrozdil}"
                             th:text="${tsc.pidrozdil}">
@@ -49,7 +50,7 @@
             </div>
 <!--            <button type="submit" name="action" value="save">save</button>-->
             <button type="submit" class="btn btn-success" name="action" value="search" >Пошук</button>
-            <button type="submit" class="btn btn-success" name="action" value="rrwer" >Пошук55</button>
+            <button type="submit" class="btn btn-success" name="action" value="print" >Друк звіту</button>
 <!--            <button type="submit" class="btn btn-success" value="print" >Друк недільний</button>-->
 
 <!--            <a th:href="/rubin/week/rubin-print-week" role="button" class="btn btn-warning">Друк недільний</a>-->

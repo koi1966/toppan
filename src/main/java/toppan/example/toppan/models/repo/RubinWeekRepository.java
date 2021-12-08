@@ -12,15 +12,49 @@ public interface RubinWeekRepository extends CrudRepository<Rubin_week, Long> {
 
     @Query(nativeQuery = true,
             value = "SELECT * from rubin_week r where r.data_v = :data_v ORDER BY r.pidrozdil")
-    List<Rubin_week> setListDateRubin(@Param("data_v") Date data_v);
+    List<Rubin_week> setListWeekDate(@Param("data_v") Date data_v);
 
     @Query(nativeQuery = true,
-            value = "SELECT * FROM rubin_week r WHERE r.data_v >= :data_v AND r.data_v <= :data_last and r.pidrozdil = :tsc ORDER BY r.pidrozdil,r.data_v ")
+            value = "SELECT * FROM rubin_week r " +
+                    "WHERE r.data_v >= :data_v " +
+                    "AND r.data_v <= :data_last " +
+                    "and r.pidrozdil = :tsc " +
+                    "ORDER BY r.pidrozdil,r.data_v ")
     List<Rubin_week> setListDateRubinWeek(@Param("data_v") Date data_v,
                                           @Param("data_last") Date data_last,
                                           @Param("tsc") String tsc);
 
+    //    Сумы нужніх полей за период по нужному ТСЦ
     @Query(nativeQuery = true,
-            value = "select sum(week) as week, sum(week_1) as week_1, sum(year_0) as year_0 , sum(year_1) as year_1 from rubin where data_v = :data_v")
-    String setSumDate(@Param("data_v") Date data_v);
+            value = "SELECT sum(week_appeal) as week_appeal, sum(week_issued) as week_issued, " +
+                    "sum(week_appeal) + (SELECT year_appeal from rubin_year ry " +
+                    "where ry.pidrozdil = :tsc and data_v = (select max(kk.data_v) " +
+                    "from rubin_year kk where kk.pidrozdil = :tsc)) as year_appeal," +
+                    "sum(week_issued) + (SELECT year_issued from rubin_year ry " +
+                    "where ry.pidrozdil = :tsc " +
+                    "and data_v = (select max(kk.data_v) " +
+                    "from rubin_year kk where kk.pidrozdil = :tsc)) as year_issued " +
+                    "from rubin_week " +
+                    "where data_v >= :data_v " +
+                    "and data_v <= :data_last " +
+                    "and pidrozdil = :tsc")
+    String setWeekPrint(@Param("data_v") Date data_v,
+                        @Param("data_last") Date data_last,
+                        @Param("tsc") String tsc);
 }
+//    @Query(nativeQuery = true,
+//            value = "SELECT sum(week_appeal) as week_appeal, sum(week_issued) as week_issued, " +
+//                    "sum(week_appeal) + (SELECT year_appeal from rubin_year ry " +
+//                    "where ry.pidrozdil = 'ТСЦ 1841' and data_v = (select max(kk.data_v) " +
+//                    "from rubin_year kk where kk.pidrozdil = 'ТСЦ 1841')) as year_appeal," +
+//                    "sum(week_issued) + (SELECT year_issued from rubin_year ry " +
+//                    "where ry.pidrozdil = 'ТСЦ 1841' " +
+//                    "and data_v = (select max(kk.data_v) " +
+//                    "from rubin_year kk where kk.pidrozdil = 'ТСЦ 1841')) as year_issued " +
+//                    "from rubin_week " +
+//                    "where data_v >='2021-12-01' " +
+//                    "and data_v <='2021-12-08' " +
+//                    "and pidrozdil = 'ТСЦ 1841'")
+//    String setWeekPrint(@Param("data_v") Date data_v,
+//                        @Param("data_last") Date data_last,
+//                        @Param("tsc") String tsc);

@@ -3,7 +3,7 @@ package toppan.example.toppan.models;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 public class Rubin_year {
@@ -12,7 +12,7 @@ public class Rubin_year {
     private Long id;
     private String pidrozdil;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    public LocalDate data_v; // звіт на останній день місяця
+    public Date data_v; // звіт на останній день місяця
     //    year_appeal  - обращений з початку року
     //    year_issued  - выдано з початку року
     private int year_appeal, year_issued;
@@ -36,11 +36,11 @@ public class Rubin_year {
         this.pidrozdil = pidrozdil;
     }
 
-    public LocalDate getData_v() {
+    public Date getData_v() {
         return data_v;
     }
 
-    public void setData_v(LocalDate data_v) {
+    public void setData_v(Date data_v) {
         this.data_v = data_v;
     }
 

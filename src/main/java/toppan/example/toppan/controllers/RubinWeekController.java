@@ -7,11 +7,15 @@ import org.springframework.web.bind.annotation.*;
 import toppan.example.toppan.createDoc.CreateExcel;
 import toppan.example.toppan.models.Pidrozdil;
 import toppan.example.toppan.models.Rubin_week;
+import toppan.example.toppan.models.Rubin_year;
 import toppan.example.toppan.models.repo.PidrozdilRepository;
 import toppan.example.toppan.models.repo.RubinWeekRepository;
+import toppan.example.toppan.models.repo.RubinYearRepository;
+import toppan.example.toppan.utilities.EmailSender;
 import toppan.example.toppan.utilities.UtilitesSting;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -28,11 +32,13 @@ class RubinWeekController {
     private final RubinWeekRepository rubinWeekRepository;
     private final PidrozdilRepository pidrozdilRepository;
     private final CreateExcel createExcel;
+    private final RubinYearRepository rubinYearRepository;
 
-    public RubinWeekController(RubinWeekRepository rubinWeekRepository, PidrozdilRepository pidrozdilRepository, CreateExcel createExcel) {
+    public RubinWeekController(RubinWeekRepository rubinWeekRepository, PidrozdilRepository pidrozdilRepository, CreateExcel createExcel, RubinYearRepository rubinYearRepository) {
         this.rubinWeekRepository = rubinWeekRepository;
         this.pidrozdilRepository = pidrozdilRepository;
         this.createExcel = createExcel;
+        this.rubinYearRepository = rubinYearRepository;
     }
 
     @GetMapping("/rubin/week/rubin-week-view")
@@ -55,18 +61,34 @@ class RubinWeekController {
 
         model.addAttribute("dat", date_s);
         model.addAttribute("dat_last", date_s);
-        final String s = "rubin/week/rubin-week-view";
-        return s;
+//        final String s = "rubin/week/rubin-week-view";
+        return "rubin/week/rubin-week-view";
     }
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @PostMapping("/rubin/week/rubin-week-view")
+    @PostMapping(value = "/rubin/week/rubin-week-view", params = "action=search")
     public String rubinViewData(@RequestParam("data_v") String data_s,
                                 @RequestParam("data_vpo") String data_last_str,
                                 @RequestParam("p_tsc") String tsc,
-                                @RequestParam(value="action", required=true) String action,
+//                                @RequestParam(value="action", required=true) String action,
                                 Model model) {
+//*************************************************************
+//        switch(action) {
+//            case "save":
+//                // do stuff
+//                break;
+//            case "cancel":
+//                // do stuff
+//                break;
+//            case "newthing":
+//                // do stuff
+//                break;
+//            default:
+//                // do stuff
+//                break;
+//        }
 
+//        ******************************************************
         SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
         Date data_v = null;
         try {
@@ -82,11 +104,6 @@ class RubinWeekController {
             e.printStackTrace();
         }
 
-//        boolean isEmpty = tsc == null || tsc.trim().length() == 0;
-//        if (isEmpty) {
-//            List<Pidrozdil> pidrozdilList = (List<Pidrozdil>) rubinWeekRepository.findAll();
-//        }
-
         List<Pidrozdil> pidrozdilList = (List<Pidrozdil>) pidrozdilRepository.findAll();
         model.addAttribute("pidrozdilList", pidrozdilList);
 
@@ -95,8 +112,54 @@ class RubinWeekController {
         model.addAttribute("rubinList", rubinList);
         model.addAttribute("dat", data_s);
         model.addAttribute("dat_last", data_last_str);
-        final String s = "rubin/week/rubin-week-view";
-        return s;
+        model.addAttribute("p_tsc", tsc);
+//        final String s = "rubin/week/rubin-week-view";
+        return "rubin/week/rubin-week-view";
+    }
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @PostMapping(value = "/rubin/week/rubin-week-view", params = "action=print")
+    public String rubinViewDataPrint(@RequestParam("data_v") String data_s,
+                                     @RequestParam("data_vpo") String data_last_str,
+                                     @RequestParam("p_tsc") String tsc,
+                                     Model model) {
+        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+        Date data_v = null;
+        try {
+            data_v = sdf2.parse(data_s);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        Date data_last = null;
+        try {
+            data_last = sdf2.parse(data_last_str);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        String rubinWekStr = rubinWeekRepository.setWeekPrint(data_v, data_last, tsc);
+        rubinWekStr = rubinWekStr+','+ "(станом на " + data_last_str+ ")," +tsc+','+ pidrozdilRepository.setEmailPidrozdil(tsc);
+        //  *****************************************************************************
+        //  Внесение полученной информации в ексл и отправка его на почту
+        try {
+            createExcel.CreateF(rubinWekStr);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String[] str = rubinWekStr.split(",");
+        EmailSender.send(str[6]);
+        //  ******************************************************************************
+        //  Записать недельные данные в таблицу rubin_year
+
+        Rubin_year rubin_year = new Rubin_year();
+        rubin_year.setPidrozdil(tsc);
+        rubin_year.setData_v(data_last);
+        rubin_year.setYear_appeal(Integer.parseInt(str[2]));
+        rubin_year.setYear_issued(Integer.parseInt(str[3]));
+        rubinYearRepository.save(rubin_year);
+//        final String s = "rubin/week/rubin-week-view";
+        return "rubin/week/rubin-week-view";
     }
 
     @GetMapping("/rubin/week/rubin-add-week")
@@ -165,16 +228,16 @@ class RubinWeekController {
         model.addAttribute("rubin_week_det", res);
 
 //       отображаем найденное на вюшке
-        final String s="rubin/week/rubin-week-deteils";
-        return s;
+//        final String s = "rubin/week/rubin-week-deteils";
+        return "rubin/week/rubin-week-deteils";
     }
 
     //    @PatchMapping("/rubin/week/{id}/edit")
     @PatchMapping("/rubin/week/{id}/edit")
     public String update(@ModelAttribute("rubin") Rubin_week rubin_week) {
         rubinWeekRepository.save(rubin_week);
-        final String s = "redirect:rubin/week/rubin-week-view";
-        return s;
+//        final String s = "redirect:rubin/week/rubin-week-view";
+        return "redirect:rubin/week/rubin-week-view";
     }
 
     //    @GetMapping("/rubin/week/{id}/update") // после НАЖАТИЯ НА кнопкУ редактирование даннЫх
@@ -188,8 +251,8 @@ class RubinWeekController {
         model.addAttribute("rubin_week_edit", res);
 //       редактируем найденное на вюшке
 
-        final String s="rubin/week/rubin-week-edit";
-        return s;
+//        final String s = "rubin/week/rubin-week-edit";
+        return "rubin/week/rubin-week-edit";
     }
 
     //    @PostMapping("/rubin/week/{id}/update")   // после нажатия Зберегти зміни
@@ -206,32 +269,8 @@ class RubinWeekController {
         rubin_week_up.setWeek_appeal(week_appeal);
         rubin_week_up.setWeek_issued(week_issued);
         rubinWeekRepository.save(rubin_week_up);
-        final String s = "redirect:rubin/week/rubin-week-view";
-        return s;
+//        final String s = "redirect:rubin/week/rubin-week-view";
+        return "redirect:rubin/week/rubin-week-view";
     }
 
-
-    @PostMapping("/rubin/week/rubin-print-week")
-    public String rubinWeekPrint(@RequestParam("data_v") String data_s,
-                                 @RequestParam("data_vpo") String data_last_str,
-                                 @RequestParam("p_tsc") String tsc,
-                                 Model model) {
-//        model.getAttribute();
-
-//************************************************************
-        SimpleDateFormat formatForDateNow = new SimpleDateFormat("yyyy-MM-dd");
-//        System.out.println("Текущая дата " + formatForDateNow.format(data_v));
-//        String rubinStr = rubinRepository.setSumDate(data_v);
-//        model.addAttribute("dat", data_v);
-//  Внесение полученной информации в ексл и отправка его на почту
-//        try {
-//            createExcel.CreateF(rubinStr);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        EmailSender.send();
-//************************************************************
-        final String s = "redirect:/rubin/week/rubin-view";
-        return s;
-    }
 }

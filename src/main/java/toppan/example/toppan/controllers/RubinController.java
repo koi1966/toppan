@@ -84,8 +84,8 @@ public class RubinController {
             return "rubin/rubin-add";
 //        Rubin rubin = new Rubin(pidrozdil, week, week_1, year_0, year_1, data_v);
         rubinRepository.save(rubin);
-        final String s = "redirect:/rubin/rubin-view";
-        return s;
+//        final String s = "redirect:/rubin/rubin-view";
+        return "redirect:/rubin/rubin-view";
     }
 
     @GetMapping("/rubin/rubin-add")
@@ -132,9 +132,9 @@ public class RubinController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        EmailSender.send();
-        final String s = "redirect:/rubin/rubin-view";
-        return s;
+        EmailSender.send("eeeeee");
+//        final String s = "redirect:/rubin/rubin-view";
+        return "redirect:/rubin/rubin-view";
     }
 
     @PostMapping("/rubin/rubin-print")
@@ -157,9 +157,8 @@ public class RubinController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        final String s = "redirect:/rubin/rubin-view";
-        return s;
+//        final String s = "redirect:/rubin/rubin-view";
+        return "redirect:/rubin/rubin-view";
     }
 
     @GetMapping("/rubin/{id}")
@@ -178,8 +177,8 @@ public class RubinController {
     @PatchMapping("/rubin/{id}/edit")
     public String update(@ModelAttribute("rubin") Rubin rubin) {
         rubinRepository.save(rubin);
-        final String s = "redirect:/rubin/rubin-view";
-        return s;
+//        final String s = "redirect:/rubin/rubin-view";
+        return "redirect:/rubin/rubin-view";
     }
 
     @GetMapping("/rubin/{id}/update") // после НАЖАТИЯ НА кнопкУ редактирование даннЫх

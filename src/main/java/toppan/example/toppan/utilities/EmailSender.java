@@ -12,10 +12,10 @@ import java.util.Properties;
 
 public class EmailSender {
 
-        public static void send(){
+        public static void send( String to){
 
-            String to = "o.klymchuk@zhi.hsc.gov.ua";         // sender email
-            String from = "oleg@zhi.hsc.gov.ua";       // receiver email
+//            String to = "o.klymchuk@zhi.hsc.gov.ua";       // sender email
+            String from = "it_rubin@zhi.hsc.gov.ua";       // receiver email
             String host = "10.6.1.1";            // mail server host
 
             Properties properties = System.getProperties();
@@ -32,10 +32,6 @@ public class EmailSender {
                 // Create a multipar message
                 Multipart multipart = new MimeMultipart();
                 message.setSubject("Звіт по рубину"); // subject line
-//
-//                // actual mail body
-//                message.setText("You can send mail from Java program by using mail API, but you need" +
-//                        "couple of more JAR files e.g. smtp.jar and activation.jar");
 
                 MimeBodyPart messageBodyPart = new MimeBodyPart();
 //                String filename = "C:/demo/rubin.xlsx";
@@ -47,7 +43,7 @@ public class EmailSender {
                 // Send the complete message parts
                 message.setContent(multipart );
                 Transport.send(message);
-                System.out.println("Email Sent successfully....");
+//                System.out.println("Email Sent successfully....");
             } catch (MessagingException mex){ mex.printStackTrace(); }
 
         }
