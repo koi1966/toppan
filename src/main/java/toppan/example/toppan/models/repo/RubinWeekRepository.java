@@ -16,7 +16,7 @@ public interface RubinWeekRepository extends CrudRepository<Rubin_week, Long> {
 
     @Query(nativeQuery = true,
             value = "SELECT * FROM rubin_week r " +
-                    "WHERE r.data_v >= :data_v " +
+                    "WHERE r.data_v > :data_v " +
                     "AND r.data_v <= :data_last " +
                     "and r.pidrozdil = :tsc " +
                     "ORDER BY r.pidrozdil,r.data_v ")
@@ -35,7 +35,7 @@ public interface RubinWeekRepository extends CrudRepository<Rubin_week, Long> {
                     "and data_v = (select max(kk.data_v) " +
                     "from rubin_year kk where kk.pidrozdil = :tsc)) as year_issued " +
                     "from rubin_week " +
-                    "where data_v >= :data_v " +
+                    "where data_v > :data_v " +
                     "and data_v <= :data_last " +
                     "and pidrozdil = :tsc")
     String setWeekPrint(@Param("data_v") Date data_v,

@@ -132,7 +132,7 @@ public class RubinController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        EmailSender.send("eeeeee");
+        EmailSender.send("o.klymchuk@zhi.hsc.gov.ua");
 //        final String s = "redirect:/rubin/rubin-view";
         return "redirect:/rubin/rubin-view";
     }
