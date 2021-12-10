@@ -225,7 +225,6 @@ class RubinWeekController {
 //        Rubin_week rubin_week = new Rubin_week(pidrozdil, data_v,week_appeal, week_issued );
         Rubin_week rubin_week = new Rubin_week();
         rubin_week.setPidrozdil(pidrozdil);
-
         rubin_week.setData_v(data_v);
         rubin_week.setWeek_appeal(week_appeal);
         rubin_week.setWeek_issued(week_issued);
@@ -235,7 +234,6 @@ class RubinWeekController {
 
     @GetMapping("/rubin/week/{id}")
     public String rubinWeekDetails(Model model, @PathVariable("id") long id) {
-
         //      находим и передаем єту одну запись на вюшку
         Optional<Rubin_week> rubin = rubinWeekRepository.findById(id);
         ArrayList<Rubin_week> res = new ArrayList<>();
@@ -260,11 +258,10 @@ class RubinWeekController {
 
         rubin_week.ifPresent(res::add);
         model.addAttribute("rubin_week_edit", res);
-//       редактируем найденное на вюшке
-        return "rubin/week/rubin-week-edit";
+        return "rubin/week/rubin-week-edit";//       редактируем найденное на вюшке
     }
 
-    @PostMapping("/rubin/week/{id}/update")
+    @PostMapping("/rubin/week/{id}/update")  // нажата кнопка - Обновить
     public String rubinUpdate(Model model,
                               @PathVariable(value = "id") long id,
                               @RequestParam String pidrozdil,
@@ -277,7 +274,12 @@ class RubinWeekController {
         rubin_week_up.setWeek_appeal(week_appeal);
         rubin_week_up.setWeek_issued(week_issued);
         rubinWeekRepository.save(rubin_week_up);
-        return "redirect:rubin/week/rubin-week-view";
+        return "redirect:/rubin/week/rubin-week-view";
     }
 
+    @PatchMapping("/rubin/week/{id}/remove")
+    public String remove(@ModelAttribute("rubin") Rubin_week rubin_week) {
+        rubinWeekRepository.save(rubin_week);
+        return "redirect:rubin/week/rubin-week-view";
+    }
 }

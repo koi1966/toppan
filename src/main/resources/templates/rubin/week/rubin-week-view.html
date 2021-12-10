@@ -27,18 +27,14 @@
 
 <!--        ********************************************       -->
 
-<!--        <form th:action="@{/rubin/week/rubin-week-view}" th:object="${model}" th:method="post">-->
         <form method="post">
-            <label for="data_v"> Дата внесення з : </label>
-            <input type="date" name="data_v" th:value="${dat}" placeholder="Дата внесення з" class="form-control"
-                   id="data_v"><br>
-
-            <label for="data_v2"> Дата внесення по: </label>
-            <input type="date" name="data_vpo" th:value="${dat_last}" placeholder="Дата внесення по"
-                   class="form-control" id="data_v2"><br>
-
+            <label for="data_v"> Дата внесення  з :  </label>
+                   <input type="date" name="data_v" th:value="${dat}" placeholder="Дата внесення  з " id="data_v"><br>
+            <br>
+            <label for="data_v2"> Дата внесення по:  </label>
+            <input type="date" name="data_vpo" th:value="${dat_last}" placeholder="Дата внесення по " id="data_v2"><br>
+            <br>
             <div class="col-lg-3" th:object="${pidrozdilList}">
-<!--                <select class="form-control" id="p_tsc" name="p_tsc">-->
                <select required size = "1" name = "p_tsc" class="form-control" id="p_tsc" >
                     <option th:value="${p_tsc}">Виберіть підрозділ</option>
                     <option th:each="tsc:${pidrozdilList}"
@@ -48,19 +44,15 @@
                     </option>
                 </select>
             </div>
-<!--            <button type="submit" name="action" value="save">save</button>-->
             <button type="submit" class="btn btn-success" name="action" value="search" >Пошук</button>
-            <button type="submit" class="btn btn-success" name="action" value="print" >Друк звіту</button>
-<!--            <button type="submit" class="btn btn-success" value="print" >Друк недільний</button>-->
-
-<!--            <a th:href="/rubin/week/rubin-print-week" role="button" class="btn btn-warning">Друк недільний</a>-->
-<!--            <a th:href="'/rubin/week/rubin-print-year'" role="button" class="btn btn-warning">Друк помісячний</a>-->
+            <button type="submit" class="btn btn-success" name="action" value="print" >Формування, друк тижневого звіту</button>
+            <button type="submit" class="btn btn-success" name="action" value="print_month" disabled>Формування, друк помісячного звіту</button>
         </form>
     </div>
     <div>
-        <div class="container mt-5 mb-1">
-            <!--            <a th:href="@{/people/{id}(id=${person.getId()})}" th:text="${person.getName()}">user</a>-->
-            <div th:each="rubin:${rubinList}" class="alert alert-info mt-2">
+        <div class="container mt-auto mb-auto">
+<!--            class="alert alert-info mt-2"-->
+            <div th:each="rubin:${rubinList}" class="shadow p-1 mb-1 bg-white rounded">
                 <a th:href="@{/rubin/week/{id}(id=${rubin.getId()})}"
                    th:text="${rubin.getPidrozdil() + ' .... ' + rubin.getData_v()}">user</a>
                 <p th:text="${'звернень за день :' +rubin.week_appeal + '  виданих за день : '+rubin.week_issued  }"/>
