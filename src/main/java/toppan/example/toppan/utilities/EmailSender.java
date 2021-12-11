@@ -14,13 +14,14 @@ public class EmailSender {
 
         public static void send( String to){
 
-//            String to = "o.klymchuk@zhi.hsc.gov.ua";       // sender email
-            String from = "it_rubin@zhi.hsc.gov.ua";       // receiver email
-            String host = "10.6.1.1";            // mail server host
+//            final String toto = "o.klymchuk@zhi.hsc.gov.ua";       // sender email
+            final String from = "o.klymchuk@zhi.hsc.gov.ua";       // receiver email
+            final String host = "10.30.1.1";            // mail server host
 
             Properties properties = System.getProperties();
             properties.setProperty("mail.smtp.host", host);
-
+//            System.out.println("Email Sent successfully...." + to);
+//            System.out.println("Email Sent successfully...." + toto);
             Session session = Session.getDefaultInstance(properties); // default session
 
             try {
@@ -34,7 +35,7 @@ public class EmailSender {
                 message.setSubject("Звіт по рубину"); // subject line
 
                 MimeBodyPart messageBodyPart = new MimeBodyPart();
-//                String filename = "C:/demo/rubin.xlsx";
+//                String filename = "rubin.xlsx";
                 String filename = "c:/RSC1840/rubin.xlsx";
                 DataSource source = new FileDataSource(filename);
                 messageBodyPart.setDataHandler(new DataHandler(source));
@@ -43,10 +44,9 @@ public class EmailSender {
                 // Send the complete message parts
                 message.setContent(multipart );
                 Transport.send(message);
-//                System.out.println("Email Sent successfully....");
+                System.out.println("Email Sent successfully...." + to);
             } catch (MessagingException mex){ mex.printStackTrace(); }
 
         }
-
 
 }

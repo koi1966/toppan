@@ -157,6 +157,15 @@ class RubinWeekController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        //        Проверяем на дубликат записи
+        String tsc_data = rubinRepository.setDatePidrozdil(data_last,tsc);
+        boolean isEmpty = tsc_data == null || tsc_data.trim().length() == 0;
+        if (!isEmpty) {
+
+            return "redirect:/";
+        }
+
         String[] str = rubinWekStr.split(",");
         EmailSender.send(str[6]);
         //  Запись сформированного отчета по таблицам
@@ -180,8 +189,10 @@ class RubinWeekController {
         rubin_year.setData_v(data_last);
         rubin_year.setYear_appeal(Integer.parseInt(str[2]));
         rubin_year.setYear_issued(Integer.parseInt(str[3]));
-        rubinYearRepository.save(rubin_year);  //  Запист в годовую таблицю
-        return "rubin/week/rubin-week-view";
+        rubinYearRepository.save(rubin_year);  //  Запись в годовую таблицю
+
+        return "redirect:/rubin/week/rubin-week-view";
+//        return "redirect:/";
     }
 
     @GetMapping("/rubin/week/rubin-add-week")
