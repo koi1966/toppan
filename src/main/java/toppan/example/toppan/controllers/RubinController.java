@@ -92,9 +92,9 @@ public class RubinController {
     public String rubinadd(HttpServletRequest request, Model model) {
 //        вытягивает IP копма с которого вносят информацию
         String ip_user = request.getRemoteAddr();
-        int end = UtilitesSting.ordinalIndexOf(ip_user, ".", 2);
+        int ip_tsc = UtilitesSting.ordinalIndexOf(ip_user, ".", 2);
 //        узнаеп подсеть
-        String ip = ip_user.substring(0, end);
+        String ip = ip_user.substring(0, ip_tsc);
 //        по подсети узнаем из какого ТСЦ зашли работать
         String tsc = pidrozdilRepository.setNamePidrozdil(ip);
 
