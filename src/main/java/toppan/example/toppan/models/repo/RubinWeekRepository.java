@@ -16,12 +16,12 @@ public interface RubinWeekRepository extends CrudRepository<Rubin_week, Long> {
 
     @Query(nativeQuery = true,
             value = "SELECT * FROM rubin_week r " +
-                    "WHERE r.data_v > :data_v " +
-                    "AND r.data_v <= :data_last " +
+                    "WHERE r.data_v > :startDate " +
+                    "AND r.data_v <= :endDate " +
                     "and r.pidrozdil = :tsc " +
                     "ORDER BY r.pidrozdil,r.data_v ")
-    List<Rubin_week> setListDateRubinWeek(@Param("data_v") Date data_v,
-                                          @Param("data_last") Date data_last,
+    List<Rubin_week> setListDateRubinWeek(@Param("startDate") Date data_v,
+                                          @Param("endDate") Date data_last,
                                           @Param("tsc") String tsc);
 
     //    Сумы нужніх полей за период по нужному ТСЦ
@@ -35,12 +35,24 @@ public interface RubinWeekRepository extends CrudRepository<Rubin_week, Long> {
                     "and data_v = (select max(kk.data_v) " +
                     "from rubin_year kk where kk.pidrozdil = :tsc)) as year_issued " +
                     "from rubin_week " +
-                    "where data_v > :data_v " +
-                    "and data_v <= :data_last " +
+                    "where data_v > :startDate " +
+                    "and data_v <= :endDate " +
                     "and pidrozdil = :tsc")
-    String setWeekPrint(@Param("data_v") Date data_v,
-                        @Param("data_last") Date data_last,
+    String setWeekPrint(@Param("startDate") Date data_v,
+                        @Param("endDate") Date data_last,
                         @Param("tsc") String tsc);
+
+    //  МЕСЯЧНЫЙ ОТЧЕТ  Сумы нужных полей за период по нужному ТСЦ
+    @Query(nativeQuery = true,
+            value = "SELECT sum(week_appeal) as week_appeal, " +
+                    "sum(week_issued) as week_issued " +
+                    "from rubin_week " +
+                    "where data_v >= :startDate " +
+                    "and data_v <= :endDate " +
+                    "and pidrozdil = :tsc")
+    String setSumWeek(@Param("startDate") String data_v,
+                      @Param("endDate") String data_last,
+                      @Param("tsc") String tsc);
 }
 //    @Query(nativeQuery = true,
 //            value = "SELECT sum(week_appeal) as week_appeal, sum(week_issued) as week_issued, " +

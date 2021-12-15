@@ -3,7 +3,7 @@
 <head>
     <title>Блог РСЦ</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css">
+<!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css">-->
 </head>
 
 <body data-hasqtip="0">
@@ -12,25 +12,12 @@
 
     <header th:insert="blocks/header.html :: header"></header>
     <div>
-<!--        ********************************************      -->
-<!--        <form action="#" data-th-action="@{/action/edit}" data-th-object="${model}" method="post">-->
-<!--        <button type="submit" name="action" value="save">save</button>-->
-<!--        <button type="submit" name="action" value="cancel">cancel</button>-->
-<!--        </form>-->
 
-<!--        @RequestMapping(value="/edit", method=RequestMethod.POST, params="action=save")-->
-<!--        public ModelAndView save() {}-->
-
-
-<!--        @RequestMapping(value="/edit", method=RequestMethod.POST, params="action=cancel")-->
-<!--        public ModelAndView cancel() {}-->
-
-<!--        ********************************************       -->
 
         <form method="post">
             <label for="data_v"> Дата внесення  з :  </label>
                    <input type="date" name="data_v" th:value="${dat}" placeholder="Дата внесення  з " id="data_v"><br>
-            <br>
+            <br> <br> <br> <br> <br>
             <label for="data_v2"> Дата внесення по:  </label>
             <input type="date" name="data_vpo" th:value="${dat_last}" placeholder="Дата внесення по " id="data_v2"><br>
             <br>
@@ -46,7 +33,7 @@
             </div>
             <button type="submit" class="btn btn-success" name="action" value="search" >Пошук</button>
             <button type="submit" class="btn btn-success" name="action" value="print" >Формування, друк тижневого звіту</button>
-            <button type="submit" class="btn btn-success" name="action" value="print_month" disabled>Формування, друк помісячного звіту</button>
+            <button type="submit" class="btn btn-success" name="action" value="print_month" >Формування, друк помісячного звіту</button>
             <button type="submit" class="btn btn-success" name="action" value="month" disabled>Попередня помісячна інфа в звіт</button>
         </form>
     </div>

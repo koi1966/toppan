@@ -33,7 +33,6 @@ public class RubinController {
     private final PidrozdilRepository pidrozdilRepository;
 
     private final CreateExcel createExcel;
-//    private CreateDoc createDoc;
 
     public RubinController(RubinRepository rubinRepository, PidrozdilRepository pidrozdilRepository, CreateExcel createExcel) {
         this.rubinRepository = rubinRepository;
@@ -45,7 +44,6 @@ public class RubinController {
     public String rubinview(Model model) {
 //      находим и передаем все записи на вюшку
 //        List<Rubin> rubinList = (List<Rubin>) rubinRepository.findAll();
-
         String date_s = LocalDate.now().toString(); // берем локальную дату переводим в String
 
         Date data_v = null;
@@ -54,7 +52,6 @@ public class RubinController {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
         List<Rubin> rubinList = (List<Rubin>) rubinRepository.setListDateRubin(data_v);
         model.addAttribute("rubinList", rubinList);
         model.addAttribute("dat", data_v);
@@ -68,7 +65,6 @@ public class RubinController {
         List<Rubin> rubinList = (List<Rubin>) rubinRepository.setListDateRubin(data_v);
         model.addAttribute("rubinList", rubinList);
         model.addAttribute("dat", data_v);
-
         return "rubin/rubin-view-p";
     }
 
@@ -79,24 +75,18 @@ public class RubinController {
 //                           @RequestParam int year,
 //                           @RequestParam int year_1, @RequestParam("data_v") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date data_v) {
     public String rubinadd(@Valid Rubin rubin, BindingResult bindingResult) {
-//        public String rubinadd(Rubin rubin) {
         if (bindingResult.hasErrors())
             return "rubin/rubin-add";
-//        Rubin rubin = new Rubin(pidrozdil, week, week_1, year_0, year_1, data_v);
         rubinRepository.save(rubin);
-//        final String s = "redirect:/rubin/rubin-view";
         return "redirect:/rubin/rubin-view";
     }
 
     @GetMapping("/rubin/rubin-add")
     public String rubinadd(HttpServletRequest request, Model model) {
-//        вытягивает IP копма с которого вносят информацию
-        String ip_user = request.getRemoteAddr();
+        String ip_user = request.getRemoteAddr();//        вытягивает IP копма с которого вносят информацию
         int ip_tsc = UtilitesSting.ordinalIndexOf(ip_user, ".", 2);
-//        узнаеп подсеть
-        String ip = ip_user.substring(0, ip_tsc);
-//        по подсети узнаем из какого ТСЦ зашли работать
-        String tsc = pidrozdilRepository.setNamePidrozdil(ip);
+        String ip = ip_user.substring(0, ip_tsc);//        узнаеп подсеть
+        String tsc = pidrozdilRepository.setNamePidrozdil(ip);//        по подсети узнаем из какого ТСЦ зашли работать
 
         boolean isEmpty = tsc == null || tsc.trim().length() == 0;
         if (isEmpty) {
@@ -104,80 +94,67 @@ public class RubinController {
         }
 
         Date date = new Date();
-//        //Getting the default zone id
-        ZoneId defaultZoneId = ZoneId.systemDefault();
-        //Converting the date to Instant
-        Instant instant = date.toInstant();
+        ZoneId defaultZoneId = ZoneId.systemDefault();//        //Getting the default zone id
+        Instant instant = date.toInstant();        //Converting the date to Instant
 
         Rubin rubin = new Rubin();
         rubin.setPidrozdil(pidrozdilRepository.setNamePidrozdil(ip));
         rubin.setData_v(instant.atZone(defaultZoneId).toLocalDate());
-
         model.addAttribute("rubin", rubin);
-
         return "rubin/rubin-add";
     }
 
     @PostMapping("/rubin/rubin-view-p")
     public String rubinViewP(@RequestParam("data_v") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date data_v, Model model) {
-//        model.getAttribute();
 
         SimpleDateFormat formatForDateNow = new SimpleDateFormat("yyyy-MM-dd");
-//        System.out.println("Текущая дата " + formatForDateNow.format(data_v));
         String rubinStr = rubinRepository.setSumDate(data_v);
+
+//        rubinStr = rubinStr + ',' + "(станом на " + data_last_str + ")," + tsc + ',' + pidrozdilRepository.setEmailPidrozdil(tsc);
+        rubinStr = rubinStr + ',' + "(станом на " + LocalDate.now().toString() + ")";
+
         model.addAttribute("dat", data_v);
-//  Внесение полученной информации в ексл и отправка его на почту
         try {
-            createExcel.CreateF(rubinStr);
+            createExcel.CreateF(rubinStr);//  Внесение полученной информации в ексл и отправка его на почту
         } catch (IOException e) {
             e.printStackTrace();
         }
         EmailSender.send("o.klymchuk@zhi.hsc.gov.ua");
-//        final String s = "redirect:/rubin/rubin-view";
         return "redirect:/rubin/rubin-view";
     }
 
-    @PostMapping("/rubin/rubin-print")
-    public String rubinPrint(Model model) {
-//       ****************************
-        String date_s = LocalDate.now().toString();
-
-        Date data_v = null;
-        try {
-            data_v = new SimpleDateFormat("yyyy-MM-dd").parse(date_s);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        String rubinStr = rubinRepository.setSumDate(data_v);
-        model.addAttribute("dat", data_v);
-
-        try {
-            createExcel.CreateF(rubinStr);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-//        final String s = "redirect:/rubin/rubin-view";
-        return "redirect:/rubin/rubin-view";
-    }
+//    @PostMapping("/rubin/rubin-print")
+//    public String rubinPrint(Model model) {
+//        String date_s = LocalDate.now().toString();
+//        Date data_v = null;
+//        try {
+//            data_v = new SimpleDateFormat("yyyy-MM-dd").parse(date_s);
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//        String rubinStr = rubinRepository.setSumDate(data_v);
+//        model.addAttribute("dat", data_v);
+//        try {
+//            createExcel.CreateF(rubinStr);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return "redirect:/rubin/rubin-view";
+//    }
 
     @GetMapping("/rubin/{id}")
     public String rubinDetaіls(Model model, @PathVariable(value = "id") long id) {
         //      находим и передаем єту одну запись на вюшку
         Optional<Rubin> rubin = rubinRepository.findById(id);
         ArrayList<Rubin> res = new ArrayList<>();
-
         rubin.ifPresent(res::add);
         model.addAttribute("rubin", res);
-
-//       отображаем найденное на вюшке
-        return "rubin/rubin-deteils";
+        return "rubin/rubin-deteils";//       отображаем найденное на вюшке
     }
 
     @PatchMapping("/rubin/{id}/edit")
     public String update(@ModelAttribute("rubin") Rubin rubin) {
         rubinRepository.save(rubin);
-//        final String s = "redirect:/rubin/rubin-view";
         return "redirect:/rubin/rubin-view";
     }
 
@@ -186,11 +163,9 @@ public class RubinController {
         //      находим и передаем єту одну запись на вюшку
         Optional<Rubin> rubin = rubinRepository.findById(id);
         ArrayList<Rubin> res = new ArrayList<>();
-
         rubin.ifPresent(res::add);
         model.addAttribute("rubin", res);
-//       редактируем найденное на вюшке
-        return "rubin/rubin-edit";
+        return "rubin/rubin-edit";//       редактируем найденное на вюшке
     }
 
 

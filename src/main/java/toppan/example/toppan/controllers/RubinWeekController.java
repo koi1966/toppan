@@ -17,6 +17,8 @@ import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -50,12 +52,10 @@ class RubinWeekController {
         final LocalDate today = LocalDate.now();  // берем сегдняшнюю дату
 //        final LocalDate nextSunday = today.with(next(SUNDAY)); // берем будущее воскресенье
         final LocalDate thisPastSunday = today.with(previous(SUNDAY));  // берем прошедшее воскресенье
-        //***********************************
 //        LocalDate dat_firs_t = LocalDate.now().with(TemporalAdjusters.firstDayOfMonth());  //        Берем первое число текущего месяца
         String dat_first = thisPastSunday.toString();
-//  dat_first - переводим в тип Date  первое число месяца
-        Date dat_f = new SimpleDateFormat("yyyy-MM-dd").parse(dat_first);
 
+        Date dat_f = new SimpleDateFormat("yyyy-MM-dd").parse(dat_first);//  dat_first - переводим в тип Date  первое число месяца
         String date_s = LocalDate.now().toString(); // берем локальную дату переводим в String
 
         Date data_v = null;
@@ -64,7 +64,6 @@ class RubinWeekController {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        //***********************************
         String ip_user = request.getRemoteAddr(); //        вытягивает IP копма с которого вносят информацию
 //        ip_user="172.0.0.0";
         int end = UtilitesSting.ordinalIndexOf(ip_user, ".", 2);
@@ -87,7 +86,7 @@ class RubinWeekController {
     public String rubinViewData(@RequestParam("data_v") String data_s,
                                 @RequestParam("data_vpo") String data_last_str,
                                 @RequestParam("p_tsc") String tsc,
-//                                @RequestParam(value="action", required=true) String action,
+//                              @RequestParam(value="action", required=true) String action,
                                 Model model) {
 
         SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
@@ -119,51 +118,49 @@ class RubinWeekController {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @PostMapping(value = "/rubin/week/rubin-week-view", params = "action=print")
-    public String rubinViewDataPrint(@RequestParam("data_v") String data_s,
-                                     @RequestParam("data_vpo") String data_last_str,
+    public String rubinViewDataPrint(@RequestParam("data_v") String data_sart_str,
+                                     @RequestParam("data_vpo") String data_end_str,
                                      @RequestParam("p_tsc") String tsc_front,
                                      Model model, HttpServletRequest request) {
 
         //  сверяем ТСЦ которое создает отчет и сравниваем IP копма с которого вносят информацию
         String ip_user = request.getRemoteAddr();
         int ip_tsc = UtilitesSting.ordinalIndexOf(ip_user, ".", 2);
-//        узнаеп подсеть
-        String ip = ip_user.substring(0, ip_tsc);
-//        по подсети узнаем из какого ТСЦ зашли работать
-        String tsc = pidrozdilRepository.setNamePidrozdil(ip);
+
+        String ip = ip_user.substring(0, ip_tsc);//        узнаеп подсеть
+        String tsc = pidrozdilRepository.setNamePidrozdil(ip);//        по подсети узнаем из какого ТСЦ зашли работать
 
         if (tsc != "РСЦ 1840") {
             if (tsc_front != tsc) {
-                return "redirect:/";
-            }  //  если разные ТСЦ то на головну сторынку
+                return "redirect:/";//  если разные ТСЦ то на головну сторынку
+            }
         }
 
         SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
         Date data_v = null;
         try {
-            data_v = sdf2.parse(data_s);
+            data_v = sdf2.parse(data_sart_str);
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
         Date data_last = null;
         try {
-            data_last = sdf2.parse(data_last_str);
+            data_last = sdf2.parse(data_end_str);
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
         String rubinWekStr = rubinWeekRepository.setWeekPrint(data_v, data_last, tsc);
-        rubinWekStr = rubinWekStr + ',' + "(станом на " + data_last_str + ")," + tsc + ',' + pidrozdilRepository.setEmailPidrozdil(tsc);
-        //  Внесение полученной информации в ексл и отправка его на почту
+        rubinWekStr = rubinWekStr + ',' + "(станом на " + data_end_str + ")," + tsc + ',' + pidrozdilRepository.setEmailPidrozdil(tsc);
+
         try {
-            createExcel.CreateF(rubinWekStr);
+            createExcel.CreateF(rubinWekStr);//  Внесение полученной информации в ексл и отправка его на почту
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        //        Проверяем на дубликат записи
-        String tsc_data = rubinRepository.setDatePidrozdil(data_last, tsc);
+        String tsc_data = rubinRepository.setDatePidrozdil(data_last, tsc);//  Проверяем на дубликат отчета
         boolean isEmpty = tsc_data == null || tsc_data.trim().length() == 0;
         if (!isEmpty) {
 
@@ -176,7 +173,7 @@ class RubinWeekController {
         Rubin rubin = new Rubin();
         rubin.setPidrozdil(tsc);
 
-        LocalDate dat_f = LocalDate.parse(data_last_str);
+        LocalDate dat_f = LocalDate.parse(data_end_str);
 //        Date dat_f =new SimpleDateFormat("dd/MM/yyyy").parse(data_last_str);
         rubin.setData_v(dat_f);
 
@@ -187,8 +184,7 @@ class RubinWeekController {
         rubin.setYear_1(Integer.parseInt(str[3]));
         rubinRepository.save(rubin);
 
-        //  Записать недельные данные в таблицу rubin_year
-        Rubin_year rubin_year = new Rubin_year();
+        Rubin_year rubin_year = new Rubin_year();//  Записать недельные данные в таблицу rubin_year
         rubin_year.setPidrozdil(tsc);
         rubin_year.setData_v(data_last);
         rubin_year.setYear_appeal(Integer.parseInt(str[2]));
@@ -196,29 +192,82 @@ class RubinWeekController {
         rubinYearRepository.save(rubin_year);  //  Запись в годовую таблицю
 
         return "redirect:/rubin/week/rubin-week-view";
-//        return "redirect:/";
     }
 
-    //   print_month
     @PostMapping(value = "/rubin/week/rubin-week-view", params = "action=print_month")
-    public String rubinMouth(HttpServletRequest request){
+    public String rubinMouth(@RequestParam("data_v") String data_s,
+                             @RequestParam("data_vpo") String data_last_str,
+                             @RequestParam("p_tsc") String tsc_front,
+                             Model model,HttpServletRequest request){
+       //  Первая и последяя дата предідущего месяца  = Почитать =-> С помощью Java.Time очень легко писать код.
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate now = LocalDate.now();
+        String startDate = now.minusMonths(1).with(TemporalAdjusters.firstDayOfMonth()).format(format);
+        String endDate = now.minusMonths(1).with(TemporalAdjusters.lastDayOfMonth()).format(format);
 
+        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+        Date start_Date = null;
+        try {
+            start_Date = sdf2.parse(startDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        Date end_Date = null;
+        try {
+            end_Date = sdf2.parse(endDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        // проверить на дубликат,
+        // ***********************************************
+//        DateTimeFormatter format_2 = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+//        String newString = now.minusMonths(1).with(TemporalAdjusters.lastDayOfMonth()).format(format_2);
+//        String month_year = newString.substring(3);
+//        String tsc_data = monthRepository.setMonthPidrozdil(month_year, tsc_front);//  Проверяем на дубликат отчета
+//        boolean isEmpty = tsc_data == null || tsc_data.trim().length() == 0;
+//        if (!isEmpty) {
+//
+//            return "redirect:/";
+//        }
+        // ***********************************************
+        // и создать месячный отчет
+
+
+        String rubinWeekMounth = rubinWeekRepository.setSumWeek(startDate, endDate, tsc_front);
+        //  формируем запись для таблицы - rubin_month
+        String[] str = rubinWeekMounth.split(",");
+        Rubin_month rubin_month = new Rubin_month();//  Записать месячніе данные в таблицу Rubin_month
+        rubin_month.setMonth_appeal(Integer.parseInt(str[0]));
+        rubin_month.setMonth_issued(Integer.parseInt(str[1]));
+        rubin_month.setPidrozdil(tsc_front);
+        rubin_month.setData_v(end_Date);
+        rubin_month.setMonth_year(endDate.substring(3));
+        monthRepository.save(rubin_month);  //  Запись в месячную таблицу
+
+
+        model.addAttribute("rubinList", rubinWeekMounth);
+
+        List<Pidrozdil> pidrozdilList = (List<Pidrozdil>) pidrozdilRepository.findAll();
+        model.addAttribute("pidrozdilList", pidrozdilList);
+
+        model.addAttribute("dat", startDate);
+        model.addAttribute("dat_last", endDate);
+//        String mod = model.toString();
         return "redirect:/";
     }
-    //
 
     @GetMapping("/rubin/week/rubin-add-week")
     public String rubinAddWeek(HttpServletRequest request, Model model) {
-//        вытягивает IP копма с которого вносят информацию
-        String ip_user = request.getRemoteAddr();
+
+        String ip_user = request.getRemoteAddr();//        вытягивает IP копма с которого вносят информацию
 //        ip_user="172.0.0.0";
         int end = UtilitesSting.ordinalIndexOf(ip_user, ".", 2);
 
-//        узнаеп подсеть
-        String ip = ip_user.substring(0, end);
+        String ip = ip_user.substring(0, end);//        узнаел подсеть
 
-//        по подсети узнаем из какого ТСЦ зашли работать
-        String tsc = pidrozdilRepository.setNamePidrozdil(ip);
+        String tsc = pidrozdilRepository.setNamePidrozdil(ip);//        по подсети узнаем из какого ТСЦ зашли работать
 
         boolean isEmpty = tsc == null || tsc.trim().length() == 0;
         if (isEmpty) {
@@ -226,10 +275,8 @@ class RubinWeekController {
         }
 
         Date date = new Date();
-//        //Getting the default zone id
-        ZoneId defaultZoneId = ZoneId.systemDefault();
-        //Converting the date to Instant
-        Instant instant = date.toInstant();
+        ZoneId defaultZoneId = ZoneId.systemDefault();//        //Getting the default zone id
+        Instant instant = date.toInstant();//Converting the date to Instant
 
         Rubin_week rubin_week = new Rubin_week();
         rubin_week.setPidrozdil(pidrozdilRepository.setNamePidrozdil(ip));
@@ -257,14 +304,12 @@ class RubinWeekController {
 
     @GetMapping("/rubin/week/{id}")
     public String rubinWeekDetails(Model model, @PathVariable("id") long id) {
-        //      находим и передаем єту одну запись на вюшку
-        Optional<Rubin_week> rubin = rubinWeekRepository.findById(id);
-        ArrayList<Rubin_week> res = new ArrayList<>();
 
+        Optional<Rubin_week> rubin = rubinWeekRepository.findById(id);//      находим и передаем єту одну запись на вюшку
+        ArrayList<Rubin_week> res = new ArrayList<>();
         rubin.ifPresent(res::add);
         model.addAttribute("rubin_week_det", res);
-//       отображаем найденное на вюшке
-        return "rubin/week/rubin-week-deteils";
+        return "rubin/week/rubin-week-deteils";//       отображаем найденное на вюшке
     }
 
     @PatchMapping("/rubin/week/{id}/edit")
@@ -307,7 +352,7 @@ class RubinWeekController {
     }
 
 
-    @PostMapping(value = "/rubin/week/rubin-week-view", params = "action=month")
+    @PostMapping(value = "/rubin/week/rubin-week-view", params = "action=month_stop")
     public String rubinAddMounh() {
 
         SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
