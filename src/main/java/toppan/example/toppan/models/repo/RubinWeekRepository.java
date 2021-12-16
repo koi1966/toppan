@@ -44,15 +44,8 @@ public interface RubinWeekRepository extends CrudRepository<Rubin_week, Long> {
 
     //  МЕСЯЧНЫЙ ОТЧЕТ  Сумы нужных полей за период по нужному ТСЦ
     @Query(nativeQuery = true,
-            value = "SELECT sum(week_appeal) as week_appeal, " +
-                    "sum(week_issued) as week_issued " +
-                    "from rubin_week " +
-                    "where data_v >= :startDate " +
-                    "and data_v <= :endDate " +
-                    "and pidrozdil = :tsc")
-    String setSumWeek(@Param("startDate") String data_v,
-                      @Param("endDate") String data_last,
-                      @Param("tsc") String tsc);
+            value = "SELECT sum(week_appeal) as week_appeal, sum(week_issued) as week_issued, ru.pidrozdil from rubin_week ru where ru.data_v >= :start_Date and ru.data_v <= :end_Date and ru.pidrozdil = :tsc group by ru.pidrozdil")
+    String setSumWeek(@Param("start_Date") Date start_Date, @Param("end_Date") Date end_Date, @Param("tsc") String tsc);
 }
 //    @Query(nativeQuery = true,
 //            value = "SELECT sum(week_appeal) as week_appeal, sum(week_issued) as week_issued, " +

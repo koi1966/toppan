@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import toppan.example.toppan.createDoc.CreateExcel;
+import toppan.example.toppan.createDoc.CreateExilMonth;
 import toppan.example.toppan.models.*;
 import toppan.example.toppan.models.repo.*;
 import toppan.example.toppan.utilities.EmailSender;
@@ -222,20 +223,23 @@ class RubinWeekController {
 
         // проверить на дубликат,
         // ***********************************************
-//        DateTimeFormatter format_2 = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-//        String newString = now.minusMonths(1).with(TemporalAdjusters.lastDayOfMonth()).format(format_2);
-//        String month_year = newString.substring(3);
-//        String tsc_data = monthRepository.setMonthPidrozdil(month_year, tsc_front);//  Проверяем на дубликат отчета
-//        boolean isEmpty = tsc_data == null || tsc_data.trim().length() == 0;
-//        if (!isEmpty) {
-//
-//            return "redirect:/";
-//        }
+        DateTimeFormatter format_2 = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        String newString = now.minusMonths(1).with(TemporalAdjusters.lastDayOfMonth()).format(format_2);
+        String month_year = newString.substring(3);
+        String tsc_data = monthRepository.setMonthPidrozdil(month_year, tsc_front);//  Проверяем на дубликат отчета
+        boolean isEmpty = tsc_data == null || tsc_data.trim().length() == 0;
+        if (!isEmpty) {
+            return "redirect:/";
+        }
         // ***********************************************
-        // и создать месячный отчет
+        // если нет записи создать месячный отчет
+        DateTimeFormatter format_end = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate nowend = LocalDate.now();
+         endDate = nowend.minusMonths(1).with(TemporalAdjusters.lastDayOfMonth()).format(format_end);
 
 
-        String rubinWeekMounth = rubinWeekRepository.setSumWeek(startDate, endDate, tsc_front);
+        String rubinWeekMounth = rubinWeekRepository.setSumWeek(start_Date, end_Date, tsc_front);
+        rubinWeekMounth = rubinWeekMounth + ',' + "(станом за " + month_year + ")," + pidrozdilRepository.setEmailPidrozdil(tsc_front);
         //  формируем запись для таблицы - rubin_month
         String[] str = rubinWeekMounth.split(",");
         Rubin_month rubin_month = new Rubin_month();//  Записать месячніе данные в таблицу Rubin_month
@@ -246,7 +250,16 @@ class RubinWeekController {
         rubin_month.setMonth_year(endDate.substring(3));
         monthRepository.save(rubin_month);  //  Запись в месячную таблицу
 
+//      Внестии в ексел
+        try {
+            CreateExilMonth.CreateMonth(rubinWeekMounth);//  Внесение полученной информации в ексл и отправка его на почту
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+//      И отправить юзеру  на почту
 
+        EmailSender.send(str[4]);
+//
         model.addAttribute("rubinList", rubinWeekMounth);
 
         List<Pidrozdil> pidrozdilList = (List<Pidrozdil>) pidrozdilRepository.findAll();
