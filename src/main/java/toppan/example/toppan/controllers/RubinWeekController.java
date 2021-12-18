@@ -220,7 +220,6 @@ class RubinWeekController {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
         // проверить на дубликат,
         // ***********************************************
         DateTimeFormatter format_2 = DateTimeFormatter.ofPattern("dd.MM.yyyy");
