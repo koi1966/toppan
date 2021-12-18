@@ -125,17 +125,18 @@ class RubinWeekController {
                                      Model model, HttpServletRequest request) {
 
         //  сверяем ТСЦ которое создает отчет и сравниваем IP копма с которого вносят информацию
-        String ip_user = request.getRemoteAddr();
-        int ip_tsc = UtilitesSting.ordinalIndexOf(ip_user, ".", 2);
-
-        String ip = ip_user.substring(0, ip_tsc);//        узнаеп подсеть
-        String tsc = pidrozdilRepository.setNamePidrozdil(ip);//        по подсети узнаем из какого ТСЦ зашли работать
-
-        if (tsc != "РСЦ 1840") {
-            if (tsc_front != tsc) {
-                return "redirect:/";//  если разные ТСЦ то на головну сторынку
-            }
-        }
+//        String ip_user = request.getRemoteAddr();
+//        int ip_tsc = UtilitesSting.ordinalIndexOf(ip_user, ".", 2);
+//
+//        String ip = ip_user.substring(0, ip_tsc);//        узнаеп подсеть
+//        String tsc = pidrozdilRepository.setNamePidrozdil(ip);//        по подсети узнаем из какого ТСЦ зашли работать
+//
+//        if (tsc != "РСЦ 1840") {
+//            if (tsc_front != tsc) {
+//                return "redirect:/";//  если разные ТСЦ то на головну сторынку
+//            }
+//        }
+//     сверяем ТСЦ которое создает отчет и сравниваем IP копма с которого вносят информацию
 
         SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
         Date data_v = null;
@@ -152,8 +153,8 @@ class RubinWeekController {
             e.printStackTrace();
         }
 
-        String rubinWekStr = rubinWeekRepository.setWeekPrint(data_v, data_last, tsc);
-        rubinWekStr = rubinWekStr + ',' + "(станом на " + data_end_str + ")," + tsc + ',' + pidrozdilRepository.setEmailPidrozdil(tsc);
+        String rubinWekStr = rubinWeekRepository.setWeekPrint(data_v, data_last, tsc_front);
+        rubinWekStr = rubinWekStr + ',' + "(станом на " + data_end_str + ")," + tsc_front + ',' + pidrozdilRepository.setEmailPidrozdil(tsc_front);
 
         try {
             createExcel.CreateF(rubinWekStr);//  Внесение полученной информации в ексл и отправка его на почту
@@ -161,7 +162,7 @@ class RubinWeekController {
             e.printStackTrace();
         }
 
-        String tsc_data = rubinRepository.setDatePidrozdil(data_last, tsc);//  Проверяем на дубликат отчета
+        String tsc_data = rubinRepository.setDatePidrozdil(data_last, tsc_front);//  Проверяем на дубликат отчета
         boolean isEmpty = tsc_data == null || tsc_data.trim().length() == 0;
         if (!isEmpty) {
 
@@ -172,7 +173,7 @@ class RubinWeekController {
         EmailSender.send(str[6]);
         //  Запись сформированного отчета по таблицам
         Rubin rubin = new Rubin();
-        rubin.setPidrozdil(tsc);
+        rubin.setPidrozdil(tsc_front);
 
         LocalDate dat_f = LocalDate.parse(data_end_str);
 //        Date dat_f =new SimpleDateFormat("dd/MM/yyyy").parse(data_last_str);
@@ -186,7 +187,7 @@ class RubinWeekController {
         rubinRepository.save(rubin);
 
         Rubin_year rubin_year = new Rubin_year();//  Записать недельные данные в таблицу rubin_year
-        rubin_year.setPidrozdil(tsc);
+        rubin_year.setPidrozdil(tsc_front);
         rubin_year.setData_v(data_last);
         rubin_year.setYear_appeal(Integer.parseInt(str[2]));
         rubin_year.setYear_issued(Integer.parseInt(str[3]));
@@ -222,6 +223,8 @@ class RubinWeekController {
         }
         // проверить на дубликат,
         // ***********************************************
+        //  нужно тестировать
+        // ***********************************************
         DateTimeFormatter format_2 = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         String newString = now.minusMonths(1).with(TemporalAdjusters.lastDayOfMonth()).format(format_2);
         String month_year = newString.substring(3);
@@ -230,6 +233,7 @@ class RubinWeekController {
         if (!isEmpty) {
             return "redirect:/";
         }
+        // ***********************************************
         // ***********************************************
         // если нет записи создать месячный отчет
         DateTimeFormatter format_end = DateTimeFormatter.ofPattern("dd-MM-yyyy");

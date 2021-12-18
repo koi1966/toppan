@@ -12,13 +12,13 @@
 
     <header th:insert="blocks/header.html :: header"></header>
     <div>
-        <form action="../rubin/rubin-view-p" method="post">
+        <form action="/rubin/rubin-view-p" method="post">
             <!--        <input type="text" th:value="${tsc}" disabled name="pidrozdil" placeholder="Підрозділ" class="form-control" id="pidrozdil"><br>-->
             <input type="date" id="data_v" name="data_v" th:value="${dat}">
 <!--            <input type="date" th:value="${dat}" name="data_v" placeholder="Дата внесення" class="form-control" id="data_v" ><br>-->
 
-            <button type="submit" class="btn btn-success">Формування та друк тижневї довідки РСЦ</button><br>
-            <button type="submit" class="btn btn-success" name="action" value="print_month" >Формування, друк помісячного звіту РЦС</button>
+            <button type="submit" class="btn btn-success">Формування та друк тижневї довідки РСЦ</button>
+<!--            <button type="submit" class="btn btn-success" name="action" value="print_month" >Формування, друк помісячного звіту РЦС</button>-->
 
         </form>
     </div>

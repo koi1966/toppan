@@ -119,28 +119,11 @@ public class RubinController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        EmailSender.send("o.klymchuk@zhi.hsc.gov.ua");
+        EmailSender.send("it@zhi.hsc.gov.ua");
         return "redirect:/rubin/rubin-view";
     }
 
-//    @PostMapping("/rubin/rubin-print")
-//    public String rubinPrint(Model model) {
-//        String date_s = LocalDate.now().toString();
-//        Date data_v = null;
-//        try {
-//            data_v = new SimpleDateFormat("yyyy-MM-dd").parse(date_s);
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//        String rubinStr = rubinRepository.setSumDate(data_v);
-//        model.addAttribute("dat", data_v);
-//        try {
-//            createExcel.CreateF(rubinStr);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return "redirect:/rubin/rubin-view";
-//    }
+
 
     @GetMapping("/rubin/{id}")
     public String rubinDetaіls(Model model, @PathVariable(value = "id") long id) {
@@ -186,6 +169,12 @@ public class RubinController {
         rubin.setYear_1(year_1);
         rubinRepository.save(rubin);
         return "redirect:/rubin/rubin-view";
+    }
+
+    @GetMapping("/rubin/rubin-view-month")
+    public String rubinViewmonth(Model model) {
+
+        return "rubin/rubin-view-month";
     }
 
 }
