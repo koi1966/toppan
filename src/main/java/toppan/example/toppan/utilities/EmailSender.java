@@ -19,7 +19,7 @@ public class EmailSender {
             final String host = "10.30.1.1";            // mail server host
 //            final String host = "10.6.1.1";
             Properties properties = System.getProperties();
-            properties.setProperty("mail.smtp.host", host);
+            properties.setProperty("mail.smtp.host", host); //"mail.smtp.host"
 //            System.out.println("Email Sent successfully...." + to);
 //            System.out.println("Email Sent successfully...." + toto);
             Session session = Session.getDefaultInstance(properties); // default session
