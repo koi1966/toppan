@@ -25,22 +25,25 @@ public interface RubinWeekRepository extends CrudRepository<Rubin_week, Long> {
                                           @Param("tsc") String tsc);
 
     @Query(nativeQuery = true,
-            value = "SELECT sum(week_appeal) as week_appeal, " +
-                    "sum(week_issued) as week_issued " +
+            value = "SELECT sum(week_appeal) as week_appeal, sum(week_issued) as week_issued  " +
                     "FROM rubin_week " +
-                    "WHERE data_v >= :start_Date " +
-                    "AND data_v <= :end_Date");
-
-    String setSumWeek(@Param("start_Date") Date start_Date,
-                      @Param("end_Date") Date end_Date);
+                    "WHERE data_v >= :startDate " +
+                    "AND data_v <= :endDate")
+    String setRubinDate(@Param("startDate") Date startDate,
+                        @Param("endDate") Date endDate);
 
     //    Сумы нужніх полей за период по нужному ТСЦ
     @Query(nativeQuery = true,
-            value = "SELECT sum(week_appeal) as week_appeal, sum(week_issued) as week_issued, " +
-                    "sum(week_appeal) + (SELECT year_appeal from rubin_year ry " +
-                    "where ry.pidrozdil = :tsc and data_v = (select max(kk.data_v) " +
-                    "from rubin_year kk where kk.pidrozdil = :tsc)) as year_appeal," +
-                    "sum(week_issued) + (SELECT year_issued from rubin_year ry " +
+            value = "SELECT sum(week_appeal) as week_appeal, " +
+                    "sum(week_issued) as week_issued, " +
+                    "sum(week_appeal) + " +
+                    "(SELECT year_appeal " +
+                    "from rubin_year ry " +
+                    "where ry.pidrozdil = :tsc " +
+                    "and data_v = (select max(kk.data_v) " +
+                    "from rubin_year kk " +
+                    "where kk.pidrozdil = :tsc)) as year_appeal, sum(week_issued) + " +
+                    "(SELECT year_issued from rubin_year ry " +
                     "where ry.pidrozdil = :tsc " +
                     "and data_v = (select max(kk.data_v) " +
                     "from rubin_year kk where kk.pidrozdil = :tsc)) as year_issued " +

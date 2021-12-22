@@ -8,12 +8,25 @@
 <body data-hasqtip="0">
 <header th:insert="blocks/header.html :: header"></header>
 
+
 <div class="container mt-5">
     <h1>Формування помісячного звіту РСЦ</h1>
 </div>
+<div>
+    <form action="/rubin/rubin-view-month" method="post">
 
-<div  class="alert alert-info mt-2">
+        <label for="dat_start"> Дата внесення  з :  </label>
+        <input type="text" name="dat_start" th:value="${startDate}" placeholder="Дата внесення  з " id="dat_start"><br>
 
+<!--      <input type="date" name="dat_start"  th:value="${{startDate}}"-->
+        <br>
+        <label for="dat_end"> Дата внесення по:  </label>
+        <input type="text" name="dat_end" th:value="${endDate}" placeholder="Дата внесення по " id="dat_end"><br>
+        <br>
+
+        <button type="submit" class="btn btn-success">Формування та друк щомісячної довідки РСЦ</button>
+
+    </form>
 </div>
 
 

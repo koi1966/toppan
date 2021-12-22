@@ -17,7 +17,7 @@ public class CreateExilMonth {
 
         String[] str = rubinStr.split(",");
         XSSFWorkbook wb = new XSSFWorkbook(new FileInputStream("C:/RSC1840/Temp_rubin_Mounth.xlsx"));
-        FileOutputStream fileOut = new FileOutputStream("C:/RSC1840/rubin_Mounth.xlsx");
+        FileOutputStream fileOut = new FileOutputStream("C:/RSC1840/rubin.xlsx");
 //    XSSFWorkbook wb = new XSSFWorkbook(new FileInputStream("Temp_rubin.xlsx"));
 //    FileOutputStream fileOut = new FileOutputStream("rubin.xlsx");
         XSSFSheet sheet1 = wb.getSheet("Rubin");
@@ -39,11 +39,12 @@ public class CreateExilMonth {
 // дата - суббота
         XSSFRow dat_p = sheet1.getRow(13);
         XSSFCell cell_p = dat_p.getCell(7);
-        cell_p.setCellValue(str[3]);
+        cell_p.setCellValue(str[2]);
 
         wb.write(fileOut);
 //    log.info("Written xls file");
         fileOut.close();
         wb.close();
+
     }
 }

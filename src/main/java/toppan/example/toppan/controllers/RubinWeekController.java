@@ -240,7 +240,6 @@ class RubinWeekController {
         LocalDate nowend = LocalDate.now();
          endDate = nowend.minusMonths(1).with(TemporalAdjusters.lastDayOfMonth()).format(format_end);
 
-
         String rubinWeekMounth = rubinWeekRepository.setSumWeek(start_Date, end_Date, tsc_front);
         rubinWeekMounth = rubinWeekMounth + ',' + "(станом за " + month_year + ")," + pidrozdilRepository.setEmailPidrozdil(tsc_front);
         //  формируем запись для таблицы - rubin_month
@@ -260,7 +259,6 @@ class RubinWeekController {
             e.printStackTrace();
         }
 //      И отправить юзеру  на почту
-
         EmailSender.send(str[4]);
 //
         model.addAttribute("rubinList", rubinWeekMounth);
@@ -367,28 +365,25 @@ class RubinWeekController {
         return "redirect:rubin/week/rubin-week-view";
     }
 
-
     @PostMapping(value = "/rubin/week/rubin-week-view", params = "action=month_stop")
     public String rubinAddMounh() {
 
         SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
         Date data_v = null;
         try {
-            data_v = sdf2.parse("2021-11-30");
+            data_v = sdf2.parse("2021-12-31");
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
     Rubin_month rubinMonth = new Rubin_month();
 
     rubinMonth.setData_v(data_v);
-    rubinMonth.setMonth_appeal(133);
-    rubinMonth.setMonth_issued(115);
-    rubinMonth.setMonth_year("11.2021");
+    rubinMonth.setMonth_appeal(111);
+    rubinMonth.setMonth_issued(111);
+    rubinMonth.setMonth_year("12.2021");
     rubinMonth.setPidrozdil("ТСЦ 1843");
     monthRepository.save(rubinMonth);
         return "redirect:/";
-
     }
 
 }

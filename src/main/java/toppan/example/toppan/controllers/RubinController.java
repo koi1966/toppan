@@ -6,9 +6,11 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import toppan.example.toppan.createDoc.CreateExcel;
+import toppan.example.toppan.createDoc.CreateExilMonth;
 import toppan.example.toppan.models.Rubin;
 import toppan.example.toppan.models.repo.PidrozdilRepository;
 import toppan.example.toppan.models.repo.RubinRepository;
+import toppan.example.toppan.models.repo.RubinWeekRepository;
 import toppan.example.toppan.utilities.EmailSender;
 import toppan.example.toppan.utilities.UtilitesSting;
 
@@ -20,6 +22,8 @@ import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -31,13 +35,16 @@ public class RubinController {
 
     private final RubinRepository rubinRepository;
     private final PidrozdilRepository pidrozdilRepository;
-
+    private final RubinWeekRepository rubinWeekRepository;
     private final CreateExcel createExcel;
+    private final CreateExilMonth createExilMonth;
 
-    public RubinController(RubinRepository rubinRepository, PidrozdilRepository pidrozdilRepository, CreateExcel createExcel) {
+    public RubinController(RubinRepository rubinRepository, PidrozdilRepository pidrozdilRepository, RubinWeekRepository rubinWeekRepository, CreateExcel createExcel, CreateExilMonth createExilMonth) {
         this.rubinRepository = rubinRepository;
         this.pidrozdilRepository = pidrozdilRepository;
+        this.rubinWeekRepository = rubinWeekRepository;
         this.createExcel = createExcel;
+        this.createExilMonth = createExilMonth;
     }
 
     @GetMapping("/rubin/rubin-view")
@@ -123,8 +130,6 @@ public class RubinController {
         return "redirect:/rubin/rubin-view";
     }
 
-
-
     @GetMapping("/rubin/{id}")
     public String rubinDetaіls(Model model, @PathVariable(value = "id") long id) {
         //      находим и передаем єту одну запись на вюшку
@@ -174,9 +179,62 @@ public class RubinController {
     @GetMapping("/rubin/rubin-view-month")
     public String rubinViewmonth(Model model) {
 
+
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        LocalDate now = LocalDate.now();
+        String startDate = now.minusMonths(1).with(TemporalAdjusters.firstDayOfMonth()).format(format);
+        String endDate = now.minusMonths(1).with(TemporalAdjusters.lastDayOfMonth()).format(format);
+
+//        Date start_Date= null;
+//        try {
+//            start_Date = new SimpleDateFormat("yyyy.MM.dd").parse(startDate);
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+
+        model.addAttribute("startDate", startDate);
+        model.addAttribute("endDate", endDate);
+
         return "rubin/rubin-view-month";
     }
 
+    @DateTimeFormat(pattern = "dd.MM.yyyy")
+    @PostMapping("/rubin/rubin-view-month")
+    public String rubinMonthPrint(@RequestParam("dat_start") String dat_start,
+                                  @RequestParam("dat_end") String dat_end) {
+
+        Date date_start = null;
+        try {
+            date_start = new SimpleDateFormat("dd.MM.yyyy").parse(dat_start);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        Date date_end = null;
+        try {
+            date_end =new SimpleDateFormat("dd.MM.yyyy").parse(dat_end);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        String rubinStr = rubinWeekRepository.setRubinDate(date_start,date_end);
+
+        LocalDate localDate = date_end.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        int year  = localDate.getYear();
+        int month = localDate.getMonthValue();
+//        int day   = localDate.getDayOfMonth();
+
+       rubinStr = rubinStr + ',' + "(за " + String.valueOf(month)+"." + String.valueOf(year)+ " )";
+
+//        model.addAttribute("dat", data_v);
+        try {
+            createExilMonth.CreateMonth(rubinStr);//  Внесение полученной информации в ексл и отправка его на почту
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        EmailSender.send("o.klymchuk@zhi.hsc.gov.ua");
+        return "redirect:/";
+    }
 }
 
 

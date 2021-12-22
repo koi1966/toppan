@@ -39,13 +39,22 @@
         </form>
     </div>
     <div>
-        <div class="container mt-auto mb-auto">
+<!--        <div class="container mt-auto mb-auto">-->
+            <div >
 <!--            class="alert alert-info mt-2"-->
             <div th:each="rubin:${rubinList}" class="shadow p-1 mb-1 bg-white rounded">
                 <a th:href="@{/rubin/week/{id}(id=${rubin.getId()})}"
                    th:text="${rubin.getPidrozdil() + ' .... ' + rubin.getData_v()}">user</a>
                 <p th:text="${'звернень за день :' +rubin.week_appeal + '  виданих за день : '+rubin.week_issued  }"/>
             </div>
+
+            <table border="1">
+                <tr>
+                    <th> EE</th>
+                    <th> RR</th>
+                </tr>
+
+            </table>
 
         </div>
 

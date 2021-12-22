@@ -16,19 +16,15 @@ public class EmailSender {
 
 //            final String toto = "o.klymchuk@zhi.hsc.gov.ua";       // sender email
             final String from = "o.klymchuk@zhi.hsc.gov.ua";       // receiver email
-            final String host = "10.30.1.1";            // mail server host
-//            final String host = "10.6.1.1";
+//            final String host = "10.30.1.1";            // mail server host
+            final String host = "10.6.1.1";
             Properties properties = System.getProperties();
             properties.setProperty("mail.smtp.host", host); //"mail.smtp.host"
-//            System.out.println("Email Sent successfully...." + to);
-//            System.out.println("Email Sent successfully...." + toto);
             Session session = Session.getDefaultInstance(properties); // default session
 
             try {
                 MimeMessage message = new MimeMessage(session); // email message
-
                 message.setFrom(new InternetAddress(from)); // setting header fields
-
                 message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
                 // Create a multipar message
                 Multipart multipart = new MimeMultipart();
