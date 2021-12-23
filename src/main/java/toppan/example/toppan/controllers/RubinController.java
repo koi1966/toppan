@@ -184,7 +184,8 @@ public class RubinController {
         LocalDate now = LocalDate.now();
         String startDate = now.minusMonths(1).with(TemporalAdjusters.firstDayOfMonth()).format(format);
         String endDate = now.minusMonths(1).with(TemporalAdjusters.lastDayOfMonth()).format(format);
-
+        String startPreviousYear = now.minusMonths(1).minusYears(1).with(TemporalAdjusters.firstDayOfMonth()).format(format);
+        String endPreviousYear = now.minusMonths(1).minusYears(1).with(TemporalAdjusters.lastDayOfMonth()).format(format);
 //        Date start_Date= null;
 //        try {
 //            start_Date = new SimpleDateFormat("yyyy.MM.dd").parse(startDate);
@@ -217,7 +218,25 @@ public class RubinController {
             e.printStackTrace();
         }
 
-        String rubinStr = rubinWeekRepository.setRubinDate(date_start,date_end);
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        LocalDate now = LocalDate.now();
+        String startPreviousYear = now.minusMonths(1).minusYears(1).with(TemporalAdjusters.firstDayOfMonth()).format(format);
+        String endPreviousYear = now.minusMonths(1).minusYears(1).with(TemporalAdjusters.lastDayOfMonth()).format(format);
+
+        Date startDateOld = null;
+        try {
+            startDateOld = new SimpleDateFormat("dd.MM.yyyy").parse(startPreviousYear);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        Date endDateOld = null;
+        try {
+            endDateOld =new SimpleDateFormat("dd.MM.yyyy").parse(endPreviousYear);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        String rubinStr = rubinWeekRepository.setRubinDate(date_start,date_end,startDateOld,endDateOld);
 
         LocalDate localDate = date_end.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         int year  = localDate.getYear();

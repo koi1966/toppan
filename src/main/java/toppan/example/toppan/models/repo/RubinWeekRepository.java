@@ -23,14 +23,37 @@ public interface RubinWeekRepository extends CrudRepository<Rubin_week, Long> {
     List<Rubin_week> setListDateRubinWeek(@Param("startDate") Date data_v,
                                           @Param("endDate") Date data_last,
                                           @Param("tsc") String tsc);
-
+    //   Помісячний звіт РСЦ
+    //   обработка null
+//    SELECT coalesce(SUM(week_appeal),0) AS week_appeal FROM rubin_week WHERE data_v <= '01.10.2021'
+//
     @Query(nativeQuery = true,
-            value = "SELECT sum(week_appeal) as week_appeal, sum(week_issued) as week_issued  " +
+            value = "SELECT sum(week_appeal) as week_appeal, sum(week_issued) as week_issued, " +
+                    "(SELECT coalesce(SUM(week_appeal),0) as week_appeal_old FROM rubin_week ri where ri.data_v >= :startDateOld and ri.data_v <= :endDateOld) as week_appeal_old," +
+                    "(SELECT coalesce(SUM(week_issued),0) as week_issued_old FROM rubin_week ro where ro.data_v >= :startDateOld and ro.data_v <= :endDateOld) as week_issued_old "+
                     "FROM rubin_week " +
                     "WHERE data_v >= :startDate " +
                     "AND data_v <= :endDate")
     String setRubinDate(@Param("startDate") Date startDate,
-                        @Param("endDate") Date endDate);
+                        @Param("endDate") Date endDate,
+                        @Param("startDateOld") Date startDateOld,
+                        @Param("endDateOld") Date endDateOld
+    );
+
+
+
+//    SELECT sum(week_appeal) as week_appeal, sum(week_issued) as week_issued,
+//                    (SELECT coalesce(SUM(week_appeal),0) as week_appeal_old FROM rubin_week ri where ri.data_v >= '01.11.2020' and ri.data_v <= '30.11.2020') as week_appeal_old,
+//                    (SELECT coalesce(SUM(week_issued),0) as week_issued_old FROM rubin_week ri where ri.data_v >= '01.11.2020' and ri.data_v <= '30.11.2020') as week_issued_old
+//    FROM rubin_week
+//    WHERE data_v <= '30.11.2021'
+//    AND data_v >= '01.11.2021'
+
+
+
+
+
+
 
     //    Сумы нужніх полей за период по нужному ТСЦ
     @Query(nativeQuery = true,
@@ -57,13 +80,13 @@ public interface RubinWeekRepository extends CrudRepository<Rubin_week, Long> {
 
     //  МЕСЯЧНЫЙ ОТЧЕТ  Сумы нужных полей за период по нужному ТСЦ
     @Query(nativeQuery = true,
-            value = "SELECT sum(week_appeal) as week_appeal, sum(week_issued) as week_issued, ru.pidrozdil from rubin_week ru where ru.data_v >= :start_Date and ru.data_v <= :end_Date and ru.pidrozdil = :tsc group by ru.pidrozdil")
+            value = "SELECT sum(week_appeal) as week_appeal, sum(week_issued) as week_issued, ru.pidrozdil " +
+                    "from rubin_week ru where ru.data_v >= :start_Date and ru.data_v <= :end_Date and ru.pidrozdil = :tsc group by ru.pidrozdil")
     String setSumWeek(@Param("start_Date") Date start_Date, @Param("end_Date") Date end_Date, @Param("tsc") String tsc);
-
-//  МЕСЯЧНЫЙ ОТЧЕТ за РСЦ ;
-
 }
-
+//
+//    SELECT coalesce(SUM(week_appeal),0) AS week_appeal FROM rubin_week WHERE data_v <= '01.10.2021'
+//
 
 //    @Query(nativeQuery = true,
 //            value = "SELECT sum(week_appeal) as week_appeal, sum(week_issued) as week_issued, " +
