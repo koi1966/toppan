@@ -4,10 +4,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import toppan.example.toppan.createDoc.CreateDoc;
 import toppan.example.toppan.createDoc.CreateExcel;
 import toppan.example.toppan.createDoc.CreateExilMonth;
 import toppan.example.toppan.models.*;
 import toppan.example.toppan.models.repo.*;
+import toppan.example.toppan.utilities.EmailFilename;
 import toppan.example.toppan.utilities.EmailSender;
 import toppan.example.toppan.utilities.UtilitesSting;
 
@@ -37,14 +39,16 @@ class RubinWeekController {
     private final RubinYearRepository rubinYearRepository;
     private final RubinRepository rubinRepository;
     private final MonthRepository monthRepository;
+    private final CreateDoc createDoc;
 
-    public RubinWeekController(RubinWeekRepository rubinWeekRepository, PidrozdilRepository pidrozdilRepository, CreateExcel createExcel, RubinYearRepository rubinYearRepository, RubinRepository rubinRepository, MonthRepository monthRepository) {
+    public RubinWeekController(RubinWeekRepository rubinWeekRepository, PidrozdilRepository pidrozdilRepository, CreateExcel createExcel, RubinYearRepository rubinYearRepository, RubinRepository rubinRepository, MonthRepository monthRepository, CreateDoc createDoc) {
         this.rubinWeekRepository = rubinWeekRepository;
         this.pidrozdilRepository = pidrozdilRepository;
         this.createExcel = createExcel;
         this.rubinYearRepository = rubinYearRepository;
         this.rubinRepository = rubinRepository;
         this.monthRepository = monthRepository;
+        this.createDoc = createDoc;
     }
 
     @GetMapping("/rubin/week/rubin-week-view")
@@ -162,6 +166,12 @@ class RubinWeekController {
             e.printStackTrace();
         }
 
+        try {
+            createDoc.EditDoc(rubinWekStr);//  Внесение полученной информации в ексл и отправка его на почту
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         String tsc_data = rubinRepository.setDatePidrozdil(data_last, tsc_front);//  Проверяем на дубликат отчета
         boolean isEmpty = tsc_data == null || tsc_data.trim().length() == 0;
         if (!isEmpty) {
@@ -170,7 +180,12 @@ class RubinWeekController {
         }
 
         String[] str = rubinWekStr.split(",");
-        EmailSender.send(str[6]);
+        String filename = "c:/RSC1840/rubin.docx";
+//        EmailSender.send(str[6]);
+//        EmailFilename.send(str[6],filename);
+          EmailSender.send("o.klymchuk@zhi.hsc.gov.ua");
+        EmailFilename.send("o.klymchuk@zhi.hsc.gov.ua",filename);
+
         //  Запись сформированного отчета по таблицам
         Rubin rubin = new Rubin();
         rubin.setPidrozdil(tsc_front);
@@ -192,6 +207,9 @@ class RubinWeekController {
         rubin_year.setYear_appeal(Integer.parseInt(str[2]));
         rubin_year.setYear_issued(Integer.parseInt(str[3]));
         rubinYearRepository.save(rubin_year);  //  Запись в годовую таблицю
+
+
+
 
         return "redirect:/rubin/week/rubin-week-view";
     }
@@ -261,6 +279,14 @@ class RubinWeekController {
 //      И отправить юзеру  на почту
         EmailSender.send(str[4]);
 //
+        //  формирование вордовского документа
+        try {
+            createDoc.EditDoc(rubinWeekMounth);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
         model.addAttribute("rubinList", rubinWeekMounth);
 
         List<Pidrozdil> pidrozdilList = (List<Pidrozdil>) pidrozdilRepository.findAll();

@@ -5,12 +5,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import toppan.example.toppan.createDoc.CreateDoc;
 import toppan.example.toppan.createDoc.CreateExcel;
 import toppan.example.toppan.createDoc.CreateExilMonth;
 import toppan.example.toppan.models.Rubin;
 import toppan.example.toppan.models.repo.PidrozdilRepository;
 import toppan.example.toppan.models.repo.RubinRepository;
 import toppan.example.toppan.models.repo.RubinWeekRepository;
+import toppan.example.toppan.utilities.EmailFilename;
 import toppan.example.toppan.utilities.EmailSender;
 import toppan.example.toppan.utilities.UtilitesSting;
 
@@ -38,13 +40,15 @@ public class RubinController {
     private final RubinWeekRepository rubinWeekRepository;
     private final CreateExcel createExcel;
     private final CreateExilMonth createExilMonth;
+    private final CreateDoc createDoc;
 
-    public RubinController(RubinRepository rubinRepository, PidrozdilRepository pidrozdilRepository, RubinWeekRepository rubinWeekRepository, CreateExcel createExcel, CreateExilMonth createExilMonth) {
+    public RubinController(RubinRepository rubinRepository, PidrozdilRepository pidrozdilRepository, RubinWeekRepository rubinWeekRepository, CreateExcel createExcel, CreateExilMonth createExilMonth, CreateDoc createDoc) {
         this.rubinRepository = rubinRepository;
         this.pidrozdilRepository = pidrozdilRepository;
         this.rubinWeekRepository = rubinWeekRepository;
         this.createExcel = createExcel;
         this.createExilMonth = createExilMonth;
+        this.createDoc = createDoc;
     }
 
     @GetMapping("/rubin/rubin-view")
@@ -179,13 +183,14 @@ public class RubinController {
     @GetMapping("/rubin/rubin-view-month")
     public String rubinViewmonth(Model model) {
 
-
         DateTimeFormatter format = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         LocalDate now = LocalDate.now();
         String startDate = now.minusMonths(1).with(TemporalAdjusters.firstDayOfMonth()).format(format);
         String endDate = now.minusMonths(1).with(TemporalAdjusters.lastDayOfMonth()).format(format);
         String startPreviousYear = now.minusMonths(1).minusYears(1).with(TemporalAdjusters.firstDayOfMonth()).format(format);
         String endPreviousYear = now.minusMonths(1).minusYears(1).with(TemporalAdjusters.lastDayOfMonth()).format(format);
+// начало року  01.01.2021
+        String startYear = now.withDayOfMonth(01).withMonth(01).with(TemporalAdjusters.firstDayOfMonth()).format(format);
 //        Date start_Date= null;
 //        try {
 //            start_Date = new SimpleDateFormat("yyyy.MM.dd").parse(startDate);
@@ -252,6 +257,19 @@ public class RubinController {
             e.printStackTrace();
         }
         EmailSender.send("o.klymchuk@zhi.hsc.gov.ua");
+
+        try {
+            createDoc.EditDoc(rubinStr);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        String filename = "c:/RSC1840/rubin.docx";
+//        EmailSender.send(str[6]);
+//        EmailFilename.send(str[6],filename);
+        EmailSender.send("o.klymchuk@zhi.hsc.gov.ua");
+        EmailFilename.send("o.klymchuk@zhi.hsc.gov.ua",filename);
+
         return "redirect:/";
     }
 }

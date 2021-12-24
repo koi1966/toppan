@@ -4,11 +4,11 @@ import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
-import org.apache.poi.xwpf.usermodel.XWPFParagraph;
-import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
+import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -25,30 +25,26 @@ public class CreateDoc {
     }
 
 
-    public void CreateDoc(String rubinStr) throws IOException {
+    public void EditDoc(String rubinStr) throws IOException {
         String[] str = rubinStr.split(",");
-
-        XWPFDocument document = new XWPFDocument(new FileInputStream("C:/demo/rubin.docx"));
+//Blank Document
+        XWPFDocument document = new XWPFDocument(new FileInputStream("C:/RSC1840/Temp_rubin.docx"));
+        //Write the Document in file system
+        FileOutputStream out = new FileOutputStream(new File("C:/RSC1840/rubin.docx"));
 
         XWPFTable table = document.getTableArray(0);
+        XWPFTableRow tableRowOne = table.getRow(1);
+        tableRowOne.getCell(2).setText(str[0]);
+        tableRowOne.getCell(3).setText(str[1]);
+        tableRowOne = table.getRow(2);
+        tableRowOne.getCell(2).setText(str[2]);
+        tableRowOne.getCell(3).setText(str[3]);
 
-        org.apache.xmlbeans.XmlCursor cursor = table.getCTTbl().newCursor();
-        cursor.toEndToken(); //теперь мы находимся в конце CTTbl
-
-        //всегда должен быть следующий стартовый жетон. Либо p, либо хотя бы  sectPr.
-
-        while (cursor.toNextToken() != org.apache.xmlbeans.XmlCursor.TokenType.START) ;
-        XWPFParagraph newParagraph = document.insertNewParagraph(cursor);
-        XWPFRun run = newParagraph.createRun();
-
-        table.getRow(0).getCell(0).getText();
-
-        run.setText("inserted new text  ЛЯ ЛЯ");
-
-//        run.setText(rubinStr);
-
-        document.write(new FileOutputStream("C:/demo/rubin.docx"));
+//        document.write(new FileOutputStream("C:/demo/rubin.docx"));
+        document.write(out);
+        out.close();
         document.close();
+
     }
 //    //Blank Document
 //    XWPFDocument document = new XWPFDocument();
