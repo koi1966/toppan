@@ -121,7 +121,7 @@ class RubinWeekController {
         return "rubin/week/rubin-week-view";
     }
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd") // Тижневий ЗВІТ
     @PostMapping(value = "/rubin/week/rubin-week-view", params = "action=print")
     public String rubinViewDataPrint(@RequestParam("data_v") String data_sart_str,
                                      @RequestParam("data_vpo") String data_end_str,
@@ -158,33 +158,36 @@ class RubinWeekController {
         }
 
         String rubinWekStr = rubinWeekRepository.setWeekPrint(data_v, data_last, tsc_front);
-        rubinWekStr = rubinWekStr + ',' + "(станом на " + data_end_str + ")," + tsc_front + ',' + pidrozdilRepository.setEmailPidrozdil(tsc_front);
-
+        rubinWekStr = rubinWekStr + ',' + data_end_str + "," + tsc_front + ',' + pidrozdilRepository.setEmailPidrozdil(tsc_front);
+        String filename = "c:/RSC1840/Temp_rubin.docx";
         try {
             createExcel.CreateF(rubinWekStr);//  Внесение полученной информации в ексл и отправка его на почту
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        EmailSender.send("o.klymchuk@zhi.hsc.gov.ua");
+        //  Doc
         try {
-            createDoc.EditDoc(rubinWekStr);//  Внесение полученной информации в ексл и отправка его на почту
+            createDoc.EditDoc(rubinWekStr,filename);//  Внесение полученной информации в Doc и отправка его на почту
         } catch (IOException e) {
             e.printStackTrace();
         }
+//        filename = "c:/RSC1840/rubin.docx";
+
+        String[] str = rubinWekStr.split(",");
+
+//        EmailSender.send(str[7]);
+//        EmailFilename.send(str[7],filename);
+
+        //  Doc
+//        EmailFilename.send("o.klymchuk@zhi.hsc.gov.ua",filename);
+        EmailFilename.send(str[7],"c:/RSC1840/rubin.docx");
 
         String tsc_data = rubinRepository.setDatePidrozdil(data_last, tsc_front);//  Проверяем на дубликат отчета
         boolean isEmpty = tsc_data == null || tsc_data.trim().length() == 0;
         if (!isEmpty) {
-
             return "redirect:/";
         }
-
-        String[] str = rubinWekStr.split(",");
-        String filename = "c:/RSC1840/rubin.docx";
-//        EmailSender.send(str[6]);
-//        EmailFilename.send(str[6],filename);
-          EmailSender.send("o.klymchuk@zhi.hsc.gov.ua");
-        EmailFilename.send("o.klymchuk@zhi.hsc.gov.ua",filename);
 
         //  Запись сформированного отчета по таблицам
         Rubin rubin = new Rubin();
@@ -207,9 +210,6 @@ class RubinWeekController {
         rubin_year.setYear_appeal(Integer.parseInt(str[2]));
         rubin_year.setYear_issued(Integer.parseInt(str[3]));
         rubinYearRepository.save(rubin_year);  //  Запись в годовую таблицю
-
-
-
 
         return "redirect:/rubin/week/rubin-week-view";
     }
@@ -252,14 +252,13 @@ class RubinWeekController {
             return "redirect:/";
         }
         // ***********************************************
-        // ***********************************************
         // если нет записи создать месячный отчет
-        DateTimeFormatter format_end = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        DateTimeFormatter format_end = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         LocalDate nowend = LocalDate.now();
          endDate = nowend.minusMonths(1).with(TemporalAdjusters.lastDayOfMonth()).format(format_end);
 
-        String rubinWeekMounth = rubinWeekRepository.setSumWeek(start_Date, end_Date, tsc_front);
-        rubinWeekMounth = rubinWeekMounth + ',' + "(станом за " + month_year + ")," + pidrozdilRepository.setEmailPidrozdil(tsc_front);
+        String rubinWeekMounth = "0,0,"+rubinWeekRepository.setSumWeek(start_Date, end_Date, tsc_front);
+        rubinWeekMounth = rubinWeekMounth + ',' + month_year + "," + pidrozdilRepository.setEmailPidrozdil(tsc_front);
         //  формируем запись для таблицы - rubin_month
         String[] str = rubinWeekMounth.split(",");
         Rubin_month rubin_month = new Rubin_month();//  Записать месячніе данные в таблицу Rubin_month
@@ -270,22 +269,24 @@ class RubinWeekController {
         rubin_month.setMonth_year(endDate.substring(3));
         monthRepository.save(rubin_month);  //  Запись в месячную таблицу
 
+        String filename = "c:/RSC1840/Temp_rubin_Mounth.docx";
 //      Внестии в ексел
         try {
             CreateExilMonth.CreateMonth(rubinWeekMounth);//  Внесение полученной информации в ексл и отправка его на почту
         } catch (IOException e) {
             e.printStackTrace();
         }
-//      И отправить юзеру  на почту
-        EmailSender.send(str[4]);
-//
-        //  формирование вордовского документа
+        //      Внестии в Doc
         try {
-            createDoc.EditDoc(rubinWeekMounth);
+            createDoc.EditDoc(rubinWeekMounth,filename);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+//      И отправить юзеру  на почту
+        // Doc
+        EmailFilename.send(str[6],"c:/RSC1840/rubin.docx");
+        // Exel
+        EmailSender.send(str[6]);
 
         model.addAttribute("rubinList", rubinWeekMounth);
 

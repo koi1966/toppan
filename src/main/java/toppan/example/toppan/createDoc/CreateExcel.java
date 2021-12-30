@@ -50,7 +50,7 @@ public void CreateF(String rubinStr) throws IOException {
 // дата - суббота
     XSSFRow dat_p = sheet1.getRow(13);
     XSSFCell cell_p = dat_p.getCell(7);
-    cell_p.setCellValue(str[4]);
+    cell_p.setCellValue(str[5]);
 
     wb.write(fileOut);
 //    log.info("Written xls file");

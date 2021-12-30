@@ -256,19 +256,20 @@ public class RubinController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        EmailSender.send("o.klymchuk@zhi.hsc.gov.ua");
+//        EmailSender.send("o.klymchuk@zhi.hsc.gov.ua");
 
+        String filename = "c:/RSC1840/rubin.docx";
         try {
-            createDoc.EditDoc(rubinStr);
+            createDoc.EditDoc(rubinStr,filename);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        String filename = "c:/RSC1840/rubin.docx";
-//        EmailSender.send(str[6]);
-//        EmailFilename.send(str[6],filename);
-        EmailSender.send("o.klymchuk@zhi.hsc.gov.ua");
-        EmailFilename.send("o.klymchuk@zhi.hsc.gov.ua",filename);
+
+        EmailSender.send(rubinStr[6]);
+        EmailFilename.send(rubinStr[6],filename);
+//        EmailSender.send("o.klymchuk@zhi.hsc.gov.ua");
+//        EmailFilename.send("o.klymchuk@zhi.hsc.gov.ua",filename);
 
         return "redirect:/";
     }
