@@ -81,6 +81,7 @@ public class BlogController {
     public String blogPostUpdate(@PathVariable("id") long id, @RequestParam String title, @RequestParam String anons, @RequestParam String full_text, Model model) {
 //       Находим запись в базе и заталкиваем о объект
         Post post = postRepository.findById(id).orElseThrow();
+//        Optional<Post> post = postRepository.findById(id);
         post.setTitle(title);
         post.setTitle(anons);
         post.setTitle(full_text);
@@ -92,6 +93,7 @@ public class BlogController {
     @PostMapping("/blog/{id}/remove")
     public String blogPostDelete(@PathVariable("id") long id, Model model) {
 //       Находим запись в базе и заталкиваем о объект
+
         Post post = postRepository.findById(id).orElseThrow();
         postRepository.deleteById(id);
 //        postRepository.delete(post);

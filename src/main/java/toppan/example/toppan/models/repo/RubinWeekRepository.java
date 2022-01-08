@@ -87,6 +87,42 @@ public interface RubinWeekRepository extends CrudRepository<Rubin_week, Long> {
                         @Param("endDate") Date data_last,
                         @Param("tsc") String tsc);
 
+    @Query(nativeQuery = true,
+            value = "SELECT sum(week_appeal) as week_appeal, " +
+                    "sum(week_issued) as week_issued, " +
+
+                    "(SELECT sum(ry.week_appeal) from rubin_week ry where ry.pidrozdil = :tsc and ry.data_v >= :firstYear and ry.data_v <= :endDate) as year_appeal, " +
+
+
+                    "(SELECT sum(ri.week_issued) from rubin_week ri where ri.pidrozdil = :tsc and ri.data_v >= :firstYear and ri.data_v <= :endDate) as year_issued, " +
+                    "RIGHT(pidrozdil, 4) as pidrozdil " +
+                    "from rubin_week " +
+                    "where data_v >= :startDate " +
+                    "and data_v <= :endDate " +
+                    "and pidrozdil = :tsc " +
+                    "group by pidrozdil")
+    String setWeekPrint2022(@Param("startDate") Date data_v,
+                        @Param("endDate") Date data_last,
+                        @Param("firstYear") Date firstYear,
+                        @Param("tsc") String tsc);
+
+//    setWeekPrintRSC
+
+    @Query(nativeQuery = true,
+            value = "SELECT sum(week_appeal) as week_appeal, " +
+                    "sum(week_issued) as week_issued, " +
+
+                    "(SELECT sum(ry.week_appeal) from rubin_week ry where ry.data_v >= :firstYear and ry.data_v <= :endDate) as year_appeal, " +
+
+
+                    "(SELECT sum(ri.week_issued) from rubin_week ri where ri.data_v >= :firstYear and ri.data_v <= :endDate) as year_issued " +
+//                    "RIGHT(pidrozdil, 4) as pidrozdil " +
+                    "from rubin_week " +
+                    "where data_v >= :startDate " +
+                    "and data_v <= :endDate ")
+    String setWeekPrintRSC(@Param("startDate") Date data_v,
+                            @Param("endDate") Date data_last,
+                            @Param("firstYear") Date firstYear);
 
     //  МЕСЯЧНЫЙ ОТЧЕТ  Сумы нужных полей за период по нужному ТСЦ
     @Query(nativeQuery = true,

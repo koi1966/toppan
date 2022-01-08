@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static java.time.DayOfWeek.SUNDAY;
+import static java.time.temporal.TemporalAdjusters.firstDayOfYear;
 import static java.time.temporal.TemporalAdjusters.previous;
 
 @Controller
@@ -141,23 +142,40 @@ class RubinWeekController {
 //            }
 //        }
 //     сверяем ТСЦ которое создает отчет и сравниваем IP копма с которого вносят информацию
-
+//
+//
+        //  отчет по датам из фронта
+// ************************************************************************************************
         SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
-        Date data_v = null;
+        Date data_sart = null;
         try {
-            data_v = sdf2.parse(data_sart_str);
+            data_sart = sdf2.parse(data_sart_str);
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        Date data_last = null;
+        Date data_end = null;
         try {
-            data_last = sdf2.parse(data_end_str);
+            data_end = sdf2.parse(data_end_str);
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        String firstYearStr = LocalDate.now().with(firstDayOfYear()).toString();
+        Date firstYear = null;
+        try {
+            firstYear = sdf2.parse(firstYearStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+//  получение начало текущего года
 
-        String rubinWekStr = rubinWeekRepository.setWeekPrint(data_v, data_last, tsc_front);
+
+
+//        Date date = Date.from(LocalDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+//        java.util.Date firstYear = new SimpleDateFormat("yyyy-MM-dd").parse(String.valueOf(LocalDate.now().with(firstDayOfYear())));
+
+        String rubinWekStr = rubinWeekRepository.setWeekPrint2022(data_sart, data_end,firstYear, tsc_front);
         rubinWekStr = rubinWekStr + ',' + data_end_str + "," + tsc_front + ',' + pidrozdilRepository.setEmailPidrozdil(tsc_front);
         String filename = "c:/RSC1840/Temp_rubin.docx";
         try {
@@ -183,34 +201,83 @@ class RubinWeekController {
 //        EmailFilename.send("o.klymchuk@zhi.hsc.gov.ua",filename);
         EmailFilename.send(str[7],"c:/RSC1840/rubin.docx");
 
-        String tsc_data = rubinRepository.setDatePidrozdil(data_last, tsc_front);//  Проверяем на дубликат отчета
-        boolean isEmpty = tsc_data == null || tsc_data.trim().length() == 0;
-        if (!isEmpty) {
-            return "redirect:/";
-        }
+//        String tsc_data = rubinRepository.setDatePidrozdil(data_last, tsc_front);//  Проверяем на дубликат отчета
+//        boolean isEmpty = tsc_data == null || tsc_data.trim().length() == 0;
+//        if (!isEmpty) {
+//            return "redirect:/";
+//        }
 
         //  Запись сформированного отчета по таблицам
-        Rubin rubin = new Rubin();
-        rubin.setPidrozdil(tsc_front);
+//        Rubin rubin = new Rubin();
+//        rubin.setPidrozdil(tsc_front);
+//
+//        LocalDate dat_f = LocalDate.parse(data_end_str);
+////        Date dat_f =new SimpleDateFormat("dd/MM/yyyy").parse(data_last_str);
+//        rubin.setData_v(dat_f);
+//
+//        rubin.setWeek(Integer.parseInt(str[0]));
+//        rubin.setWeek_1(Integer.parseInt(str[1]));
+//
+//        rubin.setYear_0(Integer.parseInt(str[2]));
+//        rubin.setYear_1(Integer.parseInt(str[3]));
+//        rubinRepository.save(rubin);
 
-        LocalDate dat_f = LocalDate.parse(data_end_str);
-//        Date dat_f =new SimpleDateFormat("dd/MM/yyyy").parse(data_last_str);
-        rubin.setData_v(dat_f);
+//        Rubin_year rubin_year = new Rubin_year();//  Записать недельные данные в таблицу rubin_year
+//        rubin_year.setPidrozdil(tsc_front);
+//        rubin_year.setData_v(data_last);
+//        rubin_year.setYear_appeal(Integer.parseInt(str[2]));
+//        rubin_year.setYear_issued(Integer.parseInt(str[3]));
+//        rubinYearRepository.save(rubin_year);  //  Запись в годовую таблицю
 
-        rubin.setWeek(Integer.parseInt(str[0]));
-        rubin.setWeek_1(Integer.parseInt(str[1]));
+        return "redirect:/rubin/week/rubin-week-view";
+    }
 
-        rubin.setYear_0(Integer.parseInt(str[2]));
-        rubin.setYear_1(Integer.parseInt(str[3]));
-        rubinRepository.save(rubin);
+    @PostMapping(value = "/rubin/week/rubin-week-view", params = "action=print_week_rsc")
+    public String rubunPrintWeekRSC(@RequestParam("data_v") String data_sart_str,
+                                    @RequestParam("data_vpo") String data_end_str,
+                                    @RequestParam("p_tsc") String tsc_front ) {
 
-        Rubin_year rubin_year = new Rubin_year();//  Записать недельные данные в таблицу rubin_year
-        rubin_year.setPidrozdil(tsc_front);
-        rubin_year.setData_v(data_last);
-        rubin_year.setYear_appeal(Integer.parseInt(str[2]));
-        rubin_year.setYear_issued(Integer.parseInt(str[3]));
-        rubinYearRepository.save(rubin_year);  //  Запись в годовую таблицю
+//        ****************************************************************************************************
+        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+        Date data_sart = null;
+        try {
+            data_sart = sdf2.parse(data_sart_str);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
+        Date data_end = null;
+        try {
+            data_end = sdf2.parse(data_end_str);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        //  получение начало текущего года
+        String firstYearStr = LocalDate.now().with(firstDayOfYear()).toString();
+        Date firstYear = null;
+        try {
+            firstYear = sdf2.parse(firstYearStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        String rubinWekStr = rubinWeekRepository.setWeekPrintRSC(data_sart, data_end,firstYear);
+        rubinWekStr = rubinWekStr + ',' + tsc_front + ','+ data_end_str + "," + tsc_front + ',' + pidrozdilRepository.setEmailPidrozdil(tsc_front);
+        String filename = "c:/RSC1840/Temp_rubin.docx";
+
+
+        //  Doc
+        try {
+            createDoc.EditDoc(rubinWekStr,filename);//  Внесение полученной информации в Doc и отправка его на почту
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+//        filename = "c:/RSC1840/rubin.docx";
+
+        String[] str = rubinWekStr.split(",");
+
+        EmailFilename.send(str[7],"c:/RSC1840/rubin.docx");
+        EmailSender.send("o.klymchuk@zhi.hsc.gov.ua");
+//        *****************************************************************************************************
         return "redirect:/rubin/week/rubin-week-view";
     }
 
@@ -412,5 +479,7 @@ class RubinWeekController {
     monthRepository.save(rubinMonth);
         return "redirect:/";
     }
+
+//    print_month_rsc
 
 }

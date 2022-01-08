@@ -9,6 +9,7 @@ import toppan.example.toppan.createDoc.CreateDoc;
 import toppan.example.toppan.createDoc.CreateExcel;
 import toppan.example.toppan.createDoc.CreateExilMonth;
 import toppan.example.toppan.models.Rubin;
+import toppan.example.toppan.models.Rubin_week;
 import toppan.example.toppan.models.repo.PidrozdilRepository;
 import toppan.example.toppan.models.repo.RubinRepository;
 import toppan.example.toppan.models.repo.RubinWeekRepository;
@@ -63,7 +64,7 @@ public class RubinController {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        List<Rubin> rubinList = (List<Rubin>) rubinRepository.setListDateRubin(data_v);
+        List<Rubin> rubinList = rubinRepository.setListDateRubin(data_v);
         model.addAttribute("rubinList", rubinList);
         model.addAttribute("dat", data_v);
         return "rubin/rubin-view";
@@ -73,7 +74,7 @@ public class RubinController {
     @PostMapping("/rubin/rubin-view")
     public String rubinViewData(@RequestParam("data_v") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date data_v, Model model) {
 
-        List<Rubin> rubinList = (List<Rubin>) rubinRepository.setListDateRubin(data_v);
+        List<Rubin> rubinList = rubinRepository.setListDateRubin(data_v);
         model.addAttribute("rubinList", rubinList);
         model.addAttribute("dat", data_v);
         return "rubin/rubin-view-p";
@@ -170,6 +171,7 @@ public class RubinController {
                               @RequestParam int year_0,
                               @RequestParam int year_1, @RequestParam("data_v") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date data_v
     ) {
+
         Rubin rubin = rubinRepository.findById(id).orElseThrow();
         rubin.setPidrozdil(pidrozdil);
         rubin.setWeek(week);
@@ -249,7 +251,7 @@ public class RubinController {
 //        int day   = localDate.getDayOfMonth();
 
        rubinStr = rubinStr + ',' + "(за " + String.valueOf(month)+"." + String.valueOf(year)+ " )";
-
+        String[] str = rubinStr.split(",");
 //        model.addAttribute("dat", data_v);
         try {
             createExilMonth.CreateMonth(rubinStr);//  Внесение полученной информации в ексл и отправка его на почту
@@ -266,8 +268,8 @@ public class RubinController {
         }
 
 
-        EmailSender.send(rubinStr[6]);
-        EmailFilename.send(rubinStr[6],filename);
+        EmailSender.send(str[6]);
+        EmailFilename.send(str[6],filename);
 //        EmailSender.send("o.klymchuk@zhi.hsc.gov.ua");
 //        EmailFilename.send("o.klymchuk@zhi.hsc.gov.ua",filename);
 
