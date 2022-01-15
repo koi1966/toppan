@@ -14,7 +14,7 @@ public class EmailFilename {
     public static void send(String to, String filename){
 
 //            final String toto = "o.klymchuk@zhi.hsc.gov.ua";       // sender email
-        final String from = "o.klymchuk@zhi.hsc.gov.ua";       // receiver email
+        final String from = "rubin@zhi.hsc.gov.ua";       // receiver email
             final String host = "10.30.1.1";            // mail server host
 //        final String host = "10.6.1.1";
         Properties properties = System.getProperties();

@@ -11,10 +11,6 @@ import java.util.List;
 public interface RubinWeekRepository extends CrudRepository<Rubin_week, Long> {
 
     @Query(nativeQuery = true,
-            value = "SELECT * from rubin_week r where r.data_v = :data_v ORDER BY r.pidrozdil")
-    List<Rubin_week> setListWeekDate(@Param("data_v") Date data_v);
-
-    @Query(nativeQuery = true,
             value = "SELECT * FROM rubin_week r " +
                     "WHERE r.data_v >= :startDate " +
                     "AND r.data_v <= :endDate " +
@@ -28,9 +24,10 @@ public interface RubinWeekRepository extends CrudRepository<Rubin_week, Long> {
 //    SELECT coalesce(SUM(week_appeal),0) AS week_appeal FROM rubin_week WHERE data_v <= '01.10.2021'
 //
     @Query(nativeQuery = true,
-            value = "SELECT sum(week_appeal) as week_appeal, sum(week_issued) as week_issued, " +
+            value = "SELECT " +
                     "(SELECT coalesce(SUM(week_appeal),0) as week_appeal_old FROM rubin_week ri where ri.data_v >= :startDateOld and ri.data_v <= :endDateOld) as week_appeal_old," +
-                    "(SELECT coalesce(SUM(week_issued),0) as week_issued_old FROM rubin_week ro where ro.data_v >= :startDateOld and ro.data_v <= :endDateOld) as week_issued_old "+
+                    "(SELECT coalesce(SUM(week_issued),0) as week_issued_old FROM rubin_week ro where ro.data_v >= :startDateOld and ro.data_v <= :endDateOld) as week_issued_old, "+
+                    "sum(week_appeal) as week_appeal, sum(week_issued) as week_issued " +
                     "FROM rubin_week " +
                     "WHERE data_v >= :startDate " +
                     "AND data_v <= :endDate")
@@ -40,27 +37,6 @@ public interface RubinWeekRepository extends CrudRepository<Rubin_week, Long> {
                         @Param("endDateOld") Date endDateOld
     );
 
-
-    //    Сумы нужніх полей за период по нужному ТСЦ
-//    @Query(
-////            coalesce(SUM(week_appeal),0) as week_appeal_old
-//            value = "SELECT coalesce(sum(week_appeal),0) as week_appeal, " +
-//                    "coalesce(sum(week_issued),0) as week_issued, " +
-//                    "coalesce(sum(week_appeal),0) + " +
-//                    "(SELECT coalesce(year_appeal,0) as year_appeal from rubin_year ry where ry.pidrozdil = :tsc and data_v = (select max(kk.data_v) from rubin_year kk where kk.pidrozdil = :tsc)) as year_appeal, " +
-//                    "coalesce(sum(week_issued),0) + " +
-//
-//                    "(SELECT coalesce(year_issued,0) as year_issued from rubin_year ry " +
-//                    "where ry.pidrozdil = :tsc " +
-//                    "and data_v = (select max(kk.data_v) " +
-//                    "from rubin_year kk where kk.pidrozdil = :tsc)) as year_issued " +
-//                    "from rubin_week " +
-//                    "where data_v >= :startDate " +
-//                    "and data_v <= :endDate " +
-//                    "and pidrozdil = :tsc")
-//    String setWeekPrint(@Param("startDate") Date data_v,
-//                        @Param("endDate") Date data_last,
-//                        @Param("tsc") String tsc);
 
 
     @Query(nativeQuery = true,
@@ -128,7 +104,17 @@ public interface RubinWeekRepository extends CrudRepository<Rubin_week, Long> {
     @Query(nativeQuery = true,
             value = "SELECT coalesce(sum(week_appeal),0) as week_appeal,coalesce(sum(week_issued),0) as week_issued,RIGHT(pidrozdil, 4) as pidrozdil " +
                     "from rubin_week ru where ru.data_v >= :start_Date and ru.data_v <= :end_Date and ru.pidrozdil = :tsc group by ru.pidrozdil")
-    String setSumWeek(@Param("start_Date") Date start_Date, @Param("end_Date") Date end_Date, @Param("tsc") String tsc);
+    String setSumWeek(@Param("start_Date") Date start_Date,
+                      @Param("end_Date") Date end_Date,
+                      @Param("tsc") String tsc);
+
+    @Query(nativeQuery = true,
+            value = "SELECT id, pidrozdil,data_v, week_appeal, week_issued FROM rubin_week r WHERE r.data_v >= :start_Date " +
+            "AND r.data_v <= :end_Date " +
+
+            "ORDER BY pidrozdil,r.data_v ")
+    List<Rubin_week> setWeekRSC(@Param("start_Date") Date start_Date,
+                      @Param("end_Date") Date end_Date );
 
 }
 //

@@ -73,8 +73,8 @@ public class CreateDoc {
                     for (XWPFParagraph p : cell.getParagraphs()) {
                         for (XWPFRun r : p.getRuns()) {
                             String text = r.getText(0);
-                            if (text != null && text.contains("184")) {
-                                text = text.replace("184", str[4]);
+                            if (text != null && text.contains("2021")) {
+                                text = text.replace("2021", str[5]);
                                 r.setText(text,0);
                             }
                         }
