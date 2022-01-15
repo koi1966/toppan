@@ -34,10 +34,22 @@ public interface RubinWeekRepository extends CrudRepository<Rubin_week, Long> {
     String setRubinDate(@Param("startDate") Date startDate,
                         @Param("endDate") Date endDate,
                         @Param("startDateOld") Date startDateOld,
-                        @Param("endDateOld") Date endDateOld
-    );
+                        @Param("endDateOld") Date endDateOld);
 
-
+    @Query(nativeQuery = true,
+            value = "SELECT " +
+                    "(SELECT coalesce(SUM(week_appeal),0) as week_appeal_old FROM rubin_week ri where ri.data_v >= :startDateOld and ri.data_v <= :endDateOld and ri.pidrozdil = :tsc ) as week_appeal_old," +
+                    "(SELECT coalesce(SUM(week_issued),0) as week_issued_old FROM rubin_week ro where ro.data_v >= :startDateOld and ro.data_v <= :endDateOld and ro.pidrozdil = :tsc ) as week_issued_old,"+
+                    "sum(week_appeal) as week_appeal, sum(week_issued) as week_issued " +
+                    "FROM rubin_week " +
+                    "WHERE data_v >= :startDate " +
+                    "AND data_v <= :endDate " +
+                    "and pidrozdil = :tsc ")
+    String setRubinDateTSC(@Param("startDate") Date startDate,
+                        @Param("endDate") Date endDate,
+                        @Param("startDateOld") Date startDateOld,
+                        @Param("endDateOld") Date endDateOld,
+                        @Param("tsc") String tsc);
 
     @Query(nativeQuery = true,
             value = "SELECT sum(week_appeal) as week_appeal, " +

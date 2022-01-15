@@ -183,12 +183,6 @@ class RubinWeekController {
         String rubinWekStr = rubinWeekRepository.setWeekPrint2022(data_sart, data_end, firstYear, tsc_front);
         rubinWekStr = rubinWekStr + ',' + data_end_str + "," + tsc_front + ',' + pidrozdilRepository.setEmailPidrozdil(tsc_front);
 
-//        try {
-//            createExcel.CreateF(rubinWekStr);//  Внесение полученной информации в ексл и отправка его на почту
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        EmailSender.send("o.klymchuk@zhi.hsc.gov.ua");
         //  Doc
         String[] str = rubinWekStr.split(",");
         String filename = "c:/RSC1840/Temp_rubin.docx";
@@ -200,41 +194,12 @@ class RubinWeekController {
         EmailFilename.send(str[7], "c:/RSC1840/rubin.docx");
 //        filename = "c:/RSC1840/rubin.docx";
 
-
 //        EmailSender.send(str[7]);
 //        EmailFilename.send(str[7],filename);
 
         //  Doc
 //        EmailFilename.send("o.klymchuk@zhi.hsc.gov.ua",filename);
 
-
-//        String tsc_data = rubinRepository.setDatePidrozdil(data_last, tsc_front);//  Проверяем на дубликат отчета
-//        boolean isEmpty = tsc_data == null || tsc_data.trim().length() == 0;
-//        if (!isEmpty) {
-//            return "redirect:/";
-//        }
-
-        //  Запись сформированного отчета по таблицам
-//        Rubin rubin = new Rubin();
-//        rubin.setPidrozdil(tsc_front);
-//
-//        LocalDate dat_f = LocalDate.parse(data_end_str);
-////        Date dat_f =new SimpleDateFormat("dd/MM/yyyy").parse(data_last_str);
-//        rubin.setData_v(dat_f);
-//
-//        rubin.setWeek(Integer.parseInt(str[0]));
-//        rubin.setWeek_1(Integer.parseInt(str[1]));
-//
-//        rubin.setYear_0(Integer.parseInt(str[2]));
-//        rubin.setYear_1(Integer.parseInt(str[3]));
-//        rubinRepository.save(rubin);
-
-//        Rubin_year rubin_year = new Rubin_year();//  Записать недельные данные в таблицу rubin_year
-//        rubin_year.setPidrozdil(tsc_front);
-//        rubin_year.setData_v(data_last);
-//        rubin_year.setYear_appeal(Integer.parseInt(str[2]));
-//        rubin_year.setYear_issued(Integer.parseInt(str[3]));
-//        rubinYearRepository.save(rubin_year);  //  Запись в годовую таблицю
 
         return "redirect:/rubin/week/rubin-week-view";
     }
@@ -343,88 +308,66 @@ class RubinWeekController {
 //        **************************************************************************************************************
         return "redirect:/rubin/week/rubin-week-view";
     }
-
     @PostMapping(value = "/rubin/week/rubin-week-view", params = "action=print_month")
-    public String rubinMouth(@RequestParam("data_v") String data_s,
-                             @RequestParam("data_vpo") String data_last_str,
+    public String rubinMouth(@RequestParam("data_v") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date data_v,
+                             @RequestParam("data_vpo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date data_last,
                              @RequestParam("p_tsc") String tsc_front,
                              Model model, HttpServletRequest request) {
-        //  Первая и последяя дата предідущего месяца  = Почитать =-> С помощью Java.Time очень легко писать код.
-        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//     ********************************************************************************************************************
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         LocalDate now = LocalDate.now();
-        String startDate = now.minusMonths(1).with(TemporalAdjusters.firstDayOfMonth()).format(format);
-        String endDate = now.minusMonths(1).with(TemporalAdjusters.lastDayOfMonth()).format(format);
+        String startPreviousYear = now.minusMonths(1).minusYears(1).with(TemporalAdjusters.firstDayOfMonth()).format(format);
+        String endPreviousYear = now.minusMonths(1).minusYears(1).with(TemporalAdjusters.lastDayOfMonth()).format(format);
 
-        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
-        Date start_Date = null;
+        Date startDateOld = null;
         try {
-            start_Date = sdf2.parse(startDate);
+            startDateOld = new SimpleDateFormat("dd.MM.yyyy").parse(startPreviousYear);
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        Date end_Date = null;
+        Date endDateOld = null;
         try {
-            end_Date = sdf2.parse(endDate);
+            endDateOld =new SimpleDateFormat("dd.MM.yyyy").parse(endPreviousYear);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        // проверить на дубликат,
-        // ***********************************************
-        //  нужно тестировать
-        // ***********************************************
-        DateTimeFormatter format_2 = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        String newString = now.minusMonths(1).with(TemporalAdjusters.lastDayOfMonth()).format(format_2);
-        String month_year = newString.substring(3);
-        String tsc_data = monthRepository.setMonthPidrozdil(month_year, tsc_front);//  Проверяем на дубликат отчета
-        boolean isEmpty = tsc_data == null || tsc_data.trim().length() == 0;
-        if (!isEmpty) {
-            return "redirect:/";
-        }
-        // ***********************************************
-        // если нет записи создать месячный отчет
-        DateTimeFormatter format_end = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        LocalDate nowend = LocalDate.now();
-        endDate = nowend.minusMonths(1).with(TemporalAdjusters.lastDayOfMonth()).format(format_end);
+        String rubinStr = rubinWeekRepository.setRubinDateTSC(data_v,data_last,startDateOld,endDateOld,tsc_front);
 
-        String rubinWeekMounth = "0,0," + rubinWeekRepository.setSumWeek(start_Date, end_Date, tsc_front);
-        rubinWeekMounth = rubinWeekMounth + ',' + month_year + "," + pidrozdilRepository.setEmailPidrozdil(tsc_front);
-        //  формируем запись для таблицы - rubin_month
-        String[] str = rubinWeekMounth.split(",");
-        Rubin_month rubin_month = new Rubin_month();//  Записать месячніе данные в таблицу Rubin_month
-        rubin_month.setMonth_appeal(Integer.parseInt(str[0]));
-        rubin_month.setMonth_issued(Integer.parseInt(str[1]));
-        rubin_month.setPidrozdil(tsc_front);
-        rubin_month.setData_v(end_Date);
-        rubin_month.setMonth_year(endDate.substring(3));
-        monthRepository.save(rubin_month);  //  Запись в месячную таблицу
+        LocalDate localDate = data_last.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        int year  = localDate.getYear();
+        int month = localDate.getMonthValue();
 
+        Calendar calendar = Calendar.getInstance() ;
+        String[] monthNames = { "Січнь", "Лютий", "Березень", "Квітень", "Травень", "Липень", "Червень", "Серпень", "Вересень", "Жовтень", "Листопад", "Грудень" };
+        String month2 = monthNames[calendar.get(Calendar.MONTH)];
+//        System.out.println(month2);
+
+        rubinStr = rubinStr + ',' + tsc_front + ',' + String.valueOf(month2)+"." + String.valueOf(year) + ',' + pidrozdilRepository.setEmailPidrozdil(tsc_front);
+        String[] str = rubinStr.split(",");
+
+//        EmailSender.send("o.klymchuk@zhi.hsc.gov.ua");
         String filename = "c:/RSC1840/Temp_rubin_Mounth.docx";
-//      Внестии в ексел
         try {
-            CreateExilMonth.CreateMonth(rubinWeekMounth);//  Внесение полученной информации в ексл и отправка его на почту
+            createDoc.EditDoc(rubinStr,filename);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //      Внестии в Doc
-        try {
-            createDoc.EditDoc(rubinWeekMounth, filename);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-//      И отправить юзеру  на почту
-        // Doc
-        EmailFilename.send(str[6], "c:/RSC1840/rubin.docx");
-        // Exel
-        EmailSender.send(str[6]);
+        filename = "c:/RSC1840/Rubin.docx";
+//        EmailSender.send(str[6]);
+        EmailFilename.send(str[6],filename);
+//        EmailFilename.send("o.klymchuk@zhi.hsc.gov.ua",filename);
 
-        model.addAttribute("rubinList", rubinWeekMounth);
 
-        List<Pidrozdil> pidrozdilList = (List<Pidrozdil>) pidrozdilRepository.findAll();
-        model.addAttribute("pidrozdilList", pidrozdilList);
 
-        model.addAttribute("dat", startDate);
-        model.addAttribute("dat_last", endDate);
+//     ********************************************************************************************************************
+//        model.addAttribute("rubinList", rubinWeekMounth);
+//
+//        List<Pidrozdil> pidrozdilList = (List<Pidrozdil>) pidrozdilRepository.findAll();
+//        model.addAttribute("pidrozdilList", pidrozdilList);
+//
+//        model.addAttribute("dat", startDate);
+//        model.addAttribute("dat_last", endDate);
 //        String mod = model.toString();
         return "redirect:/";
     }
