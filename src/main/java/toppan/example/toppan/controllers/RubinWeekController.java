@@ -1,5 +1,6 @@
 package toppan.example.toppan.controllers;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +31,7 @@ import java.util.*;
 import static java.time.DayOfWeek.SUNDAY;
 import static java.time.temporal.TemporalAdjusters.firstDayOfYear;
 import static java.time.temporal.TemporalAdjusters.previous;
+import static java.util.Comparator.naturalOrder;
 
 @Controller
 class RubinWeekController {
@@ -78,10 +80,17 @@ class RubinWeekController {
 
         List<Rubin_week> rubinList = rubinWeekRepository.setListDateRubinWeek(dat_f, data_v, tsc);
         model.addAttribute("rubinList", rubinList);
+//******************
+//        pidrozdilRepository.findAll();
+        List<Pidrozdil> pidrozdilList = (List<Pidrozdil>) pidrozdilRepository.findByOrderByPidrozdilAsc();
 
-        List<Pidrozdil> pidrozdilList = (List<Pidrozdil>) pidrozdilRepository.findAll();
+//        Простой способ:
+//
+//        repository.findAll(Sort.by(Sort.Direction.DESC, "colName"));
+//
+
+//        Collections.sort(pidrozdilList);
         model.addAttribute("pidrozdilList", pidrozdilList);
-
         model.addAttribute("dat", dat_first);
         model.addAttribute("dat_last", date_s);
         return "rubin/week/rubin-week-view";
@@ -113,7 +122,8 @@ class RubinWeekController {
             e.printStackTrace();
         }
 
-        List<Pidrozdil> pidrozdilList = (List<Pidrozdil>) pidrozdilRepository.findAll();
+        List<Pidrozdil> pidrozdilList = (List<Pidrozdil>) pidrozdilRepository.findByOrderByPidrozdilAsc();
+//        List<Pidrozdil> pidrozdilList = (List<Pidrozdil>) pidrozdilRepository.findAll();
         model.addAttribute("pidrozdilList", pidrozdilList);
 
         if (tsc.equals("РСЦ 1840")) {
@@ -358,17 +368,6 @@ class RubinWeekController {
         EmailFilename.send(str[6],filename);
 //        EmailFilename.send("o.klymchuk@zhi.hsc.gov.ua",filename);
 
-
-
-//     ********************************************************************************************************************
-//        model.addAttribute("rubinList", rubinWeekMounth);
-//
-//        List<Pidrozdil> pidrozdilList = (List<Pidrozdil>) pidrozdilRepository.findAll();
-//        model.addAttribute("pidrozdilList", pidrozdilList);
-//
-//        model.addAttribute("dat", startDate);
-//        model.addAttribute("dat_last", endDate);
-//        String mod = model.toString();
         return "redirect:/";
     }
 

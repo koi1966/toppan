@@ -5,7 +5,11 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import toppan.example.toppan.models.Pidrozdil;
 
+import java.util.List;
+
 public interface PidrozdilRepository extends CrudRepository<Pidrozdil,String> {
+
+    List<Pidrozdil> findByOrderByPidrozdilAsc();
 
     @Query(nativeQuery = true,
             value = "SELECT pidrozdil from pidrozdil p where p.ip = :ip_user")
@@ -14,6 +18,10 @@ public interface PidrozdilRepository extends CrudRepository<Pidrozdil,String> {
     @Query(nativeQuery = true,
             value = "SELECT email from pidrozdil where pidrozdil = :pidrozdil")
     String setEmailPidrozdil(@Param("pidrozdil") String pidrozdil) ;
+
+
+    @Query("SELECT p.pidrozdil from Pidrozdil AS p order by p.pidrozdil DESC ")
+    List<Pidrozdil> setPidrozdilAll() ;
 
 }
 
