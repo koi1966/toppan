@@ -1,19 +1,15 @@
 package toppan.example.toppan.controllers;
 
-import org.springframework.data.domain.Sort;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import toppan.example.toppan.createDoc.CreateDoc;
 import toppan.example.toppan.createDoc.CreateExcel;
-import toppan.example.toppan.createDoc.CreateExilMonth;
 import toppan.example.toppan.models.*;
 import toppan.example.toppan.models.repo.*;
 import toppan.example.toppan.utilities.EmailFilename;
-import toppan.example.toppan.utilities.EmailSender;
 import toppan.example.toppan.utilities.UtilitesSting;
-
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.text.DateFormat;
@@ -21,10 +17,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
-import java.time.Month;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.time.format.TextStyle;
 import java.time.temporal.TemporalAdjusters;
 import java.util.*;
 
@@ -80,16 +74,9 @@ class RubinWeekController {
 
         List<Rubin_week> rubinList = rubinWeekRepository.setListDateRubinWeek(dat_f, data_v, tsc);
         model.addAttribute("rubinList", rubinList);
-//******************
-//        pidrozdilRepository.findAll();
+
         List<Pidrozdil> pidrozdilList = (List<Pidrozdil>) pidrozdilRepository.findByOrderByPidrozdilAsc();
 
-//        Простой способ:
-//
-//        repository.findAll(Sort.by(Sort.Direction.DESC, "colName"));
-//
-
-//        Collections.sort(pidrozdilList);
         model.addAttribute("pidrozdilList", pidrozdilList);
         model.addAttribute("dat", dat_first);
         model.addAttribute("dat_last", date_s);
@@ -312,8 +299,6 @@ class RubinWeekController {
             e.printStackTrace();
         }
         filename = "c:/RSC1840/Rubin.docx";
-//        EmailSender.send(str[6]);
-//        EmailFilename.send(str[6],filename);
         EmailFilename.send("o.klymchuk@zhi.hsc.gov.ua",filename);
 //        **************************************************************************************************************
         return "redirect:/rubin/week/rubin-week-view";
