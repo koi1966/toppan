@@ -45,11 +45,11 @@ public interface RubinWeekRepository extends CrudRepository<Rubin_week, Long> {
                     "WHERE data_v >= :startDate " +
                     "AND data_v <= :endDate " +
                     "and pidrozdil = :tsc ")
-    String setRubinDateTSC(@Param("startDate") Date startDate,
-                        @Param("endDate") Date endDate,
-                        @Param("startDateOld") Date startDateOld,
-                        @Param("endDateOld") Date endDateOld,
-                        @Param("tsc") String tsc);
+    String setRubinDateTSC( @Param("startDate") Date startDate,
+                            @Param("endDate") Date endDate,
+                            @Param("startDateOld") Date startDateOld,
+                            @Param("endDateOld") Date endDateOld,
+                            @Param("tsc") String tsc);
 
     @Query(nativeQuery = true,
             value = "SELECT sum(week_appeal) as week_appeal, " +
@@ -78,10 +78,7 @@ public interface RubinWeekRepository extends CrudRepository<Rubin_week, Long> {
     @Query(nativeQuery = true,
             value = "SELECT sum(week_appeal) as week_appeal, " +
                     "sum(week_issued) as week_issued, " +
-
                     "(SELECT sum(ry.week_appeal) from rubin_week ry where ry.pidrozdil = :tsc and ry.data_v >= :firstYear and ry.data_v <= :endDate) as year_appeal, " +
-
-
                     "(SELECT sum(ri.week_issued) from rubin_week ri where ri.pidrozdil = :tsc and ri.data_v >= :firstYear and ri.data_v <= :endDate) as year_issued, " +
                     "RIGHT(pidrozdil, 4) as pidrozdil " +
                     "from rubin_week " +
@@ -94,15 +91,10 @@ public interface RubinWeekRepository extends CrudRepository<Rubin_week, Long> {
                         @Param("firstYear") Date firstYear,
                         @Param("tsc") String tsc);
 
-//    setWeekPrintRSC
-
     @Query(nativeQuery = true,
             value = "SELECT sum(week_appeal) as week_appeal, " +
                     "sum(week_issued) as week_issued, " +
-
                     "(SELECT sum(ry.week_appeal) from rubin_week ry where ry.data_v >= :firstYear and ry.data_v <= :endDate) as year_appeal, " +
-
-
                     "(SELECT sum(ri.week_issued) from rubin_week ri where ri.data_v >= :firstYear and ri.data_v <= :endDate) as year_issued " +
 //                    "RIGHT(pidrozdil, 4) as pidrozdil " +
                     "from rubin_week " +
@@ -121,12 +113,31 @@ public interface RubinWeekRepository extends CrudRepository<Rubin_week, Long> {
                       @Param("tsc") String tsc);
 
     @Query(nativeQuery = true,
-            value = "SELECT id, pidrozdil,data_v, week_appeal, week_issued FROM rubin_week r WHERE r.data_v >= :start_Date " +
+            value = "SELECT id, pidrozdil,data_v, week_appeal, week_issued " +
+                    "FROM rubin_week r " +
+                    "WHERE r.data_v >= :start_Date " +
             "AND r.data_v <= :end_Date " +
-
             "ORDER BY pidrozdil,r.data_v ")
     List<Rubin_week> setWeekRSC(@Param("start_Date") Date start_Date,
-                      @Param("end_Date") Date end_Date );
+                                @Param("end_Date") Date end_Date );
+
+    @Query(nativeQuery = true,
+            value = "SELECT sum(rw.week_appeal) as week_appeal,sum(rw.week_issued) as week_issued " +
+                    "FROM rubin_week rw " +
+                    "WHERE rw.data_v >= :start_Date " +
+                    "AND rw.data_v <= :end_Date")
+    String setWeekRSCSum(@Param("start_Date") Date start_Date,
+                         @Param("end_Date") Date end_Date );
+
+    @Query(nativeQuery = true,
+            value = "SELECT sum(rw.week_appeal) as week_appeal,sum(rw.week_issued) as week_issued " +
+                    "FROM rubin_week rw " +
+                    "WHERE rw.data_v >= :start_Date " +
+                    "AND rw.data_v <= :end_Date " +
+                    "AND rw.pidrozdil = :tsc")
+    String setWeekAllTSCSum(@Param("start_Date") Date start_Date,
+                            @Param("end_Date") Date end_Date,
+                            @Param("tsc") String tsc );
 
 }
 //

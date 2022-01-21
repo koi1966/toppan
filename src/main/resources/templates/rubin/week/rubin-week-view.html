@@ -4,6 +4,26 @@
     <title>Блог РСЦ</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css">-->
+    <style>
+        .textcols {
+            white-space: nowrap;
+        }
+        .textcols-item {
+            white-space: normal;
+            display: inline-block;
+            width: 48%;
+            vertical-align: top;
+            background: #fff2e1;
+        }
+        .textcols .textcols-item:first-child {
+            margin-right: 4%;
+        }
+        .textcolor {
+            color: #12b617;
+            background-color: #ffe;
+        }
+
+    </style>
 </head>
 
 <body data-hasqtip="0">
@@ -24,6 +44,7 @@
             <div class="col-lg-3" th:object="${pidrozdilList}">
                <select required size = "1" name = "p_tsc" class="form-control" id="p_tsc" >
                     <option th:value="${p_tsc}">Виберіть підрозділ</option>
+                    <!--/*@thymesVar id="pidrozdil" type="toppan"*/-->
                     <option th:each="tsc:${pidrozdilList}"
                             th:value="${tsc.pidrozdil}"
                             th:text="${tsc.pidrozdil}">
@@ -37,11 +58,13 @@
             <button type="submit" class="btn btn-success" name="action" value="print_month" >Помісячний звіт ТСЦ</button>
             <button type="submit" class="btn btn-success" name="action" value="print_week_rsc" >Тижневий, звіт РСЦ</button>
             <button type="submit" class="btn btn-success" name="action" value="print_month_rsc" >Помісячний, звіт РСЦ</button>
+            <p class="textcolor" th:text="${' Загалом звернень  :' +week_appeal + '  виданих  : '+week_issued }"/>
         </form>
     </div>
-    <div>
+
+    <div id="container" style="width:100%;">
 <!--        <div class="container mt-auto mb-auto">-->
-            <div >
+        <div id="left" style="float:left; width:50%;">
 <!--            class="alert alert-info mt-2"-->
             <div th:each="rubin:${rubinList}" class="shadow p-1 mb-1 bg-white rounded">
                 <a th:href="@{/rubin/week/{id}(id=${rubin.getId()})}"
@@ -49,7 +72,7 @@
                 <p th:text="${'звернень за день :' +rubin.week_appeal + '  виданих за день : '+rubin.week_issued  }"/>
             </div>
 
-            <table border="1">
+            <table th:border="1">
                 <tr>
                     <th> EE</th>
                     <th> RR</th>
@@ -59,7 +82,17 @@
 
         </div>
 
+
+
     </div>
+
+    <div id="right" style="float:right; width:50%;">
+<!--        Правая панель-->
+        <div  class="shadow p-1 mb-1 bg-white rounded">
+<!--            <p th:text="${' Загалом звернень  :' +week_appeal + '  виданих  : '+week_issued }"/>-->
+        </div>
+    </div>
+
 </div>
 
 </body>

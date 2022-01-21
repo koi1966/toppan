@@ -1,0 +1,14 @@
+
+.textcolstextcols {
+    white-space: nowrap;
+}
+.textcols-item {
+    white-space: normal;
+    display: inline-block;
+    width: 48%;
+    vertical-align: top;
+    background: #fff2e1;
+}
+.textcols .textcols-item:first-child {
+    margin-right: 4%;
+}

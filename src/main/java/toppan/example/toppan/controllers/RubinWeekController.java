@@ -25,7 +25,6 @@ import java.util.*;
 import static java.time.DayOfWeek.SUNDAY;
 import static java.time.temporal.TemporalAdjusters.firstDayOfYear;
 import static java.time.temporal.TemporalAdjusters.previous;
-import static java.util.Comparator.naturalOrder;
 
 @Controller
 class RubinWeekController {
@@ -48,6 +47,12 @@ class RubinWeekController {
         this.createDoc = createDoc;
     }
 
+    @GetMapping("/rubin/week/rubin-week-view1") // тестовое окно
+    public String rubinWeekViewAll1(){
+
+        return "rubin/week/rubin-week-view1";
+    }
+
     @GetMapping("/rubin/week/rubin-week-view")
     public String rubinWeekViewAll(HttpServletRequest request, Model model) throws ParseException {
 
@@ -66,17 +71,18 @@ class RubinWeekController {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        String ip_user = request.getRemoteAddr(); //        вытягивает IP копма с которого вносят информацию
+        String ip_user = request.getRemoteAddr(); //  вытягивает IP копма с которого вносят информацию
 //        ip_user="172.0.0.0";
         int end = UtilitesSting.ordinalIndexOf(ip_user, ".", 2);
-        String ip = ip_user.substring(0, end); //        узнаеп подсеть  172.0.0
-        String tsc = pidrozdilRepository.setNamePidrozdil(ip);//        по подсети узнаем из какого ТСЦ зашли работать
+        String ip = ip_user.substring(0, end); // узнаеп подсеть  172.0.0
+        String tsc = pidrozdilRepository.setNamePidrozdil(ip);//  по подсети узнаем из какого ТСЦ зашли работать
 
         List<Rubin_week> rubinList = rubinWeekRepository.setListDateRubinWeek(dat_f, data_v, tsc);
         model.addAttribute("rubinList", rubinList);
 
         List<Pidrozdil> pidrozdilList = (List<Pidrozdil>) pidrozdilRepository.findByOrderByPidrozdilAsc();
-
+        model.addAttribute("week_appeal", "0");
+        model.addAttribute("week_issued", "0");
         model.addAttribute("pidrozdilList", pidrozdilList);
         model.addAttribute("dat", dat_first);
         model.addAttribute("dat_last", date_s);
@@ -112,16 +118,20 @@ class RubinWeekController {
         List<Pidrozdil> pidrozdilList = (List<Pidrozdil>) pidrozdilRepository.findByOrderByPidrozdilAsc();
 //        List<Pidrozdil> pidrozdilList = (List<Pidrozdil>) pidrozdilRepository.findAll();
         model.addAttribute("pidrozdilList", pidrozdilList);
-
+        String rubinSUM = new String();
         if (tsc.equals("РСЦ 1840")) {
             rubinList = rubinWeekRepository.setWeekRSC(data_v, data_last);
+             rubinSUM = rubinWeekRepository.setWeekRSCSum(data_v, data_last);
+
         } else {
             rubinList = rubinWeekRepository.setListDateRubinWeek(data_v, data_last, tsc);
+            rubinSUM = rubinWeekRepository.setWeekAllTSCSum(data_v, data_last, tsc);
         }
 
-//        List<Rubin_week> rubinList = rubinWeekRepository.setListDateRubinWeek(data_v, data_last, tsc);
+        String[] strSum = rubinSUM.split(",");
         model.addAttribute("rubinList", rubinList);
-
+        model.addAttribute("week_appeal", strSum[0]);
+        model.addAttribute("week_issued", strSum[1]);
         model.addAttribute("dat", data_s);
         model.addAttribute("dat_last", data_last_str);
         model.addAttribute("p_tsc", tsc);
@@ -148,8 +158,7 @@ class RubinWeekController {
 //            }
 //        }
 //     сверяем ТСЦ которое создает отчет и сравниваем IP копма с которого вносят информацию
-//
-//
+
         //  отчет по датам из фронта
 // ************************************************************************************************
         SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
@@ -189,15 +198,6 @@ class RubinWeekController {
             e.printStackTrace();
         }
         EmailFilename.send(str[7], "c:/RSC1840/rubin.docx");
-//        filename = "c:/RSC1840/rubin.docx";
-
-//        EmailSender.send(str[7]);
-//        EmailFilename.send(str[7],filename);
-
-        //  Doc
-//        EmailFilename.send("o.klymchuk@zhi.hsc.gov.ua",filename);
-
-
         return "redirect:/rubin/week/rubin-week-view";
     }
 
@@ -246,7 +246,6 @@ class RubinWeekController {
 //        filename = "c:/RSC1840/rubin.docx";
 
         String[] str = rubinWekStr.split(",");
-
         EmailFilename.send(str[7], "c:/RSC1840/rubin.docx");
 
 //        *****************************************************************************************************
@@ -259,7 +258,6 @@ class RubinWeekController {
                                 @RequestParam("data_vpo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date data_last,
                                 @RequestParam("p_tsc") String tsc_front) {
 // ***********************************************************************************************************************
-
         DateTimeFormatter format = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         LocalDate now = LocalDate.now();
         String startPreviousYear = now.minusMonths(1).minusYears(1).with(TemporalAdjusters.firstDayOfMonth()).format(format);
@@ -400,9 +398,20 @@ class RubinWeekController {
         return "redirect:/";
     }
 
-    @GetMapping("/rubin/week/{id}")
-    public String rubinWeekDetails(Model model, @PathVariable("id") long id) {
-
+    @GetMapping("/rubin/week/{id}") //  открыть для поштуного просмотра
+    public String rubinWeekDetails(Model model,
+                                   @PathVariable("id") long id)
+//    HttpServletRequest request,@RequestParam("p_tsc") String tsc_front)
+    {
+//        в другом месте сврить
+  // сверить ТЦС для редактирования
+//        String ip_user = request.getRemoteAddr(); //        вытягивает IP копма с которого вносят информацию
+//        int end = UtilitesSting.ordinalIndexOf(ip_user, ".", 2);
+//        String ip = ip_user.substring(0, end); //        узнаеп подсеть  172.0.0
+//        String tsc = pidrozdilRepository.setNamePidrozdil(ip);//  по подсети узнаем из какого ТСЦ зашли работать
+//        if (!(tsc_front.equals(tsc))) {
+//            return "redirect:/";
+//        }
         Optional<Rubin_week> rubin = rubinWeekRepository.findById(id);//      находим и передаем єту одну запись на вюшку
         ArrayList<Rubin_week> res = new ArrayList<>();
         rubin.ifPresent(res::add);
@@ -472,4 +481,7 @@ class RubinWeekController {
 
 //    print_month_rsc
 
+//    String[] strings = {"foo","bar"};
+//    List<String> l = Arrays.asList(strings);
+//    Ctrl+Shift+Space
 }
