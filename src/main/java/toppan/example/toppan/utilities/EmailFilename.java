@@ -11,11 +11,11 @@ import javax.mail.internet.MimeMultipart;
 import java.util.Properties;
 
 public class EmailFilename {
-    public static void send(String to, String filename){
+    public static void send(String to, String filename) {
 
 //            final String toto = "o.klymchuk@zhi.hsc.gov.ua";       // sender email
         final String from = "rubin@zhi.hsc.gov.ua";       // receiver email
-            final String host = "10.30.1.1";            // mail server host
+        final String host = "10.30.1.1";            // mail server host
 //        final String host = "10.6.1.1";
         Properties properties = System.getProperties();
         properties.setProperty("mail.smtp.host", host); //"mail.smtp.host"
@@ -37,10 +37,12 @@ public class EmailFilename {
             messageBodyPart.setFileName(filename);
             multipart.addBodyPart(messageBodyPart);
             // Send the complete message parts
-            message.setContent(multipart );
+            message.setContent(multipart);
             Transport.send(message);
             System.out.println("Email Sent successfully Doc...." + to);
-        } catch (MessagingException mex){ mex.printStackTrace(); }
+        } catch (MessagingException mex) {
+            mex.printStackTrace();
+        }
     }
 
 }

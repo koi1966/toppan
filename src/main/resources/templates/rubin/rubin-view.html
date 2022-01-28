@@ -3,7 +3,7 @@
 <head>
     <title>Блог РСЦ</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-<!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css">-->
+    <!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css">-->
 </head>
 
 <body data-hasqtip="0">
@@ -14,9 +14,10 @@
     <div>
         <form action="../rubin/rubin-view" method="post">
             <label for="data_v"> Дата внесення : </label>
-            <input type="date" name="data_v" th:value="${dat}" placeholder="Дата внесення" class="form-control" id="data_v">
+            <input type="date" name="data_v" th:value="${dat}" placeholder="Дата внесення" class="form-control"
+                   id="data_v">
 
-<!--            <input class="form-control" id="data_v" th:value="${dat}" name="data_v" type="date" [ngModel] ="dateFrom | date:'yyyy-MM-dd'" (ngModelChange)="$event = dateFrom" min="2016-10-01" [value]="2016-10-01" />-->
+            <!--            <input class="form-control" id="data_v" th:value="${dat}" name="data_v" type="date" [ngModel] ="dateFrom | date:'yyyy-MM-dd'" (ngModelChange)="$event = dateFrom" min="2016-10-01" [value]="2016-10-01" />-->
             <!--            <a th:href="'../rubin/rubin-print'" role="button" class="btn btn-warning">Печать</a>-->
             <!--            <a th:href="'/rubin/'+ ${el.id} +'/remove'" class="btn btn-warning" aria-pressed="false" >Удалить</a>-->
             <button type="submit" class="btn btn-success">Пошук</button>
@@ -26,13 +27,14 @@
         <div class="container mt-5 mb-1">
 
             <div th:each="rubin:${rubinList}" class="alert alert-info mt-2">
-                <a th:href="@{/rubin/{id} (id=${rubin.getId()})}" th:text="${rubin.pidrozdil + ' ....  ' + rubin.data_v}">user</a>
+                <a th:href="@{/rubin/{id} (id=${rubin.getId()})}"
+                   th:text="${rubin.pidrozdil + ' ....  ' + rubin.data_v}">user</a>
                 <p th:text="${'звернень тиждень :' +rubin.week + '  з початку року : '+rubin.year_0  }"/>
                 <p th:text="${'виданих  тиждень :'+rubin.week_1 +'  з початку року : '+ rubin.year_1 }"/>
             </div>
 
         </div>
-<!--        <a th:href="'../rubin/rubin-print'" role="button" class="btn btn-warning">Печать</a>-->
+        <!--        <a th:href="'../rubin/rubin-print'" role="button" class="btn btn-warning">Печать</a>-->
     </div>
 </div>
 

@@ -2,13 +2,13 @@ package toppan.example.toppan.models;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
+@Table(name = "Rubin_week", indexes = {
+        @Index(name = "idx_rubin_week_data_v", columnList = "data_v")
+})
 public class Rubin_week {   // неделя
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -16,11 +16,12 @@ public class Rubin_week {   // неделя
     private String pidrozdil;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     public LocalDate data_v;
-//    week_appeal  - обращений
+    //    week_appeal  - обращений
 //    week_issued  - выдано
     private int week_appeal, week_issued;
 
-    public Rubin_week() {}
+    public Rubin_week() {
+    }
 
     public Long getId() {
         return id;
