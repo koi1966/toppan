@@ -5,41 +5,44 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css">-->
     <style>
-        .textcols {
-            white-space: nowrap;
-        }
-
-        .textcols-item {
-            white-space: normal;
-            display: inline-block;
-            width: 48%;
-            vertical-align: top;
-            background: #fff2e1;
-        }
-
         .textcols .textcols-item:first-child {
             margin-right: 4%;
         }
 
         .textcolor {
-            color: #12b617;
+            color: #191972;
             background-color: #ffe;
         }
 
         .th1, .td1 { /* ячейки таблиці */
             border: 1px solid black; /* Параметры рамки */
-            text-align: left; /* Выравнивание по центру */
+            text-align: center ; /* по центру блока */
             /*margin:0px;*/
-            background: #f1f1f5;
+            background: #b3b3ee;
             /*  padding: -5px;  !* поля вокруг текста *!*/
-            border-bottom: 1px solid #5b90d0;
+            border-bottom: 1px solid rgba(91, 144, 208, 0.99);
             /*td{ cursor: default;  как сделать таблицу неактивной } */
+            /*baseline:*/
         }
 
         .th1 { /* заголовок */
-            background: #e9efe4; /* Цвет фона ячейки */
+            background: #cffacf; /* Цвет фона ячейки */
             vertical-align: center;
             padding: 15px; /* Убираем поля вокруг текста */
+        }
+
+        .tab1 {
+            border-collapse: collapse; /* Убираем двойные линии между ячейками */
+            /*width: 600px; !* Ширина таблицы *!*/
+            width: 70%;
+            /*border-spacing: 10px 30px;*/
+            border: 1px solid red;
+        }
+        .tab2 {
+            border-collapse: collapse; /* Убираем двойные линии между ячейками */
+            width: 50%;
+            /*border-spacing: 10px 30px;*/
+            border: 1px solid red;
         }
     </style>
 </head>
@@ -51,7 +54,6 @@
     <header th:insert="blocks/header.html :: header"></header>
     <div>
 
-
         <form method="post">
             <label for="data_v"> Дата внесення з : </label>
             <input type="date" name="data_v" th:value="${dat}" placeholder="Дата внесення  з " id="data_v"><br>
@@ -62,11 +64,10 @@
             <div class="col-lg-3" th:object="${pidrozdilList}">
                 <select required size="1" name="p_tsc" class="form-control" id="p_tsc">
                     <option th:value="${p_tsc}">Виберіть підрозділ</option>
-                    <!--/*@thymesVar id="pidrozdil" type="toppan"*/-->
+
                     <option th:each="tsc:${pidrozdilList}"
                             th:value="${tsc.pidrozdil}"
                             th:text="${tsc.pidrozdil}">
-                        <!--                            th:text="${tsc.pidrozdil}+' : '+${tsc.ip}">-->
                     </option>
                 </select><br>
             </div>
@@ -80,60 +81,59 @@
             </button>
             <button type="submit" class="btn btn-success" name="action" value="print_month_rsc">Помісячний, звіт РСЦ
             </button>
-            <p class="textcolor" th:text="${' Загалом звернень  :' +week_appeal + '  виданих  : '+week_issued }"/>
+
+            <table>
+                <tr >
+                    <th class="th1">
+                        <a class="textcolor" th:text="${' Загалом - звернень : ' +week_appeal + ' виданих : '+week_issued }">user</a>
+                    </th>
+<!--                    <th class="th1">Д а т а    </th>-->
+                </tr>
+            </table>
         </form>
     </div>
 
-<!--    <div id="container" style="width:100%;">-->
-<!--        &lt;!&ndash;        <div class="container mt-auto mb-auto">&ndash;&gt;-->
-<!--        <div id="left" style="float:left; width:50%;">-->
-<!--            &lt;!&ndash;            class="alert alert-info mt-2"&ndash;&gt;-->
-<!--            <div th:each="rubin:${rubinList}" class="shadow p-1 mb-1 bg-white rounded">-->
-<!--                <a th:href="@{/rubin/week/{id}(id=${rubin.id})}"-->
-<!--                   th:text="${rubin.getPidrozdil() + ' .... ' + rubin.getData_v()}">user</a>-->
-<!--                <p th:text="${'звернень за день :' +rubin.week_appeal + '  виданих за день : '+rubin.week_issued  }"/>-->
-<!--            </div>-->
 
-<!--            <table th:border="1">-->
-<!--                <tr>-->
-<!--                    <th> EE</th>-->
-<!--                    <th> RR</th>-->
-<!--                </tr>-->
-<!--            </table>-->
+    <div id="container" style="width:100%;">
+        <!--        <div class="container mt-auto mb-auto">-->
+        <div id="left" style="float:left; width:50%;">
+            <!--            class="alert alert-info mt-2"-->
+            <table class="tab1">
+                <tr>
+                    <th class="th1"> Т С Ц </th>
+                    <th class="th1">Д а т а</th>
+                    <th class="th1">Звернень за день</th>
+                    <th class="th1">Виданих за день</th>
+                </tr>
+                <tr th:each="rubin:${rubinList}">
+                    <td class="td1" id="col1">
+                        <a th:href="@{/rubin/week/{id}(id=${rubin.id})}"
+                           th:text="${rubin.getPidrozdil()}">user</a>
+                    </td>
+                    <td class="td1">
+                        <a th:href="@{/rubin/week/{id}(id=${rubin.id})}"
+                           th:text="${rubin.getData_v()}">user</a>
+                    </td>
+                    <td class="td1">
+                        <a th:text="${rubin.week_appeal}">user</a>
+                    </td>
+                    <td class="td1">
+                        <a th:text="${rubin.week_issued}">user</a>
+                    </td>
 
-<!--        </div>-->
+                </tr>
+                <div class="shadow p-1 mb-1 bg-white rounded">
+                    <!--            <p th:text="${' Загалом звернень  :' +week_appeal + '  виданих  : '+week_issued }"/>-->
+                </div>
+            </table>
 
-<!--    </div>-->
+        </div>
+
+    </div>
 
     <div id="right" style="float:right; width:50%;">
         <!--        Правая панель-->
-        <table class="tab1">
-            <tr>
-                <th class="th1"> Т С Ц </th>
-                <th class="th1">Д а т а    </th>
-                <th class="th1">Звернень за день</th>
-                <th class="th1">Виданих за день</th>
-            </tr>
-            <tr th:each="rubin:${rubinList}">
-                <td class="td1" id="col1">
-                    <a th:href="@{/rubin/week/{id}(id=${rubin.id})}"
-                       th:text="${rubin.getPidrozdil()}">user</a>
-                </td>
-                <td>
-                    <a th:text="${rubin.getData_v()}">user</a>
-                </td>
-                <td>
-                    <a th:text="${rubin.week_appeal}">user</a>
-                </td>
-                <td>
-                    <a th:text="${rubin.week_issued}">user</a>
-                </td>
 
-            </tr>
-        <div class="shadow p-1 mb-1 bg-white rounded">
-            <!--            <p th:text="${' Загалом звернень  :' +week_appeal + '  виданих  : '+week_issued }"/>-->
-        </div>
-        </table>
     </div>
 
 </div>

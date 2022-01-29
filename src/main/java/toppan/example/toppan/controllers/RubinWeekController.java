@@ -300,8 +300,10 @@ class RubinWeekController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+//        EmailFilename.send(str[6], filename);
         filename = "c:/RSC1840/Rubin.docx";
-        EmailFilename.send("o.klymchuk@zhi.hsc.gov.ua", filename);
+//        EmailFilename.send("it@zhi.hsc.gov.ua", filename);
+        EmailFilename.send(str[6], filename);
 //        **************************************************************************************************************
         return "redirect:/rubin/week/rubin-week-view";
     }
