@@ -228,22 +228,20 @@ class RubinWeekController {
         }
         //  Doc
         String[] str = rubinWekStr.split(",");
-//        String filename = "c:/RSC1840/Temp_rubin.docx";
         try {
             createDoc.EditDoc(rubinWekStr, filename);//  Внесение полученной информации в Doc и отправка его на почту
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-
         EmailFilename.send(str[7], "c:/RSC1840/rubin.docx");
         return "redirect:/rubin/week/rubin-week-view";
     }
 
     @PostMapping(value = "/rubin/week/rubin-week-view", params = "action=print_month")
-    public String rubinMouth(@RequestParam("data_v") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date data_v,
-                             @RequestParam("data_vpo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date data_last,
-                             @RequestParam("p_tsc") String tsc_front) {
+    public String rubinPrintMonth(@RequestParam("data_v") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date data_v,
+                                  @RequestParam("data_vpo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date data_last,
+                                  @RequestParam("p_tsc") String tsc_front) {
 //     ********************************************************************************************************************
         DateTimeFormatter format = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         LocalDate now = LocalDate.now();
@@ -274,7 +272,7 @@ class RubinWeekController {
         String month2 = monthNames[calendar.get(Calendar.MONTH)];
 //        System.out.println(month2);
 
-        rubinStr = rubinStr + ',' + tsc_front + ',' + String.valueOf(month2) + "." + String.valueOf(year) + ',' + pidrozdilRepository.setEmailPidrozdil(tsc_front);
+        rubinStr = rubinStr + ',' + tsc_front + ',' + String.valueOf(month2) + " " + String.valueOf(year) + ',' + pidrozdilRepository.setEmailPidrozdil(tsc_front);
         String[] str = rubinStr.split(",");
 
 //        EmailSender.send("o.klymchuk@zhi.hsc.gov.ua");
@@ -294,14 +292,11 @@ class RubinWeekController {
         return "redirect:/";
     }
 
-
-
-
     @PostMapping(value = "/rubin/week/rubin-week-view", params = "action=print_week_rsc")
     public String rubunPrintWeekRSC(@RequestParam("data_v") String data_sart_str,
                                     @RequestParam("data_vpo") String data_end_str,
                                     @RequestParam("p_tsc") String tsc_front) {
-//        ****************************************************************************************************
+
         SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
         Date data_sart = null;
         try {
