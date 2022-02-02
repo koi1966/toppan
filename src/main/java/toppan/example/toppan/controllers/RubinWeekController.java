@@ -95,13 +95,12 @@ class RubinWeekController {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @PostMapping(value = "/rubin/week/rubin-week-view", params = "action=search")
-    public String rubinViewData(@RequestParam("data_v") String data_s,
-                                @RequestParam("data_vpo") String data_last_str,
-                                @RequestParam("p_tsc") String tsc,
+    public String rubinSearchTSC(@RequestParam("data_v") String data_s,
+                                 @RequestParam("data_vpo") String data_last_str,
+                                 @RequestParam("p_tsc") String tsc,
 //                              @RequestParam(value="action", required=true) String action,
-                                Model model) {
+                                 Model model) {
 
-//        Rubin_week rubinList = new Rubin_week();
         List<Rubin_week> rubinList = new ArrayList<>();
 
         SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
@@ -120,7 +119,6 @@ class RubinWeekController {
         }
 
         List<Pidrozdil> pidrozdilList = (List<Pidrozdil>) pidrozdilRepository.findByOrderByPidrozdilAsc();
-//        List<Pidrozdil> pidrozdilList = (List<Pidrozdil>) pidrozdilRepository.findAll();
         model.addAttribute("pidrozdilList", pidrozdilList);
         String rubinSUM = new String();
         if (tsc.equals("РСЦ 1840")) {
@@ -142,12 +140,12 @@ class RubinWeekController {
         return "rubin/week/rubin-week-view";
     }
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd") // Тижневий ЗВІТ
+    @DateTimeFormat(pattern = "yyyy-MM-dd") // Тижневий ЗВІТ    ТСЦ
     @PostMapping(value = "/rubin/week/rubin-week-view", params = "action=print")
-    public String rubinViewDataPrint(@RequestParam("data_v") String data_sart_str,
-                                     @RequestParam("data_vpo") String data_end_str,
-                                     @RequestParam("p_tsc") String tsc_front,
-                                     Model model, HttpServletRequest request) {
+    public String rubinPrintWeekTSC(@RequestParam("data_v") String data_sart_str,
+                                    @RequestParam("data_vpo") String data_end_str,
+                                    @RequestParam("p_tsc") String tsc_front,
+                                    Model model, HttpServletRequest request) {
 
         //  сверяем ТСЦ которое создает отчет и сравниваем IP копма с которого вносят информацию
 //        String ip_user = request.getRemoteAddr();
@@ -158,7 +156,7 @@ class RubinWeekController {
 //
 //        if (tsc != "РСЦ 1840") {
 //            if (tsc_front != tsc) {
-//                return "redirect:/";//  если разные ТСЦ то на головну сторынку
+//                return "redirect:/Error";//  если разные ТСЦ то на сторінку з поилкою
 //            }
 //        }
 //     сверяем ТСЦ которое создает отчет и сравниваем IP копма с которого вносят информацию
@@ -191,25 +189,118 @@ class RubinWeekController {
 //        java.util.Date firstYear = new SimpleDateFormat("yyyy-MM-dd").parse(String.valueOf(LocalDate.now().with(firstDayOfYear())));
 
         String rubinWekStr = rubinWeekRepository.setWeekPrint2022(data_sart, data_end, firstYear, tsc_front);
-        rubinWekStr = rubinWekStr + ',' + data_end_str + "," + tsc_front + ',' + pidrozdilRepository.setEmailPidrozdil(tsc_front);
 
+        boolean isEmpty = rubinWekStr == null || rubinWekStr.trim().length() == 0;
+        if (isEmpty) {
+            rubinWekStr ="0,0,0,0";
+        }
+
+        rubinWekStr = rubinWekStr + ',' + data_end_str + "," + tsc_front + ',' + pidrozdilRepository.setEmailPidrozdil(tsc_front);
+        String filename;
+        switch (tsc_front) {
+            case "РСЦ 1840":
+                System.out.println("РСЦ 1840");
+                filename = "c:/RSC1840/Temp_rubin_1840.docx";
+                break;
+            case "ТСЦ 1841":
+                System.out.println("Тижневий ТСЦ 1841");
+                filename = "c:/RSC1840/Temp_rubin_1841.docx";
+                break;
+            case "ТСЦ 1842":
+                System.out.println("Тижневий ТСЦ 1842");
+                filename = "c:/RSC1840/Temp_rubin_1842.docx";
+                break;
+            case "ТСЦ 1843":
+                System.out.println("Тижневий ТСЦ 1843");
+                filename = "c:/RSC1840/Temp_rubin_1843.docx";
+                break;
+            case "ТСЦ 1844":
+                System.out.println("Тижневий ТСЦ 1844");
+                filename = "c:/RSC1840/Temp_rubin_1844.docx";
+                break;
+            case "ТСЦ 1845":
+                System.out.println("Тижневий ТСЦ 1845");
+                filename = "c:/RSC1840/Temp_rubin_1845.docx";
+                break;
+            default:
+                System.out.println("Oooops, Тижневий  something wrong !");
+                filename = "c:/RSC1840/Temp_rubin.docx";
+        }
         //  Doc
         String[] str = rubinWekStr.split(",");
-        String filename = "c:/RSC1840/Temp_rubin.docx";
+//        String filename = "c:/RSC1840/Temp_rubin.docx";
         try {
             createDoc.EditDoc(rubinWekStr, filename);//  Внесение полученной информации в Doc и отправка его на почту
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
         EmailFilename.send(str[7], "c:/RSC1840/rubin.docx");
         return "redirect:/rubin/week/rubin-week-view";
     }
+
+    @PostMapping(value = "/rubin/week/rubin-week-view", params = "action=print_month")
+    public String rubinMouth(@RequestParam("data_v") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date data_v,
+                             @RequestParam("data_vpo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date data_last,
+                             @RequestParam("p_tsc") String tsc_front) {
+//     ********************************************************************************************************************
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        LocalDate now = LocalDate.now();
+        String startPreviousYear = now.minusMonths(1).minusYears(1).with(TemporalAdjusters.firstDayOfMonth()).format(format);
+        String endPreviousYear = now.minusMonths(1).minusYears(1).with(TemporalAdjusters.lastDayOfMonth()).format(format);
+
+        Date startDateOld = null;
+        try {
+            startDateOld = new SimpleDateFormat("dd.MM.yyyy").parse(startPreviousYear);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        Date endDateOld = null;
+        try {
+            endDateOld = new SimpleDateFormat("dd.MM.yyyy").parse(endPreviousYear);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        String rubinStr = rubinWeekRepository.setRubinDateTSC(data_v, data_last, startDateOld, endDateOld, tsc_front);
+
+        LocalDate localDate = data_last.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        int year = localDate.getYear();
+        int month = localDate.getMonthValue();
+
+        Calendar calendar = Calendar.getInstance();
+        String[] monthNames = {"Січнь", "Лютий", "Березень", "Квітень", "Травень", "Липень", "Червень", "Серпень", "Вересень", "Жовтень", "Листопад", "Грудень"};
+        String month2 = monthNames[calendar.get(Calendar.MONTH)];
+//        System.out.println(month2);
+
+        rubinStr = rubinStr + ',' + tsc_front + ',' + String.valueOf(month2) + "." + String.valueOf(year) + ',' + pidrozdilRepository.setEmailPidrozdil(tsc_front);
+        String[] str = rubinStr.split(",");
+
+//        EmailSender.send("o.klymchuk@zhi.hsc.gov.ua");
+        String filename = "c:/RSC1840/Temp_rubin_Mounth.docx";
+
+        try {
+            createDoc.EditDoc(rubinStr, filename);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        filename = "c:/RSC1840/Rubin.docx";
+
+
+        EmailFilename.send(str[6], filename);
+//        EmailFilename.send("o.klymchuk@zhi.hsc.gov.ua",filename);
+
+        return "redirect:/";
+    }
+
+
+
 
     @PostMapping(value = "/rubin/week/rubin-week-view", params = "action=print_week_rsc")
     public String rubunPrintWeekRSC(@RequestParam("data_v") String data_sart_str,
                                     @RequestParam("data_vpo") String data_end_str,
                                     @RequestParam("p_tsc") String tsc_front) {
-
 //        ****************************************************************************************************
         SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
         Date data_sart = null;
@@ -239,7 +330,7 @@ class RubinWeekController {
 
         String rubinWekStr = rubinWeekRepository.setWeekPrintRSC(data_sart, data_end, firstYear);
         rubinWekStr = rubinWekStr + ',' + tsc_front + ',' + data_end_str2 + "," + tsc_front + ',' + pidrozdilRepository.setEmailPidrozdil(tsc_front);
-        String filename = "c:/RSC1840/Temp_rubin.docx";
+        String filename = "c:/RSC1840/Temp_rubin_1840.docx";
 
         //  Doc
         try {
@@ -258,9 +349,9 @@ class RubinWeekController {
 
     //    print_month_rsc
     @PostMapping(value = "/rubin/week/rubin-week-view", params = "action=print_month_rsc")
-    public String printMonthRSC(@RequestParam("data_v") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date data_v,
-                                @RequestParam("data_vpo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date data_last,
-                                @RequestParam("p_tsc") String tsc_front) {
+    public String rubinPrintMonthRSC(@RequestParam("data_v") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date data_v,
+                                     @RequestParam("data_vpo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date data_last,
+                                     @RequestParam("p_tsc") String tsc_front) {
 // ***********************************************************************************************************************
         DateTimeFormatter format = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         LocalDate now = LocalDate.now();
@@ -306,58 +397,6 @@ class RubinWeekController {
         EmailFilename.send(str[6], filename);
 //        **************************************************************************************************************
         return "redirect:/rubin/week/rubin-week-view";
-    }
-
-    @PostMapping(value = "/rubin/week/rubin-week-view", params = "action=print_month")
-    public String rubinMouth(@RequestParam("data_v") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date data_v,
-                             @RequestParam("data_vpo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date data_last,
-                             @RequestParam("p_tsc") String tsc_front) {
-//     ********************************************************************************************************************
-        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        LocalDate now = LocalDate.now();
-        String startPreviousYear = now.minusMonths(1).minusYears(1).with(TemporalAdjusters.firstDayOfMonth()).format(format);
-        String endPreviousYear = now.minusMonths(1).minusYears(1).with(TemporalAdjusters.lastDayOfMonth()).format(format);
-
-        Date startDateOld = null;
-        try {
-            startDateOld = new SimpleDateFormat("dd.MM.yyyy").parse(startPreviousYear);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        Date endDateOld = null;
-        try {
-            endDateOld = new SimpleDateFormat("dd.MM.yyyy").parse(endPreviousYear);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        String rubinStr = rubinWeekRepository.setRubinDateTSC(data_v, data_last, startDateOld, endDateOld, tsc_front);
-
-        LocalDate localDate = data_last.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        int year = localDate.getYear();
-        int month = localDate.getMonthValue();
-
-        Calendar calendar = Calendar.getInstance();
-        String[] monthNames = {"Січнь", "Лютий", "Березень", "Квітень", "Травень", "Липень", "Червень", "Серпень", "Вересень", "Жовтень", "Листопад", "Грудень"};
-        String month2 = monthNames[calendar.get(Calendar.MONTH)];
-//        System.out.println(month2);
-
-        rubinStr = rubinStr + ',' + tsc_front + ',' + String.valueOf(month2) + "." + String.valueOf(year) + ',' + pidrozdilRepository.setEmailPidrozdil(tsc_front);
-        String[] str = rubinStr.split(",");
-
-//        EmailSender.send("o.klymchuk@zhi.hsc.gov.ua");
-        String filename = "c:/RSC1840/Temp_rubin_Mounth.docx";
-        try {
-            createDoc.EditDoc(rubinStr, filename);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        filename = "c:/RSC1840/Rubin.docx";
-//        EmailSender.send(str[6]);
-        EmailFilename.send(str[6], filename);
-//        EmailFilename.send("o.klymchuk@zhi.hsc.gov.ua",filename);
-
-        return "redirect:/";
     }
 
     @GetMapping("/rubin/week/rubin-add-week")

@@ -27,41 +27,31 @@ public class CreateDoc {
         String[] str = rubinStr.split(",");
 //Blank Document
         XWPFDocument document = new XWPFDocument(new FileInputStream(filename));
-        //Write the Document in file system
-//        FileOutputStream out = new FileOutputStream(new File("C:/RSC1840/rubin.docx"));
-//        FileOutputStream out = new FileOutputStream(new File(filename));
-        XWPFTable table = document.getTableArray(0);
+
+        XWPFTable table = document.getTableArray(1);
         XWPFTableRow tableRowOne = table.getRow(1);
+        //Получить все абзацы
+        List<XWPFParagraph> list = document.getParagraphs();
+        //Получить все таблицы
+        List<XWPFTable> tables = document.getTables();
+        //  ккккккккккккккккккккккккккккккккккккккккккккк
         tableRowOne.getCell(2).setText(str[0]);
         tableRowOne.getCell(3).setText(str[2]);
         tableRowOne = table.getRow(2);
         tableRowOne.getCell(2).setText(str[1]);
         tableRowOne.getCell(3).setText(str[3]);
-
-//        document.write(new FileOutputStream("C:/demo/rubin.docx"));
-
-
-//        document.write(out);
-//        out.close();
-//        document.close();
-// *******************************************************
-//        XWPFDocument doc = null;
-//        try {
-//            doc = new XWPFDocument(OPCPackage.open("C:/RSC1840/Temp_rubin_Mounth.docx"));
-//        } catch (InvalidFormatException e) {
-//            e.printStackTrace();
-//        }
+//  ккккккккккккккккккккккккккккккккккккккккккккк
         for (XWPFParagraph p : document.getParagraphs()) {
             List<XWPFRun> runs = p.getRuns();
             if (runs != null) {
                 for (XWPFRun r : runs) {
                     String text = r.getText(0);
-                    if (text != null && text.contains("184")) {
-                        text = text.replace("184", str[4]);
+                    if (text != null && text.contains("QQQ")) {
+                        text = text.replace("QQQ", str[4]);
                         r.setText(text, 0);
                     }
-                    if (text != null && text.contains("2021")) {
-                        text = text.replace("2021", str[5]);
+                    if (text != null && text.contains("Data")) {
+                        text = text.replace("Data", str[5]);
                         r.setText(text, 0);
                     }
                 }
@@ -73,8 +63,8 @@ public class CreateDoc {
                     for (XWPFParagraph p : cell.getParagraphs()) {
                         for (XWPFRun r : p.getRuns()) {
                             String text = r.getText(0);
-                            if (text != null && text.contains("2021")) {
-                                text = text.replace("2021", str[5]);
+                            if (text != null && text.contains("0000")) {
+                                text = text.replace("0000", str[5]);
                                 r.setText(text,0);
                             }
                         }
