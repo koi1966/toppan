@@ -276,7 +276,7 @@ class RubinWeekController {
         String[] str = rubinStr.split(",");
 
 //        EmailSender.send("o.klymchuk@zhi.hsc.gov.ua");
-        String filename = "c:/RSC1840/Temp_rubin_Mounth.docx";
+        String filename = "c:/RSC1840/Temp_rubin_Mounth.docx ";
 
         try {
             createDoc.EditDoc(rubinStr, filename);
