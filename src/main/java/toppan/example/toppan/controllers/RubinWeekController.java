@@ -101,7 +101,7 @@ class RubinWeekController {
 //                              @RequestParam(value="action", required=true) String action,
                                  Model model) {
 
-        List<Rubin_week> rubinList = new ArrayList<>();
+        List<Rubin_week> rubinList ;
 
         SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
         Date data_v = null;
