@@ -50,8 +50,8 @@ public class CreateDoc {
                         text = text.replace("QQQ", str[4]);
                         r.setText(text, 0);
                     }
-                    if (text != null && text.contains("Data")) {
-                        text = text.replace("Data", str[5]);
+                    if (text != null && text.contains("Dak")) {
+                        text = text.replace("Dak", str[5]);
                         r.setText(text, 0);
                     }
                 }
@@ -63,8 +63,8 @@ public class CreateDoc {
                     for (XWPFParagraph p : cell.getParagraphs()) {
                         for (XWPFRun r : p.getRuns()) {
                             String text = r.getText(0);
-                            if (text != null && text.contains("0000")) {
-                                text = text.replace("0000", str[5]);
+                            if (text != null && text.contains("Dak")) {
+                                text = text.replace("Dak", str[5]);
                                 r.setText(text,0);
                             }
                         }

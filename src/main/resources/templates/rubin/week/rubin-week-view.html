@@ -112,7 +112,7 @@
                     </td>
                     <td class="td1">
                         <a th:href="@{/rubin/week/{id}(id=${rubin.id})}"
-                           th:text="${#temporals.formatISO(rubin.getData_v)}">user</a>
+                           th:text="${#temporals.format(rubin.getData_v,'dd.MM.yyyy')}">user</a>
 <!--                           th:text="${rubin.getData_v()}"-->
                     </td>
                     <td class="td1">

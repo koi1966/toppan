@@ -120,7 +120,7 @@ class RubinWeekController {
 
         List<Pidrozdil> pidrozdilList = (List<Pidrozdil>) pidrozdilRepository.findByOrderByPidrozdilAsc();
         model.addAttribute("pidrozdilList", pidrozdilList);
-        String rubinSUM = new String();
+        String rubinSUM ;
         if (tsc.equals("РСЦ 1840")) {
             rubinList = rubinWeekRepository.setWeekRSC(data_v, data_last);
             rubinSUM = rubinWeekRepository.setWeekRSCSum(data_v, data_last);
@@ -187,6 +187,12 @@ class RubinWeekController {
 //  получение начало текущего года
 //        Date date = Date.from(LocalDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
 //        java.util.Date firstYear = new SimpleDateFormat("yyyy-MM-dd").parse(String.valueOf(LocalDate.now().with(firstDayOfYear())));
+
+//        "SELECT sum(week_appeal) as week_appeal, " +
+//                "sum(week_issued) as week_issued, " +
+//                "(SELECT sum(ry.week_appeal) from rubin_week ry where ry.pidrozdil = :tsc and ry.data_v >= :firstYear and ry.data_v <= :endDate) as year_appeal, " +
+//                "(SELECT sum(ri.week_issued) from rubin_week ri where ri.pidrozdil = :tsc and ri.data_v >= :firstYear and ri.data_v <= :endDate) as year_issued, " +
+//                "RIGHT(pidrozdil, 4) as pidrozdil " +
 
         String rubinWekStr = rubinWeekRepository.setWeekPrint2022(data_sart, data_end, firstYear, tsc_front);
 
@@ -272,7 +278,7 @@ class RubinWeekController {
         String month2 = monthNames[calendar.get(Calendar.MONTH)];
 //        System.out.println(month2);
 
-        rubinStr = rubinStr + ',' + tsc_front + ',' + String.valueOf(month2) + " " + String.valueOf(year) + ',' + pidrozdilRepository.setEmailPidrozdil(tsc_front);
+        rubinStr = rubinStr + ',' + month2 + " " + year + ',' + tsc_front + ',' + pidrozdilRepository.setEmailPidrozdil(tsc_front);
         String[] str = rubinStr.split(",");
 
 //        EmailSender.send("o.klymchuk@zhi.hsc.gov.ua");
@@ -284,11 +290,8 @@ class RubinWeekController {
             e.printStackTrace();
         }
         filename = "c:/RSC1840/Rubin.docx";
-
-
         EmailFilename.send(str[6], filename);
 //        EmailFilename.send("o.klymchuk@zhi.hsc.gov.ua",filename);
-
         return "redirect:/";
     }
 
@@ -380,7 +383,7 @@ class RubinWeekController {
         String[] str = rubinStr.split(",");
 
 //        EmailSender.send("o.klymchuk@zhi.hsc.gov.ua");
-        String filename = "c:/RSC1840/Temp_rubin_Mounth.docx";
+        String filename = "c:/RSC1840/Temp_rubin_Mounth_1840.docx";
         try {
             createDoc.EditDoc(rubinStr, filename);
         } catch (IOException e) {
