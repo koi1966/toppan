@@ -1,10 +1,12 @@
 package toppan.example.toppan.models.repo;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import toppan.example.toppan.models.Rubin_week;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -19,6 +21,12 @@ public interface RubinWeekRepository extends CrudRepository<Rubin_week, Long> {
     List<Rubin_week> setListDateRubinWeek(@Param("startDate") Date data_v,
                                           @Param("endDate") Date data_last,
                                           @Param("tsc") String tsc);
+
+    @Query("select r from Rubin_week r where r.data between ?1 and ?2 and r.pidrozdil = ?3 order by r.pidrozdil,r.data")
+    List<Rubin_week> getAllByDataBetweenAndPidrozdilOrderByPidrozdil(LocalDate data, LocalDate data2, String pidrozdil);
+
+
+
     //   Помісячний звіт РСЦ
     //   обработка null
 //    SELECT coalesce(SUM(week_appeal),0) AS week_appeal FROM rubin_week WHERE data_v <= '01.10.2021'
@@ -42,8 +50,8 @@ public interface RubinWeekRepository extends CrudRepository<Rubin_week, Long> {
                     "(SELECT coalesce(SUM(week_appeal),0) as week_appeal_old FROM rubin_week ri where ri.data_v >= :startDateOld and ri.data_v <= :endDateOld and ri.pidrozdil = :tsc ) as week_appeal_old," +
                     "(SELECT coalesce(SUM(week_issued),0) as week_issued_old FROM rubin_week ro where ro.data_v >= :startDateOld and ro.data_v <= :endDateOld and ro.pidrozdil = :tsc ) as week_issued_old,"+
                     "sum(week_appeal) as week_appeal, " +
-                    "sum(week_issued) as week_issued " +
-                    "RIGHT(pidrozdil, 4) as pidrozdil " +
+                    "sum(week_issued) as week_issued, " +
+                    "right(pidrozdil, 4) as pidrozdil " +
                     "FROM rubin_week " +
                     "WHERE data_v >= :startDate " +
                     "AND data_v <= :endDate " +
@@ -82,7 +90,7 @@ public interface RubinWeekRepository extends CrudRepository<Rubin_week, Long> {
             value = "SELECT sum(week_appeal) as week_appeal, " +
                     "sum(week_issued) as week_issued, " +
                     "(SELECT sum(ry.week_appeal) from rubin_week ry where ry.pidrozdil = :tsc and ry.data_v >= :firstYear and ry.data_v <= :endDate) as year_appeal, " +
-                    "(SELECT sum(ri.week_issued) from rubin_week ri where ri.pidrozdil = :tsc and ri.data_v >= :firstYear and ri.data_v <= :endDate) as year_issued, " +
+                    "(SELECT sum(ri.week_issued) from rubin_week ri where ri.pidrozdil = :tsc and ri.data_v >= :firstYear and ri.data_v <= :endDate) as year_issued " +
                     "from rubin_week " +
                     "where data_v >= :startDate " +
                     "and data_v <= :endDate " +

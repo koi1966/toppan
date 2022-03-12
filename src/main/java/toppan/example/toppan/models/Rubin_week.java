@@ -15,9 +15,11 @@ public class Rubin_week {   // неделя
     private Long id;
     private String pidrozdil;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    public LocalDate data_v;
-    //    week_appeal  - обращений
-//    week_issued  - выдано
+    @Column(name = "data_v")
+    public LocalDate data;
+
+    //          week_appeal  - обращений
+    //                       week_issued  - выдано
     private int week_appeal, week_issued;
 
     public Rubin_week() {
@@ -39,12 +41,12 @@ public class Rubin_week {   // неделя
         this.pidrozdil = pidrozdil;
     }
 
-    public LocalDate getData_v() {
-        return data_v;
+    public LocalDate getData() {
+        return data;
     }
 
-    public void setData_v(LocalDate data_v) {
-        this.data_v = data_v;
+    public void setData(LocalDate data_v) {
+        this.data = data_v;
     }
 
     public int getWeek_appeal() {

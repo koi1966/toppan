@@ -13,7 +13,7 @@
     <h1>Виправить помилку або повернутить на головну</h1>
     <div th:each="rwd:${rubin_week_det}" class="alert alert-info mt-2">
 
-        <h3 th:text="${rwd.pidrozdil + ' . . . . .' + rwd.data_v}"></h3>
+        <h3 th:text="${rwd.pidrozdil + ' . . . . .' + rwd.data}"></h3>
         <p th:text="${'звернень за день :..' + rwd.week_appeal}"></p>
         <p th:text="${'виданих  за день :..' + rwd.week_issued}"></p>
 <!--        <a th:href="@{'/rubin/week/'+ ${rwd.id} + '/update'" role="button" class="btn btn-warning">Змінита</a>-->

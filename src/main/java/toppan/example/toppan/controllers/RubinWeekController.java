@@ -13,6 +13,7 @@ import toppan.example.toppan.utilities.EmailFilename;
 import toppan.example.toppan.utilities.UtilitesSting;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -63,33 +64,24 @@ class RubinWeekController {
         final LocalDate today = LocalDate.now();  // берем сегдняшнюю дату
 //        final LocalDate nextSunday = today.with(next(SUNDAY)); // берем будущее воскресенье
         final LocalDate thisPastSunday = today.with(previous(SUNDAY));  // берем прошедшее воскресенье
-//        LocalDate dat_firs_t = LocalDate.now().with(TemporalAdjusters.firstDayOfMonth());  //        Берем первое число текущего месяца
-        String dat_first = thisPastSunday.toString();
 
-        Date dat_f = new SimpleDateFormat("yyyy-MM-dd").parse(dat_first);//  dat_first - переводим в тип Date  первое число месяца
-        String date_s = LocalDate.now().toString(); // берем локальную дату переводим в String
-
-        Date data_v = null;
-        try {
-            data_v = new SimpleDateFormat("yyyy-MM-dd").parse(date_s);  //  Локальная дата без времени
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
         String ip_user = request.getRemoteAddr(); //  вытягивает IP копма с которого вносят информацию
 //        ip_user="172.0.0.0";
         int end = UtilitesSting.ordinalIndexOf(ip_user, ".", 2);
         String ip = ip_user.substring(0, end); // узнаеп подсеть  172.0.0
         String tsc = pidrozdilRepository.setNamePidrozdil(ip);//  по подсети узнаем из какого ТСЦ зашли работать
 
-        List<Rubin_week> rubinList = rubinWeekRepository.setListDateRubinWeek(dat_f, data_v, tsc);
+//        List<Rubin_week> rubinList = rubinWeekRepository.setListDateRubinWeek(dat_f, data_v, tsc);
+        List<Rubin_week> rubinList = rubinWeekRepository.getAllByDataBetweenAndPidrozdilOrderByPidrozdil(thisPastSunday, today, tsc);
+
         model.addAttribute("rubinList", rubinList);
 
         List<Pidrozdil> pidrozdilList = (List<Pidrozdil>) pidrozdilRepository.findByOrderByPidrozdilAsc();
         model.addAttribute("week_appeal", "0");
         model.addAttribute("week_issued", "0");
         model.addAttribute("pidrozdilList", pidrozdilList);
-        model.addAttribute("dat", dat_first);
-        model.addAttribute("dat_last", date_s);
+        model.addAttribute("dat", thisPastSunday);
+        model.addAttribute("dat_last", today);
         return "rubin/week/rubin-week-view";
     }
 
@@ -230,7 +222,8 @@ class RubinWeekController {
                 break;
             default:
                 System.out.println("Oooops, Тижневий  something wrong !");
-                filename = "c:/RSC1840/Temp_rubin.docx";
+                String setarator = File.separator;
+                filename = "C:" + setarator + "RSC1840" + setarator +"Temp_rubin.docx";
         }
         //  Doc
         String[] str = rubinWekStr.split(",");
@@ -406,10 +399,15 @@ class RubinWeekController {
 
         String ip = ip_user.substring(0, end);//        узнаел подсеть
 
-        String tsc = pidrozdilRepository.setNamePidrozdil(ip);//        по подсети узнаем из какого ТСЦ зашли работать
+//        String tsc = pidrozdilRepository.setNamePidrozdil(ip);//        по подсети узнаем из какого ТСЦ зашли работать
+//
+//        boolean isEmpty = tsc == null || tsc.trim().length() == 0;
+//        if (isEmpty) {
+//            return "redirect:/";
+//        }
 
-        boolean isEmpty = tsc == null || tsc.trim().length() == 0;
-        if (isEmpty) {
+        Pidrozdil pidrozdil = pidrozdilRepository.findByIp(ip);
+        if (pidrozdil == null || pidrozdil.getPidrozdil().isEmpty()){
             return "redirect:/";
         }
 
@@ -418,8 +416,8 @@ class RubinWeekController {
         Instant instant = date.toInstant();//Converting the date to Instant
 
         Rubin_week rubin_week = new Rubin_week();
-        rubin_week.setPidrozdil(pidrozdilRepository.setNamePidrozdil(ip));
-        rubin_week.setData_v(instant.atZone(defaultZoneId).toLocalDate());
+        rubin_week.setPidrozdil(pidrozdil.getPidrozdil());
+        rubin_week.setData(instant.atZone(defaultZoneId).toLocalDate());
 
         model.addAttribute("rubin_week", rubin_week);
         return "rubin/week/rubin-add-week";
@@ -434,7 +432,7 @@ class RubinWeekController {
 //        Rubin_week rubin_week = new Rubin_week(pidrozdil, data_v,week_appeal, week_issued );
         Rubin_week rubin_week = new Rubin_week();
         rubin_week.setPidrozdil(pidrozdil);
-        rubin_week.setData_v(data_v);
+        rubin_week.setData(data_v);
         rubin_week.setWeek_appeal(week_appeal);
         rubin_week.setWeek_issued(week_issued);
         rubinWeekRepository.save(rubin_week);
