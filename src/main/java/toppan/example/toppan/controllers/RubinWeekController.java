@@ -1,6 +1,7 @@
 package toppan.example.toppan.controllers;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Sort;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -72,7 +73,7 @@ class RubinWeekController {
         String tsc = pidrozdilRepository.setNamePidrozdil(ip);//  по подсети узнаем из какого ТСЦ зашли работать
 
 //        List<Rubin_week> rubinList = rubinWeekRepository.setListDateRubinWeek(dat_f, data_v, tsc);
-        List<Rubin_week> rubinList = rubinWeekRepository.getAllByDataBetweenAndPidrozdilOrderByPidrozdil(thisPastSunday, today, tsc);
+        List<Rubin_week> rubinList = rubinWeekRepository.getAllByDataBetweenAndPidrozdil(thisPastSunday, today, tsc, Sort.by("pidrozdil").and(Sort.by("data")));
 
         model.addAttribute("rubinList", rubinList);
 

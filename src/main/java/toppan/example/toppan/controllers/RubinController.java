@@ -97,8 +97,8 @@ public class RubinController {
     public String rubinadd(HttpServletRequest request, Model model) {
         String ip_user = request.getRemoteAddr();//        вытягивает IP копма с которого вносят информацию
         int ip_tsc = UtilitesSting.ordinalIndexOf(ip_user, ".", 2);
-        String ip = ip_user.substring(0, ip_tsc);//        узнаеп подсеть
-        String tsc = pidrozdilRepository.setNamePidrozdil(ip);//        по подсети узнаем из какого ТСЦ зашли работать
+         String ip = ip_user.substring(0, ip_tsc);//        узнаеп подсеть
+         String tsc = pidrozdilRepository.setNamePidrozdil(ip);//        по подсети узнаем из какого ТСЦ зашли работать
 
         boolean isEmpty = tsc == null || tsc.trim().length() == 0;
         if (isEmpty) {

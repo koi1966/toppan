@@ -22,9 +22,11 @@ public interface RubinWeekRepository extends CrudRepository<Rubin_week, Long> {
                                           @Param("endDate") Date data_last,
                                           @Param("tsc") String tsc);
 
-    @Query("select r from Rubin_week r where r.data between ?1 and ?2 and r.pidrozdil = ?3 order by r.pidrozdil,r.data")
-    List<Rubin_week> getAllByDataBetweenAndPidrozdilOrderByPidrozdil(LocalDate data, LocalDate data2, String pidrozdil);
 
+
+//    @Query("select r from Rubin_week r where r.data between ?1 and ?2 and r.pidrozdil = ?3 order by r.pidrozdil")
+@Query("select r from Rubin_week r where r.data between ?1 and ?2 and r.pidrozdil = ?3")
+List<Rubin_week> getAllByDataBetweenAndPidrozdil(LocalDate data, LocalDate data2, String pidrozdil, Sort sort);
 
 
     //   Помісячний звіт РСЦ
@@ -51,7 +53,7 @@ public interface RubinWeekRepository extends CrudRepository<Rubin_week, Long> {
                     "(SELECT coalesce(SUM(week_issued),0) as week_issued_old FROM rubin_week ro where ro.data_v >= :startDateOld and ro.data_v <= :endDateOld and ro.pidrozdil = :tsc ) as week_issued_old,"+
                     "sum(week_appeal) as week_appeal, " +
                     "sum(week_issued) as week_issued, " +
-                    "right(pidrozdil, 4) as pidrozdil " +
+//                    "right(pidrozdil, 4) as pidrozdil " +
                     "FROM rubin_week " +
                     "WHERE data_v >= :startDate " +
                     "AND data_v <= :endDate " +
