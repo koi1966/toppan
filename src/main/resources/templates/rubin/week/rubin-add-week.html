@@ -9,12 +9,17 @@
 <div>
     <header th:insert="blocks/header.html :: header"></header>
 
+<!--    @RequestMapping(value="/testme" , method=RequestMethod.GET)-->
+<!--    public @ResponseBody String testMe(@RequestParam("odate") @DateTimeFormat(pattern="yyyy-MM-dd") Date odate) {-->
+<!--    //.....-->
+<!--    }-->
+
 
     <div>
         <form method="post">
 
             <label for="pidrozdil">ТСЦ : </label>
-            <input type="text" th:value="${rubin_week.pidrozdil}" name="pidrozdil" placeholder="Підрозділ"
+            <input type="text" th:value="${rubin_week.pidrozdil}" name="pidrozdilName" placeholder="Підрозділ"
                    class="form-control" id="pidrozdil"><br>
 
             <label for="data_v">Дата : </label>

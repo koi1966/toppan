@@ -5,6 +5,7 @@ import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.xwpf.usermodel.*;
 import org.springframework.stereotype.Component;
+import toppan.example.toppan.models.ReportData;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -23,8 +24,7 @@ public class CreateDoc {
     }
 
 
-    public void EditDoc(String rubinStr,String filename) throws IOException {
-        String[] str = rubinStr.split(",");
+    public void createDoc(ReportData reportData, String filename) throws IOException {
 //Blank Document
         XWPFDocument document = new XWPFDocument(new FileInputStream(filename));
 
@@ -35,11 +35,11 @@ public class CreateDoc {
         //Получить все таблицы
         List<XWPFTable> tables = document.getTables();
         //  ккккккккккккккккккккккккккккккккккккккккккккк
-        tableRowOne.getCell(2).setText(str[0]);
-        tableRowOne.getCell(3).setText(str[2]);
+        tableRowOne.getCell(2).setText(reportData.getRequestOld());
+        tableRowOne.getCell(3).setText(reportData.getRequest());
         tableRowOne = table.getRow(2);
-        tableRowOne.getCell(2).setText(str[1]);
-        tableRowOne.getCell(3).setText(str[3]);
+        tableRowOne.getCell(2).setText(reportData.getIssuedOld());
+        tableRowOne.getCell(3).setText(reportData.getIssued());
 //  ккккккккккккккккккккккккккккккккккккккккккккк
         for (XWPFParagraph p : document.getParagraphs()) {
             List<XWPFRun> runs = p.getRuns();
@@ -65,7 +65,7 @@ public class CreateDoc {
                             String text = r.getText(0);
                             if (text != null && text.contains("Dak")) {
                                 text = text.replace("Dak", str[5]);
-                                r.setText(text,0);
+                                r.setText(text, 0);
                             }
                         }
                     }
@@ -130,7 +130,7 @@ public class CreateDoc {
 //        doc.write(out);
 //        doc.close();
 
-        // ---------------------------------------------------------------------------------------------------
+    // ---------------------------------------------------------------------------------------------------
 //        File file = null;
 //        FileOutputStream fos = null;
 //        XWPFDocument document = null;

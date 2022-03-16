@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.*;
 import toppan.example.toppan.createDoc.CreateDoc;
 import toppan.example.toppan.createDoc.CreateExcel;
 import toppan.example.toppan.createDoc.CreateExilMonth;
+import toppan.example.toppan.models.Pidrozdil;
 import toppan.example.toppan.models.Rubin;
-import toppan.example.toppan.models.Rubin_week;
 import toppan.example.toppan.models.repo.PidrozdilRepository;
 import toppan.example.toppan.models.repo.RubinRepository;
 import toppan.example.toppan.models.repo.RubinWeekRepository;
-import toppan.example.toppan.utilities.EmailFilename;
+import toppan.example.toppan.service.EmailService;
 import toppan.example.toppan.utilities.EmailSender;
 import toppan.example.toppan.utilities.UtilitesSting;
 
@@ -97,10 +97,10 @@ public class RubinController {
     public String rubinadd(HttpServletRequest request, Model model) {
         String ip_user = request.getRemoteAddr();//        вытягивает IP копма с которого вносят информацию
         int ip_tsc = UtilitesSting.ordinalIndexOf(ip_user, ".", 2);
-         String ip = ip_user.substring(0, ip_tsc);//        узнаеп подсеть
-         String tsc = pidrozdilRepository.setNamePidrozdil(ip);//        по подсети узнаем из какого ТСЦ зашли работать
+        String ip = ip_user.substring(0, ip_tsc);//        узнаеп подсеть
+        Pidrozdil tsc = pidrozdilRepository.findByIp(ip);//        по подсети узнаем из какого ТСЦ зашли работать
 
-        boolean isEmpty = tsc == null || tsc.trim().length() == 0;
+        boolean isEmpty = tsc == null || tsc.getPidrozdil().isEmpty();
         if (isEmpty) {
             return "redirect:/";
         }
@@ -110,7 +110,7 @@ public class RubinController {
         Instant instant = date.toInstant();        //Converting the date to Instant
 
         Rubin rubin = new Rubin();
-        rubin.setPidrozdil(pidrozdilRepository.setNamePidrozdil(ip));
+        rubin.setPidrozdil(tsc.getPidrozdil());
         rubin.setData_v(instant.atZone(defaultZoneId).toLocalDate());
         model.addAttribute("rubin", rubin);
         return "rubin/rubin-add";
@@ -220,7 +220,7 @@ public class RubinController {
 
         Date date_end = null;
         try {
-            date_end =new SimpleDateFormat("dd.MM.yyyy").parse(dat_end);
+            date_end = new SimpleDateFormat("dd.MM.yyyy").parse(dat_end);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -239,18 +239,18 @@ public class RubinController {
 
         Date endDateOld = null;
         try {
-            endDateOld =new SimpleDateFormat("dd.MM.yyyy").parse(endPreviousYear);
+            endDateOld = new SimpleDateFormat("dd.MM.yyyy").parse(endPreviousYear);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        String rubinStr = rubinWeekRepository.setRubinDate(date_start,date_end,startDateOld,endDateOld);
+        String rubinStr = rubinWeekRepository.setRubinDate(date_start, date_end, startDateOld, endDateOld);
 
         LocalDate localDate = date_end.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        int year  = localDate.getYear();
+        int year = localDate.getYear();
         int month = localDate.getMonthValue();
 //        int day   = localDate.getDayOfMonth();
 
-       rubinStr = rubinStr + ',' + "(за " + String.valueOf(month)+"." + String.valueOf(year)+ " )";
+        rubinStr = rubinStr + ',' + "(за " + String.valueOf(month) + "." + String.valueOf(year) + " )";
         String[] str = rubinStr.split(",");
 //        model.addAttribute("dat", data_v);
         try {
@@ -262,14 +262,14 @@ public class RubinController {
 
         String filename = "c:/RSC1840/rubin.docx";
         try {
-            createDoc.EditDoc(rubinStr,filename);
+            createDoc.createDoc(rubinStr, filename);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
 
         EmailSender.send(str[6]);
-        EmailFilename.send(str[6],filename);
+        EmailService.send(str[6], filename);
 //        EmailSender.send("o.klymchuk@zhi.hsc.gov.ua");
 //        EmailFilename.send("o.klymchuk@zhi.hsc.gov.ua",filename);
 

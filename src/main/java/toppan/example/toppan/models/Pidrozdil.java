@@ -2,11 +2,16 @@ package toppan.example.toppan.models;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.util.List;
 
 @Entity
 public class Pidrozdil {
     @Id
     private String pidrozdil;
+
+    @OneToMany(mappedBy = "pidrozdil")
+    private List<Rubin_week> rubin_weeks;
 
     private String ip, email;
 

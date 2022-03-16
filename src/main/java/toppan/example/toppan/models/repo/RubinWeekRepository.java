@@ -21,13 +21,10 @@ public interface RubinWeekRepository extends CrudRepository<Rubin_week, Long> {
     List<Rubin_week> setListDateRubinWeek(@Param("startDate") Date data_v,
                                           @Param("endDate") Date data_last,
                                           @Param("tsc") String tsc);
+//  List<Rubin_week> rubinList = rubinWeekRepository.setListDateRubinWeek(dat_f, data_v, tsc);
 
-
-
-//    @Query("select r from Rubin_week r where r.data between ?1 and ?2 and r.pidrozdil = ?3 order by r.pidrozdil")
-@Query("select r from Rubin_week r where r.data between ?1 and ?2 and r.pidrozdil = ?3")
-List<Rubin_week> getAllByDataBetweenAndPidrozdil(LocalDate data, LocalDate data2, String pidrozdil, Sort sort);
-
+    //  List<Rubin_week> rubinList = rubinWeekRepository.getAllByDataBetweenAndPidrozdil(thisPastSunday, today, tsc, Sort.by("pidrozdil").and(Sort.by("data")));
+    List<Rubin_week> getAllByDataBetweenAndPidrozdilPidrozdil(LocalDate data, LocalDate data2, String pidrozdil, Sort sort);
 
     //   Помісячний звіт РСЦ
     //   обработка null
@@ -36,7 +33,7 @@ List<Rubin_week> getAllByDataBetweenAndPidrozdil(LocalDate data, LocalDate data2
     @Query(nativeQuery = true,
             value = "SELECT " +
                     "(SELECT coalesce(SUM(week_appeal),0) as week_appeal_old FROM rubin_week ri where ri.data_v >= :startDateOld and ri.data_v <= :endDateOld) as week_appeal_old," +
-                    "(SELECT coalesce(SUM(week_issued),0) as week_issued_old FROM rubin_week ro where ro.data_v >= :startDateOld and ro.data_v <= :endDateOld) as week_issued_old, "+
+                    "(SELECT coalesce(SUM(week_issued),0) as week_issued_old FROM rubin_week ro where ro.data_v >= :startDateOld and ro.data_v <= :endDateOld) as week_issued_old, " +
                     "sum(week_appeal) as week_appeal, " +
                     "sum(week_issued) as week_issued " +
                     "FROM rubin_week " +
@@ -50,19 +47,20 @@ List<Rubin_week> getAllByDataBetweenAndPidrozdil(LocalDate data, LocalDate data2
     @Query(nativeQuery = true,
             value = "SELECT " +
                     "(SELECT coalesce(SUM(week_appeal),0) as week_appeal_old FROM rubin_week ri where ri.data_v >= :startDateOld and ri.data_v <= :endDateOld and ri.pidrozdil = :tsc ) as week_appeal_old," +
-                    "(SELECT coalesce(SUM(week_issued),0) as week_issued_old FROM rubin_week ro where ro.data_v >= :startDateOld and ro.data_v <= :endDateOld and ro.pidrozdil = :tsc ) as week_issued_old,"+
+                    "(SELECT coalesce(SUM(week_issued),0) as week_issued_old FROM rubin_week ro where ro.data_v >= :startDateOld and ro.data_v <= :endDateOld and ro.pidrozdil = :tsc ) as week_issued_old," +
                     "sum(week_appeal) as week_appeal, " +
                     "sum(week_issued) as week_issued, " +
-//                    "right(pidrozdil, 4) as pidrozdil " +
+                    "RIGHT (pidrozdil, 4) as pidrozdil " +
                     "FROM rubin_week " +
                     "WHERE data_v >= :startDate " +
                     "AND data_v <= :endDate " +
-                    "and pidrozdil = :tsc ")
-    String setRubinDateTSC( @Param("startDate") Date startDate,
-                            @Param("endDate") Date endDate,
-                            @Param("startDateOld") Date startDateOld,
-                            @Param("endDateOld") Date endDateOld,
-                            @Param("tsc") String tsc);
+                    "and pidrozdil = :tsc " +
+                    "GROUP BY pidrozdil")
+    String getRubinDateTSC(@Param("startDate") LocalDate startDate,
+                           @Param("endDate") LocalDate endDate,
+                           @Param("startDateOld") LocalDate startDateOld,
+                           @Param("endDateOld") LocalDate endDateOld,
+                           @Param("tsc") String tsc);
 
     @Query(nativeQuery = true,
             value = "SELECT sum(week_appeal) as week_appeal, " +
@@ -99,9 +97,9 @@ List<Rubin_week> getAllByDataBetweenAndPidrozdil(LocalDate data, LocalDate data2
                     "and pidrozdil = :tsc " +
                     "group by pidrozdil")
     String setWeekPrint2022(@Param("startDate") Date data_v,
-                        @Param("endDate") Date data_last,
-                        @Param("firstYear") Date firstYear,
-                        @Param("tsc") String tsc);
+                            @Param("endDate") Date data_last,
+                            @Param("firstYear") Date firstYear,
+                            @Param("tsc") String tsc);
 
     @Query(nativeQuery = true,
             value = "SELECT sum(week_appeal) as week_appeal, " +
@@ -113,8 +111,8 @@ List<Rubin_week> getAllByDataBetweenAndPidrozdil(LocalDate data, LocalDate data2
                     "where data_v >= :startDate " +
                     "and data_v <= :endDate ")
     String setWeekPrintRSC(@Param("startDate") Date data_v,
-                            @Param("endDate") Date data_last,
-                            @Param("firstYear") Date firstYear);
+                           @Param("endDate") Date data_last,
+                           @Param("firstYear") Date firstYear);
 
     //  МЕСЯЧНЫЙ ОТЧЕТ  Сумы нужных полей за период по нужному ТСЦ
     @Query(nativeQuery = true,
@@ -128,10 +126,10 @@ List<Rubin_week> getAllByDataBetweenAndPidrozdil(LocalDate data, LocalDate data2
             value = "SELECT id, pidrozdil,data_v, week_appeal, week_issued " +
                     "FROM rubin_week r " +
                     "WHERE r.data_v >= :start_Date " +
-            "AND r.data_v <= :end_Date " +
-            "ORDER BY pidrozdil,r.data_v ")
+                    "AND r.data_v <= :end_Date " +
+                    "ORDER BY pidrozdil,r.data_v ")
     List<Rubin_week> setWeekRSC(@Param("start_Date") Date start_Date,
-                                @Param("end_Date") Date end_Date );
+                                @Param("end_Date") Date end_Date);
 
     @Query(nativeQuery = true,
             value = "SELECT sum(rw.week_appeal) as week_appeal,sum(rw.week_issued) as week_issued " +
@@ -139,7 +137,7 @@ List<Rubin_week> getAllByDataBetweenAndPidrozdil(LocalDate data, LocalDate data2
                     "WHERE rw.data_v >= :start_Date " +
                     "AND rw.data_v <= :end_Date")
     String setWeekRSCSum(@Param("start_Date") Date start_Date,
-                         @Param("end_Date") Date end_Date );
+                         @Param("end_Date") Date end_Date);
 
     @Query(nativeQuery = true,
             value = "SELECT sum(rw.week_appeal) as week_appeal,sum(rw.week_issued) as week_issued " +
@@ -149,7 +147,7 @@ List<Rubin_week> getAllByDataBetweenAndPidrozdil(LocalDate data, LocalDate data2
                     "AND rw.pidrozdil = :tsc")
     String setWeekAllTSCSum(@Param("start_Date") Date start_Date,
                             @Param("end_Date") Date end_Date,
-                            @Param("tsc") String tsc );
+                            @Param("tsc") String tsc);
 
 }
 //

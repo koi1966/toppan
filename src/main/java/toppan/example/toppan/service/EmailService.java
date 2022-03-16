@@ -1,4 +1,4 @@
-package toppan.example.toppan.utilities;
+package toppan.example.toppan.service;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -10,7 +10,7 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import java.util.Properties;
 
-public class EmailFilename {
+public class EmailService {
     public static void send(String to, String filename) {
 
 //            final String toto = "o.klymchuk@zhi.hsc.gov.ua";       // sender email

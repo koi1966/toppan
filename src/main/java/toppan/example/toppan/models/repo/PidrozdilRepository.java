@@ -11,9 +11,9 @@ public interface PidrozdilRepository extends CrudRepository<Pidrozdil,String> {
 
     List<Pidrozdil> findByOrderByPidrozdilAsc();
 
-    @Query(nativeQuery = true,
-            value = "SELECT pidrozdil from pidrozdil p where p.ip = :ip_user")
-            String setNamePidrozdil(@Param("ip_user") String ip_user) ;
+//    @Query(nativeQuery = true,
+//            value = "SELECT pidrozdil from pidrozdil p where p.ip = :ip_user")
+//            String setNamePidrozdil(@Param("ip_user") String ip_user) ;
 
     Pidrozdil findByIp(String ip_user) ;
 

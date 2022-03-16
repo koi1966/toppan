@@ -13,7 +13,9 @@ public class Rubin_week {   // неделя
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String pidrozdil;
+    @ManyToOne
+    @JoinColumn(name = "pidrozdil")
+    private Pidrozdil pidrozdil;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "data_v")
     public LocalDate data;
@@ -34,10 +36,10 @@ public class Rubin_week {   // неделя
     }
 
     public String getPidrozdil() {
-        return pidrozdil;
+        return pidrozdil.getPidrozdil();
     }
 
-    public void setPidrozdil(String pidrozdil) {
+    public void setPidrozdil(Pidrozdil pidrozdil) {
         this.pidrozdil = pidrozdil;
     }
 
