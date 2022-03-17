@@ -12,11 +12,10 @@ import toppan.example.toppan.models.*;
 import toppan.example.toppan.models.repo.*;
 import toppan.example.toppan.service.EmailService;
 import toppan.example.toppan.service.ReportService;
-import toppan.example.toppan.utilities.UtilitesSting;
+import toppan.example.toppan.utils.UtilitesSting;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -228,15 +227,16 @@ class RubinWeekController {
                 String setarator = File.separator;
                 filename = "C:" + setarator + "RSC1840" + setarator + "Temp_rubin.docx";
         }
+        // *********************************************
         //  Doc
-        String[] str = rubinWekStr.split(",");
-        try {
-            createDoc.createDoc(rubinWekStr, filename);//  Внесение полученной информации в Doc и отправка его на почту
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        EmailService.send(str[7], "c:/RSC1840/rubin.docx");
+//        String[] str = rubinWekStr.split(",");
+//        try {
+//            createDoc.createDoc(rubinWekStr, filename);//  Внесение полученной информации в Doc и отправка его на почту
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+// *********************************************
+//        EmailService.send(str[7], "c:/RSC1840/rubin.docx");
         return "redirect:/rubin/week/rubin-week-view";
     }
 
@@ -283,13 +283,14 @@ class RubinWeekController {
         String rubinWekStr = rubinWeekRepository.setWeekPrintRSC(data_sart, data_end, firstYear);
         rubinWekStr = rubinWekStr + ',' + tsc_front + ',' + data_end_str2 + "," + tsc_front + ',' + pidrozdilRepository.setEmailPidrozdil(tsc_front);
         String filename = "c:/RSC1840/Temp_rubin_1840.docx";
-
-        //  Doc
-        try {
-            createDoc.createDoc(rubinWekStr, filename);//  Внесение полученной информации в Doc и отправка его на почту
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+// *********************************************
+//        //  Doc
+//        try {
+//            createDoc.createDoc(rubinWekStr, filename);//  Внесение полученной информации в Doc и отправка его на почту
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+        // *********************************************
 //        filename = "c:/RSC1840/rubin.docx";
 
         String[] str = rubinWekStr.split(",");
@@ -338,11 +339,13 @@ class RubinWeekController {
 
 //        EmailSender.send("o.klymchuk@zhi.hsc.gov.ua");
         String filename = "c:/RSC1840/Temp_rubin_Mounth_1840.docx";
-        try {
-            createDoc.createDoc(rubinStr, filename);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        // *********************************************
+//        try {
+//            createDoc.createDoc(rubinStr, filename);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+        // *********************************************
 //        EmailFilename.send(str[6], filename);
         filename = "c:/RSC1840/Rubin.docx";
 //        EmailFilename.send("it@zhi.hsc.gov.ua", filename);

@@ -14,8 +14,8 @@ import toppan.example.toppan.models.repo.PidrozdilRepository;
 import toppan.example.toppan.models.repo.RubinRepository;
 import toppan.example.toppan.models.repo.RubinWeekRepository;
 import toppan.example.toppan.service.EmailService;
-import toppan.example.toppan.utilities.EmailSender;
-import toppan.example.toppan.utilities.UtilitesSting;
+import toppan.example.toppan.utils.EmailSender;
+import toppan.example.toppan.utils.UtilitesSting;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -261,12 +261,13 @@ public class RubinController {
 //        EmailSender.send("o.klymchuk@zhi.hsc.gov.ua");
 
         String filename = "c:/RSC1840/rubin.docx";
-        try {
-            createDoc.createDoc(rubinStr, filename);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+//        // *********************************************
+//        try {
+//            createDoc.createDoc(rubinStr, filename);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+// *********************************************
 
         EmailSender.send(str[6]);
         EmailService.send(str[6], filename);

@@ -5,6 +5,7 @@ import toppan.example.toppan.createDoc.CreateDoc;
 import toppan.example.toppan.models.ReportData;
 import toppan.example.toppan.models.repo.PidrozdilRepository;
 import toppan.example.toppan.models.repo.RubinWeekRepository;
+import toppan.example.toppan.utils.DateUtils;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -36,20 +37,18 @@ public class ReportServiceImpl implements ReportService {
         ReportData reportData = new ReportData(rubinWeekRepository.getRubinDateTSC(from, to, startDateOld, endDateOld, tsc));
 
         int year = now.getYear();
-//        String displayName = now.getMonth().getDisplayName(TextStyle.FULL, Locale.US);
-//        Calendar calendar = Calendar.getInstance();
-        String[] monthNames = {"Січнь", "Лютий", "Березень", "Квітень", "Травень", "Липень", "Червень", "Серпень", "Вересень", "Жовтень", "Листопад", "Грудень"};
-        String month2 = monthNames[now.getMonthValue() - 1];
+        String yearTxt=Integer.toString(year);
+//        String monthUA = DateUtils.monthNamesUA(now);
+        String monthUA = DateUtils.MonthNamUA.getNameMonth(now.getMonthValue());
 
-        rubinStr = rubinStr + ',' + month2 + " " + year + ',' + tsc + ',' + pidrozdilRepository.setEmailPidrozdil(tsc);
-
-        String[] str = rubinStr.split(",");
+//        String[] monthNamesUA = {"Січнь", "Лютий", "Березень", "Квітень", "Травень", "Липень", "Червень", "Серпень", "Вересень", "Жовтень", "Листопад", "Грудень"};
+//        String monthUA = monthNamesUA[now.getMonthValue() - 1];
 
 //        EmailSender.send("o.klymchuk@zhi.hsc.gov.ua");
         String filename = "c:/RSC1840/Temp_rubin_Mounth.docx ";
 
         try {
-            createDoc.createDoc(reportData, filename);
+            createDoc.createDoc(reportData, monthUA, yearTxt, tsc, filename);
         } catch (IOException e) {
             e.printStackTrace();
         }

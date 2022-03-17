@@ -24,7 +24,7 @@ public class CreateDoc {
     }
 
 
-    public void createDoc(ReportData reportData, String filename) throws IOException {
+    public void createDoc(ReportData reportData, String monthUA, String year, String tsc, String filename) throws IOException {
 //Blank Document
         XWPFDocument document = new XWPFDocument(new FileInputStream(filename));
 
@@ -47,11 +47,11 @@ public class CreateDoc {
                 for (XWPFRun r : runs) {
                     String text = r.getText(0);
                     if (text != null && text.contains("QQQ")) {
-                        text = text.replace("QQQ", str[4]);
+//                        text = text.replace("QQQ", str[4]);
                         r.setText(text, 0);
                     }
                     if (text != null && text.contains("Dak")) {
-                        text = text.replace("Dak", str[5]);
+//                        text = text.replace("Dak", str[5]);
                         r.setText(text, 0);
                     }
                 }
@@ -64,7 +64,7 @@ public class CreateDoc {
                         for (XWPFRun r : p.getRuns()) {
                             String text = r.getText(0);
                             if (text != null && text.contains("Dak")) {
-                                text = text.replace("Dak", str[5]);
+//                                text = text.replace("Dak", str[5]);
                                 r.setText(text, 0);
                             }
                         }

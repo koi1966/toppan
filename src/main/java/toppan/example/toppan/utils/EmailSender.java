@@ -1,4 +1,4 @@
-package toppan.example.toppan.utilities;
+package toppan.example.toppan.utils;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;

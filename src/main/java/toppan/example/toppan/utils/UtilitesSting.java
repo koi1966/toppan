@@ -1,4 +1,4 @@
-package toppan.example.toppan.utilities;
+package toppan.example.toppan.utils;
 
 public class UtilitesSting {
 

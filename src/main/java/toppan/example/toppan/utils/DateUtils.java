@@ -1,4 +1,4 @@
-package toppan.example.toppan.utilities;
+package toppan.example.toppan.utils;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -7,6 +7,29 @@ import java.time.ZoneId;
 import java.util.Date;
 
 public class DateUtils {
+
+    public enum MonthNamUA {Січнь(1), Лютий(2), Березень(3), Квітень(4), Травень(5),
+        Липень(6), Червень(7), Серпень(8), Вересень(9), Жовтень(10),
+        Листопад(11), Грудень(12);
+
+        private int number;
+
+        MonthNamUA(int number) {
+            this.number = number;
+        }
+
+        public static String getNameMonth(int number){
+            MonthNamUA[] values = MonthNamUA.values();
+            for (MonthNamUA month : values) {
+                if (month.number == number) {
+                    return month.name();
+                }
+            }
+            return null;
+        }
+
+    };
+
     public static Date asDate(LocalDate localDate) {
         return Date.from(localDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
     }
@@ -23,7 +46,15 @@ public class DateUtils {
         return Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDateTime();
     }
 
-//    public static
+
+    public static String monthNamesUA(LocalDate now) {
+
+        String[] monthNamesUA = {"Січнь", "Лютий", "Березень", "Квітень", "Травень", "Липень", "Червень", "Серпень", "Вересень", "Жовтень", "Листопад", "Грудень"};
+//        String monthUA = monthNamesUA[now.getMonthValue() - 1];
+        return monthNamesUA[now.getMonthValue() - 1];
+    }
+
+
 }
 
 //        LocalDateTime ldt1 = LocalDateTime.now();
