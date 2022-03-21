@@ -8,17 +8,18 @@ import java.util.Date;
 
 public class DateUtils {
 
-    public enum MonthNamUA {Січнь(1), Лютий(2), Березень(3), Квітень(4), Травень(5),
+    public enum MonthNamUA {
+        Січнь(1), Лютий(2), Березень(3), Квітень(4), Травень(5),
         Липень(6), Червень(7), Серпень(8), Вересень(9), Жовтень(10),
         Листопад(11), Грудень(12);
 
-        private int number;
+        private final int number;
 
         MonthNamUA(int number) {
             this.number = number;
         }
 
-        public static String getNameMonth(int number){
+        public static String getNameMonth(int number) {
             MonthNamUA[] values = MonthNamUA.values();
             for (MonthNamUA month : values) {
                 if (month.number == number) {
@@ -28,7 +29,9 @@ public class DateUtils {
             return null;
         }
 
-    };
+    }
+
+    ;
 
     public static Date asDate(LocalDate localDate) {
         return Date.from(localDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
@@ -45,7 +48,6 @@ public class DateUtils {
     public static LocalDateTime asLocalDateTime(Date date) {
         return Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDateTime();
     }
-
 
     public static String monthNamesUA(LocalDate now) {
 

@@ -244,7 +244,7 @@ class RubinWeekController {
     public String rubinPrintMonth(@RequestParam("data_v") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
                                   @RequestParam("data_vpo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to,
                                   @RequestParam("p_tsc") String tsc) {
-        log.info("Generate monthly report, date from: {}, to: {}, tsc: {}",from, to, tsc);
+        log.info("Generate monthly report (action=print_month), date from: {}, to: {}, tsc: {}",from, to, tsc);
         reportService.createMonthlyReport(from, to, tsc);
         return "redirect:/";
     }

@@ -21,10 +21,10 @@ public class ReportServiceImpl implements ReportService {
     private final PidrozdilRepository pidrozdilRepository;
     // Alt + Enter - вызывает конструктор
 
-    public ReportServiceImpl(RubinWeekRepository rubinWeekRepository, CreateDoc createDoc, PidrozdilRepository pidrozdilRepository, PidrozdilRepository pidrozdilRepository1) {
+    public ReportServiceImpl(RubinWeekRepository rubinWeekRepository, CreateDoc createDoc, PidrozdilRepository pidrozdilRepository) {
         this.rubinWeekRepository = rubinWeekRepository;
         this.createDoc = createDoc;
-        this.pidrozdilRepository = pidrozdilRepository1;
+        this.pidrozdilRepository = pidrozdilRepository;
     }
 
     @Override
@@ -37,12 +37,8 @@ public class ReportServiceImpl implements ReportService {
         ReportData reportData = new ReportData(rubinWeekRepository.getRubinDateTSC(from, to, startDateOld, endDateOld, tsc));
 
         int year = now.getYear();
-        String yearTxt=Integer.toString(year);
-//        String monthUA = DateUtils.monthNamesUA(now);
+        String yearTxt = Integer.toString(year);
         String monthUA = DateUtils.MonthNamUA.getNameMonth(now.getMonthValue());
-
-//        String[] monthNamesUA = {"Січнь", "Лютий", "Березень", "Квітень", "Травень", "Липень", "Червень", "Серпень", "Вересень", "Жовтень", "Листопад", "Грудень"};
-//        String monthUA = monthNamesUA[now.getMonthValue() - 1];
 
 //        EmailSender.send("o.klymchuk@zhi.hsc.gov.ua");
         String filename = "c:/RSC1840/Temp_rubin_Mounth.docx ";
@@ -52,6 +48,7 @@ public class ReportServiceImpl implements ReportService {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         filename = "c:/RSC1840/Rubin.docx";
         EmailService.send(pidrozdilRepository.setEmailPidrozdil(tsc), filename);
 //        EmailFilename.send("o.klymchuk@zhi.hsc.gov.ua",filename);

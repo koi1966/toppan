@@ -7,6 +7,7 @@ import org.apache.poi.xwpf.usermodel.*;
 import org.springframework.stereotype.Component;
 import toppan.example.toppan.models.ReportData;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -25,7 +26,11 @@ public class CreateDoc {
 
 
     public void createDoc(ReportData reportData, String monthUA, String year, String tsc, String filename) throws IOException {
-//Blank Document
+        String separator = File.separator;
+//        String path = "c:" \\rsc1840\\texst.txt";
+//        String path = "c:" + separator + "rsc1840" + separator + "texst.txt";
+
+        //Blank Document
         XWPFDocument document = new XWPFDocument(new FileInputStream(filename));
 
         XWPFTable table = document.getTableArray(1);
@@ -72,6 +77,9 @@ public class CreateDoc {
                 }
             }
         }
+//        String separator = File.separator;
+//        String path = "c:" \\rsc1840\\texst.txt";
+//        String path = "c:" + separator + "rsc1840" + separator + "texst.txt";
         document.write(new FileOutputStream("C:/RSC1840/Rubin.docx"));
         document.close();
 //        out.close();

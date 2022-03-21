@@ -66,16 +66,20 @@ public interface RubinWeekRepository extends CrudRepository<Rubin_week, Long> {
             value = "SELECT sum(week_appeal) as week_appeal, " +
                     "sum(week_issued) as week_issued, " +
                     "sum(week_appeal) + " +
+
                     "(SELECT year_appeal " +
                     "from rubin_year ry " +
                     "where ry.pidrozdil = :tsc " +
                     "and data_v = (select max(kk.data_v) " +
                     "from rubin_year kk " +
-                    "where kk.pidrozdil = :tsc)) as year_appeal, sum(week_issued) + " +
+                    "where kk.pidrozdil = :tsc)) as year_appeal, " +
+//
+                    "sum(week_issued) + " +
                     "(SELECT year_issued from rubin_year ry " +
                     "where ry.pidrozdil = :tsc " +
                     "and data_v = (select max(kk.data_v) " +
                     "from rubin_year kk where kk.pidrozdil = :tsc)) as year_issued, " +
+//
                     "RIGHT(pidrozdil, 4) as pidrozdil " +
                     "from rubin_week " +
                     "where data_v >= :startDate " +
