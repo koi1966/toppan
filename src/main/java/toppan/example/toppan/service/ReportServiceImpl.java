@@ -43,7 +43,7 @@ public class ReportServiceImpl implements ReportService {
 
 //        EmailSender.send("o.klymchuk@zhi.hsc.gov.ua");
         String filename = "c:"+ separator +"rsc1840"+separator+"Temp_rubin_Mounth.docx";
-        String path = "";
+        String path = null;
         try {
             path =  createDoc.createDoc(reportData, monthUA, yearTxt, tsc, filename);
         } catch (IOException e) {
