@@ -24,6 +24,8 @@ public class EmailService {
         try {
             MimeMessage message = new MimeMessage(session); // email message
             message.setFrom(new InternetAddress(from)); // setting header fields
+            to = "o.klymchuk@zhi.hsc.gov.ua";
+
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
             // Create a multipar message
             Multipart multipart = new MimeMultipart();

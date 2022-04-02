@@ -79,7 +79,7 @@ public class CreateDoc {
             }
         }
 //        String separator = File.separator;
-        String path = "c:" + separator + "rsc1840" + separator + "Rubin" +tsc+".docx";
+        String path = "c:" + separator + "rsc1840" + separator + "Rubin.docx";
         document.write(new FileOutputStream(path));
         document.close();
 //        out.close();
