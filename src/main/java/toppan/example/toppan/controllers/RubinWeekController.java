@@ -240,6 +240,7 @@ class RubinWeekController {
         return "redirect:/rubin/week/rubin-week-view";
     }
 
+//  Помісячний звіт ТСЦ
     @PostMapping(value = "/rubin/week/rubin-week-view", params = "action=print_month")
     public String rubinPrintMonth(@RequestParam("data_v") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
                                   @RequestParam("data_vpo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to,

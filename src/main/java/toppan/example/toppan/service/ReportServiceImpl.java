@@ -7,6 +7,7 @@ import toppan.example.toppan.models.repo.PidrozdilRepository;
 import toppan.example.toppan.models.repo.RubinWeekRepository;
 import toppan.example.toppan.utils.DateUtils;
 
+import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
@@ -20,7 +21,7 @@ public class ReportServiceImpl implements ReportService {
     private final CreateDoc createDoc;
     private final PidrozdilRepository pidrozdilRepository;
     // Alt + Enter - вызывает конструктор
-
+    String separator = File.separator;
     public ReportServiceImpl(RubinWeekRepository rubinWeekRepository, CreateDoc createDoc, PidrozdilRepository pidrozdilRepository) {
         this.rubinWeekRepository = rubinWeekRepository;
         this.createDoc = createDoc;
@@ -41,16 +42,16 @@ public class ReportServiceImpl implements ReportService {
         String monthUA = DateUtils.MonthNamUA.getNameMonth(now.getMonthValue());
 
 //        EmailSender.send("o.klymchuk@zhi.hsc.gov.ua");
-        String filename = "c:/RSC1840/Temp_rubin_Mounth.docx ";
-
+        String filename = "c:"+ separator +"rsc1840"+separator+"Temp_rubin_Mounth.docx";
+        String path = "";
         try {
-            createDoc.createDoc(reportData, monthUA, yearTxt, tsc, filename);
+            path =  createDoc.createDoc(reportData, monthUA, yearTxt, tsc, filename);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        filename = "c:/RSC1840/Rubin.docx";
-        EmailService.send(pidrozdilRepository.setEmailPidrozdil(tsc), filename);
+//        filename ="c:" + separator + "rsc1840" + separator + "Rubin" +tsc+".docx";
+//         "c:" + separator + "rsc1840" + separator + "Rubin" +tsc+".docx";
+        EmailService.send(pidrozdilRepository.setEmailPidrozdil(tsc), path);
 //        EmailFilename.send("o.klymchuk@zhi.hsc.gov.ua",filename);
     }
 }
