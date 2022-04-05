@@ -270,7 +270,7 @@ public class RubinController {
 // *********************************************
 
         EmailSender.send(str[6]);
-        EmailService.send(str[6], filename);
+        EmailService.send(str[6], filename, "TSC");
 //        EmailSender.send("o.klymchuk@zhi.hsc.gov.ua");
 //        EmailFilename.send("o.klymchuk@zhi.hsc.gov.ua",filename);
 

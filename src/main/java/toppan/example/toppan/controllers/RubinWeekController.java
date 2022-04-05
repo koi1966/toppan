@@ -295,7 +295,7 @@ class RubinWeekController {
 //        filename = "c:/RSC1840/rubin.docx";
 
         String[] str = rubinWekStr.split(",");
-        EmailService.send(str[7], "c:/RSC1840/rubin.docx");
+        EmailService.send(str[7], "c:/RSC1840/rubin.docx", tsc_front);
 
 //        *****************************************************************************************************
         return "redirect:/rubin/week/rubin-week-view";
@@ -350,7 +350,7 @@ class RubinWeekController {
 //        EmailFilename.send(str[6], filename);
         filename = "c:/RSC1840/Rubin.docx";
 //        EmailFilename.send("it@zhi.hsc.gov.ua", filename);
-        EmailService.send(str[6], filename);
+        EmailService.send(str[6], filename, tsc_front);
 //        **************************************************************************************************************
         return "redirect:/rubin/week/rubin-week-view";
     }

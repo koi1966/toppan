@@ -31,27 +31,33 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public void createMonthlyReport(LocalDate from, LocalDate to, String tsc) {
         LocalDate now = LocalDate.now();
-        LocalDate startDateOld, endDateOld;
+        LocalDate startDateOld, endDateOld, minusMount;
         startDateOld = now.minusMonths(1).minusYears(1).with(TemporalAdjusters.firstDayOfMonth());
         endDateOld = now.minusMonths(1).minusYears(1).with(TemporalAdjusters.lastDayOfMonth());
+        minusMount = now.minusMonths(1).with(TemporalAdjusters.lastDayOfMonth());
 
         ReportData reportData = new ReportData(rubinWeekRepository.getRubinDateTSC(from, to, startDateOld, endDateOld, tsc));
 
         int year = now.getYear();
-        String yearTxt = Integer.toString(year);
-        String monthUA = DateUtils.MonthNamUA.getNameMonth(now.getMonthValue());
+        int oldyear = startDateOld.getYear();
 
+        String yearTxt = Integer.toString(year);
+
+        String monthUA = DateUtils.MonthNamUA.getNameMonth(now.getMonthValue());
+        String minusUA = DateUtils.MonthNamUA.getNameMonth(minusMount.getMonthValue());
+        String minusYears = DateUtils.MonthNamUA.getNameMonth(startDateOld.getMonthValue());
+        minusYears = minusYears +" "+ oldyear;
 //        EmailSender.send("o.klymchuk@zhi.hsc.gov.ua");
-        String filename = "c:"+ separator +"rsc1840"+separator+"Temp_rubin_Mounth.docx";
+
+        String filename = "c:\\rsc1840\\Temp_rubin_Mounth.docx";
         String path = null;
         try {
-            path =  createDoc.createDoc(reportData, monthUA, yearTxt, tsc, filename);
+            path =  createDoc.createDoc(reportData,minusYears, minusUA, monthUA, yearTxt, tsc, filename);
         } catch (IOException e) {
             e.printStackTrace();
         }
-//        filename ="c:" + separator + "rsc1840" + separator + "Rubin" +tsc+".docx";
-//         "c:" + separator + "rsc1840" + separator + "Rubin" +tsc+".docx";
-        EmailService.send(pidrozdilRepository.setEmailPidrozdil(tsc), path);
+
+        EmailService.send(pidrozdilRepository.setEmailPidrozdil(tsc), path, tsc);
 //        EmailFilename.send("o.klymchuk@zhi.hsc.gov.ua",filename);
     }
 }

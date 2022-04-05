@@ -11,7 +11,7 @@ import javax.mail.internet.MimeMultipart;
 import java.util.Properties;
 
 public class EmailService {
-    public static void send(String to, String filename) {
+    public static void send(String to, String filename,String tsc) {
 
 //            final String toto = "o.klymchuk@zhi.hsc.gov.ua";       // sender email
         final String from = "rubin@zhi.hsc.gov.ua";       // receiver email
@@ -29,14 +29,14 @@ public class EmailService {
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
             // Create a multipar message
             Multipart multipart = new MimeMultipart();
-            message.setSubject("Звіт по рубину формат Doc"); // subject line
+            message.setSubject("Звіт по рубину формат Doc "+tsc); // subject line
 
             MimeBodyPart messageBodyPart = new MimeBodyPart();
 //                String filename = "rubin.xlsx";
-//            String filename = "c:/RSC1840/rubin.xlsx";
-            DataSource source = new FileDataSource(filename);
+            String filename1 = "c:/rsc1840/Rubin.docx";
+            DataSource source = new FileDataSource(filename1);
             messageBodyPart.setDataHandler(new DataHandler(source));
-            messageBodyPart.setFileName(filename);
+            messageBodyPart.setFileName(filename1);
             multipart.addBodyPart(messageBodyPart);
             // Send the complete message parts
             message.setContent(multipart);

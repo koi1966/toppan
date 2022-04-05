@@ -26,9 +26,10 @@ public class CreateDoc {
 
 
 //    public void createDoc(ReportData reportData, String monthUA, String year, String tsc, String filename) throws IOException {
-    public String createDoc(ReportData reportData, String monthUA, String year, String tsc, String filename) throws IOException {
-        String separator = File.separator;
-//        String path = "c:" \\rsc1840\\texst.txt";
+    public String createDoc(ReportData reportData, String minusYears,String minusUA, String monthUA, String year, String tsc, String filename) throws IOException {
+//        String separator = File.separator;
+//        String path = "c:\\rsc1840\\Rubin"+tsc+".docx";
+//        String path = "c:\\rsc1840\\texst.txt";
 //        String path = "c:" + separator + "rsc1840" + separator + "texst.txt";
 
         //Blank Document
@@ -60,6 +61,10 @@ public class CreateDoc {
                         text = text.replace("dat", monthUA+" "+year);
                         r.setText(text, 0);
                     }
+                    if (text != null && text.contains("dak")) {
+                        text = text.replace("dak", minusUA+" "+year);
+                        r.setText(text, 0);
+                    }
                 }
             }
         }
@@ -69,8 +74,12 @@ public class CreateDoc {
                     for (XWPFParagraph p : cell.getParagraphs()) {
                         for (XWPFRun r : p.getRuns()) {
                             String text = r.getText(0);
-                            if (text != null && text.contains("dat")) {
-                                text = text.replace("dat", monthUA+" "+year);
+                            if (text != null && text.contains("dak")) {
+                                text = text.replace("dak", minusUA+" "+year);
+                                r.setText(text, 0);
+                            }
+                            if (text != null && text.contains("das")) {
+                                text = text.replace("das", minusYears);
                                 r.setText(text, 0);
                             }
                         }
@@ -79,13 +88,17 @@ public class CreateDoc {
             }
         }
 //        String separator = File.separator;
-        String path = "c:" + separator + "rsc1840" + separator + "Rubin.docx";
-        document.write(new FileOutputStream(path));
+
+//        String path = "c:" + separator + "rsc1840" + separator + "Rubin"+tsc+".docx";
+//        String path = "c:\\rsc1840\\Rubin"+tsc+".docx";
+        String path = "c:/rsc1840/Rubin.docx";
+        String pathOut = path.replaceAll("(?<! ) (?! )", "_");
+        document.write(new FileOutputStream(pathOut));
         document.close();
 //        out.close();
-
+//        System.out.println(path.replaceAll("(?<! ) (?! )", "_"));
 //        EmailFilename.send("o.klymchuk@zhi.hsc.gov.ua","c:/RSC1840/rubin.docx");
-        return path;
+        return pathOut;
     }
 //    //Blank Document
 //    XWPFDocument document = new XWPFDocument();
