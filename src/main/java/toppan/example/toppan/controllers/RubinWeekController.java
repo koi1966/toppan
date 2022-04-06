@@ -8,7 +8,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import toppan.example.toppan.createDoc.CreateDoc;
 import toppan.example.toppan.createDoc.CreateExcel;
-import toppan.example.toppan.models.*;
+import toppan.example.toppan.models.Pidrozdil;
+import toppan.example.toppan.models.Rubin_month;
+import toppan.example.toppan.models.Rubin_week;
 import toppan.example.toppan.models.repo.*;
 import toppan.example.toppan.service.EmailService;
 import toppan.example.toppan.service.ReportService;
@@ -24,7 +26,10 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 import static java.time.DayOfWeek.SUNDAY;
 import static java.time.temporal.TemporalAdjusters.firstDayOfYear;
@@ -134,6 +139,16 @@ class RubinWeekController {
         return "rubin/week/rubin-week-view";
     }
 
+    /**
+     * Тижневий ЗВІТ    ТСЦ
+     *
+     * @param data_sart_str
+     * @param data_end_str
+     * @param tsc_front
+     * @param model
+     * @param request
+     * @return
+     */
     @DateTimeFormat(pattern = "yyyy-MM-dd") // Тижневий ЗВІТ    ТСЦ
     @PostMapping(value = "/rubin/week/rubin-week-view", params = "action=print")
     public String rubinPrintWeekTSC(@RequestParam("data_v") String data_sart_str,
@@ -240,16 +255,31 @@ class RubinWeekController {
         return "redirect:/rubin/week/rubin-week-view";
     }
 
-//  Помісячний звіт ТСЦ
+    /**
+     * Помісячний звіь ТСЦ
+     *
+     * @param from
+     * @param to
+     * @param tsc
+     * @return
+     */
     @PostMapping(value = "/rubin/week/rubin-week-view", params = "action=print_month")
     public String rubinPrintMonth(@RequestParam("data_v") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
                                   @RequestParam("data_vpo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to,
                                   @RequestParam("p_tsc") String tsc) {
-        log.info("Generate monthly report (action=print_month), date from: {}, to: {}, tsc: {}",from, to, tsc);
+        log.info("Generate monthly report (action=print_month), date from: {}, to: {}, tsc: {}", from, to, tsc);
         reportService.createMonthlyReport(from, to, tsc);
         return "redirect:/";
     }
 
+    /**
+     * Недільний звіт ТЦС
+     *
+     * @param data_sart_str
+     * @param data_end_str
+     * @param tsc_front
+     * @return
+     */
     @PostMapping(value = "/rubin/week/rubin-week-view", params = "action=print_week_rsc")
     public String rubunPrintWeekRSC(@RequestParam("data_v") String data_sart_str,
                                     @RequestParam("data_vpo") String data_end_str,
@@ -301,7 +331,14 @@ class RubinWeekController {
         return "redirect:/rubin/week/rubin-week-view";
     }
 
-    //    print_month_rsc
+    /**
+     * Помісячний звіт РСЦ
+     *
+     * @param data_v
+     * @param data_last
+     * @param tsc_front
+     * @return
+     */
     @PostMapping(value = "/rubin/week/rubin-week-view", params = "action=print_month_rsc")
     public String rubinPrintMonthRSC(@RequestParam("data_v") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date data_v,
                                      @RequestParam("data_vpo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date data_last,
@@ -355,6 +392,13 @@ class RubinWeekController {
         return "redirect:/rubin/week/rubin-week-view";
     }
 
+    /**
+     * Внесення щоденної інформійії
+     *
+     * @param request
+     * @param model
+     * @return
+     */
     @GetMapping("/rubin/week/rubin-add-week")
     public String rubinAddWeek(HttpServletRequest request, Model model) {
 

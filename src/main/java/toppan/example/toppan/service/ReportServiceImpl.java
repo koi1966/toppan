@@ -60,4 +60,9 @@ public class ReportServiceImpl implements ReportService {
         EmailService.send(pidrozdilRepository.setEmailPidrozdil(tsc), path, tsc);
 //        EmailFilename.send("o.klymchuk@zhi.hsc.gov.ua",filename);
     }
+
+    @Override
+    public void createWeekReport(LocalDate from, LocalDate to, String tsc) {
+
+    }
 }
