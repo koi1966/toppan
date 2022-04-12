@@ -5,7 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import toppan.example.toppan.createDoc.CreateDoc;
 import toppan.example.toppan.createDoc.CreateExcel;
 import toppan.example.toppan.createDoc.CreateExilMonth;
 import toppan.example.toppan.models.Pidrozdil;
@@ -33,7 +32,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-//@RequestMapping("/rubin")
 public class RubinController {
 
     private final RubinRepository rubinRepository;
@@ -41,21 +39,20 @@ public class RubinController {
     private final RubinWeekRepository rubinWeekRepository;
     private final CreateExcel createExcel;
     private final CreateExilMonth createExilMonth;
-    private final CreateDoc createDoc;
+//    private final CreateDoc createDoc;
 
-    public RubinController(RubinRepository rubinRepository, PidrozdilRepository pidrozdilRepository, RubinWeekRepository rubinWeekRepository, CreateExcel createExcel, CreateExilMonth createExilMonth, CreateDoc createDoc) {
+    public RubinController(RubinRepository rubinRepository, PidrozdilRepository pidrozdilRepository, RubinWeekRepository rubinWeekRepository, CreateExcel createExcel, CreateExilMonth createExilMonth) {
         this.rubinRepository = rubinRepository;
         this.pidrozdilRepository = pidrozdilRepository;
         this.rubinWeekRepository = rubinWeekRepository;
         this.createExcel = createExcel;
         this.createExilMonth = createExilMonth;
-        this.createDoc = createDoc;
+//        this.createDoc = createDoc;
     }
 
     @GetMapping("/rubin/rubin-view")
     public String rubinview(Model model) {
 //      находим и передаем все записи на вюшку
-//        List<Rubin> rubinList = (List<Rubin>) rubinRepository.findAll();
         String date_s = LocalDate.now().toString(); // берем локальную дату переводим в String
 
         Date data_v = null;
@@ -81,11 +78,6 @@ public class RubinController {
     }
 
     @PostMapping("/rubin/rubin-add")
-//    public String rubinadd(@RequestParam String pidrozdil,
-//                           @RequestParam int week,
-//                           @RequestParam int week_1,
-//                           @RequestParam int year,
-//                           @RequestParam int year_1, @RequestParam("data_v") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date data_v) {
     public String rubinadd(@Valid Rubin rubin, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             return "rubin/rubin-add";
@@ -161,7 +153,6 @@ public class RubinController {
         return "rubin/rubin-edit";//       редактируем найденное на вюшке
     }
 
-
     @PostMapping("/rubin/{id}/update")   // после нажатия Зберегти зміни
     public String rubinUpdate(Model model,
                               @PathVariable(value = "id") long id,
@@ -193,12 +184,6 @@ public class RubinController {
         String endPreviousYear = now.minusMonths(1).minusYears(1).with(TemporalAdjusters.lastDayOfMonth()).format(format);
 // начало року  01.01.2021
         String startYear = now.withDayOfMonth(01).withMonth(01).with(TemporalAdjusters.firstDayOfMonth()).format(format);
-//        Date start_Date= null;
-//        try {
-//            start_Date = new SimpleDateFormat("yyyy.MM.dd").parse(startDate);
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
 
         model.addAttribute("startDate", startDate);
         model.addAttribute("endDate", endDate);
@@ -259,21 +244,12 @@ public class RubinController {
             e.printStackTrace();
         }
 //        EmailSender.send("o.klymchuk@zhi.hsc.gov.ua");
-
         String filename = "c:/RSC1840/rubin.docx";
-//        // *********************************************
-//        try {
-//            createDoc.createDoc(rubinStr, filename);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-// *********************************************
 
         EmailSender.send(str[6]);
         EmailService.send(str[6], filename, "TSC");
 //        EmailSender.send("o.klymchuk@zhi.hsc.gov.ua");
 //        EmailFilename.send("o.klymchuk@zhi.hsc.gov.ua",filename);
-
         return "redirect:/";
     }
 }

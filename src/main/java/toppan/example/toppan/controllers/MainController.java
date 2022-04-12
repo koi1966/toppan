@@ -12,24 +12,10 @@ public class MainController {
         model.addAttribute("title", "главной странице");
         return "Home";
     }
-//    @GetMapping("/blog")
-//    public String blog(Model model) {
-//        model.addAttribute("title", "Єто блог");
-//        return "blog";
-//
-//    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
-//
-//
-//    }
 
     @GetMapping("/about")
     public String about(Model model) {
         model.addAttribute("title", "Про ГСЦ РСЦ В Житомирской области");
         return "about";
     }
-
-//   токен - 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
-
-//    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
-
 }

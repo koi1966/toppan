@@ -41,22 +41,22 @@ class RubinWeekController {
 
     private final RubinWeekRepository rubinWeekRepository;
     private final PidrozdilRepository pidrozdilRepository;
-    private final CreateExcel createExcel;
-    private final RubinYearRepository rubinYearRepository;
-    private final RubinRepository rubinRepository;
-    private final MonthRepository monthRepository;
-    private final CreateDoc createDoc;
+//    private final CreateExcel createExcel;
+//    private final RubinYearRepository rubinYearRepository;
+//    private final RubinRepository rubinRepository;
+//    private final MonthRepository monthRepository;
+//    private final CreateDoc createDoc;
     private final ReportService reportService;
 
     public RubinWeekController(RubinWeekRepository rubinWeekRepository, PidrozdilRepository pidrozdilRepository, CreateExcel createExcel, RubinYearRepository rubinYearRepository, RubinRepository rubinRepository, MonthRepository monthRepository, CreateDoc createDoc, ReportService reportService) {
         this.rubinWeekRepository = rubinWeekRepository;
         this.pidrozdilRepository = pidrozdilRepository;
-        this.createExcel = createExcel;
-        this.rubinYearRepository = rubinYearRepository;
-        this.rubinRepository = rubinRepository;
-        this.monthRepository = monthRepository;
-        this.createDoc = createDoc;
         this.reportService = reportService;
+//        this.createExcel = createExcel;
+//        this.rubinYearRepository = rubinYearRepository;
+//        this.rubinRepository = rubinRepository;
+//        this.monthRepository = monthRepository;
+//        this.createDoc = createDoc;
     }
 
     @GetMapping("/rubin/week/rubin-week-view1") // тестовое окно
@@ -101,7 +101,6 @@ class RubinWeekController {
                                  Model model) {
 
         List<Rubin_week> rubinList;
-
         SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
         Date data_v = null;
         try {
@@ -156,22 +155,6 @@ class RubinWeekController {
                                     @RequestParam("p_tsc") String tsc_front,
                                     Model model, HttpServletRequest request) {
 
-        //  сверяем ТСЦ которое создает отчет и сравниваем IP копма с которого вносят информацию
-//        String ip_user = request.getRemoteAddr();
-//        int ip_tsc = UtilitesSting.ordinalIndexOf(ip_user, ".", 2);
-//
-//        String ip = ip_user.substring(0, ip_tsc);//        узнаеп подсеть
-//        String tsc = pidrozdilRepository.setNamePidrozdil(ip);//        по подсети узнаем из какого ТСЦ зашли работать
-//
-//        if (tsc != "РСЦ 1840") {
-//            if (tsc_front != tsc) {
-//                return "redirect:/Error";//  если разные ТСЦ то на сторінку з поилкою
-//            }
-//        }
-//     сверяем ТСЦ которое создает отчет и сравниваем IP копма с которого вносят информацию
-
-        //  отчет по датам из фронта
-// ************************************************************************************************
         SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
         Date data_sart = null;
         try {
@@ -193,15 +176,6 @@ class RubinWeekController {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-//  получение начало текущего года
-//        Date date = Date.from(LocalDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-//        java.util.Date firstYear = new SimpleDateFormat("yyyy-MM-dd").parse(String.valueOf(LocalDate.now().with(firstDayOfYear())));
-
-//        "SELECT sum(week_appeal) as week_appeal, " +
-//                "sum(week_issued) as week_issued, " +
-//                "(SELECT sum(ry.week_appeal) from rubin_week ry where ry.pidrozdil = :tsc and ry.data_v >= :firstYear and ry.data_v <= :endDate) as year_appeal, " +
-//                "(SELECT sum(ri.week_issued) from rubin_week ri where ri.pidrozdil = :tsc and ri.data_v >= :firstYear and ri.data_v <= :endDate) as year_issued, " +
-//                "RIGHT(pidrozdil, 4) as pidrozdil " +
 
         String rubinWekStr = rubinWeekRepository.setWeekPrint2022(data_sart, data_end, firstYear, tsc_front);
 
@@ -242,16 +216,6 @@ class RubinWeekController {
                 String setarator = File.separator;
                 filename = "C:" + setarator + "RSC1840" + setarator + "Temp_rubin.docx";
         }
-        // *********************************************
-        //  Doc
-//        String[] str = rubinWekStr.split(",");
-//        try {
-//            createDoc.createDoc(rubinWekStr, filename);//  Внесение полученной информации в Doc и отправка его на почту
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-// *********************************************
-//        EmailService.send(str[7], "c:/RSC1840/rubin.docx");
         return "redirect:/rubin/week/rubin-week-view";
     }
 
@@ -314,15 +278,6 @@ class RubinWeekController {
         String rubinWekStr = rubinWeekRepository.setWeekPrintRSC(data_sart, data_end, firstYear);
         rubinWekStr = rubinWekStr + ',' + tsc_front + ',' + data_end_str2 + "," + tsc_front + ',' + pidrozdilRepository.setEmailPidrozdil(tsc_front);
         String filename = "c:/RSC1840/Temp_rubin_1840.docx";
-// *********************************************
-//        //  Doc
-//        try {
-//            createDoc.createDoc(rubinWekStr, filename);//  Внесение полученной информации в Doc и отправка его на почту
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-        // *********************************************
-//        filename = "c:/RSC1840/rubin.docx";
 
         String[] str = rubinWekStr.split(",");
         EmailService.send(str[7], "c:/RSC1840/rubin.docx", tsc_front);
@@ -343,7 +298,7 @@ class RubinWeekController {
     public String rubinPrintMonthRSC(@RequestParam("data_v") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date data_v,
                                      @RequestParam("data_vpo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date data_last,
                                      @RequestParam("p_tsc") String tsc_front) {
-// ***********************************************************************************************************************
+
         DateTimeFormatter format = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         LocalDate now = LocalDate.now();
         String startPreviousYear = now.minusMonths(1).minusYears(1).with(TemporalAdjusters.firstDayOfMonth()).format(format);
@@ -367,23 +322,13 @@ class RubinWeekController {
         LocalDate localDate = data_last.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         int year = localDate.getYear();
         int month = localDate.getMonthValue();
-//        String mount2 = localDate.getMonth();
-//        Month jan = Month.of(1);
-//        Locale loc = Locale.forLanguageTag("ru");
-//        System.out.println(jan.getDisplayName(TextStyle.FULL_STANDALONE, loc)); // Вернёт Январь/січень
 
         rubinStr = rubinStr + ',' + tsc_front + ',' + String.valueOf(month) + "." + String.valueOf(year) + ',' + pidrozdilRepository.setEmailPidrozdil(tsc_front);
         String[] str = rubinStr.split(",");
 
 //        EmailSender.send("o.klymchuk@zhi.hsc.gov.ua");
         String filename = "c:/RSC1840/Temp_rubin_Mounth_1840.docx";
-        // *********************************************
-//        try {
-//            createDoc.createDoc(rubinStr, filename);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-        // *********************************************
+
 //        EmailFilename.send(str[6], filename);
         filename = "c:/RSC1840/Rubin.docx";
 //        EmailFilename.send("it@zhi.hsc.gov.ua", filename);
@@ -416,11 +361,9 @@ class RubinWeekController {
         Date date = new Date();
         ZoneId defaultZoneId = ZoneId.systemDefault();//        //Getting the default zone id
         Instant instant = date.toInstant();//Converting the date to Instant
-
         Rubin_week rubin_week = new Rubin_week();
         rubin_week.setPidrozdil(pidrozdil);
         rubin_week.setData(instant.atZone(defaultZoneId).toLocalDate());
-
         model.addAttribute("rubin_week", rubin_week);
         return "rubin/week/rubin-add-week";
     }
@@ -431,7 +374,6 @@ class RubinWeekController {
                                @RequestParam("data_v") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate data_v,
                                @RequestParam int week_issued,
                                @RequestParam int week_appeal) {
-//        Rubin_week rubin_week = new Rubin_week(pidrozdil, data_v,week_appeal, week_issued );
         Pidrozdil pidrozdil = pidrozdilRepository.findById(pidrozdilName).get();
         Rubin_week rubin_week = new Rubin_week();
         rubin_week.setPidrozdil(pidrozdil);
@@ -474,13 +416,11 @@ class RubinWeekController {
     @PostMapping("/rubin/week/{id}/update")  // нажата кнопка - Обновить
     public String rubinUpdate(Model model,
                               @PathVariable(value = "id") long id,
-//                              @RequestParam String pidrozdil,
                               @RequestParam int week_appeal,
                               @RequestParam int week_issued,
                               @RequestParam("data_v") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date data_v
     ) {
         Rubin_week rubin_week_up = rubinWeekRepository.findById(id).orElseThrow();
-//        rubin_week_up.setPidrozdil(pidrozdil);
         rubin_week_up.setWeek_appeal(week_appeal);
         rubin_week_up.setWeek_issued(week_issued);
         rubinWeekRepository.save(rubin_week_up);
@@ -493,30 +433,4 @@ class RubinWeekController {
         return "redirect:rubin/week/rubin-week-view";
     }
 
-    @PostMapping(value = "/rubin/week/rubin-week-view", params = "action=month_stop")
-    public String rubinAddMounh() {
-
-        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
-        Date data_v = null;
-        try {
-            data_v = sdf2.parse("2021-12-31");
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        Rubin_month rubinMonth = new Rubin_month();
-
-        rubinMonth.setData_v(data_v);
-        rubinMonth.setMonth_appeal(111);
-        rubinMonth.setMonth_issued(111);
-        rubinMonth.setMonth_year("12.2021");
-        rubinMonth.setPidrozdil("ТСЦ 1843");
-        monthRepository.save(rubinMonth);
-        return "redirect:/";
-    }
-
-//    print_month_rsc
-
-//    String[] strings = {"foo","bar"};
-//    List<String> l = Arrays.asList(strings);
-//    Ctrl+Shift+Space
 }
