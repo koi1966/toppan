@@ -10,6 +10,6 @@ public class DateUtilsTest {
     @Test
     void getMonthTest() {
         String nameMonth = DateUtils.MonthNamUA.getNameMonth(3);
-        Assertions.assertEquals("Березень", nameMonth);
+        Assertions.assertEquals("березень", nameMonth);
     }
 }

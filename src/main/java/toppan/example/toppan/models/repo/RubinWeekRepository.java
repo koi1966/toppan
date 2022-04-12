@@ -27,7 +27,7 @@ public interface RubinWeekRepository extends CrudRepository<Rubin_week, Long> {
     List<Rubin_week> getAllByDataBetweenAndPidrozdilPidrozdil(LocalDate data, LocalDate data2, String pidrozdil, Sort sort);
 
     //   Помісячний звіт РСЦ
-    //   обработка null
+    //   обробка - null
 //    SELECT coalesce(SUM(week_appeal),0) AS week_appeal FROM rubin_week WHERE data_v <= '01.10.2021'
 //
     @Query(nativeQuery = true,
@@ -91,18 +91,20 @@ public interface RubinWeekRepository extends CrudRepository<Rubin_week, Long> {
                         @Param("tsc") String tsc);
 
     @Query(nativeQuery = true,
-            value = "SELECT sum(week_appeal) as week_appeal, " +
-                    "sum(week_issued) as week_issued, " +
+            value = "SELECT " +
                     "(SELECT sum(ry.week_appeal) from rubin_week ry where ry.pidrozdil = :tsc and ry.data_v >= :firstYear and ry.data_v <= :endDate) as year_appeal, " +
                     "(SELECT sum(ri.week_issued) from rubin_week ri where ri.pidrozdil = :tsc and ri.data_v >= :firstYear and ri.data_v <= :endDate) as year_issued " +
+                    "sum(week_appeal) as week_appeal, " +
+                    "sum(week_issued) as week_issued, " +
+                    "pidrozdil " +
                     "from rubin_week " +
                     "where data_v >= :startDate " +
                     "and data_v <= :endDate " +
                     "and pidrozdil = :tsc " +
                     "group by pidrozdil")
-    String setWeekPrint2022(@Param("startDate") Date data_v,
-                            @Param("endDate") Date data_last,
-                            @Param("firstYear") Date firstYear,
+    String setWeekPrint2022(@Param("startDate") LocalDate data_v,
+                            @Param("endDate") LocalDate data_last,
+                            @Param("firstYear") LocalDate firstYear,
                             @Param("tsc") String tsc);
 
     @Query(nativeQuery = true,

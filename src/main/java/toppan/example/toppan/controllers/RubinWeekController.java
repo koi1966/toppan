@@ -148,73 +148,82 @@ class RubinWeekController {
      * @param request
      * @return
      */
-    @DateTimeFormat(pattern = "yyyy-MM-dd") // Тижневий ЗВІТ    ТСЦ
     @PostMapping(value = "/rubin/week/rubin-week-view", params = "action=print")
-    public String rubinPrintWeekTSC(@RequestParam("data_v") String data_sart_str,
-                                    @RequestParam("data_vpo") String data_end_str,
-                                    @RequestParam("p_tsc") String tsc_front,
-                                    Model model, HttpServletRequest request) {
+    public String rubinPrintWeekTSC(@RequestParam("data_v") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
+                                  @RequestParam("data_vpo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to,
+                                  @RequestParam("p_tsc") String tsc){
 
-        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
-        Date data_sart = null;
-        try {
-            data_sart = sdf2.parse(data_sart_str);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+//    @DateTimeFormat(pattern = "yyyy-MM-dd") // Тижневий ЗВІТ    ТСЦ
 
-        Date data_end = null;
-        try {
-            data_end = sdf2.parse(data_end_str);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        String firstYearStr = LocalDate.now().with(firstDayOfYear()).toString();
-        Date firstYear = null;
-        try {
-            firstYear = sdf2.parse(firstYearStr);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+//    public String rubinPrintWeekTSC(@RequestParam("data_v") String data_sart_str,
+//                                    @RequestParam("data_vpo") String data_end_str,
+//                                    @RequestParam("p_tsc") String tsc_front,
+//                                    Model model, HttpServletRequest request) {
 
-        String rubinWekStr = rubinWeekRepository.setWeekPrint2022(data_sart, data_end, firstYear, tsc_front);
+//        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+//        Date data_sart = null;
+//        try {
+//            data_sart = sdf2.parse(data_sart_str);
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+
+//        Date data_end = null;
+//        try {
+//            data_end = sdf2.parse(data_end_str);
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+        LocalDate firstYear = LocalDate.now().with(firstDayOfYear());
+//        String firstYearStr =
+//        Date firstYear = null;
+//        try {
+//            firstYear = sdf2.parse(firstYearStr);
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+
+        log.info("Тижневий ЗВІТ ТСЦ (action=print), date from: {}, to: {}, tsc: {}", from, to, tsc);
+        reportService.createMonthlyReport(from, to, tsc);
+
+        String rubinWekStr = rubinWeekRepository.setWeekPrint2022(from, to, firstYear, tsc);
 
         boolean isEmpty = rubinWekStr == null || rubinWekStr.trim().length() == 0;
         if (isEmpty) {
             rubinWekStr = "0,0,0,0";
         }
 
-        rubinWekStr = rubinWekStr + ',' + data_end_str + "," + tsc_front + ',' + pidrozdilRepository.setEmailPidrozdil(tsc_front);
+//        rubinWekStr = rubinWekStr + ',' + data_end_str + "," + tsc_front + ',' + pidrozdilRepository.setEmailPidrozdil(tsc);
         String filename;
-        switch (tsc_front) {
+        switch (tsc) {
             case "РСЦ 1840":
-                System.out.println("РСЦ 1840");
+//                System.out.println("РСЦ 1840");
                 filename = "c:/RSC1840/Temp_rubin_1840.docx";
                 break;
             case "ТСЦ 1841":
-                System.out.println("Тижневий ТСЦ 1841");
+//                System.out.println("Тижневий ТСЦ 1841");
                 filename = "c:/RSC1840/Temp_rubin_1841.docx";
                 break;
             case "ТСЦ 1842":
-                System.out.println("Тижневий ТСЦ 1842");
+//                System.out.println("Тижневий ТСЦ 1842");
                 filename = "c:/RSC1840/Temp_rubin_1842.docx";
                 break;
             case "ТСЦ 1843":
-                System.out.println("Тижневий ТСЦ 1843");
+//                System.out.println("Тижневий ТСЦ 1843");
                 filename = "c:/RSC1840/Temp_rubin_1843.docx";
                 break;
             case "ТСЦ 1844":
-                System.out.println("Тижневий ТСЦ 1844");
+//                System.out.println("Тижневий ТСЦ 1844");
                 filename = "c:/RSC1840/Temp_rubin_1844.docx";
                 break;
             case "ТСЦ 1845":
-                System.out.println("Тижневий ТСЦ 1845");
+//                System.out.println("Тижневий ТСЦ 1845");
                 filename = "c:/RSC1840/Temp_rubin_1845.docx";
                 break;
             default:
-                System.out.println("Oooops, Тижневий  something wrong !");
-                String setarator = File.separator;
-                filename = "C:" + setarator + "RSC1840" + setarator + "Temp_rubin.docx";
+//                System.out.println("Oooops, Тижневий  something wrong !");
+//                String setarator = File.separator;
+                filename = "C:\\" + "RSC1840" + "\\Temp_rubin.docx";
         }
         return "redirect:/rubin/week/rubin-week-view";
     }

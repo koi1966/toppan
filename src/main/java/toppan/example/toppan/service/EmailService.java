@@ -29,7 +29,7 @@ public class EmailService {
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
             // Create a multipar message
             Multipart multipart = new MimeMultipart();
-            message.setSubject("Звіт по рубину формат Doc "+tsc); // subject line
+            message.setSubject("Звіт по рубину - "+tsc); // subject line
 
             MimeBodyPart messageBodyPart = new MimeBodyPart();
 //                String filename = "rubin.xlsx";

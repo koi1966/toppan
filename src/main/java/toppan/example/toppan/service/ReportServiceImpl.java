@@ -7,7 +7,6 @@ import toppan.example.toppan.models.repo.PidrozdilRepository;
 import toppan.example.toppan.models.repo.RubinWeekRepository;
 import toppan.example.toppan.utils.DateUtils;
 
-import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
@@ -20,12 +19,14 @@ public class ReportServiceImpl implements ReportService {
     private final RubinWeekRepository rubinWeekRepository;
     private final CreateDoc createDoc;
     private final PidrozdilRepository pidrozdilRepository;
+    private final NameFileDoc nameFileDoc;
     // Alt + Enter - вызывает конструктор
-    String separator = File.separator;
-    public ReportServiceImpl(RubinWeekRepository rubinWeekRepository, CreateDoc createDoc, PidrozdilRepository pidrozdilRepository) {
+//    String separator = File.separator;
+    public ReportServiceImpl(RubinWeekRepository rubinWeekRepository, CreateDoc createDoc, PidrozdilRepository pidrozdilRepository, NameFileDoc nameFileDoc) {
         this.rubinWeekRepository = rubinWeekRepository;
         this.createDoc = createDoc;
         this.pidrozdilRepository = pidrozdilRepository;
+        this.nameFileDoc = nameFileDoc;
     }
 
     @Override
@@ -49,7 +50,8 @@ public class ReportServiceImpl implements ReportService {
         minusYears = minusYears +" "+ oldyear;
 //        EmailSender.send("o.klymchuk@zhi.hsc.gov.ua");
 
-        String filename = "c:\\rsc1840\\Temp_rubin_Mounth.docx";
+        String filename = nameFileDoc.NameWeekFileDoc(tsc);
+//        String filename = "c:\\rsc1840\\Temp_rubin_Mounth.docx";
         String path = null;
         try {
             path =  createDoc.createDoc(reportData,minusYears, minusUA, monthUA, yearTxt, tsc, filename);
@@ -61,8 +63,4 @@ public class ReportServiceImpl implements ReportService {
 //        EmailFilename.send("o.klymchuk@zhi.hsc.gov.ua",filename);
     }
 
-    @Override
-    public void createWeekReport(LocalDate from, LocalDate to, String tsc) {
-
-    }
 }
