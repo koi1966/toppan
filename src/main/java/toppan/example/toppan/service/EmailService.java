@@ -19,6 +19,7 @@ public class EmailService {
         final String host = "10.6.1.1";
         Properties properties = System.getProperties();
         properties.setProperty("mail.smtp.host", host); //"mail.smtp.host"
+
         Session session = Session.getDefaultInstance(properties); // default session
 
         try {

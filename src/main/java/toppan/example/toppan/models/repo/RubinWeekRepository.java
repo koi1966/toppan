@@ -93,7 +93,7 @@ public interface RubinWeekRepository extends CrudRepository<Rubin_week, Long> {
     @Query(nativeQuery = true,
             value = "SELECT " +
                     "(SELECT sum(ry.week_appeal) from rubin_week ry where ry.pidrozdil = :tsc and ry.data_v >= :firstYear and ry.data_v <= :endDate) as year_appeal, " +
-                    "(SELECT sum(ri.week_issued) from rubin_week ri where ri.pidrozdil = :tsc and ri.data_v >= :firstYear and ri.data_v <= :endDate) as year_issued " +
+                    "(SELECT sum(ri.week_issued) from rubin_week ri where ri.pidrozdil = :tsc and ri.data_v >= :firstYear and ri.data_v <= :endDate) as year_issued, " +
                     "sum(week_appeal) as week_appeal, " +
                     "sum(week_issued) as week_issued, " +
                     "pidrozdil " +

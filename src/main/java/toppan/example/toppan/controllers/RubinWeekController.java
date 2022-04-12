@@ -184,47 +184,18 @@ class RubinWeekController {
 //        }
 
         log.info("Тижневий ЗВІТ ТСЦ (action=print), date from: {}, to: {}, tsc: {}", from, to, tsc);
-        reportService.createMonthlyReport(from, to, tsc);
+        reportService.createWeekReportTSCImp(from, to, tsc);
 
-        String rubinWekStr = rubinWeekRepository.setWeekPrint2022(from, to, firstYear, tsc);
-
-        boolean isEmpty = rubinWekStr == null || rubinWekStr.trim().length() == 0;
-        if (isEmpty) {
-            rubinWekStr = "0,0,0,0";
-        }
+//        String rubinWekStr = rubinWeekRepository.setWeekPrint2022(from, to, firstYear, tsc);
+//
+//        boolean isEmpty = rubinWekStr == null || rubinWekStr.trim().length() == 0;
+//        if (isEmpty) {
+//            rubinWekStr = "0,0,0,0";
+//        }
 
 //        rubinWekStr = rubinWekStr + ',' + data_end_str + "," + tsc_front + ',' + pidrozdilRepository.setEmailPidrozdil(tsc);
-        String filename;
-        switch (tsc) {
-            case "РСЦ 1840":
-//                System.out.println("РСЦ 1840");
-                filename = "c:/RSC1840/Temp_rubin_1840.docx";
-                break;
-            case "ТСЦ 1841":
-//                System.out.println("Тижневий ТСЦ 1841");
-                filename = "c:/RSC1840/Temp_rubin_1841.docx";
-                break;
-            case "ТСЦ 1842":
-//                System.out.println("Тижневий ТСЦ 1842");
-                filename = "c:/RSC1840/Temp_rubin_1842.docx";
-                break;
-            case "ТСЦ 1843":
-//                System.out.println("Тижневий ТСЦ 1843");
-                filename = "c:/RSC1840/Temp_rubin_1843.docx";
-                break;
-            case "ТСЦ 1844":
-//                System.out.println("Тижневий ТСЦ 1844");
-                filename = "c:/RSC1840/Temp_rubin_1844.docx";
-                break;
-            case "ТСЦ 1845":
-//                System.out.println("Тижневий ТСЦ 1845");
-                filename = "c:/RSC1840/Temp_rubin_1845.docx";
-                break;
-            default:
-//                System.out.println("Oooops, Тижневий  something wrong !");
-//                String setarator = File.separator;
-                filename = "C:\\" + "RSC1840" + "\\Temp_rubin.docx";
-        }
+//        String filename;
+
         return "redirect:/rubin/week/rubin-week-view";
     }
 

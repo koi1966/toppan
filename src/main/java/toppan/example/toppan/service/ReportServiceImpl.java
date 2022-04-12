@@ -1,5 +1,6 @@
 package toppan.example.toppan.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import toppan.example.toppan.createDoc.CreateDoc;
 import toppan.example.toppan.models.ReportData;
@@ -11,9 +12,11 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
 
+import static java.time.temporal.TemporalAdjusters.firstDayOfYear;
+
 
 @Service
-//@AllArgsConstructor
+@Slf4j   // Логер
 public class ReportServiceImpl implements ReportService {
 
     private final RubinWeekRepository rubinWeekRepository;
@@ -36,6 +39,7 @@ public class ReportServiceImpl implements ReportService {
         startDateOld = now.minusMonths(1).minusYears(1).with(TemporalAdjusters.firstDayOfMonth());
         endDateOld = now.minusMonths(1).minusYears(1).with(TemporalAdjusters.lastDayOfMonth());
         minusMount = now.minusMonths(1).with(TemporalAdjusters.lastDayOfMonth());
+
 
         ReportData reportData = new ReportData(rubinWeekRepository.getRubinDateTSC(from, to, startDateOld, endDateOld, tsc));
 
@@ -61,6 +65,15 @@ public class ReportServiceImpl implements ReportService {
 
         EmailService.send(pidrozdilRepository.setEmailPidrozdil(tsc), path, tsc);
 //        EmailFilename.send("o.klymchuk@zhi.hsc.gov.ua",filename);
+    }
+
+    @Override
+    public void createWeekReportTSCImp(LocalDate from, LocalDate to, String tsc) {
+        LocalDate firstYear = LocalDate.now().with(firstDayOfYear());
+        log.info("Тижневий ЗВІТ ТСЦ (action=print), date from: {}, to: {}, tsc: {}", from, to, tsc);
+        ReportData reportData = new ReportData(rubinWeekRepository.setWeekPrint2022(from, to, firstYear, tsc));
+        String fileNameDoc = nameFileDoc.NameWeekFileDoc(tsc);
+
     }
 
 }
