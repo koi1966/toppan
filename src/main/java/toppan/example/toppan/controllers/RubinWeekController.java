@@ -41,28 +41,17 @@ class RubinWeekController {
 
     private final RubinWeekRepository rubinWeekRepository;
     private final PidrozdilRepository pidrozdilRepository;
-//    private final CreateExcel createExcel;
-//    private final RubinYearRepository rubinYearRepository;
-//    private final RubinRepository rubinRepository;
-//    private final MonthRepository monthRepository;
-//    private final CreateDoc createDoc;
     private final ReportService reportService;
+    SimpleDateFormat sdf2;
+
+    {
+        sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+    }
 
     public RubinWeekController(RubinWeekRepository rubinWeekRepository, PidrozdilRepository pidrozdilRepository, CreateExcel createExcel, RubinYearRepository rubinYearRepository, RubinRepository rubinRepository, MonthRepository monthRepository, CreateDoc createDoc, ReportService reportService) {
         this.rubinWeekRepository = rubinWeekRepository;
         this.pidrozdilRepository = pidrozdilRepository;
         this.reportService = reportService;
-//        this.createExcel = createExcel;
-//        this.rubinYearRepository = rubinYearRepository;
-//        this.rubinRepository = rubinRepository;
-//        this.monthRepository = monthRepository;
-//        this.createDoc = createDoc;
-    }
-
-    @GetMapping("/rubin/week/rubin-week-view1") // тестовое окно
-    public String rubinWeekViewAll1() {
-
-        return "rubin/week/rubin-week-view1";
     }
 
     @GetMapping("/rubin/week/rubin-week-view")
@@ -101,7 +90,7 @@ class RubinWeekController {
                                  Model model) {
 
         List<Rubin_week> rubinList;
-        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+
         Date data_v = null;
         try {
             data_v = sdf2.parse(data_s);
@@ -147,16 +136,6 @@ class RubinWeekController {
                                   @RequestParam("data_vpo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to,
                                   @RequestParam("p_tsc") String tsc){
 
-//    @DateTimeFormat(pattern = "yyyy-MM-dd") // Тижневий ЗВІТ    ТСЦ
-
-//    public String rubinPrintWeekTSC(@RequestParam("data_v") String data_sart_str,
-//                                    @RequestParam("data_vpo") String data_end_str,
-//                                    @RequestParam("p_tsc") String tsc_front,
-//                                    Model model, HttpServletRequest request) {
-
-//        LocalDate firstYear = LocalDate.now().with(firstDayOfYear());
-
-
         log.info("Тижневий ЗВІТ ТСЦ (action=print), from: {}, to: {}, tsc: {}", from, to, tsc);
         reportService.createWeekReportTSCImp(from, to, tsc);
 
@@ -166,9 +145,6 @@ class RubinWeekController {
 //        if (isEmpty) {
 //            rubinWekStr = "0,0,0,0";
 //        }
-
-//        rubinWekStr = rubinWekStr + ',' + data_end_str + "," + tsc_front + ',' + pidrozdilRepository.setEmailPidrozdil(tsc);
-//        String filename;
 
         return "redirect:/rubin/week/rubin-week-view";
     }
@@ -231,7 +207,6 @@ class RubinWeekController {
         String[] str = rubinWekStr.split(",");
         EmailService.send(str[7], "c:/RSC1840/rubin.docx", tsc_front);
 
-//        *****************************************************************************************************
         return "redirect:/rubin/week/rubin-week-view";
     }
 
@@ -282,7 +257,7 @@ class RubinWeekController {
         filename = "c:/RSC1840/Rubin.docx";
 //        EmailFilename.send("it@zhi.hsc.gov.ua", filename);
         EmailService.send(str[6], filename, tsc_front);
-//        **************************************************************************************************************
+
         return "redirect:/rubin/week/rubin-week-view";
     }
 
@@ -297,7 +272,6 @@ class RubinWeekController {
     public String rubinAddWeek(HttpServletRequest request, Model model) {
 
         String ip_user = request.getRemoteAddr();//        вытягивает IP копма с которого вносят информацию
-//        ip_user="172.0.0.0";
         int end = UtilitesSting.ordinalIndexOf(ip_user, ".", 2);
 
         String ip = ip_user.substring(0, end);//        узнаел подсеть
