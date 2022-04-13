@@ -67,7 +67,7 @@ public class CreateDoc {
                         r.setText(text, 0);
                     }
                     if (text != null && text.contains("to")) {
-                        text = text.replace("to", to.format(DateTimeFormatter.ofPattern("dd.MMMM.yyyy")));
+                        text = text.replace("to", to.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
                         r.setText(text, 0);
                     }
                 }

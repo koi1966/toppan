@@ -40,7 +40,6 @@ public class ReportServiceImpl implements ReportService {
         endDateOld = now.minusMonths(1).minusYears(1).with(TemporalAdjusters.lastDayOfMonth());
 //        minusMount = now.minusMonths(1).with(TemporalAdjusters.lastDayOfMonth());
 
-
         ReportData reportData = new ReportData(rubinWeekRepository.getRubinDateTSC(from, to, startDateOld, endDateOld, tsc));
 
 //        int year = now.getYear();
@@ -54,7 +53,7 @@ public class ReportServiceImpl implements ReportService {
 //        minusYear = minusYear +" "+ oldYear;
 //        EmailSender.send("o.klymchuk@zhi.hsc.gov.ua");
 
-        String filename = nameFileDoc.NameWeekFileDoc(tsc);
+        String filename = nameFileDoc.NameMonthFileDoc(tsc);
 //        String filename = "c:\\rsc1840\\Temp_rubin_Mounth.docx";
         String path = null;
         try {

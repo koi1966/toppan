@@ -40,27 +40,27 @@ public class NameFileDoc {
         String filename;
         switch (tsc) {
             case "РСЦ 1840":
-                filename = "c:\\RSC1840\\Temp_rubin_1840.docx";
+                filename = "c:\\RSC1840\\Temp_rubin_Mounth_1840.docx";
                 break;
             case "ТСЦ 1841":
-                filename = "c:\\RSC1840\\Temp_rubin_1841.docx";
+                filename = "c:\\RSC1840\\Temp_rubin_Mounth_1841.docx";
                 break;
             case "ТСЦ 1842":
-                filename = "c:\\RSC1840\\Temp_rubin_1842.docx";
+                filename = "c:\\RSC1840\\Temp_rubin_Mounth_1842.docx";
                 break;
             case "ТСЦ 1843":
-                filename = "c:\\RSC1840\\Temp_rubin_1843.docx";
+                filename = "c:\\RSC1840\\Temp_rubin_Mounth_1843.docx";
                 break;
             case "ТСЦ 1844":
-                filename = "c:\\RSC1840\\Temp_rubin_1844.docx";
+                filename = "c:\\RSC1840\\Temp_rubin_Mounth_1844.docx";
                 break;
             case "ТСЦ 1845":
-                filename = "c:\\RSC1840\\Temp_rubin_1845.docx";
+                filename = "c:\\RSC1840\\Temp_rubin_Mounth_1845.docx";
                 break;
             default:
-                filename = "C:\\RSC1840\\Temp_rubin.docx";
+                filename = "C:\\RSC1840\\Temp_rubin_Mounth.docx";
         }
-        log.info("Взято фашд - Місячний ЗВІТ - tsc: {}", tsc);
+        log.info("Взято фаіл - Місячний ЗВІТ - {}", tsc);
         return filename;
     }
 }

@@ -154,7 +154,7 @@ class RubinWeekController {
 //                                    @RequestParam("p_tsc") String tsc_front,
 //                                    Model model, HttpServletRequest request) {
 
-        LocalDate firstYear = LocalDate.now().with(firstDayOfYear());
+//        LocalDate firstYear = LocalDate.now().with(firstDayOfYear());
 
 
         log.info("Тижневий ЗВІТ ТСЦ (action=print), from: {}, to: {}, tsc: {}", from, to, tsc);
