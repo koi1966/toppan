@@ -10,10 +10,12 @@ Statistics and analysis of the use of the Toppan CP500 printer.
 Як Java розробник я навчаюсь, а краще навчання - виконувати проєкт. 
 Я вигадав для себе три проєкти для навчаня з використанням баз даних. 
 
-Перший проєкт пробний - вивчання/використнням - statement = connectionSa.createStatement 
-з Tomcat та працюючою в нас Sybase Adaptive Server Enterpriser Enterpeyse.
+Перший проєкт пробний (https://github.com/koi1966/test.database.sybase) - 
+вивчання з використнням - statement = connectionSa.createStatement 
+з Tomcat та працюючою в нас Sybase Adaptive Server Enterpeyse.
 
-Реалізвую другий проєкт (toppan) - aвтоматизую деякі звітності по роботі вивчанню/використовую - spring-boot, hibernate, postgresql з відправкою звіту на Email. 
+Реалізвую другий проєкт (toppan - https://github.com/koi1966/toppan ) - aвтоматизую деякі звітності по роботі 
+вивчанню/використовую - spring-boot, hibernate, postgresql з відправкою звіту на Email. 
 Готовий працюючий проєкт, покращую .. виправляю створене мною за принципиам дизайну класів (S.O.L.I.D.)
 
 Комерційний досвід як Java розробника відсутній.

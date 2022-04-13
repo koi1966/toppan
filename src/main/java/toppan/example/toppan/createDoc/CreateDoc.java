@@ -7,10 +7,11 @@ import org.apache.poi.xwpf.usermodel.*;
 import org.springframework.stereotype.Component;
 import toppan.example.toppan.models.ReportData;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Component
@@ -26,7 +27,7 @@ public class CreateDoc {
 
 
 //    public void createDoc(ReportData reportData, String monthUA, String year, String tsc, String filename) throws IOException {
-    public String createDoc(ReportData reportData, String minusYears,String minusUA, String monthUA, String year, String tsc, String filename) throws IOException {
+    public String createDoc(ReportData reportData, String tsc, LocalDate to, String filename) throws IOException {
 //        String separator = File.separator;
 //        String path = "c:\\rsc1840\\Rubin"+tsc+".docx";
 //        String path = "c:\\rsc1840\\texst.txt";
@@ -58,11 +59,15 @@ public class CreateDoc {
                         r.setText(text, 0);
                     }
                     if (text != null && text.contains("dat")) {
-                        text = text.replace("dat", monthUA+" "+year);
+                        text = text.replace("dat", reportData.getMonthUA()+" "+reportData.getYearTxt());
                         r.setText(text, 0);
                     }
                     if (text != null && text.contains("dak")) {
-                        text = text.replace("dak", minusUA+" "+year);
+                        text = text.replace("dak", reportData.getMinusMonthUA()+" "+reportData.getYearTxt());
+                        r.setText(text, 0);
+                    }
+                    if (text != null && text.contains("to")) {
+                        text = text.replace("to", to.format(DateTimeFormatter.ofPattern("dd.MMMM.yyyy")));
                         r.setText(text, 0);
                     }
                 }
@@ -75,11 +80,11 @@ public class CreateDoc {
                         for (XWPFRun r : p.getRuns()) {
                             String text = r.getText(0);
                             if (text != null && text.contains("dak")) {
-                                text = text.replace("dak", minusUA+" "+year);
+                                text = text.replace("dak", reportData.getMinusMonthUA()+" "+reportData.getYearTxt());
                                 r.setText(text, 0);
                             }
                             if (text != null && text.contains("das")) {
-                                text = text.replace("das", minusYears);
+                                text = text.replace("das", reportData.getMinusYear());
                                 r.setText(text, 0);
                             }
                         }

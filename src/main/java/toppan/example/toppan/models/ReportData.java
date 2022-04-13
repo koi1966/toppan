@@ -25,9 +25,27 @@ public class ReportData {
      */
     private String issued;
     private String pidrozdilNumber;
+    /**
+    * Прошлий рік
+     */
+    private String minusYear;
+    /**
+     * Попередній місяць
+     */
+    private String minusMonthUA;
+    /**
+     * Місяць за номером
+     */
+    private String monthUA;
+    /**
+     * Рік
+     */
+    private String yearTxt;
 
     public ReportData(String reportData) {
         String[] strData = reportData.split(",");
+        LocalDate now = LocalDate.now();
+        LocalDate startDateOld, endDateOld, minusMount;
 
         requestOld = strData[0];
         issuedOld = strData[1];
@@ -35,22 +53,18 @@ public class ReportData {
         issued = strData[3];
         pidrozdilNumber = strData[4];
 
-        LocalDate now = LocalDate.now();
-        LocalDate startDateOld, endDateOld, minusMount;
         startDateOld = now.minusMonths(1).minusYears(1).with(TemporalAdjusters.firstDayOfMonth());
-        endDateOld = now.minusMonths(1).minusYears(1).with(TemporalAdjusters.lastDayOfMonth());
+//        endDateOld = now.minusMonths(1).minusYears(1).with(TemporalAdjusters.lastDayOfMonth());
         minusMount = now.minusMonths(1).with(TemporalAdjusters.lastDayOfMonth());
 
         int year = now.getYear();
-        int oldyear = startDateOld.getYear();
-        String yearTxt = Integer.toString(year);
+        int oldYear = startDateOld.getYear();
+        yearTxt = Integer.toString(year);
 
-        String monthUA = DateUtils.MonthNamUA.getNameMonth(now.getMonthValue());
-        String minusUA = DateUtils.MonthNamUA.getNameMonth(minusMount.getMonthValue());
-        String minusYears = DateUtils.MonthNamUA.getNameMonth(startDateOld.getMonthValue());
-        minusYears = minusYears +" "+ oldyear;
-
-
+        monthUA = DateUtils.MonthNamUA.getNameMonth(now.getMonthValue());
+        minusMonthUA = DateUtils.MonthNamUA.getNameMonth(minusMount.getMonthValue());
+        minusYear = DateUtils.MonthNamUA.getNameMonth(startDateOld.getMonthValue());
+        minusYear = minusYear.concat(" ")+ oldYear;
     }
 
 }

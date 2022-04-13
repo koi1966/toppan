@@ -38,27 +38,28 @@ public class ReportServiceImpl implements ReportService {
         LocalDate startDateOld, endDateOld, minusMount;
         startDateOld = now.minusMonths(1).minusYears(1).with(TemporalAdjusters.firstDayOfMonth());
         endDateOld = now.minusMonths(1).minusYears(1).with(TemporalAdjusters.lastDayOfMonth());
-        minusMount = now.minusMonths(1).with(TemporalAdjusters.lastDayOfMonth());
+//        minusMount = now.minusMonths(1).with(TemporalAdjusters.lastDayOfMonth());
 
 
         ReportData reportData = new ReportData(rubinWeekRepository.getRubinDateTSC(from, to, startDateOld, endDateOld, tsc));
 
-        int year = now.getYear();
-        int oldyear = startDateOld.getYear();
-
-        String yearTxt = Integer.toString(year);
-
-        String monthUA = DateUtils.MonthNamUA.getNameMonth(now.getMonthValue());
-        String minusUA = DateUtils.MonthNamUA.getNameMonth(minusMount.getMonthValue());
-        String minusYears = DateUtils.MonthNamUA.getNameMonth(startDateOld.getMonthValue());
-        minusYears = minusYears +" "+ oldyear;
+//        int year = now.getYear();
+//        int oldYear = startDateOld.getYear();
+//
+//        String yearTxt = Integer.toString(year);
+//
+//        String monthUA = DateUtils.MonthNamUA.getNameMonth(now.getMonthValue());
+//        String minusMonthUA = DateUtils.MonthNamUA.getNameMonth(minusMount.getMonthValue());
+//        String minusYear = DateUtils.MonthNamUA.getNameMonth(startDateOld.getMonthValue());
+//        minusYear = minusYear +" "+ oldYear;
 //        EmailSender.send("o.klymchuk@zhi.hsc.gov.ua");
 
         String filename = nameFileDoc.NameWeekFileDoc(tsc);
 //        String filename = "c:\\rsc1840\\Temp_rubin_Mounth.docx";
         String path = null;
         try {
-            path =  createDoc.createDoc(reportData,minusYears, minusUA, monthUA, yearTxt, tsc, filename);
+//            path =  createDoc.createDoc(reportData, minusYear, minusMonthUA, monthUA, yearTxt, tsc, filename);
+            path =  createDoc.createDoc(reportData, tsc, to, filename);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -74,6 +75,16 @@ public class ReportServiceImpl implements ReportService {
         ReportData reportData = new ReportData(rubinWeekRepository.setWeekPrint2022(from, to, firstYear, tsc));
         String fileNameDoc = nameFileDoc.NameWeekFileDoc(tsc);
 
+//        String fileNameDoc = "c:\\rsc1840\\Temp_rubin_Mounth.docx";
+        String path = null;
+        try {
+//            path =  createDoc.createDoc(reportData, minusYear, minusMonthUA, monthUA, yearTxt, tsc, filename);
+            path =  createDoc.createDoc(reportData, tsc, to, fileNameDoc);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        EmailService.send(pidrozdilRepository.setEmailPidrozdil(tsc), path, tsc);
     }
 
 }

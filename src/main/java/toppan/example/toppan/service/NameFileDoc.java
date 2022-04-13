@@ -32,7 +32,7 @@ public class NameFileDoc {
             default:
                 filename = "C:\\RSC1840\\Temp_rubin.docx";
         }
-        log.info("Взято фашд - Тижневий ЗВІТ - tsc: {}", tsc);
+        log.info("Взято файл - Тижневий ЗВІТ - tsc: {}", filename);
         return filename;
     }
 

@@ -28,7 +28,12 @@ public class DateUtils {
             }
             return null;
         }
+    }
 
+    public static String monthNamesUA(LocalDate now) {
+        String[] monthNamesUA = {"Січнь", "Лютий", "Березень", "Квітень", "Травень", "Липень", "Червень", "Серпень", "Вересень", "Жовтень", "Листопад", "Грудень"};
+//        String monthUA = monthNamesUA[now.getMonthValue() - 1];
+        return monthNamesUA[now.getMonthValue() - 1];
     }
 
     public static Date asDate(LocalDate localDate) {
@@ -46,15 +51,6 @@ public class DateUtils {
     public static LocalDateTime asLocalDateTime(Date date) {
         return Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDateTime();
     }
-
-    public static String monthNamesUA(LocalDate now) {
-
-        String[] monthNamesUA = {"Січнь", "Лютий", "Березень", "Квітень", "Травень", "Липень", "Червень", "Серпень", "Вересень", "Жовтень", "Листопад", "Грудень"};
-//        String monthUA = monthNamesUA[now.getMonthValue() - 1];
-        return monthNamesUA[now.getMonthValue() - 1];
-    }
-
-
 }
 
 //        LocalDateTime ldt1 = LocalDateTime.now();

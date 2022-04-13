@@ -141,12 +141,6 @@ class RubinWeekController {
     /**
      * Тижневий ЗВІТ    ТСЦ
      *
-     * @param data_sart_str
-     * @param data_end_str
-     * @param tsc_front
-     * @param model
-     * @param request
-     * @return
      */
     @PostMapping(value = "/rubin/week/rubin-week-view", params = "action=print")
     public String rubinPrintWeekTSC(@RequestParam("data_v") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
@@ -160,30 +154,10 @@ class RubinWeekController {
 //                                    @RequestParam("p_tsc") String tsc_front,
 //                                    Model model, HttpServletRequest request) {
 
-//        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
-//        Date data_sart = null;
-//        try {
-//            data_sart = sdf2.parse(data_sart_str);
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-
-//        Date data_end = null;
-//        try {
-//            data_end = sdf2.parse(data_end_str);
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
         LocalDate firstYear = LocalDate.now().with(firstDayOfYear());
-//        String firstYearStr =
-//        Date firstYear = null;
-//        try {
-//            firstYear = sdf2.parse(firstYearStr);
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
 
-        log.info("Тижневий ЗВІТ ТСЦ (action=print), date from: {}, to: {}, tsc: {}", from, to, tsc);
+
+        log.info("Тижневий ЗВІТ ТСЦ (action=print), from: {}, to: {}, tsc: {}", from, to, tsc);
         reportService.createWeekReportTSCImp(from, to, tsc);
 
 //        String rubinWekStr = rubinWeekRepository.setWeekPrint2022(from, to, firstYear, tsc);
@@ -201,11 +175,6 @@ class RubinWeekController {
 
     /**
      * Помісячний звіь ТСЦ
-     *
-     * @param from
-     * @param to
-     * @param tsc
-     * @return
      */
     @PostMapping(value = "/rubin/week/rubin-week-view", params = "action=print_month")
     public String rubinPrintMonth(@RequestParam("data_v") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
