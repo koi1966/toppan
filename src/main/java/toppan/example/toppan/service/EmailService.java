@@ -11,12 +11,11 @@ import javax.mail.internet.MimeMultipart;
 import java.util.Properties;
 
 public class EmailService {
-    public static void send(String to, String filename,String tsc) {
+    public static void send(String to, String filename, String tsc) {
 
-//            final String toto = "o.klymchuk@zhi.hsc.gov.ua";       // sender email
         final String from = "rubin@zhi.hsc.gov.ua";       // receiver email
-//        final String host = "10.30.1.1";            // mail server host
-        final String host = "10.6.1.1";
+        final String host = "10.30.1.1";            // mail server host
+//        final String host = "10.6.1.1";
         Properties properties = System.getProperties();
         properties.setProperty("mail.smtp.host", host); //"mail.smtp.host"
 
@@ -30,14 +29,14 @@ public class EmailService {
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
             // Create a multipar message
             Multipart multipart = new MimeMultipart();
-            message.setSubject("Звіт по рубину - "+tsc); // subject line
+            message.setSubject("Звіт по рубину надіслано - "+tsc); // subject line
 
             MimeBodyPart messageBodyPart = new MimeBodyPart();
 //                String filename = "rubin.xlsx";
-            String filename1 = "c:/rsc1840/Rubin.docx";
-            DataSource source = new FileDataSource(filename1);
+//            String filename1 = "c:/rsc1840/Rubin.docx";
+            DataSource source = new FileDataSource(filename);
             messageBodyPart.setDataHandler(new DataHandler(source));
-            messageBodyPart.setFileName(filename1);
+            messageBodyPart.setFileName(filename);
             multipart.addBodyPart(messageBodyPart);
             // Send the complete message parts
             message.setContent(multipart);

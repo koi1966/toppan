@@ -95,8 +95,8 @@ public class CreateDoc {
 //        String separator = File.separator;
 
 //        String path = "c:" + separator + "rsc1840" + separator + "Rubin"+tsc+".docx";
-//        String path = "c:\\rsc1840\\Rubin"+tsc+".docx";
-        String path = "c:/rsc1840/Rubin.docx";
+        String path = "c:/rsc1840/Rubin"+tsc+".docx";
+//        String path = "c:/rsc1840/Rubin.docx";
         String pathOut = path.replaceAll("(?<! ) (?! )", "_");
         document.write(new FileOutputStream(pathOut));
         document.close();
