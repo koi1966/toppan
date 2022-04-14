@@ -51,10 +51,13 @@ public class ReportData {
         issuedOld = strData[1];
         request = strData[2];
         issued = strData[3];
-        pidrozdilNumber = strData[4];
+        if (strData.length < 5) {
+            pidrozdilNumber ="РСЦ 1840";
+        } else {
+            pidrozdilNumber = strData[4];
+        }
 
         startDateOld = now.minusMonths(1).minusYears(1).with(TemporalAdjusters.firstDayOfMonth());
-//        endDateOld = now.minusMonths(1).minusYears(1).with(TemporalAdjusters.lastDayOfMonth());
         minusMount = now.minusMonths(1).with(TemporalAdjusters.lastDayOfMonth());
 
         int year = now.getYear();

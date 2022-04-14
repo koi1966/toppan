@@ -39,7 +39,6 @@ public class RubinController {
     private final RubinWeekRepository rubinWeekRepository;
     private final CreateExcel createExcel;
     private final CreateExilMonth createExilMonth;
-//    private final CreateDoc createDoc;
 
     public RubinController(RubinRepository rubinRepository, PidrozdilRepository pidrozdilRepository, RubinWeekRepository rubinWeekRepository, CreateExcel createExcel, CreateExilMonth createExilMonth) {
         this.rubinRepository = rubinRepository;
@@ -47,29 +46,19 @@ public class RubinController {
         this.rubinWeekRepository = rubinWeekRepository;
         this.createExcel = createExcel;
         this.createExilMonth = createExilMonth;
-//        this.createDoc = createDoc;
     }
 
     @GetMapping("/rubin/rubin-view")
     public String rubinview(Model model) {
 //      находим и передаем все записи на вюшку
-        String date_s = LocalDate.now().toString(); // берем локальную дату переводим в String
-
-        Date data_v = null;
-        try {
-            data_v = new SimpleDateFormat("yyyy-MM-dd").parse(date_s);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        List<Rubin> rubinList = rubinRepository.setListDateRubin(data_v);
+        List<Rubin> rubinList = rubinRepository.setListDateRubin(LocalDate.now());
         model.addAttribute("rubinList", rubinList);
-        model.addAttribute("dat", data_v);
+        model.addAttribute("dat", LocalDate.now());
         return "rubin/rubin-view";
     }
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @PostMapping("/rubin/rubin-view")
-    public String rubinViewData(@RequestParam("data_v") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date data_v, Model model) {
+    public String rubinViewData(@RequestParam("data_v") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate data_v, Model model) {
 
         List<Rubin> rubinList = rubinRepository.setListDateRubin(data_v);
         model.addAttribute("rubinList", rubinList);
@@ -180,10 +169,10 @@ public class RubinController {
         LocalDate now = LocalDate.now();
         String startDate = now.minusMonths(1).with(TemporalAdjusters.firstDayOfMonth()).format(format);
         String endDate = now.minusMonths(1).with(TemporalAdjusters.lastDayOfMonth()).format(format);
-        String startPreviousYear = now.minusMonths(1).minusYears(1).with(TemporalAdjusters.firstDayOfMonth()).format(format);
-        String endPreviousYear = now.minusMonths(1).minusYears(1).with(TemporalAdjusters.lastDayOfMonth()).format(format);
+//        String startPreviousYear = now.minusMonths(1).minusYears(1).with(TemporalAdjusters.firstDayOfMonth()).format(format);
+//        String endPreviousYear = now.minusMonths(1).minusYears(1).with(TemporalAdjusters.lastDayOfMonth()).format(format);
 // начало року  01.01.2021
-        String startYear = now.withDayOfMonth(01).withMonth(01).with(TemporalAdjusters.firstDayOfMonth()).format(format);
+//        String startYear = now.withDayOfMonth(01).withMonth(01).with(TemporalAdjusters.firstDayOfMonth()).format(format);
 
         model.addAttribute("startDate", startDate);
         model.addAttribute("endDate", endDate);
@@ -228,26 +217,26 @@ public class RubinController {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        String rubinStr = rubinWeekRepository.setRubinDate(date_start, date_end, startDateOld, endDateOld);
+//        String rubinStr = rubinWeekRepository.setRubinDate(date_start, date_end, startDateOld, endDateOld);
 
         LocalDate localDate = date_end.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         int year = localDate.getYear();
         int month = localDate.getMonthValue();
 //        int day   = localDate.getDayOfMonth();
 
-        rubinStr = rubinStr + ',' + "(за " + String.valueOf(month) + "." + String.valueOf(year) + " )";
-        String[] str = rubinStr.split(",");
+//        rubinStr = rubinStr + ',' + "(за " + String.valueOf(month) + "." + String.valueOf(year) + " )";
+//        String[] str = rubinStr.split(",");
 //        model.addAttribute("dat", data_v);
-        try {
-            createExilMonth.CreateMonth(rubinStr);//  Внесение полученной информации в ексл и отправка его на почту
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            createExilMonth.CreateMonth(rubinStr);//  Внесение полученной информации в ексл и отправка его на почту
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 //        EmailSender.send("o.klymchuk@zhi.hsc.gov.ua");
         String filename = "c:/RSC1840/rubin.docx";
 
-        EmailSender.send(str[6]);
-        EmailService.send(str[6], filename, "TSC");
+//        EmailSender.send(str[6]);
+//        EmailService.send(str[6], filename, "TSC");
 //        EmailSender.send("o.klymchuk@zhi.hsc.gov.ua");
 //        EmailFilename.send("o.klymchuk@zhi.hsc.gov.ua",filename);
         return "redirect:/";
