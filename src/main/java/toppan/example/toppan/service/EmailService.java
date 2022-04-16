@@ -24,7 +24,7 @@ public class EmailService {
         try {
             MimeMessage message = new MimeMessage(session); // email message
             message.setFrom(new InternetAddress(from)); // setting header fields
-            to = "o.klymchuk@zhi.hsc.gov.ua";
+//            to = "o.klymchuk@zhi.hsc.gov.ua";
 
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
             // Create a multipar message
@@ -32,8 +32,7 @@ public class EmailService {
             message.setSubject("Звіт по рубину надіслано - "+tsc); // subject line
 
             MimeBodyPart messageBodyPart = new MimeBodyPart();
-//                String filename = "rubin.xlsx";
-//            String filename1 = "c:/rsc1840/Rubin.docx";
+
             DataSource source = new FileDataSource(filename);
             messageBodyPart.setDataHandler(new DataHandler(source));
             messageBodyPart.setFileName(filename);
