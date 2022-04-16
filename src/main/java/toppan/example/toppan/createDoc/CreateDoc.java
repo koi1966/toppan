@@ -42,13 +42,13 @@ public class CreateDoc {
         List<XWPFParagraph> list = document.getParagraphs();
         //Получить все таблицы
         List<XWPFTable> tables = document.getTables();
-        //  ккккккккккккккккккккккккккккккккккккккккккккк
+
         tableRowOne.getCell(2).setText(reportData.getRequestOld());
         tableRowOne.getCell(3).setText(reportData.getRequest());
         tableRowOne = table.getRow(2);
         tableRowOne.getCell(2).setText(reportData.getIssuedOld());
         tableRowOne.getCell(3).setText(reportData.getIssued());
-//  ккккккккккккккккккккккккккккккккккккккккккккк
+
         for (XWPFParagraph p : document.getParagraphs()) {
             List<XWPFRun> runs = p.getRuns();
             if (runs != null) {
@@ -95,7 +95,7 @@ public class CreateDoc {
 //        String separator = File.separator;
 
 //        String path = "c:" + separator + "rsc1840" + separator + "Rubin"+tsc+".docx";
-        String path = "c:/rsc1840/Rubin"+tsc+".docx";
+        String path = "c:\\rsc1840\\Rubin"+tsc+".docx";
 //        String path = "c:/rsc1840/Rubin.docx";
         String pathOut = path.replaceAll("(?<! ) (?! )", "_");
         document.write(new FileOutputStream(pathOut));
