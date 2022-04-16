@@ -102,7 +102,7 @@ public class CreateDoc {
 
 //        String path = "c:" + separator + "rsc1840" + separator + "Rubin"+tsc+".docx";
         String filOutTsc = nameFileDoc.NameFileOut(tsc);
-        String path = "c:\\rsc1840\\Rubin"+filOutTsc+".docx";
+        String path = "c:\\RSC1840\\Rubin"+filOutTsc+".docx";
 //        String path = "c:/rsc1840/Rubin.docx";
         String pathOut = path.replaceAll("(?<! ) (?! )", "_");
         document.write(new FileOutputStream(pathOut));

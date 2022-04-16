@@ -37,35 +37,28 @@ public class NameFileDoc {
     }
 
     public String NameMonthFileDoc(String tsc){
-        String filename,filenameOut;
+        String filename;
         switch (tsc) {
             case "РСЦ 1840":
                 filename = "c:\\RSC1840\\Temp_rubin_Mounth_1840.docx";
-                filenameOut = "1840";
                 break;
             case "ТСЦ 1841":
                 filename = "c:\\RSC1840\\Temp_rubin_Mounth_1841.docx";
-                filenameOut = "1841";
                 break;
             case "ТСЦ 1842":
                 filename = "c:\\RSC1840\\Temp_rubin_Mounth_1842.docx";
-                filenameOut = "1842";
                 break;
             case "ТСЦ 1843":
                 filename = "c:\\RSC1840\\Temp_rubin_Mounth_1843.docx";
-                filenameOut = "1843";
                 break;
             case "ТСЦ 1844":
                 filename = "c:\\RSC1840\\Temp_rubin_Mounth_1844.docx";
-                filenameOut = "1844";
                 break;
             case "ТСЦ 1845":
                 filename = "c:\\RSC1840\\Temp_rubin_Mounth_1845.docx";
-                filenameOut = "1845";
                 break;
             default:
                 filename = "C:\\RSC1840\\Temp_rubin_Mounth.docx";
-                filenameOut = "184x";
         }
         log.info("Взято фаіл - Місячний ЗВІТ - {}", tsc);
         return filename;
@@ -95,7 +88,6 @@ public class NameFileDoc {
             default:
                 filenameOut = "184x";
         }
-        log.info("Взято фаіл - Місячний ЗВІТ - {}", tsc);
         return filenameOut;
     }
 }
