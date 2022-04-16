@@ -41,6 +41,8 @@ public class ReportData {
      * Рік
      */
     private String yearTxt;
+//    private String filenameIn;
+//    private String filenameOut;
 
     public ReportData(String reportData) {
         String[] strData = reportData.split(",");
@@ -68,6 +70,7 @@ public class ReportData {
         minusMonthUA = DateUtils.MonthNamUA.getNameMonth(minusMount.getMonthValue());
         minusYear = DateUtils.MonthNamUA.getNameMonth(startDateOld.getMonthValue());
         minusYear = minusYear.concat(" ")+ oldYear;
+
     }
 
 }

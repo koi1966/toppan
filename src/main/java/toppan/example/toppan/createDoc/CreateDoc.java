@@ -6,6 +6,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.xwpf.usermodel.*;
 import org.springframework.stereotype.Component;
 import toppan.example.toppan.models.ReportData;
+import toppan.example.toppan.service.NameFileDoc;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -16,6 +17,12 @@ import java.util.List;
 
 @Component
 public class CreateDoc {
+    public final NameFileDoc nameFileDoc;
+
+    public CreateDoc(NameFileDoc nameFileDoc) {
+        this.nameFileDoc = nameFileDoc;
+    }
+
 
     private static HSSFCellStyle createStyleForTitle(HSSFWorkbook workbook) {
         HSSFFont font = workbook.createFont();
@@ -92,10 +99,10 @@ public class CreateDoc {
                 }
             }
         }
-//        String separator = File.separator;
 
 //        String path = "c:" + separator + "rsc1840" + separator + "Rubin"+tsc+".docx";
-        String path = "c:\\rsc1840\\Rubin"+tsc+".docx";
+        String filOutTsc = nameFileDoc.NameFileOut(tsc);
+        String path = "c:\\rsc1840\\Rubin"+filOutTsc+".docx";
 //        String path = "c:/rsc1840/Rubin.docx";
         String pathOut = path.replaceAll("(?<! ) (?! )", "_");
         document.write(new FileOutputStream(pathOut));
