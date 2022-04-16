@@ -12,16 +12,16 @@ import java.util.List;
 
 public class filePatch {
     public static void main(String[] args) throws IOException {
-        String string;
-
-        File file = new File(new File("Rubin.doc").getAbsolutePath());
-        System.out.println(file);
-
-        try {
-            RandomAccessFile randomAccessFile = new RandomAccessFile(file, "Rubin1841.docx");
-            string = randomAccessFile.toString();
-            randomAccessFile.close();
-            System.out.print(string);
-        } catch (FileNotFoundException ex) {}
+//        String string;
+//
+//        File file = new File(new File("Rubin.doc").getAbsolutePath());
+//        System.out.println(file);
+//
+//        try {
+//            RandomAccessFile randomAccessFile = new RandomAccessFile(file, "Rubin1841.docx");
+//            string = randomAccessFile.toString();
+//            randomAccessFile.close();
+//            System.out.print(string);
+//        } catch (FileNotFoundException ex) {}
     }
 }
