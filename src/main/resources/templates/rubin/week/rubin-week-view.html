@@ -63,11 +63,21 @@
             <br>
             <div class="col-lg-3" th:object="${pidrozdilList}">
                 <select required size="1" name="p_tsc" class="form-control" id="p_tsc">
-                    <option th:value="${p_tsc}">Виберіть підрозділ</option>
+<!--                    <option th:value="${p_tsc}">Виберіть підрозділ</option>-->
 
                     <option th:each="tsc:${pidrozdilList}"
                             th:value="${tsc.pidrozdil}"
                             th:text="${tsc.pidrozdil}">
+                    </option>
+                </select><br>
+            </div><br>
+            <div class="col-lg-3" th:object="${pidrozdilList}">
+                <select required size="1" name="etsc" class="form-control" id="etsc">
+                    <!--                    <option th:value="${p_tsc}">Виберіть підрозділ</option>-->
+
+                    <option th:each="tsc:${pidrozdilList}"
+                            th:value="${tsc.email}"
+                            th:text="${tsc.email}">
                     </option>
                 </select><br>
             </div>

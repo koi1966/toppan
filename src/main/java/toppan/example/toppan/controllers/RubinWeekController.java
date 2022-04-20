@@ -11,12 +11,10 @@ import toppan.example.toppan.createDoc.CreateExcel;
 import toppan.example.toppan.models.Pidrozdil;
 import toppan.example.toppan.models.Rubin_week;
 import toppan.example.toppan.models.repo.*;
-import toppan.example.toppan.service.EmailService;
 import toppan.example.toppan.service.ReportService;
 import toppan.example.toppan.utils.UtilitesSting;
 
 import javax.servlet.http.HttpServletRequest;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -30,7 +28,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static java.time.DayOfWeek.SUNDAY;
-import static java.time.temporal.TemporalAdjusters.firstDayOfYear;
 import static java.time.temporal.TemporalAdjusters.previous;
 
 @Slf4j   // Логер
@@ -108,11 +105,11 @@ class RubinWeekController {
     @PostMapping(value = "/rubin/week/rubin-week-view", params = "action=print")
     public String rubinPrintWeekTSC(@RequestParam("data_v") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
                                   @RequestParam("data_vpo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to,
-                                  @RequestParam("p_tsc") String tsc){
-
+                                  @RequestParam("p_tsc") String tsc,
+                                    @RequestParam("etsc") String etsc){
+        String em = etsc;
         log.info("Тижневий ЗВІТ ТСЦ (action=print), from: {}, to: {}, tsc: {}", from, to, tsc);
-        reportService.createWeekReportTSCImp(from, to, tsc);
-
+        reportService.createWeekReportTSC(from, to, tsc);
 //        String rubinWekStr = rubinWeekRepository.setWeekPrint2022(from, to, firstYear, tsc);
 //
 //        boolean isEmpty = rubinWekStr == null || rubinWekStr.trim().length() == 0;
@@ -137,11 +134,6 @@ class RubinWeekController {
 
     /**
      * Недільний звіт ТЦС
-     *
-     * @param data_sart_str
-     * @param data_end_str
-     * @param tsc_front
-     * @return
      */
     @PostMapping(value = "/rubin/week/rubin-week-view", params = "action=print_week_rsc")
     public String rubunPrintWeekRSC(@RequestParam("data_v") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,

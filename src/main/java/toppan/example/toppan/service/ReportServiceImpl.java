@@ -58,7 +58,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public void createWeekReportTSCImp(LocalDate from, LocalDate to, String tsc) {
+    public void createWeekReportTSC(LocalDate from, LocalDate to, String tsc) {
         LocalDate firstYear = LocalDate.now().with(firstDayOfYear());
 
         ReportData reportData;
@@ -82,5 +82,7 @@ public class ReportServiceImpl implements ReportService {
 
         EmailService.send(pidrozdilRepository.setEmailPidrozdil(tsc), path, tsc);
     }
+
+
 
 }
