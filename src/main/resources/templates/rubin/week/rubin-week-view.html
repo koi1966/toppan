@@ -16,7 +16,7 @@
 
         .th1, .td1 { /* ячейки таблиці */
             border: 1px solid black; /* Параметры рамки */
-            text-align: center ; /* по центру блока */
+            text-align: center; /* по центру блока */
             /*margin:0px;*/
             background: #b3b3ee;
             /*  padding: -5px;  !* поля вокруг текста *!*/
@@ -38,6 +38,7 @@
             /*border-spacing: 10px 30px;*/
             border: 1px solid red;
         }
+
         .tab2 {
             border-collapse: collapse; /* Убираем двойные линии между ячейками */
             width: 50%;
@@ -63,14 +64,15 @@
             <br>
             <div class="col-lg-3" th:object="${pidrozdilList}">
                 <select required size="1" name="p_tsc" class="form-control" id="p_tsc">
-<!--                    <option th:value="${p_tsc}">Виберіть підрозділ</option>-->
+                    <!--                    <option th:value="${p_tsc}">Виберіть підрозділ</option>-->
 
                     <option th:each="tsc:${pidrozdilList}"
                             th:value="${tsc.pidrozdil}"
                             th:text="${tsc.pidrozdil}">
                     </option>
                 </select><br>
-            </div><br>
+            </div>
+            <br>
             <div class="col-lg-3" th:object="${pidrozdilList}">
                 <select required size="1" name="etsc" class="form-control" id="etsc">
                     <!--                    <option th:value="${p_tsc}">Виберіть підрозділ</option>-->
@@ -87,17 +89,18 @@
             <button type="submit" class="btn btn-success" name="action" value="print">Тижневий звіт</button>
             <button type="submit" class="btn btn-success" name="action" value="print_month">Помісячний звіт</button>
 
-<!--            <button type="submit" class="btn btn-success" name="action" value="print_week_rsc">Тижневий, звіт РСЦ-->
-<!--            </button>-->
-<!--            <button type="submit" class="btn btn-success" name="action" value="print_month_rsc">Помісячний, звіт РСЦ-->
-<!--            </button>-->
+            <!--            <button type="submit" class="btn btn-success" name="action" value="print_week_rsc">Тижневий, звіт РСЦ-->
+            <!--            </button>-->
+            <!--            <button type="submit" class="btn btn-success" name="action" value="print_month_rsc">Помісячний, звіт РСЦ-->
+            <!--            </button>-->
 
             <table>
-                <tr >
+                <tr>
                     <th class="th1">
-                        <a class="textcolor" th:text="${' Загалом - звернень : ' +week_appeal + ' виданих : '+week_issued }">user</a>
+                        <a class="textcolor"
+                           th:text="${' Загалом - звернень : ' +week_appeal + ' виданих : '+week_issued }">user</a>
                     </th>
-<!--                    <th class="th1">Д а т а    </th>-->
+                    <!--                    <th class="th1">Д а т а    </th>-->
                 </tr>
             </table>
         </form>
@@ -110,7 +113,7 @@
             <!--            class="alert alert-info mt-2"-->
             <table class="tab1">
                 <tr>
-                    <th class="th1"> Т С Ц </th>
+                    <th class="th1"> Т С Ц</th>
                     <th class="th1">Д а т а</th>
                     <th class="th1">Звернень за день</th>
                     <th class="th1">Виданих за день</th>
@@ -123,7 +126,7 @@
                     <td class="td1">
                         <a th:href="@{/rubin/week/{id}(id=${rubin.id})}"
                            th:text="${#temporals.format(rubin.getData(),'dd.MM.yyyy')}">user</a>
-<!--                           th:text="${rubin.getData_v()}"-->
+                        <!--                           th:text="${rubin.getData_v()}"-->
                     </td>
                     <td class="td1">
                         <a th:text="${rubin.week_appeal}">user</a>

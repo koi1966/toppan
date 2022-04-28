@@ -1,14 +1,13 @@
 package toppan.example.toppan.service;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 @Slf4j   // Логер
 @Service
 public class NameFileDoc {
 
-    public String NameWeekFileDoc(String tsc){
+    public String NameWeekFileDoc(String tsc) {
         String filename;
         switch (tsc) {
             case "РСЦ 1840":
@@ -36,7 +35,7 @@ public class NameFileDoc {
         return filename;
     }
 
-    public String NameMonthFileDoc(String tsc){
+    public String NameMonthFileDoc(String tsc) {
         String filename;
         switch (tsc) {
             case "РСЦ 1840":
@@ -64,7 +63,7 @@ public class NameFileDoc {
         return filename;
     }
 
-    public String NameFileOut(String tsc){
+    public String NameFileOut(String tsc) {
         String filenameOut;
         switch (tsc) {
             case "РСЦ 1840":

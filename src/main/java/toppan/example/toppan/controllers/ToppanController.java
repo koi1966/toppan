@@ -36,7 +36,7 @@ public class ToppanController {
     }
 
     @PostMapping("/printer/toppan-add")
-    public String addToppan(@RequestParam String sn, @RequestParam String datawork ,@RequestParam String completeness, @RequestParam String code, @RequestParam String pidrozdil, Model model) {
+    public String addToppan(@RequestParam String sn, @RequestParam String datawork, @RequestParam String completeness, @RequestParam String code, @RequestParam String pidrozdil, Model model) {
         Toppan top = new Toppan(sn, datawork, completeness, code, pidrozdil);
         //  request.getRemoteAddr()  -  вытягивает IP копма с которого вносят информацию
         toppanRepository.save(top);
@@ -51,7 +51,7 @@ public class ToppanController {
 
     @GetMapping("/printer/Total_Count")
     public String TotalCountAdd(Model model) {
-        return"printer/Total_Count";
+        return "printer/Total_Count";
     }
 
 }

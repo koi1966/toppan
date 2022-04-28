@@ -12,7 +12,6 @@ import toppan.example.toppan.models.Rubin;
 import toppan.example.toppan.models.repo.PidrozdilRepository;
 import toppan.example.toppan.models.repo.RubinRepository;
 import toppan.example.toppan.models.repo.RubinWeekRepository;
-import toppan.example.toppan.service.EmailService;
 import toppan.example.toppan.utils.EmailSender;
 import toppan.example.toppan.utils.UtilitesSting;
 
@@ -93,7 +92,7 @@ public class RubinController {
         Rubin rubin = new Rubin();
         rubin.setPidrozdil(tsc.getPidrozdil());
         rubin.setData_v(instant.atZone(defaultZoneId).toLocalDate());
-        model.addAttribute("rubin", rubin);
+//        model.addAttribute("rubin", rubin);
         return "rubin/rubin-add";
     }
 

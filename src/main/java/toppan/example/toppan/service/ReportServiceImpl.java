@@ -22,6 +22,7 @@ public class ReportServiceImpl implements ReportService {
     private final CreateDoc createDoc;
     private final PidrozdilRepository pidrozdilRepository;
     private final NameFileDoc nameFileDoc;
+
     // Alt + Enter - вызывает конструктор
 //    String separator = File.separator;
     public ReportServiceImpl(RubinWeekRepository rubinWeekRepository, CreateDoc createDoc, PidrozdilRepository pidrozdilRepository, NameFileDoc nameFileDoc) {
@@ -34,11 +35,11 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public void createMonthlyReport(LocalDate from, LocalDate to, String tsc) {
         LocalDate now = LocalDate.now();
-        LocalDate startDateOld, endDateOld, minusMount;
+        LocalDate startDateOld, endDateOld;
         startDateOld = now.minusMonths(1).minusYears(1).with(TemporalAdjusters.firstDayOfMonth());
         endDateOld = now.minusMonths(1).minusYears(1).with(TemporalAdjusters.lastDayOfMonth());
         ReportData reportData;
-        if (tsc.equals("РСЦ 1840")){
+        if (tsc.equals("РСЦ 1840")) {
             log.info("Помісячний звіт РСЦ, date from: {}, to: {}, tsc: {}", from, to, tsc);
             reportData = new ReportData(rubinWeekRepository.setRubinDate(from, to, startDateOld, endDateOld));
         } else {
@@ -50,7 +51,7 @@ public class ReportServiceImpl implements ReportService {
 
         String path = null;
         try {
-            path =  createDoc.createDoc(reportData, tsc, to, filename);
+            path = createDoc.createDoc(reportData, tsc, to, filename);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -62,7 +63,7 @@ public class ReportServiceImpl implements ReportService {
         LocalDate firstYear = LocalDate.now().with(firstDayOfYear());
 
         ReportData reportData;
-        if (tsc.equals("РСЦ 1840")){
+        if (tsc.equals("РСЦ 1840")) {
             log.info("Тижневий ЗВІТ РСЦ, date from: {}, to: {}, tsc: {}", from, to, tsc);
             reportData = new ReportData(rubinWeekRepository.setWeekPrintRSC(from, to, firstYear));
         } else {
@@ -75,14 +76,13 @@ public class ReportServiceImpl implements ReportService {
         String path = null;
         try {
 //            path =  createDoc.createDoc(reportData, minusYear, minusMonthUA, monthUA, yearTxt, tsc, filename);
-            path =  createDoc.createDoc(reportData, tsc, to, fileNameDoc);
+            path = createDoc.createDoc(reportData, tsc, to, fileNameDoc);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         EmailService.send(pidrozdilRepository.setEmailPidrozdil(tsc), path, tsc);
     }
-
 
 
 }

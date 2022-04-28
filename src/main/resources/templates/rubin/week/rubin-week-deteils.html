@@ -16,12 +16,13 @@
         <h3 th:text="${rwd.pidrozdil + ' . . . . .' + rwd.data}"></h3>
         <p th:text="${'звернень за день :..' + rwd.week_appeal}"></p>
         <p th:text="${'виданих  за день :..' + rwd.week_issued}"></p>
-<!--        <a th:href="@{'/rubin/week/'+ ${rwd.id} + '/update'" role="button" class="btn btn-warning">Змінита</a>-->
-<!--        <a th:href="@{'/category/edit/' + ${category.id}}">view</a>-->
+        <!--        <a th:href="@{'/rubin/week/'+ ${rwd.id} + '/update'" role="button" class="btn btn-warning">Змінита</a>-->
+        <!--        <a th:href="@{'/category/edit/' + ${category.id}}">view</a>-->
 
-        <a th:href="'/rubin/week/'+ ${rwd.id} +'/update'" class="btn btn-warning" aria-pressed="false" >Змінити</a>
-        <a th:href="'/rubin/week/'+ ${rwd.id} +'/remove'" class="btn btn-warning" aria-pressed="false" disabled>Видалити</a>
-<!--        <a onclick="window.open('ms-excel:ofe|u|http://localhost/iis-server/test.xlsx')"> Open Excel </a>-->
+        <a th:href="'/rubin/week/'+ ${rwd.id} +'/update'" class="btn btn-warning" aria-pressed="false">Змінити</a>
+        <a th:href="'/rubin/week/'+ ${rwd.id} +'/remove'" class="btn btn-warning" aria-pressed="false"
+           disabled>Видалити</a>
+        <!--        <a onclick="window.open('ms-excel:ofe|u|http://localhost/iis-server/test.xlsx')"> Open Excel </a>-->
     </div>
 </div>
 

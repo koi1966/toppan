@@ -100,13 +100,12 @@ class RubinWeekController {
 
     /**
      * Тижневий ЗВІТ    ТСЦ
-     *
      */
     @PostMapping(value = "/rubin/week/rubin-week-view", params = "action=print")
     public String rubinPrintWeekTSC(@RequestParam("data_v") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
-                                  @RequestParam("data_vpo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to,
-                                  @RequestParam("p_tsc") String tsc,
-                                    @RequestParam("etsc") String etsc){
+                                    @RequestParam("data_vpo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to,
+                                    @RequestParam("p_tsc") String tsc,
+                                    @RequestParam("etsc") String etsc) {
         String em = etsc;
         log.info("Тижневий ЗВІТ ТСЦ (action=print), from: {}, to: {}, tsc: {}", from, to, tsc);
         reportService.createWeekReportTSC(from, to, tsc);
