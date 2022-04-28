@@ -219,6 +219,7 @@ class RubinWeekController {
         Date date = new Date();
         ZoneId defaultZoneId = ZoneId.systemDefault();//        //Getting the default zone id
         Instant instant = date.toInstant();//Converting the date to Instant
+
         Rubin_week rubin_week = new Rubin_week();
         rubin_week.setPidrozdil(pidrozdil);
         rubin_week.setData(instant.atZone(defaultZoneId).toLocalDate());

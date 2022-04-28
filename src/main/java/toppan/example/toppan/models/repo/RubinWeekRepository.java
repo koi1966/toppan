@@ -21,15 +21,11 @@ public interface RubinWeekRepository extends CrudRepository<Rubin_week, Long> {
     List<Rubin_week> setListDateRubinWeek(@Param("startDate") LocalDate data_v,
                                           @Param("endDate") LocalDate data_last,
                                           @Param("tsc") String tsc);
-//  List<Rubin_week> rubinList = rubinWeekRepository.setListDateRubinWeek(dat_f, data_v, tsc);
-
-    //  List<Rubin_week> rubinList = rubinWeekRepository.getAllByDataBetweenAndPidrozdil(thisPastSunday, today, tsc, Sort.by("pidrozdil").and(Sort.by("data")));
     List<Rubin_week> getAllByDataBetweenAndPidrozdilPidrozdil(LocalDate data, LocalDate data2, String pidrozdil, Sort sort);
 
     //   Помісячний звіт РСЦ
     //   обробка - null
 //    SELECT coalesce(SUM(week_appeal),0) AS week_appeal FROM rubin_week WHERE data_v <= '01.10.2021'
-//
     @Query(nativeQuery = true,
             value = "SELECT " +
                     "(SELECT coalesce(SUM(week_appeal),0) as week_appeal_old FROM rubin_week ri where ri.data_v >= :startDateOld and ri.data_v <= :endDateOld) as week_appeal_old," +
@@ -79,7 +75,6 @@ public interface RubinWeekRepository extends CrudRepository<Rubin_week, Long> {
                     "where ry.pidrozdil = :tsc " +
                     "and data_v = (select max(kk.data_v) " +
                     "from rubin_year kk where kk.pidrozdil = :tsc)) as year_issued, " +
-//
                     "RIGHT(pidrozdil, 4) as pidrozdil " +
                     "from rubin_week " +
                     "where data_v >= :startDate " +

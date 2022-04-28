@@ -26,12 +26,6 @@ public class ToppanController {
         List<Toppan> toppanList = (List<Toppan>) toppanRepository.findAll();
         model.addAttribute("toppan", toppanList);
 
-//        try {
-//            createExcel.CreateF();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
         return "printer/toppan";
     }
 
