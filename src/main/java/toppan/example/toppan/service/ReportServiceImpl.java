@@ -84,5 +84,4 @@ public class ReportServiceImpl implements ReportService {
         EmailService.send(pidrozdilRepository.setEmailPidrozdil(tsc), path, tsc);
     }
 
-
 }

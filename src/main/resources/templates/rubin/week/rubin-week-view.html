@@ -64,7 +64,6 @@
             <br>
             <div class="col-lg-3" th:object="${pidrozdilList}">
                 <select required size="1" name="p_tsc" class="form-control" id="p_tsc">
-                    <!--                    <option th:value="${p_tsc}">Виберіть підрозділ</option>-->
 
                     <option th:each="tsc:${pidrozdilList}"
                             th:value="${tsc.pidrozdil}"
@@ -85,7 +84,6 @@
             </div>
             <br>
             <button type="submit" class="btn btn-success" name="action" value="search">Пошук</button>
-
             <button type="submit" class="btn btn-success" name="action" value="print">Тижневий звіт</button>
             <button type="submit" class="btn btn-success" name="action" value="print_month">Помісячний звіт</button>
 
@@ -100,7 +98,6 @@
                         <a class="textcolor"
                            th:text="${' Загалом - звернень : ' +week_appeal + ' виданих : '+week_issued }">user</a>
                     </th>
-                    <!--                    <th class="th1">Д а т а    </th>-->
                 </tr>
             </table>
         </form>
