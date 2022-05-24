@@ -1,8 +1,11 @@
 package toppan.example.toppan.models;
 
+import lombok.extern.slf4j.Slf4j;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+@Slf4j   // Логер
 @Entity
 public class Toppan {
     //    серийный номер принтера Toppan CP500

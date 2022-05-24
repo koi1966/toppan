@@ -1,5 +1,6 @@
 package toppan.example.toppan.controllers;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +13,7 @@ import toppan.example.toppan.models.repo.ToppanRepository;
 
 import java.util.List;
 
+@Slf4j   // Логер
 @Controller
 public class ToppanController {
     @Autowired

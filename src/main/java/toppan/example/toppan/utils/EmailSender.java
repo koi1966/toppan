@@ -1,5 +1,7 @@
 package toppan.example.toppan.utils;
 
+import lombok.extern.slf4j.Slf4j;
+
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
@@ -10,6 +12,7 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import java.util.Properties;
 
+@Slf4j   // Логер
 public class EmailSender {
 
     public static void send(String to) {

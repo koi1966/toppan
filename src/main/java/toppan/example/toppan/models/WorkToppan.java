@@ -1,11 +1,14 @@
 package toppan.example.toppan.models;
 
+import lombok.extern.slf4j.Slf4j;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.Date;
 
+@Slf4j   // Логер
 @Entity
 public class WorkToppan {
 

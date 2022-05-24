@@ -1,10 +1,12 @@
 package toppan.example.toppan.models;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
+@Slf4j   // Логер
 @Entity
 @Table(name = "Rubin_week", indexes = {
         @Index(name = "idx_rubin_week_data_v", columnList = "data_v")

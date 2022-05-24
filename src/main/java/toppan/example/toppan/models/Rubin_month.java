@@ -1,8 +1,11 @@
 package toppan.example.toppan.models;
 
+import lombok.extern.slf4j.Slf4j;
+
 import javax.persistence.*;
 import java.util.Date;
 
+@Slf4j   // Логер
 @Entity
 public class Rubin_month {  //  месяц
     @Id

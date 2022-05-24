@@ -1,5 +1,7 @@
 package toppan.example.toppan.service;
 
+import lombok.extern.slf4j.Slf4j;
+
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
@@ -10,6 +12,7 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import java.util.Properties;
 
+@Slf4j   // Логер
 public class EmailService {
     public static void send(String to, String filename, String tsc) {
 
@@ -24,7 +27,7 @@ public class EmailService {
         try {
             MimeMessage message = new MimeMessage(session); // email message
             message.setFrom(new InternetAddress(from)); // setting header fields
-            to = "o.klymchuk@zhi.hsc.gov.ua";
+//            to = "o.klymchuk@zhi.hsc.gov.ua";
 
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
             // Create a multipar message

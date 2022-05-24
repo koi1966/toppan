@@ -1,5 +1,6 @@
 package toppan.example.toppan.models;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -8,6 +9,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
+@Slf4j   // Логер
 @Entity
 @Table(name ="rubin", indexes = {@Index(name = "data_v", columnList = "data_v",unique = false)})
 public class Rubin {

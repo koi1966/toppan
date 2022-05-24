@@ -24,9 +24,10 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import lombok.NonNull;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 
-
+@Slf4j   // Логер
 public final class SrxUtility {
     private static final Logger LOG = getLogger(SrxUtility.class);
     private static final Set<String> availableZoneIds = ZoneId.getAvailableZoneIds();

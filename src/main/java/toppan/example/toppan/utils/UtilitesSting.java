@@ -1,5 +1,8 @@
 package toppan.example.toppan.utils;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j   // Логер
 public class UtilitesSting {
 
     // поиск N-го вхождения подстроки в строке

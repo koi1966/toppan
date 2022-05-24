@@ -1,11 +1,13 @@
 package toppan.example.toppan.models;
 
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import toppan.example.toppan.utils.DateUtils;
 
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
 
+@Slf4j   // Логер
 @Data
 public class ReportData {
     /**
