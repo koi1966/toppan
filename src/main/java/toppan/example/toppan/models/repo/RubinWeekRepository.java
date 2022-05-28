@@ -153,7 +153,3 @@ public interface RubinWeekRepository extends CrudRepository<Rubin_week, Long> {
                             @Param("tsc") String tsc);
 
 }
-//
-//    SELECT coalesce(SUM(week_appeal),0) AS week_appeal FROM rubin_week WHERE data_v <= '01.10.2021'
-//
-//      select RIGHT(pidrozdil, 4) from rubin_week

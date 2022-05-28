@@ -6,24 +6,6 @@ import toppan.example.toppan.models.Toppan;
 
 public interface ToppanRepository extends CrudRepository<Toppan, String> {
 
-//    @Query(nativeQuery = true, //            value = "select * from toppan t where t.sn = :sn")
-//    List findByEmailReturnStream(@Param("sn") String toppan);
-
-
-
-
-//
-//    @Query(
-//            nativeQuery = true,
-//            value =
-//                    "SELECT SUM(log.amount_billed)"
-//                            + " FROM srx.billing_log log where log.created_at BETWEEN :from AND :to AND log.ship_to_id = :shipToId AND log.id NOT IN (:ids)")
-//
-//    BigDecimal calculateBillingLogByCreatedAtBetween(
-//            @Param("from") LocalDateTime from,
-//            @Param("to") LocalDateTime to,
-//            @Param("shipToId") Long shipToId,
-//            @Param("ids") Collection<Long> ids);
 }
 
 //      Лучший способ выучить Java и стать Java-разработчиком:

@@ -50,10 +50,10 @@ class RubinWeekController {
         final LocalDate today = LocalDate.now();  // берем сегодняшнюю дату
         final LocalDate thisPastSunday = today.with(previous(SUNDAY));  // берем прошедшее воскресенье
 
-        String ip_user = request.getRemoteAddr(); //  вытягивает IP копма с которого вносят информацию
+        String ip_user = request.getRemoteAddr(); //  IP копма с которого вносят информацию
         int end = UtilitesSting.ordinalIndexOf(ip_user, ".", 2);
         String ip = ip_user.substring(0, end); // узнаеп подсеть  172.0.0
-        Pidrozdil tsc = pidrozdilRepository.findByIp(ip);//  по подсети узнаем из какого ТСЦ зашли работать
+        Pidrozdil tsc = pidrozdilRepository.findByIp(ip);// по подсети узнаем из какого ТСЦ зашли работать
 
         List<Rubin_week> rubinList = rubinWeekRepository.getAllByDataBetweenAndPidrozdilPidrozdil(thisPastSunday, today, tsc.getPidrozdil(), Sort.by("pidrozdil").and(Sort.by("data")));
 
@@ -113,7 +113,7 @@ class RubinWeekController {
 //
 //        boolean isEmpty = rubinWekStr == null || rubinWekStr.trim().length() == 0;
 //        if (isEmpty) {
-//            rubinWekStr = "0,0,0,0";
+//            rubinWekStr = "0.0.0.0";
 //        }
 
         return "redirect:/rubin/week/rubin-week-view";
