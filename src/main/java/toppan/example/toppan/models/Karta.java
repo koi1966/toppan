@@ -1,11 +1,15 @@
 package toppan.example.toppan.models;
 
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Slf4j   // Логер
+@Getter
+@Setter
 @Entity
 //@Table(name = "Karta", indexes = {
 //        @Index(name = "idx_karta_data_oper", columnList = "data_oper")
@@ -80,5 +84,8 @@ public class Karta {
     private int masa1 ;
 
     public Karta () {
+    }
+
+    public String getKart_id() {
     }
 }
