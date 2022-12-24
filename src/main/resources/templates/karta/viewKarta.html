@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>KartaView</title>
+    <style type="text/css">
+        a.a {
+            color: #1810e0;
+            font-style:normal;
+            font-size: revert;
+      /*    font-weight: bold;*/
+        }
+        th, td { /* ячейки таблиці */
+            border: 1px solid black; /* Параметры рамки */
+            text-align: center; /* Выравнивание по центру */
+            /*margin:0px;*/
+            background: #f1f1f5;
+            /*  padding: -5px;  !* поля вокруг текста *!*/
+            border-bottom: 1px solid #5b90d0;
+            padding: 15px; /* Убираем поля вокруг текста */
+            /*td{ cursor: default;  как сделать таблицу неактивной } */
+        }
+
+        th { /* заголовок */
+            background: #bdd7a3; /* Цвет фона ячейки */
+            vertical-align: center;
+            padding: 15px; /* Убираем поля вокруг текста */
+        }
+    </style>
+</head>
+<body>
+Результат пошуку АМТ
+<div >
+    <table>
+        <tr>
+            <th>Дата операции</th>
+            <th>ДНЗ / свідоцтво</th>
+            <th> VIN</th>
+            <th>ДНЗ марка модель</th>
+            <th>Власник</th>
+        </tr>
+        <tr th:each="kart : ${kartaList}">
+            <td>
+                <a class="a" th:text="${#dates.format(kart.getData_oper, 'dd.MM.yyyy')}"></a>
+            </td>
+            <td>
+                <a th:href="@{/karta/{id}(id=${kart.getId()})}"
+                        th:text="${kart.getZnak()+'  спр : '+ kart.getTeh_pasp()}"></a>
+            </td>
+            <td>
+                <a th:href="@{/karta/{id}(id=${kart.getId()})}"
+                        th:text="${kart.getKart_id()}"></a>
+            </td>
+
+            <td> <a th:href="@{/karta/{id}(id=${kart.getId()})}"
+                    th:text="${kart.getMarka()+' ' + kart.getModel() +'  р.в. '+kart.getData_v()}" ></a>
+            </td>
+            <td>
+                <a th:href="@{/karta/{id}(id=${kart.getId()})}"
+                        th:text="${kart.getFamily() + ' ' + kart.getFname()+' '+ kart.getSec_name()}" ></a>
+            </td>
+
+        </tr>
+    </table>
+
+
+    <a ></a>
+    <br/>
+</div>
+<br/>
+<hr/>
+
+<a href="/karta/searchAMT">Повернутись</a>
+</body>
+</html>

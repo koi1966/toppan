@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Search</title>
+</head>
+<body>
+
+<form th:method="POST" th:action="@{/karta/}" th:object="${karta}">
+    <label for="Znak">Номерний знак: </label>
+    <input type="text" th:field="*{znak}" id="Znak"/>
+    <br/>
+    <label for="Znak">Свідоцтво про реєстр : </label>
+    <input type="text" th:field="*{teh_pasp}" id="teh_pasp"/>
+    <br/>
+    <input type="submit" value="Пошук"/>
+    <br/>
+    <input type="checkbox">
+    <br/>
+    <input type="date">
+
+</form>
+
+</body>
+</html>

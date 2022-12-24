@@ -2,7 +2,6 @@ package toppan.example.toppan.models;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -10,15 +9,14 @@ import java.sql.Timestamp;
 @Getter
 @Setter
 @Entity
-@Table(name = "Karta", indexes = {
-        @Index( name = "kart_id", columnList = "kart_id", unique = false),
-        @Index( name = "znak", columnList = "znak", unique = false),
-        @Index( name = "teh_pasp", columnList = "teh_pasp", unique = false),
-        @Index( name = "family", columnList = "family", unique = false),
-        @Index( name = "pasport", columnList = "pasport", unique = false)
-})
-
-public class Karta {
+//@Table(name = "Karta2", indexes = {
+//        @Index( name = "kart_id", columnList = "kart_id", unique = false),
+//        @Index( name = "znak", columnList = "znak", unique = false),
+//        @Index( name = "teh_pasp", columnList = "teh_pasp", unique = false),
+//        @Index( name = "family", columnList = "family", unique = false),
+//        @Index( name = "pasport", columnList = "pasport", unique = false)
+//})
+public class Karta2 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -87,5 +85,5 @@ public class Karta {
     private String tel_g ;
     private int masa1 ;
 
-    public Karta () {}
+    public Karta2 () {}
 }

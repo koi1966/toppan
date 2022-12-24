@@ -21,3 +21,11 @@ Statistics and analysis of the use of the Toppan CP500 printer.
 Комерційний досвід як Java розробника відсутній але я маю бажання і не підведу.
 
 Для навчання я використовую IntelliJ IDEA 2021.3.1 (Ultimate Edition)
+
+
+select karta.*
+from karta
+where not exists (
+select 1
+from karta2
+where karta2.id = karta.id);
