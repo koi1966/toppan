@@ -66,6 +66,14 @@ public class KartaDAO {
   public List<Karta> AmtHistory(long id) {
     List<Karta> kartHistory = new ArrayList<>();
     //        Statement statement = null;
+//    select id,kart_id,data_oper,data_v,znak,kv,Teh_pasp,family,Fname,Sec_name,house,street,city,rajon,obl,
+//    znak,teh_pasp,color,(marka +''+ model) as marka,reverse(num_cuz) as num_cuz,
+//            reverse(num_shas) as num_shas,reverse(num_Dv) as num_dv, oper.*
+//            from karta, oper
+//    where kart_id in (Select k2.kart_id from karta k2 where k2.id= 5)
+//    and substring(code_oper,1,2)=oper.oper_id
+//    ORDER BY Data_oper
+    //
     String SQL =
         "" //
             + "select id,Kart_id,Data_oper,Data_v,Znak,kv,Teh_pasp,Family,Fname,Sec_name,house,street,city,rajon,obl," //
