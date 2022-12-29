@@ -36,7 +36,7 @@ public class KartaController {
     @GetMapping("/{id}")
     public String AmtHystory(@PathVariable("id") long id, Model model) {
         List<Karta> AMTHys = kartaDAO.AmtHistory(id);
-        System.out.println(AMTHys.get(0));
+  //      System.out.println(AMTHys.get(0));
         //    String kart_id1 = AMTHys.get(0).getKart_id();
         if (!AMTHys.isEmpty()) {
             Karta kartaAMT = AMTHys.get(0);
