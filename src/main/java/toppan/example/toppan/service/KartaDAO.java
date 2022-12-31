@@ -114,14 +114,14 @@ public class KartaDAO {
                     AMTh.setFamily(resultSet.getString("Family"));
                     AMTh.setFname(resultSet.getString("Fname"));
                     AMTh.setSec_name(resultSet.getString("Sec_name"));
-//          AMTh.setOper(resultSet.getString("oper"));
+
                     AMTh.setObl(resultSet.getString("obl"));
                     AMTh.setRajon(resultSet.getString("rajon"));
                     AMTh.setCity(resultSet.getString("city"));
                     AMTh.setStreet(resultSet.getString("street"));
                     AMTh.setHouse(resultSet.getString("house"));
                     AMTh.setKv(resultSet.getString("kv"));
-                    //         AMTh.setOper(resultSet.getString("oper"));
+                    AMTh.setCode_oper(resultSet.getString("oper"));
 
                     kartHistory.add(AMTh);
                 }

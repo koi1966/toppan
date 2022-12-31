@@ -4,6 +4,10 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <head>
+        <title>Логин</title>
+        <link rel="stylesheet" th:href="@{css/login_css.css}">
+    </head>
 
     <title>Історія && Арест</title>
 
@@ -79,13 +83,13 @@
                 <p class="a" th:text="${'Vin : '+AmtHyst.getKart_id()}"></p></td>
 
             <td id="col_3"><a th:text="${AmtHyst.getData_oper()}"></a>
-                <p class="a" th:text="${AmtHyst.getOper()}"></p>
+                <p class="a" th:text="${AmtHyst.getCode_oper()}"></p>
             </td>
 
             <td id="col_1"><a th:text="${AmtHyst.getFamily()+' '+ AmtHyst.getFname()+' '+ AmtHyst.getSec_name()}"></a>
                 <p class="a" th:text="${AmtHyst.getObl()!=null}? ${'Обл: '+AmtHyst.getObl()}:''"></p>
                 <p class="a" th:text="${AmtHyst.getRajon()!=null}? ${'Рай: '+AmtHyst.getRajon()}:''"></p>
-                <p class="a" th:text="${AmtHyst.getCity()!=null}? ${'Гор/саало: '+AmtHyst.getCity()}:''"></p>
+                <p class="a" th:text="${AmtHyst.getCity()!=null}? ${'Гор/сеало: '+AmtHyst.getCity()}:''"></p>
                 <p class="a" th:text="${AmtHyst.getStreet()!=null}? ${'Вул.: '+AmtHyst.getStreet()}:''"></p>
                 <p class="a" th:text="${AmtHyst.getHouse()!=null}? ${'Буд: '+AmtHyst.getHouse()}:''"></p>
                 <p class="a" th:text="${AmtHyst.getKv()!=null}? ${'кв.: '+AmtHyst.getKv()}:''"></p>
