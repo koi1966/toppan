@@ -1,20 +1,13 @@
-package toppan.example.toppan.models;
+package toppan.example.toppan.models.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
-@Getter
-@Setter
-@Entity
-public class Arest {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-//        @Column(name = "id")
+@Data
+@NoArgsConstructor
+public class ArestDTO {
     private Long id;
     private Timestamp data_arest;
     //    not null
@@ -39,9 +32,4 @@ public class Arest {
     private String commenta;
     //    not null
     private Timestamp time_fix;
-
-    public Arest() {
-    }
-
 }
-

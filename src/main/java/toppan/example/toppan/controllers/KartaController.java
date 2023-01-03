@@ -1,19 +1,26 @@
 package toppan.example.toppan.controllers;
 
+import lombok.extern.slf4j.Slf4j;
+
+import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import toppan.example.toppan.mapper.Mapper;
 import toppan.example.toppan.models.Arest;
 import toppan.example.toppan.models.Karta;
+import toppan.example.toppan.models.dto.KartaDTO;
 import toppan.example.toppan.service.ArestDAO;
 import toppan.example.toppan.service.KartaDAO;
 
 import java.util.List;
 
+@Slf4j
 @Controller
 @RequestMapping("/karta")
 public class KartaController {
     private final KartaDAO kartaDAO;
+    private final Mapper mapper = Mappers.getMapper(Mapper.class);
 
     public KartaController(KartaDAO kartaDAO) {
         this.kartaDAO = kartaDAO;
@@ -33,10 +40,17 @@ public class KartaController {
         return "karta/viewKarta";
     }
 
+    @GetMapping("/search")
+    public List<KartaDTO> searchKarta(@RequestParam String znak) {
+        log.info("All users age > {}", znak);
+        List<Karta> karta = kartaDAO.kartaList(znak);
+        return mapper.map(karta);
+    }
+
     @GetMapping("/{id}")
     public String AmtHystory(@PathVariable("id") long id, Model model) {
         List<Karta> AMTHys = kartaDAO.AmtHistory(id);
-  //      System.out.println(AMTHys.get(0));
+        //      System.out.println(AMTHys.get(0));
         //    String kart_id1 = AMTHys.get(0).getKart_id();
         if (!AMTHys.isEmpty()) {
             Karta kartaAMT = AMTHys.get(0);

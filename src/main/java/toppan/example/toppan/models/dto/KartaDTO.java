@@ -1,31 +1,17 @@
-package toppan.example.toppan.models;
+package toppan.example.toppan.models.dto;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
-@Entity
-@Table(name = "Karta", indexes = {
-        @Index( name = "kart_id", columnList = "kart_id", unique = false),
-        @Index( name = "znak", columnList = "znak", unique = false),
-        @Index( name = "teh_pasp", columnList = "teh_pasp", unique = false),
-        @Index( name = "family", columnList = "family", unique = false),
-        @Index( name = "pasport", columnList = "pasport", unique = false)
-})
-
-public class Karta {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+@Data
+@NoArgsConstructor
+public class KartaDTO {
     private Long id;
     private String kart_id;
-    private Timestamp data_oper;
+    private LocalDateTime data_oper;
     private int reg_def;
     private String num_dv;
     private String num_cuz ;
@@ -88,6 +74,4 @@ public class Karta {
     private String house_g;
     private String tel_g ;
     private int masa1 ;
-
-    public Karta () {}
 }

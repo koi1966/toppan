@@ -89,9 +89,9 @@
             <td id="col_1"><a th:text="${AmtHyst.getFamily()+' '+ AmtHyst.getFname()+' '+ AmtHyst.getSec_name()}"></a>
                 <p class="a" th:text="${AmtHyst.getObl()!=null}? ${'Обл: '+AmtHyst.getObl()}:''"></p>
                 <p class="a" th:text="${AmtHyst.getRajon()!=null}? ${'Рай: '+AmtHyst.getRajon()}:''"></p>
-                <p class="a" th:text="${AmtHyst.getCity()!=null}? ${'Гор/сеало: '+AmtHyst.getCity()}:''"></p>
-                <p class="a" th:text="${AmtHyst.getStreet()!=null}? ${'Вул.: '+AmtHyst.getStreet()}:''"></p>
-                <p class="a" th:text="${AmtHyst.getHouse()!=null}? ${'Буд: '+AmtHyst.getHouse()}:''"></p>
+                <p class="a" th:text="${AmtHyst.getCity()!=null}? ${'Гор/село: '+AmtHyst.getCity()}:''"></p>
+                <p class="a" th:text="${AmtHyst.getStreet()!=null}? ${'вул.: '+AmtHyst.getStreet()}:''"></p>
+                <p class="a" th:text="${AmtHyst.getHouse()!=null}? ${'вуд: '+AmtHyst.getHouse()}:''"></p>
                 <p class="a" th:text="${AmtHyst.getKv()!=null}? ${'кв.: '+AmtHyst.getKv()}:''"></p>
             </td>
         </tr>

@@ -5,10 +5,12 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@Entity
+//@Entity
 //@Table(name = "Karta2", indexes = {
 //        @Index( name = "kart_id", columnList = "kart_id", unique = false),
 //        @Index( name = "znak", columnList = "znak", unique = false),
@@ -17,11 +19,11 @@ import java.sql.Timestamp;
 //        @Index( name = "pasport", columnList = "pasport", unique = false)
 //})
 public class Karta2 {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String kart_id;
-    private Timestamp data_oper;
+    private LocalDateTime data_oper;
     private int reg_def;
     private String num_dv;
     private String num_cuz ;
@@ -39,7 +41,7 @@ public class Karta2 {
     private String annot ;
     private String code_oper ;
     private int nom_naklad ;
-    private Timestamp data_naklad;
+    private LocalDateTime data_naklad;
     private int masa;
     private int status;
     private String region ;
@@ -62,7 +64,7 @@ public class Karta2 {
     private String family_lat;
     private String fname_lat;
     private String permis;
-    private Timestamp born ;
+    private LocalDate born ;
     private String pasport;
     private String pasp_cto;
     private String obl;

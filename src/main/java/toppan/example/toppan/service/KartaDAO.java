@@ -2,6 +2,7 @@ package toppan.example.toppan.service;
 
 import org.springframework.stereotype.Component;
 import toppan.example.toppan.models.Karta;
+import toppan.example.toppan.models.repo.KartaRepository;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,6 +15,11 @@ import static toppan.example.toppan.bl.DataDAOPostgres.connectionPos;
 
 @Component
 public class KartaDAO {
+    private final KartaRepository kartaRepository;
+
+    public KartaDAO(KartaRepository kartaRepository) {
+        this.kartaRepository = kartaRepository;
+    }
 
     public List<Karta> search(Karta kar) {
 
@@ -131,5 +137,11 @@ public class KartaDAO {
             throwables.printStackTrace();
         }
         return kartHistory;
+    }
+
+
+    public List<Karta> kartaList(String znak) {
+
+        return kartaRepository.findByKartaZnak(znak);
     }
 }
