@@ -1,16 +1,17 @@
 package toppan.example.toppan.models;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@ToString
 @Entity
 @Table(name = "Karta", indexes = {
         @Index( name = "kart_id", columnList = "kart_id", unique = false),
@@ -89,5 +90,4 @@ public class Karta {
     private String tel_g ;
     private int masa1 ;
 
-    public Karta () {}
 }

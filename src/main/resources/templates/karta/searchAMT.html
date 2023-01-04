@@ -5,9 +5,10 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>Search</title>
-    <link th:href="@{css/cssandjs.css rel=stylesheet type=text/css}">
+<!--    <link th:href="@{css/cssandjs.css rel=stylesheet type=text/css}">-->
 
 <!--    <style type="text/css">-->
+
 
 <!--        h22 {-->
 <!--            font-family: sans-serif;-->
@@ -20,7 +21,7 @@
 <body>
 
 <form th:method="POST" th:action="@{/karta/}" th:object="${karta}">
-    <label for="Znak" co >Номерний знак: </label>
+    <label for="Znak" >Номерний знак: </label>
     <input type="text" th:field="*{znak}" id="Znak"/>
 
     <br/>

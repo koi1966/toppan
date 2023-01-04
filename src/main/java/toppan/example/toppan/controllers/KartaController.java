@@ -1,9 +1,8 @@
 package toppan.example.toppan.controllers;
 
 import lombok.extern.slf4j.Slf4j;
-
 import org.mapstruct.factory.Mappers;
-import org.springframework.stereotype.Controller;
+
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import toppan.example.toppan.mapper.Mapper;
@@ -16,7 +15,7 @@ import toppan.example.toppan.service.KartaDAO;
 import java.util.List;
 
 @Slf4j
-@Controller
+@RestController
 @RequestMapping("/karta")
 public class KartaController {
     private final KartaDAO kartaDAO;
