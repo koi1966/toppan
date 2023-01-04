@@ -15,10 +15,8 @@ public class DateUtilsTest {
 
     @Test
     void getMonthTest() {
-        String nameMonth = DateUtils.MonthNamUA.getNameMonth(3);
-        Assertions.assertEquals("березень", nameMonth);
-        Path path = FileSystems.getDefault().getPath("C:\\rsc1840\\", "Temp_rubin_Mounth_1841.docx");
-        System.out.println(path);
+        String nameMonth = DateUtils.MonthNamUA.getNameMonth(8);
+        Assertions.assertEquals("серпень", nameMonth);
 
     }
 }
