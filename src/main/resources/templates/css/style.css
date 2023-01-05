@@ -1,14 +1,15 @@
+.h2 {
+    font-family: sans-serif;
+    font-size: 3.5em;
+    text-transform: uppercase;
+    color:brown;
+}
 
-.textcolstextcols {
-    white-space: nowrap;
+strong {
+    font-weight: 700;
+    background-color: yellow;
 }
-.textcols-item {
-    white-space: normal;
-    display: inline-block;
-    width: 48%;
-    vertical-align: top;
-    background: #fff2e1;
-}
-.textcols .textcols-item:first-child {
-    margin-right: 4%;
+
+p {
+    font-family: sans-serif;
 }
