@@ -1,8 +1,8 @@
-h2 {
+.h2 {
     font-family: sans-serif;
     font-size: 3.5em;
     text-transform: uppercase;
-    color:#6f93dc;
+    color:brown;
 }
 
 strong {
