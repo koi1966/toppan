@@ -7,7 +7,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import toppan.example.toppan.createDoc.CreateExcel;
 import toppan.example.toppan.models.Toppan;
 import toppan.example.toppan.models.repo.ToppanRepository;
 
@@ -16,11 +15,11 @@ import java.util.List;
 @Slf4j   // Логер
 @Controller
 public class ToppanController {
-    @Autowired
-    private ToppanRepository toppanRepository;
+    private final ToppanRepository toppanRepository;
 
-    @Autowired
-    private CreateExcel createExcel;
+    public ToppanController(ToppanRepository toppanRepository) {
+        this.toppanRepository = toppanRepository;
+    }
 
     @GetMapping("/printer/toppan")
     public String Toppan(Model model) {
@@ -32,7 +31,7 @@ public class ToppanController {
     }
 
     @PostMapping("/printer/toppan-add")
-    public String addToppan(@RequestParam String sn, @RequestParam String datawork, @RequestParam String completeness, @RequestParam String code, @RequestParam String pidrozdil, Model model) {
+    public String addToppan(@RequestParam String sn, @RequestParam String datawork, @RequestParam String completeness, @RequestParam String code, @RequestParam String pidrozdil) {
         Toppan top = new Toppan(sn, datawork, completeness, code, pidrozdil);
         //  request.getRemoteAddr()  -  вытягивает IP копма с которого вносят информацию
         toppanRepository.save(top);

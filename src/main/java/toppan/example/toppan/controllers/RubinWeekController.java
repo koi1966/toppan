@@ -37,7 +37,7 @@ class RubinWeekController {
     private final PidrozdilRepository pidrozdilRepository;
     private final ReportService reportService;
 
-    public RubinWeekController(RubinWeekRepository rubinWeekRepository, PidrozdilRepository pidrozdilRepository, CreateExcel createExcel, RubinYearRepository rubinYearRepository, RubinRepository rubinRepository, MonthRepository monthRepository, CreateDoc createDoc, ReportService reportService) {
+    public RubinWeekController(RubinWeekRepository rubinWeekRepository, PidrozdilRepository pidrozdilRepository, ReportService reportService) {
         this.rubinWeekRepository = rubinWeekRepository;
         this.pidrozdilRepository = pidrozdilRepository;
         this.reportService = reportService;
