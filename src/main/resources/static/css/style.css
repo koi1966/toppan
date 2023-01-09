@@ -1,4 +1,11 @@
-.h2 {
+oo {
+    font-family: sans-serif;
+    font-size: 3.5em;
+    text-transform: uppercase;
+    color:brown;
+}
+
+h3 {
     font-family: sans-serif;
     font-size: 3.5em;
     text-transform: uppercase;

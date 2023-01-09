@@ -14,7 +14,8 @@
         }
         th, td { /* ячейки таблиці */
             border: 1px solid black; /* Параметры рамки */
-            text-align: center; /* Выравнивание по центру */
+            /*text-align: center; !* Выравнивание по центру *!*/
+            text-align: left; /* Выравнивание по left */
             /*margin:0px;*/
             background: #f1f1f5;
             /*  padding: -5px;  !* поля вокруг текста *!*/
@@ -31,7 +32,6 @@
     </style>
 </head>
 <body>
-Результат пошуку АМТ
 <div >
     <table>
         <tr>
@@ -47,7 +47,7 @@
             </td>
             <td>
                 <a th:href="@{/karta/{id}(id=${kart.getId()})}"
-                        th:text="${kart.getZnak()+'  спр : '+ kart.getTeh_pasp()}"></a>
+                        th:text="${kart.getZnak()+'  СпР : '+ kart.getTeh_pasp()}"></a>
             </td>
             <td>
                 <a th:href="@{/karta/{id}(id=${kart.getId()})}"

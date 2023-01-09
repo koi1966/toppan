@@ -66,4 +66,15 @@ public class KartaController {
         return "karta/historearest";
     }
 
+
+//    Test
+
+    @GetMapping("/test")
+    public String testKarta() {
+        log.info("See html test !!!");
+
+        return "karta/test";
+    }
+
+
 }

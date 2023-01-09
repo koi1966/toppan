@@ -75,25 +75,8 @@ public class KartaDAO {
 
     public List<Karta> AmtHistory(long id) {
         List<Karta> kartHistory = new ArrayList<>();
-        //        Statement statement = null;
-//    select id,kart_id,data_oper,data_v,znak,kv,Teh_pasp,family,Fname,Sec_name,house,street,city,rajon,obl,
-//    znak,teh_pasp,color,(marka +''+ model) as marka,reverse(num_cuz) as num_cuz,
-//            reverse(num_shas) as num_shas,reverse(num_Dv) as num_dv, oper.*
-//            from karta, oper
-//    where kart_id in (Select k2.kart_id from karta k2 where k2.id= 5)
-//    and substring(code_oper,1,2)=oper.oper_id
-//    ORDER BY Data_oper
-        //
+
         String SQL =
-//                "select id,Kart_id,Data_oper,Data_v,Znak,kv,Teh_pasp,Family,Fname,Sec_name,house,street,city,rajon,obl," //
-//                        + "Znak,Teh_pasp,Color,(Marka | | Model)as Marka,reverse(karta.num_cuz) as Num_cuz," //
-//                        + "reverse(karta.num_shas) as Num_shas,reverse(karta.num_Dv) as num_Dv, oper.*  " //
-//                        + "from karta, oper " //
-//                        + "where kart_id in (Select k2.kart_id from karta k2 where k2.id=?) "
-//                        + "and substring(karta.code_oper,1,2)=oper.oper_id  "
-//                        + "ORDER BY Data_oper";
-
-
         "select karta.id,kart_id,data_oper,data_v,znak,kv,teh_pasp,family,fname,sec_name,house,street,city,rajon,obl,znak," +
                 "teh_pasp,color,(marka ||' '|| model) as marka,reverse(karta.num_cuz) as num_cuz,reverse(karta.num_shas) as num_shas," +
                 "reverse(karta.num_dv) as num_dv, oper.* " +
@@ -101,9 +84,6 @@ public class KartaDAO {
                 "where kart_id in (Select k2.kart_id from karta k2 where k2.id=?) " +
                 "and substring(karta.code_oper,1,2)=oper.oper_id ORDER BY data_oper";
 
-
-        //   "select
-        // id,Kart_id,Data_oper,Data_v,Znak,kv,Teh_pasp,Family,Fname,Sec_name,house,street,city,rajon,obl,Znak,Teh_pasp,Color,(Marka + ' '+Model)as Marka,reverse(karta.num_cuz) as Num_cuz,reverse(karta.num_shas) as Num_shas,reverse(karta.num_Dv) as num_Dv, oper.*  from karta, oper where kart_id in (Select k2.kart_id from karta k2 where k2.id=?) and substring(karta.code_oper,1,2)=oper.oper_id  ORDER BY Data_oper";
         try {
             PreparedStatement preparedStatement = connectionPos.prepareStatement(SQL);
             preparedStatement.setLong(1, id);
