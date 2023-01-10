@@ -4,25 +4,12 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title>Search</title>
+    <title>Пошук по регіональній автоматизованій базі АМТ</title>
     <link th:href="@{/css/style.css}" rel="stylesheet" />
-<!--    <link rel="stylesheet" type="text/css" th:href="@{/templates/css/style.css}" />-->
-<!--    <link rel="stylesheet" type="text/css" media="all" href="../assets/css/style.css" th:href="@{/css/style.css}" />-->
-<!--    <link href="../static/css/cssandjs.css" th:href="@{/templates/static/css/cssandjs.css}" rel="stylesheet" />-->
 
-<!--    <style type="text/css">-->
-
-
-<!--        h22 {-->
-<!--            font-family: sans-serif;-->
-<!--            font-size: 3.5em;-->
-<!--            text-transform: uppercase;-->
-<!--            color:brown;-->
-<!--        }-->
-<!--    </style>-->
 </head>
 <body>
-
+<header th:insert="blocks/header.html :: header"></header>
 <form th:method="POST" th:action="@{/karta/}" th:object="${karta}">
     <label for="Znak" >Номерний знак: </label>
     <input type="text" th:field="*{znak}" id="Znak"/>
@@ -33,13 +20,13 @@
     <br/>
 
     <input type="submit" value="Пошук"/>
-    <br/>
-    <input type="checkbox">
-    <br/>
+<!--    <br/>-->
+<!--    <input type="checkbox">-->
+<!--    <br/>-->
 
-    <input type="date">
+<!--    <input type="date">-->
 
-    <oo>Carefully Styled Heading</oo>
+<!--    <oo>Carefully Styled Heading</oo>-->
 
 </form>
 

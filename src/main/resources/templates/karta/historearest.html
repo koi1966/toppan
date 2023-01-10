@@ -14,8 +14,8 @@
     <style type="text/css">
         * { margin: 0; padding: 0; }
         p { padding: 1px; }
-        #left { position: absolute; left: 0; top: 0; width: 50%; }
-        #right { position: absolute; right: 0; top: 0; width: 50%; }
+        #left { position: absolute; left: 0; top: 0; width: 60%; }
+        #right { position: absolute; right: 0; top: 0; width: 40%; }
 
         th, td { /* ячейки таблиці */
             border: 1px solid black; /* Параметры рамки */
@@ -37,16 +37,22 @@
             width: 30%; /* Ширина первой колонки */
             background: rgba(250, 248, 248, 0.87); /* Цвет фона первой колонки */
         }
+        #col_4 {
+            width: 8%; /* Ширина второй  колонки */
+            background: #fcfbfb; /* Цвет фона третьей колонки */
+        }
 
         #col_2 {
-            width: 11%; /* Ширина второй колонки */
+            width: 9%; /* Ширина третьей колонки */
             background: #f5f0f0; /* Цвет фона второй колонки */
         }
 
         #col_3 {
-            width: 1%; /* Ширина третьей колонки */
+            width: 1%; /* Ширина четвертої колонки */
             background: #fcfbfb; /* Цвет фона третьей колонки */
         }
+
+
         #col_a {
             background: rgba(236, 190, 190, 0.87); /* Цвет фона первой колонки */
         }
@@ -69,36 +75,48 @@
     <table class="tab1">
         <tr>
             <th>Марка модель</th>
+            <th>ТХ ТЗ</th>
             <th>Дата операції / ТО</th>
             <th>Власник</th>
         </tr>
         <tr th:each="AmtHyst:${Amthystory}">
             <td id="col_2">
-                <p class="b" th:text="${AmtHyst.getMarka() +' рік вип.: '+AmtHyst.getData_v() +', '+ AmtHyst.getColor()}"></p>
+                <p class="b" th:text="${AmtHyst.getMarka() +' рік вип.: ' +AmtHyst.getData_v() +', '+ AmtHyst.getColor()}"></p>
                 <p class="a" th:text="${AmtHyst.getZnak()!=null}? ${'ДНЗ: '+AmtHyst.getZnak()}:''"></p>
                 <p class="a" th:text="${AmtHyst.getTeh_pasp()!=null}? ${'СпР: '+AmtHyst.getTeh_pasp()}:''"></p>
-                <p class="a" th:text="${AmtHyst.getNum_cuz!=null}? ${'Kуз.: '+AmtHyst.getNum_cuz}:''"></p>
+                <p class="a" th:text="${AmtHyst.getNum_cuz!=null}? ${'Kуз: '+AmtHyst.getNum_cuz}:''"></p>
                 <p class="a" th:text="${AmtHyst.getNum_shas!=null}? ${'Шас.: '+AmtHyst.getNum_shas}:''"></p>
                 <p class="a" th:text="${AmtHyst.getNum_dv!=null}? ${'Дв.: '+AmtHyst.getNum_dv}:''"></p>
-                <p class="a" th:text="${'Vin : '+AmtHyst.getKart_id()}"></p></td>
+                <p class="a" th:text="${'Vin : '+AmtHyst.getKart_id()}"></p>
+            </td>
+            <td id="col_4">
+                <p class="a" th:text="${AmtHyst.getVolume()!=null}? ${'Об: '+AmtHyst.getVolume()}:''"></p>
+                <p class="a" th:text="${AmtHyst.getDoor()!=null}? ${'Двер: '+AmtHyst.getDoor()}:''"></p>
+                <p class="a" th:text="${AmtHyst.getFuel()!=null}? ${'Пал: '+AmtHyst.getFuel()}:''"></p>
+
+            </td>
 
             <td id="col_3"><a th:text="${AmtHyst.getData_oper()}"></a>
                 <p class="a" th:text="${AmtHyst.getCode_oper()}"></p>
             </td>
 
             <td id="col_1"><a th:text="${AmtHyst.getFamily()+' '+ AmtHyst.getFname()+' '+ AmtHyst.getSec_name()}"></a>
-                <p class="a" th:text="${AmtHyst.getObl()!=null}? ${'Обл: '+AmtHyst.getObl()}:''"></p>
+                <p class="a" th:text="${AmtHyst.getObl()!=null}? ${'Обл: '+AmtHyst.getObl()}:''">
+
+                </p>
                 <p class="a" th:text="${AmtHyst.getRajon()!=null}? ${'Рай: '+AmtHyst.getRajon()}:''"></p>
-                <p class="a" th:text="${AmtHyst.getCity()!=null}? ${'Гор/село: '+AmtHyst.getCity()}:''"></p>
+                <p class="a" th:text="${AmtHyst.getCity()!=null}? ${'Мсто/село: '+AmtHyst.getCity()}:''"></p>
                 <p class="a" th:text="${AmtHyst.getStreet()!=null}? ${'вул.: '+AmtHyst.getStreet()}:''"></p>
                 <p class="a" th:text="${AmtHyst.getHouse()!=null}? ${'вуд: '+AmtHyst.getHouse()}:''"></p>
                 <p class="a" th:text="${AmtHyst.getKv()!=null}? ${'кв.: '+AmtHyst.getKv()}:''"></p>
+                <p class="a" th:text="${AmtHyst.getAnnot()!=null}? ${'Примітка: '+AmtHyst.getAnnot()}:''"></p>
             </td>
-        </tr>
+
+         </tr>
     </table>
 </div>
-<!-- Арест       Арест       Арест       Арест       Арест       Арест       Арест       Арест       Арест-->
-<!-- Арест       Арест       Арест       Арест       Арест       Арест       Арест       Арест       Арест-->
+<!-- Арест -->
+
 <div id="right">
     <table class="tab1">
         <tr>
@@ -114,13 +132,10 @@
                 <p class="a" th:text="${'Вихід. № '+AmtArest.getIn_nom()}"></p>
                 <p class="a" th:text="${'Дата вихід :'+AmtArest.getData_in()}"></p></td>
 
-<!--            <p class="a" th:text="${AmtHyst.getNum_dv!=null}? ${'Дв.: '+AmtHyst.getNum_dv}:''"></p>-->
-
             <td id="col3"><a th:text="${AmtArest.getWho_sha!=null}? ${'Зняв: '+AmtArest.getWho_sha}:''"></a>
                 <p class="a" th:text="${AmtArest.getOut_nom!=null}? ${'Вихідний: '+AmtArest.getOut_nom}:''"></p>
                 <p class="a" th:text="${AmtArest.getData_out!=null}? ${'Дата зняття : '+AmtArest.getData_out}:''"></p>
             </td>
-<!--            <td id="col3"><a th:text="${AmtArest.getWho_sha()+'Вихідний :'+AmtArest.getOut_nom() +' Дата зняття :'+ AmtArest.getData_out()}"></a></td>-->
         </tr>
     </table>
 </div>

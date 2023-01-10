@@ -104,7 +104,7 @@
     </style>
 </head>
 <body>
-
+<header th:insert="blocks/header.html :: header"></header>
 <div class="history_conteyner">
 
     <div class="arest">
@@ -116,8 +116,6 @@
                 <th class="th2"><a th:text="${AmtArest.getWho_na}"></a></th>
                 <th class="th2">Дата арест</th>
             </tr>
-<!--                        <td class="td2" ><a th:text="${AmtArest.getWho_na}"></a></td>-->
-            <!--            <td class="td2"><p class="a" th:text="${AmtArest.getMarka() +' рік вип. '+AmtArest.getData_v() +', '+ AmtArest.getColor()}"></p>-->
         </table>
     </div>
 
@@ -138,8 +136,6 @@
                     <p class="a" th:text="${AmtHyst.getNum_cuz!=null}? ${'Kуз.'+AmtHyst.getNum_cuz}:''"></p>
                     <p class="a" th:text="${AmtHyst.getNum_shas!=null}? ${'Шас. '+AmtHyst.getNum_shas}:''"></p>
                     <p class="a" th:text="${AmtHyst.getNum_dv!=null}? ${'Дв. '+AmtHyst.getNum_dv}:''"></p>
-                    <!--        <p class="a" th:text="${AmtHyst.getNum_dv!=null}? ${'Дв. '+AmtHyst.getNum_dv}:''" ></p>-->
-                    <!--        <p class="a" th:text="${AmtHyst.}:''" ></p>-->
                     <p class="a" th:text="${'Vin '+AmtHyst.getKart_id()}"></p></td>
 
                 <td class="td1" id="col3"><a th:text="${AmtHyst.getData_oper()}"></a></td>

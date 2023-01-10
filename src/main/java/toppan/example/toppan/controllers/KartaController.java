@@ -43,7 +43,7 @@ public class KartaController {
     @GetMapping("/search")
     public List<KartaDTO> searchKarta(@RequestParam String znak) {
         log.info("All users age > {}", znak);
-        List<Karta> karta = kartaDAO.kartaList(znak);
+        List<Karta> karta = kartaDAO.kartaList(znak) ;
         return mapper.map(karta);
     }
 
