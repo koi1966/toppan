@@ -77,9 +77,9 @@ public class KartaDAO {
         List<Karta> kartHistory = new ArrayList<>();
 
         String SQL =
-        "select karta.id,kart_id,data_oper,data_v,znak,kv,teh_pasp,family,fname,sec_name,house,street,city,rajon,obl,znak," +
+        "select karta.id,kart_id,data_oper,data_v,znak,kv,teh_pasp,family,fname,sec_name,born,pasport,permis,house,street," +
                 "teh_pasp,color,(marka ||' '|| model) as marka,reverse(karta.num_cuz) as num_cuz,reverse(karta.num_shas) as num_shas," +
-                "reverse(karta.num_dv) as num_dv,power,volume,door,fuel,annot, oper.* " +
+                "reverse(karta.num_dv) as num_dv,power,volume,door,fuel,tip,annot,cuzov,city,rajon,obl,znak, oper.* " +
                 "from karta, oper " +
                 "where kart_id in (Select k2.kart_id from karta k2 where k2.id=?) " +
                 "and substring(karta.code_oper,1,2)=oper.oper_id ORDER BY data_oper DESC";
@@ -104,13 +104,20 @@ public class KartaDAO {
                     AMTh.setFamily(resultSet.getString("Family"));
                     AMTh.setFname(resultSet.getString("Fname"));
                     AMTh.setSec_name(resultSet.getString("Sec_name"));
-                    AMTh.setAnnot(resultSet.getString("Annot"));
+                    AMTh.setBorn(resultSet.getTimestamp("Born"));
+                    AMTh.setSec_name(resultSet.getString("Sec_name"));
+                    AMTh.setPasport(resultSet.getString("Pasport"));
+                    AMTh.setPermis(resultSet.getString("Permis"));
 
+                    AMTh.setAnnot(resultSet.getString("Annot"));
 
                     AMTh.setPower(resultSet.getString("Power"));
                     AMTh.setVolume(resultSet.getString("Volume"));
                     AMTh.setDoor(resultSet.getString("Door"));
                     AMTh.setFuel(resultSet.getString("Fuel"));
+                    AMTh.setTip(resultSet.getString("Tip"));
+                    AMTh.setCuzov(resultSet.getString("Cuzov"));
+
 
                     AMTh.setObl(resultSet.getString("obl"));
                     AMTh.setRajon(resultSet.getString("rajon"));

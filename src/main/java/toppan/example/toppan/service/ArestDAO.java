@@ -3,7 +3,6 @@ package toppan.example.toppan.service;
 import org.springframework.stereotype.Component;
 import toppan.example.toppan.models.Arest;
 
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
