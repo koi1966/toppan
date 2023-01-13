@@ -36,16 +36,28 @@ public class KartaDAO {
             throwables.printStackTrace();
         }
 
-        String SQLa = "SELECT * from karta where ";
+        String SQLa = "SELECT karta.*, oper.oper from karta, oper where ";
         if (!kar.getZnak().isEmpty()) {
+
             SQLa = SQLa + "znak like '" + kar.getZnak().toUpperCase() + "' ";
         }
 
-        if (!kar.getTeh_pasp().isEmpty()) {
-            SQLa = SQLa + "Teh_pasp like '" + kar.getTeh_pasp().toUpperCase() + "' ";
+        if (!kar.getKart_id().isEmpty()) {
+            if (SQLa.contains("znak like")) {
+                SQLa = SQLa + "and ";
+            }
+            SQLa = SQLa + "kart_id like '" + kar.getKart_id().toUpperCase() + "' ";
         }
 
-        SQLa = SQLa + "ORDER BY Data_oper, kart_id";
+        if (!kar.getNum_cuz().isEmpty()) {
+            if (SQLa.contains("kart_id like")) {
+                SQLa = SQLa + "and ";
+            }
+            SQLa = SQLa + "num_cuz like '" + kar.getNum_cuz().toUpperCase() + "' ";
+        }
+//        SQLa = SQLa + "and kart_id in (Select k2.kart_id from karta k2 where k2.id=kart_id) ";
+        SQLa = SQLa + "and substring(karta.code_oper,1,2)=oper.oper_id ";
+                SQLa = SQLa + "ORDER BY Data_oper DESC, kart_id";
 
         try (ResultSet resultSet = statement.executeQuery(SQLa)) {
             while (resultSet.next()) {
@@ -64,6 +76,10 @@ public class KartaDAO {
                 AMT.setZnak(resultSet.getString("Znak"));
                 AMT.setTeh_pasp(resultSet.getString("Teh_pasp"));
                 AMT.setNum_cuz(resultSet.getString("Num_cuz"));
+                AMT.setCode_oper(resultSet.getString("oper"));
+                AMT.setCuzov(resultSet.getString("cuzov"));
+
+
                 kart.add(AMT);
             }
         } catch (SQLException throwables) {
@@ -77,12 +93,12 @@ public class KartaDAO {
         List<Karta> kartHistory = new ArrayList<>();
 
         String SQL =
-        "select karta.id,kart_id,data_oper,data_v,znak,kv,teh_pasp,family,fname,sec_name,born,pasport,permis,house,street," +
-                "teh_pasp,color,(marka ||' '|| model) as marka,reverse(karta.num_cuz) as num_cuz,reverse(karta.num_shas) as num_shas," +
-                "reverse(karta.num_dv) as num_dv,power,volume,door,fuel,tip,annot,cuzov,city,rajon,obl,znak, oper.* " +
-                "from karta, oper " +
-                "where kart_id in (Select k2.kart_id from karta k2 where k2.id=?) " +
-                "and substring(karta.code_oper,1,2)=oper.oper_id ORDER BY data_oper DESC";
+                "select karta.id,kart_id,data_oper,data_v,znak,kv,teh_pasp,family,fname,sec_name,born,pasport,permis,house,street," +
+                        "teh_pasp,color,(marka ||' '|| model) as marka,reverse(karta.num_cuz) as num_cuz,reverse(karta.num_shas) as num_shas," +
+                        "reverse(karta.num_dv) as num_dv,power,volume,door,fuel,tip,annot,cuzov,city,rajon,obl,znak, oper.* " +
+                        "from karta, oper " +
+                        "where kart_id in (Select k2.kart_id from karta k2 where k2.id=?) " +
+                        "and substring(karta.code_oper,1,2)=oper.oper_id ORDER BY data_oper DESC";
 
         try {
             PreparedStatement preparedStatement = connectionPos.prepareStatement(SQL);

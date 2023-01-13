@@ -9,9 +9,18 @@
         a.a {
             color: #1810e0;
             font-style:normal;
-            font-size: revert;
+            /*font-size: revert;*/
       /*    font-weight: bold;*/
         }
+
+        p {
+            line-height: 0.3;
+        }
+
+        a {
+            line-height: 0.3;
+        }
+
         th, td { /* ячейки таблиці */
             border: 1px solid black; /* Параметры рамки */
             /*text-align: center; !* Выравнивание по центру *!*/
@@ -47,20 +56,24 @@
                 <a class="a" th:text="${#dates.format(kart.getData_oper, 'dd.MM.yyyy')}"></a>
             </td>
             <td>
-                <a th:href="@{/karta/{id}(id=${kart.getId()})}"
-                        th:text="${kart.getZnak()+'  СпР : '+ kart.getTeh_pasp()}"></a>
+                <a th:href="@{/karta/{id}(id=${kart.getId})}"
+                        th:text="${kart.getZnak +'  СпР : '+ kart.getTeh_pasp}"></a>
+                <p th:href="@{/karta/{id}(id=${kart.getId})}"
+                    th:text="${' ТО : '+ kart.getCode_oper}"></p>
             </td>
             <td>
-                <a th:href="@{/karta/{id}(id=${kart.getId()})}"
-                        th:text="${kart.getKart_id()}"></a>
+                <a th:href="@{/karta/{id}(id=${kart.getId})}"
+                        th:text="${kart.getKart_id}"></a>
             </td>
 
-            <td> <a th:href="@{/karta/{id}(id=${kart.getId()})}"
-                    th:text="${kart.getMarka()+' ' + kart.getModel() +'  р.в. '+kart.getData_v()}" ></a>
+            <td> <a th:href="@{/karta/{id}(id=${kart.getId})}"
+                    th:text="${kart.getMarka+' ' + kart.getModel +'  р.в. '+kart.getData_v}" ></a>
+                <a th:href="@{/karta/{id}(id=${kart.getId})}"
+                   th:text="${' Куз : '+ kart.getCuzov}"></a>
             </td>
             <td>
-                <a th:href="@{/karta/{id}(id=${kart.getId()})}"
-                        th:text="${kart.getFamily() + ' ' + kart.getFname()+' '+ kart.getSec_name()}" ></a>
+                <a th:href="@{/karta/{id}(id=${kart.getId})}"
+                        th:text="${kart.getFamily + ' ' + kart.getFname+' '+ kart.getSec_name}" ></a>
             </td>
 
         </tr>
