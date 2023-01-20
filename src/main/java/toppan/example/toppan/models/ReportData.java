@@ -28,7 +28,7 @@ public class ReportData {
     private String issued;
     private String pidrozdilNumber;
     /**
-    * Прошлий рік
+     * Прошлий рік
      */
     private String minusYear;
     /**
@@ -56,7 +56,7 @@ public class ReportData {
         request = strData[2];
         issued = strData[3];
         if (strData.length < 5) {
-            pidrozdilNumber ="РСЦ 1840";
+            pidrozdilNumber = "РСЦ 1840";
         } else {
             pidrozdilNumber = strData[4];
         }
@@ -71,7 +71,7 @@ public class ReportData {
         monthUA = DateUtils.MonthNamUA.getNameMonth(now.getMonthValue());
         minusMonthUA = DateUtils.MonthNamUA.getNameMonth(minusMount.getMonthValue());
         minusYear = DateUtils.MonthNamUA.getNameMonth(startDateOld.getMonthValue());
-        minusYear = minusYear.concat(" ")+ oldYear;
+        minusYear = minusYear.concat(" ") + oldYear;
 
     }
 

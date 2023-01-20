@@ -22,6 +22,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
 import lombok.NonNull;
 
 import lombok.extern.slf4j.Slf4j;
@@ -204,8 +205,8 @@ public final class SrxUtility {
      * key.
      *
      * @param maps Maps to be merged.
-     * @param <K> Key type.
-     * @param <V> Value type.
+     * @param <K>  Key type.
+     * @param <V>  Value type.
      * @return Merged mutable map.
      */
     @NonNull
@@ -265,7 +266,9 @@ public final class SrxUtility {
 //        return isLongNotSpecified(packageConversion) ? DEFAULT_PACKAGE_CONVERSION : packageConversion;
 //    }
 
-    /** Checks whether long value isn't specified */
+    /**
+     * Checks whether long value isn't specified
+     */
     public static boolean isLongNotSpecified(final Long value) {
         return value == null || value <= 0;
     }

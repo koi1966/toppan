@@ -35,7 +35,7 @@ public class CreateDoc {
     }
 
 
-//    public void createDoc(ReportData reportData, String monthUA, String year, String tsc, String filename) throws IOException {
+    //    public void createDoc(ReportData reportData, String monthUA, String year, String tsc, String filename) throws IOException {
     public String createDoc(ReportData reportData, String tsc, LocalDate to, String filename) throws IOException {
 //        String separator = File.separator;
 //        String path = "c:\\rsc1840\\Rubin"+tsc+".docx";
@@ -68,11 +68,11 @@ public class CreateDoc {
                         r.setText(text, 0);
                     }
                     if (text != null && text.contains("dat")) {
-                        text = text.replace("dat", reportData.getMonthUA()+" "+reportData.getYearTxt());
+                        text = text.replace("dat", reportData.getMonthUA() + " " + reportData.getYearTxt());
                         r.setText(text, 0);
                     }
                     if (text != null && text.contains("dak")) {
-                        text = text.replace("dak", reportData.getMinusMonthUA()+" "+reportData.getYearTxt());
+                        text = text.replace("dak", reportData.getMinusMonthUA() + " " + reportData.getYearTxt());
                         r.setText(text, 0);
                     }
                     if (text != null && text.contains("to")) {
@@ -89,7 +89,7 @@ public class CreateDoc {
                         for (XWPFRun r : p.getRuns()) {
                             String text = r.getText(0);
                             if (text != null && text.contains("dak")) {
-                                text = text.replace("dak", reportData.getMinusMonthUA()+" "+reportData.getYearTxt());
+                                text = text.replace("dak", reportData.getMinusMonthUA() + " " + reportData.getYearTxt());
                                 r.setText(text, 0);
                             }
                             if (text != null && text.contains("das")) {
@@ -104,7 +104,7 @@ public class CreateDoc {
 
 //        String path = "c:" + separator + "rsc1840" + separator + "Rubin"+tsc+".docx";
         String filOutTsc = nameFileDoc.NameFileOut(tsc);
-        String path = "c:\\RSC1840\\Rubin"+filOutTsc+".docx";
+        String path = "c:\\RSC1840\\Rubin" + filOutTsc + ".docx";
 //        String path = "c:/rsc1840/Rubin.docx";
         String pathOut = path.replaceAll("(?<! ) (?! )", "_");
         document.write(new FileOutputStream(pathOut));

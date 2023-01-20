@@ -5,31 +5,55 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>Пошук по регіональній автоматизованій базі АМТ</title>
-    <link th:href="@{/css/style.css}" rel="stylesheet" />
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
 
 </head>
 <body>
 <header th:insert="blocks/header.html :: header"></header>
 <form th:method="POST" th:action="@{/karta/}" th:object="${karta}">
-    <label for="Znak" >Номерний знак: </label>
-    <input type="text" th:field="*{znak}" id="Znak"/>
+    <label for="Znak">Номерний знак: </label>
+    <input style="margin-left: 56px" class="tab" type="text" th:field="*{znak}" id="Znak"/>
 
     <br>
-    <label  for="Znak">Свідоцтво про реєстр : </label>
-    <input type="text" th:field="*{teh_pasp}" id="teh_pasp"/>
+    <label for="teh_pasp">Свідоцтво про реєстр : </label>
+    <input style="margin-left: 3px" type="text" th:field="*{teh_pasp}" id="teh_pasp"/>
     <br/>
 
-    <label  for="Znak">Vin : </label>
-    <input type="text" th:field="*{kart_id}" id="kart_id"/>
+    <label for="kart_id">Vin : </label>
+    <input style="margin-left: 141px" type="text" th:field="*{kart_id}" id="kart_id"/>
     <br/>
 
-    <label  for="Znak">№ кузова : </label>
-    <input type="text" th:field="*{num_cuz}" id="num_cuz"/>
+    <label for="num_cuz">№ кузова : </label>
+    <input style="margin-left: 94px" class="tab" type="text" th:field="*{num_cuz}" id="num_cuz"/>
+    <br/>
+    <label for="num_shas">№ шасі : </label>
+    <input style="margin-left: 109px" class="tab" type="text" th:field="*{num_shas}" id="num_shas"/>
+    <br/>
+    <label for="num_dv">№ двигуна : </label>
+    <input style="margin-left: 84px" class="tab" type="text" th:field="*{num_dv}" id="num_dv"/>
+
+    <br/><br/>
+    <label for="family">Фамілія  : </label>
+    <input style="margin-left: 107px" class="tab" type="text" th:field="*{family}" id="family"/>
+    <br/>
+    <label for="fname">Ім'я     : </label>
+    <input style="margin-left: 137px" class="tab" type="text" th:field="*{fname}" id="fname"/>
+    <br/>
+    <label for="sec_name">По батькові</label>
+    <input style="margin-left: 87px" class="tab" type="text" th:field="*{sec_name}" id="sec_name"/>
     <br/>
 
+    <br/>
+    <label for="pasport">ІПН/ЄДРПОУ</label>
+    <input style="margin-left: 74px" class="tab" type="text" th:field="*{pasport}" id="pasport"/>
+
+    <br/>
+    <label >Остання операція ТЗ</label>
+    <input style="margin-left: 16px" type="checkbox">
+    <br/>
     <input type="submit" value="Пошук"/>
 
-<!--    <oo>Carefully Styled Heading</oo>-->
+    <!--    <oo>Carefully Styled Heading</oo>-->
 
 </form>
 

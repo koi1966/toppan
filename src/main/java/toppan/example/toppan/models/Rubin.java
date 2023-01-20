@@ -11,7 +11,7 @@ import java.time.LocalDate;
 
 @Slf4j   // Логер
 @Entity
-@Table(name ="rubin", indexes = {@Index(name = "data_v", columnList = "data_v",unique = false)})
+@Table(name = "rubin", indexes = {@Index(name = "data_v", columnList = "data_v", unique = false)})
 public class Rubin {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,7 +27,7 @@ public class Rubin {
     @Min(value = 0, message = "Значення мають бути більше за - 0")
     private int week, week_1, year_0, year_1;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @NotEmpty( message = "Введіть дату")
+    @NotEmpty(message = "Введіть дату")
     private LocalDate data_v;
 
     public Rubin() {

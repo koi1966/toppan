@@ -28,5 +28,6 @@ public class Oper {
     private int oper_nic;
     private String osn_para;
 
-public Oper(){}
+    public Oper() {
+    }
 }

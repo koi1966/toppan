@@ -6,52 +6,55 @@
 </head>
 <body>
 <!--/*@thymesVar id="tit" type=""*/-->
-<div>  <header th:insert="blocks/header.html :: header"></header>
+<div>
+    <header th:insert="blocks/header.html :: header"></header>
     <!--    // week -   за неділю           Кількість звернень громадян щодо видачі довідок про відсутність (наявність) судимості-->
     <!--    // week_1 - за неділю           Кількість виданих довідок про відсутність (наявність) судимості-->
     <!--    //-->
     <!--    // year -   З початку року   Кількість звернень громадян щодо видачі довідок про відсутність (наявність) судимості-->
     <!--    // year_1 - З початку року   Кількість виданих довідок про відсутність (наявність) судимості-->
-<!---->
-<!--    <div th:each="rubin:${rubinList}" class="alert alert-info mt-2">-->
-<!--        <h4 th:text="${rubin.pidrozdil + ' ....  ' + #dates.format(rubin.data_v, 'dd.MM.yyyy') }"/>-->
-<!--        <p th:text="${'звернень тиждень :' +rubin.week + '  з початку року : '+rubin.year  }"/>-->
-<!--        <p th:text="${'виданих  тиждень :'+rubin.week_1 +'  з початку року : '+ rubin.year_1 }"/>-->
-<!--    </div>-->
-<!--    -->
+    <!---->
+    <!--    <div th:each="rubin:${rubinList}" class="alert alert-info mt-2">-->
+    <!--        <h4 th:text="${rubin.pidrozdil + ' ....  ' + #dates.format(rubin.data_v, 'dd.MM.yyyy') }"/>-->
+    <!--        <p th:text="${'звернень тиждень :' +rubin.week + '  з початку року : '+rubin.year  }"/>-->
+    <!--        <p th:text="${'виданих  тиждень :'+rubin.week_1 +'  з початку року : '+ rubin.year_1 }"/>-->
+    <!--    </div>-->
+    <!--    -->
 
     <div>
         <form action="../rubin/rubin-add" method="post">
 
             <label for="pidrozdil">ТСЦ : </label>
             <!--        <input type="text" th:value="${tsc}" disabled name="pidrozdil" placeholder="Підрозділ" class="form-control" id="pidrozdil"><br>-->
-            <input type="text" th:value="${rubin.pidrozdil}" name="pidrozdil" placeholder="Підрозділ" class="form-control" id="pidrozdil"><br>
+            <input type="text" th:value="${rubin.pidrozdil}" name="pidrozdil" placeholder="Підрозділ"
+                   class="form-control" id="pidrozdil"><br>
             <label for="data_v">Дата : </label>
-            <input type="date" th:value="${rubin.data_v}" name="data_v" placeholder="Дата внесення" class="form-control" id="data_v" ><br>
+            <input type="date" th:value="${rubin.data_v}" name="data_v" placeholder="Дата внесення" class="form-control"
+                   id="data_v"><br>
             <!--        <input class="form-con<input class="form-control" type="date" [ngModel] ="dateFrom | date:'yyyy-MM-dd'" (ngModelChange)="$event = dateFrom" name="dateFrom" min="2016-10-01" [value]="2016-10-01" />trol" type="date" [ngModel] ="dateFrom | date:'dd-mm-yyyy'" (ngModelChange)="$event = dateFrom" name="dateFrom" min="01-01-1900" [value]="01-10-2016" />-->
             <label for="week">Кількість звернень за тиждень : </label>
 
-<!--            <input type="text" name="week" placeholder="звернень за тиждень" class="form-control" id="week"/>-->
+            <!--            <input type="text" name="week" placeholder="звернень за тиждень" class="form-control" id="week"/>-->
             <input type="text" th:field="*{rubin.week}"
-                   th:class="${#fields.hasErrors('rubin.week')}? fieldError " id="week" />
+                   th:class="${#fields.hasErrors('rubin.week')}? fieldError " id="week"/>
 
-<!--            <input type="text" name="week" placeholder="звернень за тиждень" class="form-control" id="week"/>-->
+            <!--            <input type="text" name="week" placeholder="звернень за тиждень" class="form-control" id="week"/>-->
             <label for="year_0">Кількість звернень за рік ......... : </label>
 
             <input type="text" th:field="*{rubin.year_0}"
-                   th:class="${#fields.hasErrors('rubin.year_0')}? fieldError " id="year_0" /><br>
+                   th:class="${#fields.hasErrors('rubin.year_0')}? fieldError " id="year_0"/><br>
 
             <label for="week_1">Кількість виданих.. за тиждень : </label>
-<!--            <input type="text" name="week_1" placeholder="виданих за тиждень" class="form-control" id="week_1"><br>-->
+            <!--            <input type="text" name="week_1" placeholder="виданих за тиждень" class="form-control" id="week_1"><br>-->
             <input type="text" th:field="*{rubin.week_1}"
-                   th:class="${#fields.hasErrors('rubin.week_1')}? fieldError " id="week_1" />
+                   th:class="${#fields.hasErrors('rubin.week_1')}? fieldError " id="week_1"/>
 
 
             <label for="year_1">Кількість виданих.. за рік ....... . : </label>
             <input type="text" th:field="*{rubin.year_1}"
-                   th:class="${#fields.hasErrors('rubin.year_1')}? fieldError " id="year_1" /><br>
+                   th:class="${#fields.hasErrors('rubin.year_1')}? fieldError " id="year_1"/><br>
             <ul>
-                <li th:each="err : ${#fields.errors('*')}" th:text="${err}" />
+                <li th:each="err : ${#fields.errors('*')}" th:text="${err}"/>
             </ul>
             <button type="submit" class="btn btn-success">Зберегти</button>
         </form>

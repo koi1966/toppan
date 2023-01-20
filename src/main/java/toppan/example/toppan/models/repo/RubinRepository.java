@@ -13,14 +13,14 @@ public interface RubinRepository extends CrudRepository<Rubin, Long> {
 
     @Query(nativeQuery = true,
             value = "SELECT * from rubin r where r.data_v = :data_v ORDER BY r.pidrozdil")
-    List<Rubin> setListDateRubin(@Param("data_v") LocalDate data_v) ;
+    List<Rubin> setListDateRubin(@Param("data_v") LocalDate data_v);
 
-//    Сумы двух полей за период по всем ТСЦ
+    //    Сумы двух полей за период по всем ТСЦ
     @Query(nativeQuery = true,
             value = "select sum(week) as week, sum(week_1) as week_1, sum(year_0) as year_0 , sum(year_1) as year_1 from rubin where data_v = :data_v")
     String setSumDate(@Param("data_v") Date data_v);
 
-//    проверка на дубликат записи
+    //    проверка на дубликат записи
     @Query(nativeQuery = true,
             value = "select * from rubin where data_v = :data_v and pidrozdil = :pidrozdil")
     String setDatePidrozdil(@Param("data_v") Date data_v,

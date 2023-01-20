@@ -21,6 +21,7 @@ public interface RubinWeekRepository extends CrudRepository<Rubin_week, Long> {
     List<Rubin_week> setListDateRubinWeek(@Param("startDate") LocalDate data_v,
                                           @Param("endDate") LocalDate data_last,
                                           @Param("tsc") String tsc);
+
     List<Rubin_week> getAllByDataBetweenAndPidrozdilPidrozdil(LocalDate data, LocalDate data2, String pidrozdil, Sort sort);
 
     //   Помісячний звіт РСЦ

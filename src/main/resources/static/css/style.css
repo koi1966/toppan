@@ -1,23 +1,27 @@
-oo {
+.oo {
     font-family: sans-serif;
     font-size: 3.5em;
     text-transform: uppercase;
-    color:brown;
+    color: brown;
 }
 
-h3 {
+.h3 {
     font-family: sans-serif;
     font-size: 3.5em;
     text-transform: uppercase;
-    color:brown;
+    color: brown;
 }
 
 
-strong {
+.strong {
     font-weight: 700;
     background-color: yellow;
 }
 
-p {
+.p {
     font-family: sans-serif;
+}
+
+.tab {
+    margin-left: 40px;
 }

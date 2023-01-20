@@ -1,18 +1,20 @@
-.ul{
+.ul {
     display: flex;
     padding-left: 0;
     list-style: none;
 }
 
-.li{
+.li {
     position: relative;
 }
 
-li:hover.submenu{
+li:hover.submenu {
     display: flex;
 }
 
-.co{color: #6f93dc}
+.co {
+    color: #6f93dc
+}
 
 .a {
     display: flex;
@@ -23,20 +25,20 @@ li:hover.submenu{
     white-space: nowrap;
 }
 
-.a:hover{
+.a:hover {
     background-color: pink;
 }
 
-.a:focus{
+.a:focus {
     outline: none;
 }
 
-.a:focus{
+.a:focus {
     background-color: yellow;
 }
 
-.submenu{
+.submenu {
     display: none;
-    flex-direction: column ;
+    flex-direction: column;
     position: absolute;
 }

@@ -37,6 +37,7 @@ public class KartaDAO {
         }
 
         String SQLa = "SELECT karta.*, oper.oper from karta, oper where ";
+
         if (!kar.getZnak().isEmpty()) {
 
             SQLa = SQLa + "znak like '" + kar.getZnak().toUpperCase() + "' ";
@@ -50,14 +51,21 @@ public class KartaDAO {
         }
 
         if (!kar.getNum_cuz().isEmpty()) {
-            if (SQLa.contains("kart_id like")) {
+            if (SQLa.contains("kart_id like ")) {
                 SQLa = SQLa + "and ";
             }
+
+            if (!kar.getNum_shas().isEmpty()) {
+                if (SQLa.contains("num_shas like ")) {
+                    SQLa = SQLa + "and ";
+                }
+                SQLa = SQLa + "kart_id like '" + kar.getKart_id().toUpperCase() + "' ";
+            }
+
             SQLa = SQLa + "num_cuz like '" + kar.getNum_cuz().toUpperCase() + "' ";
         }
-//        SQLa = SQLa + "and kart_id in (Select k2.kart_id from karta k2 where k2.id=kart_id) ";
         SQLa = SQLa + "and substring(karta.code_oper,1,2)=oper.oper_id ";
-                SQLa = SQLa + "ORDER BY Data_oper DESC, kart_id";
+        SQLa = SQLa + "ORDER BY Data_oper DESC, kart_id";
 
         try (ResultSet resultSet = statement.executeQuery(SQLa)) {
             while (resultSet.next()) {

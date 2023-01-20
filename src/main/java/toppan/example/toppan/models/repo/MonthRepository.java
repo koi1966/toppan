@@ -16,7 +16,6 @@ public interface MonthRepository extends CrudRepository<Rubin_month, Long> {
      */
     @Query(nativeQuery = true,
             value = "select * from rubin_month where month_year = :month_year and pidrozdil = :pidrozdil ORDER BY pidrozdil")
-
     String setMonthPidrozdil(@Param("month_year") String month_year,
-                            @Param("pidrozdil") String pidrozdil);
+                             @Param("pidrozdil") String pidrozdil);
 }

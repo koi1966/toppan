@@ -8,9 +8,9 @@
     <style type="text/css">
         a.a {
             color: #1810e0;
-            font-style:normal;
+            font-style: normal;
             /*font-size: revert;*/
-      /*    font-weight: bold;*/
+            /*    font-weight: bold;*/
         }
 
         p {
@@ -42,7 +42,7 @@
 </head>
 <body>
 <header th:insert="blocks/header.html :: header"></header>
-<div >
+<div>
     <table>
         <tr>
             <th>Дата операции</th>
@@ -57,30 +57,30 @@
             </td>
             <td>
                 <a th:href="@{/karta/{id}(id=${kart.getId})}"
-                        th:text="${kart.getZnak +'  СпР : '+ kart.getTeh_pasp}"></a>
+                   th:text="${kart.getZnak +'  СпР : '+ kart.getTeh_pasp}"></a>
                 <p th:href="@{/karta/{id}(id=${kart.getId})}"
-                    th:text="${' ТО : '+ kart.getCode_oper}"></p>
+                   th:text="${' ТО : '+ kart.getCode_oper}"></p>
             </td>
             <td>
                 <a th:href="@{/karta/{id}(id=${kart.getId})}"
-                        th:text="${kart.getKart_id}"></a>
+                   th:text="${kart.getKart_id}"></a>
             </td>
 
-            <td> <a th:href="@{/karta/{id}(id=${kart.getId})}"
-                    th:text="${kart.getMarka+' ' + kart.getModel +'  р.в. '+kart.getData_v}" ></a>
+            <td><a th:href="@{/karta/{id}(id=${kart.getId})}"
+                   th:text="${kart.getMarka+' ' + kart.getModel +'  р.в. '+kart.getData_v}"></a>
                 <a th:href="@{/karta/{id}(id=${kart.getId})}"
                    th:text="${' Куз : '+ kart.getCuzov}"></a>
             </td>
             <td>
                 <a th:href="@{/karta/{id}(id=${kart.getId})}"
-                        th:text="${kart.getFamily + ' ' + kart.getFname+' '+ kart.getSec_name}" ></a>
+                   th:text="${kart.getFamily + ' ' + kart.getFname+' '+ kart.getSec_name}"></a>
             </td>
 
         </tr>
     </table>
 
 
-    <a ></a>
+    <a></a>
     <br/>
 </div>
 <br/>
