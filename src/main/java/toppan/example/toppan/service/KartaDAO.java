@@ -37,41 +37,83 @@ public class KartaDAO {
         }
 
         String SQLa = "SELECT karta.*, oper.oper from karta, oper where ";
+        String SqlEquals = "SELECT karta.*, oper.oper from karta, oper where ";
 
         if (!kar.getZnak().isEmpty()) {
 
             SQLa = SQLa + "znak like '" + kar.getZnak().toUpperCase() + "' ";
         }
 
+
         if (!kar.getKart_id().isEmpty()) {
-            if (SQLa.contains("znak like")) {
+            if (!StringEquals.equalsSQL(SQLa, SqlEquals)) {
+
                 SQLa = SQLa + "and ";
             }
             SQLa = SQLa + "kart_id like '" + kar.getKart_id().toUpperCase() + "' ";
         }
 
         if (!kar.getNum_cuz().isEmpty()) {
-            if (SQLa.contains("kart_id like ")) {
+            if (!StringEquals.equalsSQL(SQLa, SqlEquals)) {
                 SQLa = SQLa + "and ";
             }
-
-            if (!kar.getNum_shas().isEmpty()) {
-                if (SQLa.contains("num_shas like ")) {
-                    SQLa = SQLa + "and ";
-                }
-                SQLa = SQLa + "kart_id like '" + kar.getKart_id().toUpperCase() + "' ";
-            }
-
             SQLa = SQLa + "num_cuz like '" + kar.getNum_cuz().toUpperCase() + "' ";
         }
+
+        if (!kar.getNum_shas().isEmpty()) {
+            if (!StringEquals.equalsSQL(SQLa, SqlEquals)) {
+                SQLa = SQLa + "and ";
+            }
+            SQLa = SQLa + "num_shas like '" + kar.getNum_shas().toUpperCase() + "' ";
+        }
+
+        if (!kar.getNum_dv().isEmpty()) {
+            if (!StringEquals.equalsSQL(SQLa, SqlEquals)) {
+                SQLa = SQLa + "and ";
+            }
+            SQLa = SQLa + "num_dv like '" + kar.getNum_dv().toUpperCase() + "' ";
+        }
+
+        if (!kar.getFamily().isEmpty()) {
+            if (!StringEquals.equalsSQL(SQLa, SqlEquals)) {
+                SQLa = SQLa + "and ";
+            }
+            SQLa = SQLa + "family like '" + kar.getFamily().toUpperCase() + "' ";
+        }
+
+        if (!kar.getFname().isEmpty()) {
+            if (!StringEquals.equalsSQL(SQLa, SqlEquals)) {
+                SQLa = SQLa + "and ";
+            }
+            SQLa = SQLa + "fname like '" + kar.getFname().toUpperCase() + "' ";
+        }
+
+        if (!kar.getSec_name().isEmpty()) {
+            if (!StringEquals.equalsSQL(SQLa, SqlEquals)) {
+                SQLa = SQLa + "and ";
+            }
+            SQLa = SQLa + "sec_name like '" + kar.getSec_name().toUpperCase() + "' ";
+        }
+
+        if (!kar.getPasport().isEmpty()) {
+            if (!StringEquals.equalsSQL(SQLa, SqlEquals)) {
+                SQLa = SQLa + "and ";
+            }
+            SQLa = SQLa + "pasport like '" + kar.getPasport().toUpperCase() + "' ";
+        }
+
+
         SQLa = SQLa + "and substring(karta.code_oper,1,2)=oper.oper_id ";
         SQLa = SQLa + "ORDER BY Data_oper DESC, kart_id";
 
-        try (ResultSet resultSet = statement.executeQuery(SQLa)) {
+        try {
+            assert statement != null;
+            try(ResultSet resultSet = statement.executeQuery(SQLa))
+
+        {
             while (resultSet.next()) {
                 Karta AMT = new Karta();
                 AMT.setKart_id(resultSet.getString("Kart_id"));
-                String vv = resultSet.getString("Kart_id");
                 AMT.setId(resultSet.getLong("id"));
                 AMT.setFamily(resultSet.getString("Family"));
                 AMT.setFname(resultSet.getString("Fname"));
@@ -90,12 +132,16 @@ public class KartaDAO {
 
                 kart.add(AMT);
             }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
         }
+        } catch(
+    SQLException throwables)
+
+    {
+        throwables.printStackTrace();
+    }
 
         return kart;
-    }
+}
 
     public List<Karta> AmtHistory(long id) {
         List<Karta> kartHistory = new ArrayList<>();
