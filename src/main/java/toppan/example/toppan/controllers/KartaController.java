@@ -27,15 +27,16 @@ public class KartaController {
     }
 
     @GetMapping("/searchAMT")
-    public String searchAMT(@ModelAttribute("karta") Karta karta, Model model) {
+    public String searchAMT(@ModelAttribute("karta") Karta karta) {
 
         return "karta/searchAMT";
     }
 
     // Получить с html формы поля для обработки @PostMapping
     @PostMapping()
-    public String search(@ModelAttribute("karta") Karta kar, Model model) {
-        final List<Karta> kartaAMTList = kartaDAO.search(kar);
+    public String search(@ModelAttribute("karta") Karta kar, @ModelAttribute("checkbox1") String check, Model model) {
+
+        final List<Karta> kartaAMTList = kartaDAO.search(kar,check);
         model.addAttribute("kartaList", kartaAMTList);
         return "karta/viewKarta";
     }

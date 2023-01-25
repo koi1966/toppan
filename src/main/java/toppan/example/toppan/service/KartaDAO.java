@@ -25,7 +25,7 @@ public class KartaDAO {
         this.kartaRepository = kartaRepository;
     }
 
-    public List<Karta> search(Karta kar) {
+    public List<Karta> search(Karta kar, String check) {
 
         List<Karta> kart = new ArrayList<>();
 
@@ -102,7 +102,10 @@ public class KartaDAO {
             SQLa = SQLa + "pasport like '" + kar.getPasport().toUpperCase() + "' ";
         }
 
-
+        if (check.equals("on")) {
+            SQLa = SQLa +
+            "and karta.data_oper = (select max(kk.data_oper) from karta kk where kk.kart_id = karta.kart_id ) ";
+        }
         SQLa = SQLa + "and substring(karta.code_oper,1,2)=oper.oper_id ";
         SQLa = SQLa + "ORDER BY Data_oper DESC, kart_id";
 

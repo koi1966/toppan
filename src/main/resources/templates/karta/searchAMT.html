@@ -50,8 +50,9 @@
     <br/>
     <label >Остання операція ТЗ</label>
 
-
-    <input style="margin-left: 16px" type="checkbox" id="checked">
+    <!--/*@thymesVar id="checkbox1" type=""*/-->
+    <input type="checkbox" name="checkbox1" th:checked="${checkbox1}" />
+<!--    <input style="margin-left: 16px" type="checkbox" id="checked" name="checked">-->
     <br/>
     <input type="submit" value="Пошук"/>
 
