@@ -22,10 +22,6 @@ public class DateUtils {
             this.number = number;
         }
 
-        /**
-         * @param number
-         * @return
-         */
         public static String getNameMonth(int number) {
             MonthNamUA[] values = MonthNamUA.values();
             for (MonthNamUA month : values) {
