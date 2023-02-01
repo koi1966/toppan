@@ -33,8 +33,8 @@
     <input style="margin-left: 84px" class="tab" type="text" th:field="*{num_dv}" id="num_dv"/>
 
     <br/><br/>
-    <label for="family">Фамілія  : </label>
-    <input style="margin-left: 107px" class="tab" type="text" th:field="*{family}" id="family"/>
+    <label for="family">Прізвище : </label>
+    <input style="margin-left: 94px" class="tab" type="text" th:field="*{family}" id="family"/>
     <br/>
     <label for="fname">Ім'я     : </label>
     <input style="margin-left: 137px" class="tab" type="text" th:field="*{fname}" id="fname"/>
@@ -48,11 +48,12 @@
     <input style="margin-left: 74px" class="tab" type="text" th:field="*{pasport}" id="pasport"/>
 
     <br/>
-    <label >Остання операція ТЗ</label>
+    <label >Тільки остання операція за ТЗ:</label>
 
-    <!--/*@thymesVar id="checkbox1" type=""*/-->
-    <input type="checkbox" name="checkbox1" th:checked="${checkbox1}" />
-<!--    <input style="margin-left: 16px" type="checkbox" id="checked" name="checked">-->
+    
+    <!--/*@thymesVar id="lastOper" type=""*/-->
+    <input type="checkbox" name="lastOper" th:checked="${lastOper}" />
+
     <br/>
     <input type="submit" value="Пошук"/>
 

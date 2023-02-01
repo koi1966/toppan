@@ -34,7 +34,7 @@ public class KartaController {
 
     // Получить с html формы поля для обработки @PostMapping
     @PostMapping()
-    public String search(@ModelAttribute("karta") Karta kar, @ModelAttribute("checkbox1") String check, Model model) {
+    public String search(@ModelAttribute("karta") Karta kar, @ModelAttribute("lastOper") String check, Model model) {
 
         final List<Karta> kartaAMTList = kartaDAO.search(kar,check);
         model.addAttribute("kartaList", kartaAMTList);
