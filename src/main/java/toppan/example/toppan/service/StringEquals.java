@@ -11,4 +11,8 @@ public class StringEquals {
         return Objects.equals(str1, str2);
     }
 
+    public static void send(String str){
+
+    }
+
 }
