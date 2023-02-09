@@ -15,7 +15,6 @@ import java.util.List;
 
 import static toppan.example.toppan.bl.DataDAOPostgres.connectionPos;
 
-
 @Component
 @Service
 public class KartaDAO {

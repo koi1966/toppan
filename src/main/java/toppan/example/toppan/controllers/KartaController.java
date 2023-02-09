@@ -45,7 +45,7 @@ public class KartaController {
     public List<KartaDTO> searchKarta(@RequestParam String znak) {
         log.info("All users age > {}", znak);
         List<Karta> karta = kartaDAO.kartaList(znak);
-        return mapper.map(karta);
+        return mapper.mapKartaToKartaDto(karta);
     }
 
     @GetMapping("/{id}")
@@ -76,6 +76,15 @@ public class KartaController {
 
         return "karta/test";
     }
+
+    @GetMapping("/searchKarta")
+    public String testKarta2() {
+        log.info("See js test !!!");
+
+        return "karta/searchKarta";
+    }
+
+//    searchKarta.html
 
 
 }

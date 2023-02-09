@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 public class KartaDTO {
     private Long id;
     private String kart_id;
-    private LocalDateTime data_oper;
+    private Timestamp data_oper;
     private int reg_def;
     private String num_dv;
     private String num_cuz;

@@ -9,5 +9,7 @@ import java.util.List;
 @org.mapstruct.Mapper
 public interface Mapper {
 
-    List<KartaDTO> map(List<Karta> kartaList);
+    List<KartaDTO> mapKartaToKartaDto(List<Karta> kartaList);
+
+    List<Karta> mapKartaDtoToKarta(List<KartaDTO> kartaList);
 }
