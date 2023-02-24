@@ -106,7 +106,7 @@ public class KartaDAO {
             "and karta.data_oper = (select max(kk.data_oper) from karta kk where kk.kart_id = karta.kart_id ) ";
         }
         SQLa = SQLa + "and substring(karta.code_oper,1,2)=oper.oper_id ";
-        SQLa = SQLa + "ORDER BY Data_oper DESC, kart_id";
+        SQLa = SQLa + "ORDER BY kart_id, Data_oper";
 
         try {
             assert statement != null;

@@ -139,7 +139,9 @@
                     <p class="a" th:text="${AmtHyst.getNum_dv!=null}? ${'Дв. '+AmtHyst.getNum_dv}:''"></p>
                     <p class="a" th:text="${'Vin '+AmtHyst.getKart_id()}"></p></td>
 
-                <td class="td1" id="col3"><a th:text="${AmtHyst.getData_oper()}"></a></td>
+                <td class="td1" id="col3"><a th:text="${AmtHyst.getData_oper()}"></a>
+<!--                    <p class="a" th:text="${AmtHyst.getCode_oper!=null}? ${'Kуз.'+AmtHyst.getCode_oper}:''"></p>-->
+                </td>
             </tr>
         </table>
     </div>

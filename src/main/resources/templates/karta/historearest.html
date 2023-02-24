@@ -5,11 +5,11 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <!--    <head>-->
-    <title>Логин</title>
+    <title>Історія && Арест АМТ</title>
     <link rel="stylesheet" th:href="@{css/login_css.css}">
     <!--    </head>-->
 
-    <title>Історія && Арест</title>
+    <title>Історія && Арест </title>
 
     <style type="text/css">
         * {
@@ -128,8 +128,9 @@
 
             <td id="col_3">
                 <a> <b th:text="${#dates.format(AmtHyst.getData_oper, 'dd.MM.yyyy  HH-mm')}"></b></a>
-                <!--                <br>-->
-                <!--                <p> <b th:text="${AmtHyst.getCode_oper}"> </b></p>-->
+                                <br>
+                <p> ТО: <b th:text="${AmtHyst.getCode_oper()}?:''"> </b></p>
+<!--                                <p> <b th:text="${AmtHyst.getCode_oper}"> </b></p>-->
             </td>
 
             <td id="col_4"><b th:text="${AmtHyst.getFamily+' '+ AmtHyst.getFname+' '+ AmtHyst.getSec_name}"></b>
