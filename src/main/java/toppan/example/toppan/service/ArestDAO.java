@@ -25,6 +25,7 @@ public class ArestDAO {
             throwables.printStackTrace();
         }
         try {
+            assert preparedStatement != null;
             preparedStatement.setString(1, kart_id);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
