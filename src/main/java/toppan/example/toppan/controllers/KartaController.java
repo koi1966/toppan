@@ -51,22 +51,20 @@ public class KartaController {
     @GetMapping("/{id}")
     public String AmtHystory(@PathVariable("id") long id, Model model) {
         List<Karta> AMTHys = kartaDAO.AmtHistory(id);
-        //      System.out.println(AMTHys.get(0));
-        //    String kart_id1 = AMTHys.get(0).getKart_id();
+
         if (!AMTHys.isEmpty()) {
             Karta kartaAMT = AMTHys.get(0);
             String kart_id = kartaAMT.getKart_id();
 
             List<Arest> ArestA = new ArestDAO()
-                    .Serch_Arest(kart_id); // реализовать поиск по арестам Serch_Arest по kart_id
-            model.addAttribute("arest", ArestA); // передать найденый арест на вьюшку
+                    .Serch_Arest(kart_id); // search the arrest table ( arest )  Serch_Arest by kart_id
+            model.addAttribute("arest", ArestA); // transfer the found arrest to viewing
         }
 
         model.addAttribute("Amthystory", AMTHys);
 
         return "karta/historearest";
     }
-
 
 //    Test
 

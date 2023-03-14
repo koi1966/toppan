@@ -24,7 +24,7 @@ public class ToppanController {
 
     @GetMapping("/printer/toppan")
     public String Toppan(Model model) {
-//      находим и передаем все записи на вюшку
+//      find and transfer all records to front
         List<Toppan> toppanList = (List<Toppan>) toppanRepository.findAll();
         model.addAttribute("toppan", toppanList);
 
@@ -34,7 +34,7 @@ public class ToppanController {
     @PostMapping("/printer/toppan-add")
     public String addToppan(@RequestParam String sn, @RequestParam String datawork, @RequestParam String completeness, @RequestParam String code, @RequestParam String pidrozdil, Model model) {
         Toppan top = new Toppan(sn, datawork, completeness, code, pidrozdil);
-        //  request.getRemoteAddr()  -  вытягивает IP копма с которого вносят информацию
+        //  request.getRemoteAddr()  -  GET IP user computer - from which information is entered
         toppanRepository.save(top);
 
         return "redirect:/printer/toppan";
