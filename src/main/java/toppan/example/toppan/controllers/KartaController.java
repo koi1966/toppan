@@ -57,7 +57,7 @@ public class KartaController {
             String kart_id = kartaAMT.getKart_id();
 
             List<Arest> ArestA = new ArestDAO()
-                    .Serch_Arest(kart_id); // search the arrest table ( arest )  Serch_Arest by kart_id
+                    .SearchArest(kart_id); // search the arrest table ( arest )  Serch_Arest by kart_id
             model.addAttribute("arest", ArestA); // transfer the found arrest to viewing
         }
 
