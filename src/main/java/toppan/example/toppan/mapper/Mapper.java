@@ -5,7 +5,6 @@ import toppan.example.toppan.models.dto.KartaDTO;
 
 import java.util.List;
 
-
 @org.mapstruct.Mapper
 public interface Mapper {
 

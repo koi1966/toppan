@@ -49,7 +49,7 @@ public class ReportData {
     public ReportData(String reportData) {
         String[] strData = reportData.split(",");
         LocalDate now = LocalDate.now();
-        LocalDate startDateOld, endDateOld, minusMount;
+        LocalDate startDateOld, minusMount;
 
         requestOld = strData[0];
         issuedOld = strData[1];

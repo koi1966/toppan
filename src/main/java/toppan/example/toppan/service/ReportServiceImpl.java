@@ -13,7 +13,6 @@ import java.time.temporal.TemporalAdjusters;
 
 import static java.time.temporal.TemporalAdjusters.firstDayOfYear;
 
-
 @Service
 @Slf4j   // Логер
 public class ReportServiceImpl implements ReportService {

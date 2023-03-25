@@ -16,6 +16,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -144,10 +145,13 @@ public class KartaDAOSybase {
         return kartaSybaseAMTList;
     }
 
-    public List<ArestSybase> searchArest() throws SQLException {
+    public List<ArestSybase> updateArest(LocalDate from, LocalDate to) throws SQLException {
         List<ArestSybase> arestSybaseList = new ArrayList<>();
 
-        PreparedStatement preparedStatement = connectionSa.prepareStatement("SELECT * from arest");
+
+        PreparedStatement preparedStatement = connectionSa.prepareStatement("SELECT * from arest WHERE data_sna BETWEEN ? AND ?");
+        preparedStatement.setObject(1, from);
+        preparedStatement.setObject(2, to);
 
         try (ResultSet resultSet = preparedStatement.executeQuery()) {
 
@@ -230,5 +234,8 @@ public class KartaDAOSybase {
         }
 
         return null;
+    }
+
+    public void checArest() {
     }
 }
