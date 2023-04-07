@@ -11,11 +11,13 @@ import toppan.example.toppan.mapper.Mapper;
 import toppan.example.toppan.models.Arest;
 import toppan.example.toppan.models.Karta;
 import toppan.example.toppan.models.dto.KartaDTO;
+import toppan.example.toppan.models.repo.ArestRepository;
 import toppan.example.toppan.service.ArestDAO;
 import toppan.example.toppan.service.KartaDAO;
 import toppan.example.toppan.service.KartaDAOSybase;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -25,11 +27,13 @@ import java.util.List;
 public class KartaController {
     private final KartaDAO kartaDAO;
     private final KartaDAOSybase kartaDAOSybase;
+    private final ArestRepository arestRepository;
     private final Mapper mapper = Mappers.getMapper(Mapper.class);
 
-    public KartaController(KartaDAO kartaDAO, KartaDAOSybase kartaDAOSybase) {
+    public KartaController(KartaDAO kartaDAO, KartaDAOSybase kartaDAOSybase, ArestRepository arestRepository) {
         this.kartaDAO = kartaDAO;
         this.kartaDAOSybase = kartaDAOSybase;
+        this.arestRepository = arestRepository;
     }
 
     @GetMapping("/searchAMT")
@@ -42,7 +46,7 @@ public class KartaController {
     @PostMapping()
     public String search(@ModelAttribute("karta") Karta kar, @ModelAttribute("lastOper") String check, Model model) {
         log.info("All users age > {}", check);
-        final List<Karta> kartaAMTList = kartaDAO.search(kar,check);
+        final List<Karta> kartaAMTList = kartaDAO.search(kar, check);
         model.addAttribute("kartaList", kartaAMTList);
         return "karta/viewKarta";
     }
@@ -93,19 +97,31 @@ public class KartaController {
         return null;
     }
 
-//    @PostMapping(value = "/arest", params = "action=print_month")
-    @PostMapping(value = "/arestupdate",params = "action=update_arest")
+    //    @PostMapping(value = "/arest", params = "action=print_month")
+    @PostMapping(value = "/arestupdate", params = "action=update_arest")
     public String arestupdate(@RequestParam("data_first") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
                               @RequestParam("data_last") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to
-                                  ) throws SQLException {
+    ) throws SQLException {
         log.info("Generate report , date from: {}, to: {}", from, to);
         kartaDAOSybase.updateArest(from, to);
         return "redirect:/";
     }
-    @PostMapping(value = "/arestupdate",params = "action=compare_arest")
+
+    @GetMapping(value = "/arestupdate")
     public String arestupdate() throws SQLException {
 //  compare table arest in database Sybase and PostgreSql
-        kartaDAOSybase.checArest();
+
+        Timestamp dataSnaPos = arestRepository.maxDataSnaArestPostgres();
+        Timestamp dataSnaSybase = kartaDAOSybase.maxData_snaArestSybase();
+//        dataSnaPos.compareTo(dataSnaSybase);
+        if (!dataSnaSybase.equals(dataSnaPos)) {
+            // call a method
+            System.out.println(dataSnaSybase + " if > " + dataSnaPos + " = " + dataSnaSybase.equals(dataSnaPos));
+            //updateArest
+        } else {
+            System.out.println(dataSnaSybase + " else > " + dataSnaPos + " = " + dataSnaSybase.equals(dataSnaPos));
+        }
+
         return "redirect:/";
     }
 }

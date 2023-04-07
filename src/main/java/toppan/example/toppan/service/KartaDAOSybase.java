@@ -236,6 +236,20 @@ public class KartaDAOSybase {
         return null;
     }
 
-    public void checArest() {
+    public Timestamp maxData_snaArestSybase() throws SQLException {
+        Timestamp dataSnaSybase = null;
+//        String dataSnaSybase;
+
+        PreparedStatement preparedStatement = connectionSa.prepareStatement("select max(data_sna) as data_sna from dbo.arest where data_sna is not null");
+
+        try (ResultSet resultSet = preparedStatement.executeQuery()) {
+
+            while (resultSet.next()) {
+                dataSnaSybase = resultSet.getTimestamp("data_sna");
+            }
+        }
+
+        return dataSnaSybase;
     }
+
 }
