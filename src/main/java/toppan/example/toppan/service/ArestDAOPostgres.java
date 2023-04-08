@@ -2,6 +2,7 @@ package toppan.example.toppan.service;
 
 import org.springframework.stereotype.Component;
 import toppan.example.toppan.models.Arest;
+import toppan.example.toppan.models.ArestSybase;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,7 +13,7 @@ import java.util.List;
 import static toppan.example.toppan.bl.DataDAOPostgres.connectionPos;
 
 @Component
-public class ArestDAO {
+public class ArestDAOPostgres {
 
     public List<Arest> SearchArest(String kart_id) {
         List<Arest> ArAMT = new ArrayList<>();
@@ -62,5 +63,10 @@ public class ArestDAO {
             throwables.printStackTrace();
         }
         return ArAMT;
+    }
+
+    public List<Arest> updateArest(ArestSybase arestSybase1) {
+
+        return null ;
     }
 }

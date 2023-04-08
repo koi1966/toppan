@@ -12,7 +12,8 @@ import toppan.example.toppan.models.Arest;
 import toppan.example.toppan.models.Karta;
 import toppan.example.toppan.models.dto.KartaDTO;
 import toppan.example.toppan.models.repo.ArestRepository;
-import toppan.example.toppan.service.ArestDAO;
+import toppan.example.toppan.service.ArestDAOPostgres;
+import toppan.example.toppan.service.ArestDAOSybase;
 import toppan.example.toppan.service.KartaDAO;
 import toppan.example.toppan.service.KartaDAOSybase;
 
@@ -27,12 +28,14 @@ import java.util.List;
 public class KartaController {
     private final KartaDAO kartaDAO;
     private final KartaDAOSybase kartaDAOSybase;
+    private final ArestDAOSybase arestDAOSybase;
     private final ArestRepository arestRepository;
     private final Mapper mapper = Mappers.getMapper(Mapper.class);
 
-    public KartaController(KartaDAO kartaDAO, KartaDAOSybase kartaDAOSybase, ArestRepository arestRepository) {
+    public KartaController(KartaDAO kartaDAO, KartaDAOSybase kartaDAOSybase, ArestDAOSybase arestDAOSybase, ArestRepository arestRepository) {
         this.kartaDAO = kartaDAO;
         this.kartaDAOSybase = kartaDAOSybase;
+        this.arestDAOSybase = arestDAOSybase;
         this.arestRepository = arestRepository;
     }
 
@@ -66,7 +69,7 @@ public class KartaController {
             Karta kartaAMT = AMTHys.get(0);
             String kart_id = kartaAMT.getKart_id();
 
-            List<Arest> ArestA = new ArestDAO()
+            List<Arest> ArestA = new ArestDAOPostgres()
                     .SearchArest(kart_id); // search the arrest table ( arest )  Search_Arest by kart_id
             model.addAttribute("arest", ArestA); // transfer the found arrest to viewing
         }
@@ -110,13 +113,14 @@ public class KartaController {
     @GetMapping(value = "/arestupdate")
     public String arestupdate() throws SQLException {
 //  compare table arest in database Sybase and PostgreSql
-
-        Timestamp dataSnaPos = arestRepository.maxDataSnaArestPostgres();
-        Timestamp dataSnaSybase = kartaDAOSybase.maxData_snaArestSybase();
+        Timestamp dataSnaPos, dataSnaSybase;
+        dataSnaPos = arestRepository.maxDataSnaArestPostgres();
+        dataSnaSybase = kartaDAOSybase.maxData_snaArestSybase();
 //        dataSnaPos.compareTo(dataSnaSybase);
         if (!dataSnaSybase.equals(dataSnaPos)) {
             // call a method
-            System.out.println(dataSnaSybase + " if > " + dataSnaPos + " = " + dataSnaSybase.equals(dataSnaPos));
+            System.out.println(dataSnaSybase + "  > " + dataSnaPos + " = " + dataSnaSybase.equals(dataSnaPos));
+            arestDAOSybase.findArestDataSna(dataSnaPos);
             //updateArest
         } else {
             System.out.println(dataSnaSybase + " else > " + dataSnaPos + " = " + dataSnaSybase.equals(dataSnaPos));
