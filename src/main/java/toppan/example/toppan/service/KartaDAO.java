@@ -13,6 +13,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+//import static sun.security.util.ArrayUtil.reverse;
 import static toppan.example.toppan.bl.DataDAOPostgres.connectionPos;
 
 @Component
@@ -56,21 +57,22 @@ public class KartaDAO {
             if (!StringEquals.equalsSQL(SQLa, SqlEquals)) {
                 SQLa = SQLa + "and ";
             }
-            SQLa = SQLa + "num_cuz like '" + kar.getNum_cuz().toUpperCase() + "' ";
+            SQLa = SQLa + "num_cuz like reverse('" + kar.getNum_cuz().toUpperCase() + "') ";
         }
 
         if (!kar.getNum_shas().isEmpty()) {
             if (!StringEquals.equalsSQL(SQLa, SqlEquals)) {
                 SQLa = SQLa + "and ";
             }
-            SQLa = SQLa + "num_shas like '" + kar.getNum_shas().toUpperCase() + "' ";
+
+            SQLa = SQLa + "num_shas like reverse('" + kar.getNum_shas().toUpperCase() + "') ";
         }
 
         if (!kar.getNum_dv().isEmpty()) {
             if (!StringEquals.equalsSQL(SQLa, SqlEquals)) {
                 SQLa = SQLa + "and ";
             }
-            SQLa = SQLa + "num_dv like '" + kar.getNum_dv().toUpperCase() + "' ";
+            SQLa = SQLa + "num_dv like reverse('" + kar.getNum_dv().toUpperCase() + "') ";
         }
 
         if (!kar.getFamily().isEmpty()) {

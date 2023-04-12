@@ -11,22 +11,27 @@
 <body>
 <table>
     <tr>
-        <th>Власник</th>
-        <th class="th1"> Марка модель</th>
-        <th class="th1">Дата операції</th>
+<!--        <th>Власник</th>-->
+<!--        <th class="th1"> Марка модель</th>-->
+<!--        <th class="th1">Дата операції</th>-->
     </tr>
 
-    <tr th:each="AmtHyst:${Amthystory}">
-        <td id="col1"><a th:text="${AmtHyst.getFamily()+' '+ AmtHyst.getFname()+' '+ AmtHyst.getSec_name()}"></a></td>
-        <td><p class="a"
-               th:text="${AmtHyst.getMarka() +' рік вип. '+AmtHyst.getData_v() +', '+ AmtHyst.getColor()}"></p>
+    <tr th:each="dataSnaPos:${dataSnaPos}">
+        <td id="col1"><a th:text="${dataSnaPos}"></a></td>
 
-            <p th:text="${AmtHyst.getNum_cuz!=null}? ${'Kуз.'+AmtHyst.getNum_cuz}:''"></p>
-            <p th:text="${AmtHyst.getNum_shas!=null}? ${'Шас. '+AmtHyst.getNum_shas}:''"></p>
-            <p th:text="${AmtHyst.getNum_dv!=null}? ${'Дв. '+AmtHyst.getNum_dv}:''"></p>
-            <p th:text="${'Vin '+AmtHyst.getKart_id()}"></p></td>
+<!--        <td><p class="a"-->
+<!--               th:text="${AmtHyst.getMarka() +' рік вип. '+AmtHyst.getData_v() +', '+ AmtHyst.getColor()}"></p>-->
 
-        <td><a th:text="${AmtHyst.getData_oper()}"></a></td>
+<!--            <p th:text="${AmtHyst.getNum_cuz!=null}? ${'Kуз.'+AmtHyst.getNum_cuz}:''"></p>-->
+<!--            <p th:text="${AmtHyst.getNum_shas!=null}? ${'Шас. '+AmtHyst.getNum_shas}:''"></p>-->
+<!--            <p th:text="${AmtHyst.getNum_dv!=null}? ${'Дв. '+AmtHyst.getNum_dv}:''"></p>-->
+<!--            <p th:text="${'Vin '+AmtHyst.getKart_id()}"></p></td>-->
+
+<!--        <td><a th:text="${AmtHyst.getData_oper()}"></a></td>-->
+    </tr>
+    <tr th:each="dataSnaSybase:${dataSnaSybase}">
+        <td id="col2"><a th:text="${dataSnaSybase}"></a></td>
+
     </tr>
 </table>
 <oo>Carefully Styled Heading</oo>

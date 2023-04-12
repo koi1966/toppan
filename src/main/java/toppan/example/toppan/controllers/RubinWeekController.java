@@ -182,16 +182,11 @@ class RubinWeekController {
         int year = localDate.getYear();
         int month = localDate.getMonthValue();
 
-//        rubinStr = rubinStr + ',' + tsc_front + ',' + String.valueOf(month) + "." + String.valueOf(year) + ',' + pidrozdilRepository.setEmailPidrozdil(tsc_front);
-//        String[] str = rubinStr.split(",");
-
 //        EmailSender.send("o.klymchuk@zhi.hsc.gov.ua");
         String filename = "c:/RSC1840/Temp_rubin_Mounth_1840.docx";
 
 //        EmailFilename.send(str[6], filename);
         filename = "c:/RSC1840/Rubin.docx";
-//        EmailFilename.send("it@zhi.hsc.gov.ua", filename);
-//        EmailService.send(str[6], filename, tsc_front);
 
         return "redirect:/rubin/week/rubin-week-view";
     }
@@ -209,7 +204,7 @@ class RubinWeekController {
         String ip_user = request.getRemoteAddr();//        вытягивает IP копма с которого вносят информацию
         int end = UtilitesSting.ordinalIndexOf(ip_user, ".", 2);
 
-        String ip = ip_user.substring(0, end);//        узнаел подсеть
+        String ip = ip_user.substring(0, end);//        узнал подсеть
 
         Pidrozdil pidrozdil = pidrozdilRepository.findByIp(ip);
         if (pidrozdil == null || pidrozdil.getPidrozdil().isEmpty()) {

@@ -14,6 +14,7 @@ public class ArestDAOSybase {
 
     private final ArestDAOPostgres arestDAOPostgres;
     private final Service service;
+
     public ArestDAOSybase(KartaDAOPostgres kartaDAOPostgres, ArestDAOPostgres arestDAOPostgres, Service service) {
 
         this.arestDAOPostgres = arestDAOPostgres;
@@ -26,10 +27,9 @@ public class ArestDAOSybase {
         preparedStatement.setObject(1, dataSnaPos);
 
         try (ResultSet resultSet = preparedStatement.executeQuery()) {
+            service.arestSybase(resultSet);
+//            arestDAOPostgres.updateArest();
 
-            while (resultSet.next()) {
-                arestDAOPostgres.updateArest(service.arestSybase(resultSet));
-            }
         }
 
     }

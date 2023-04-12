@@ -65,7 +65,7 @@ public class ArestDAOPostgres {
         return ArAMT;
     }
 
-    public List<Arest> updateArest(ArestSybase arestSybase1) {
+    public List<Arest> updateArest(ArestSybase arestSybase) {
 
         return null ;
     }

@@ -101,22 +101,22 @@ public class KartaController {
     }
 
     //    @PostMapping(value = "/arest", params = "action=print_month")
-    @PostMapping(value = "/arestupdate", params = "action=update_arest")
-    public String arestupdate(@RequestParam("data_first") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
-                              @RequestParam("data_last") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to
-    ) throws SQLException {
-        log.info("Generate report , date from: {}, to: {}", from, to);
-        kartaDAOSybase.updateArest(from, to);
-        return "redirect:/";
-    }
+//    @PostMapping(value = "/arestupdate", params = "action=update_arest")
+//    public String arestupdate(@RequestParam("data_first") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
+//                              @RequestParam("data_last") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to
+//    ) throws SQLException {
+//        log.info("Generate report , date from: {}, to: {}", from, to);
+//        kartaDAOSybase.updateArest(from, to);
+//        return "redirect:/";
+//    }
 
     @GetMapping(value = "/arestupdate")
-    public String arestupdate() throws SQLException {
-//  compare table arest in database Sybase and PostgreSql
+    public String arestupdate(Model model) throws SQLException {
+
         Timestamp dataSnaPos, dataSnaSybase;
         dataSnaPos = arestRepository.maxDataSnaArestPostgres();
         dataSnaSybase = kartaDAOSybase.maxData_snaArestSybase();
-//        dataSnaPos.compareTo(dataSnaSybase);
+
         if (!dataSnaSybase.equals(dataSnaPos)) {
             // call a method
             System.out.println(dataSnaSybase + "  > " + dataSnaPos + " = " + dataSnaSybase.equals(dataSnaPos));
@@ -125,7 +125,8 @@ public class KartaController {
         } else {
             System.out.println(dataSnaSybase + " else > " + dataSnaPos + " = " + dataSnaSybase.equals(dataSnaPos));
         }
-
-        return "redirect:/";
+        model.addAttribute("dataSnaPos", dataSnaPos);
+        model.addAttribute("dataSnaSybase", dataSnaSybase);
+        return "karta/test";
     }
 }
