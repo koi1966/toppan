@@ -9,6 +9,8 @@ import toppan.example.toppan.models.Arest;
 import java.sql.Timestamp;
 
 public interface ArestRepository extends CrudRepository<Arest, Long> {
+    @Query("select count(*) from Arest a where a.data_sna is not null")
+    long countDataSnaIsNotNull();
 
     @Query(nativeQuery = true,
             value = "select max(data_sna) as data_sna from arest where data_sna is not null")

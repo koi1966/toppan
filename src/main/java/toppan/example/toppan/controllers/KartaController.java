@@ -3,7 +3,6 @@ package toppan.example.toppan.controllers;
 import lombok.extern.slf4j.Slf4j;
 import org.mapstruct.factory.Mappers;
 
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +18,6 @@ import toppan.example.toppan.service.KartaDAOSybase;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.util.List;
 
 @Slf4j
@@ -94,7 +92,7 @@ public class KartaController {
     }
 
     @GetMapping("/a")
-    public String migrationArest() throws SQLException {
+    public String migrationArest() {
 //        final List<ArestSybase> arestSybase = kartaDAOSybase.searchArest(, );
 //    System.out.println(karta.toString());
         return null;
@@ -113,18 +111,25 @@ public class KartaController {
     @GetMapping(value = "/arestupdate")
     public String arestupdate(Model model) throws SQLException {
 
-        Timestamp dataSnaPos, dataSnaSybase;
-        dataSnaPos = arestRepository.maxDataSnaArestPostgres();
-        dataSnaSybase = kartaDAOSybase.maxData_snaArestSybase();
+        long recordPos = arestRepository.countDataSnaIsNotNull();
+        long recordSyb = arestDAOSybase.countArestDataSna();
+        Timestamp dataSnaPos = arestRepository.maxDataSnaArestPostgres();
+        Timestamp dataSnaSybase = kartaDAOSybase.maxData_snaArestSybase();
+
+        if (recordSyb != recordPos) {
+
+
+        }
 
         if (!dataSnaSybase.equals(dataSnaPos)) {
             // call a method
-            System.out.println(dataSnaSybase + "  > " + dataSnaPos + " = " + dataSnaSybase.equals(dataSnaPos));
+            System.out.println(dataSnaSybase + "  > " + dataSnaPos + " = " + dataSnaSybase.equals(dataSnaPos)+" НЗА -");
             arestDAOSybase.findArestDataSna(dataSnaPos);
             //updateArest
         } else {
             System.out.println(dataSnaSybase + " else > " + dataSnaPos + " = " + dataSnaSybase.equals(dataSnaPos));
         }
+
         model.addAttribute("dataSnaPos", dataSnaPos);
         model.addAttribute("dataSnaSybase", dataSnaSybase);
         return "karta/test";

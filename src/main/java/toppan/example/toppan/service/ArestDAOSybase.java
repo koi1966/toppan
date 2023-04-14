@@ -12,12 +12,10 @@ import static toppan.example.toppan.bl.DataDAOSybase.connectionSa;
 @Component
 public class ArestDAOSybase {
 
-    private final ArestDAOPostgres arestDAOPostgres;
     private final Service service;
 
-    public ArestDAOSybase(KartaDAOPostgres kartaDAOPostgres, ArestDAOPostgres arestDAOPostgres, Service service) {
+    public ArestDAOSybase( Service service) {
 
-        this.arestDAOPostgres = arestDAOPostgres;
         this.service = service;
     }
 
@@ -33,5 +31,19 @@ public class ArestDAOSybase {
         }
 
     }
+
+    public long countArestDataSna() throws SQLException {
+        long coun = 0;
+        PreparedStatement preparedStatement = connectionSa.prepareStatement("select count(*) as coun from arest where data_sna is not null");
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+//            arestDAOPostgres.updateArest();
+           coun = resultSet.getLong("coun");
+        }
+        return coun;
+    }
+
+
 
 }
