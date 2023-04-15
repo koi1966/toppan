@@ -115,7 +115,7 @@ public class KartaController {
         long recordSyb = arestDAOSybase.countArestDataSna();
         Timestamp dataSnaPos = arestRepository.maxDataSnaArestPostgres();
         Timestamp dataSnaSybase = kartaDAOSybase.maxData_snaArestSybase();
-
+        long records = recordSyb - recordSyb;
         if (recordSyb != recordPos) {
 
 
@@ -124,7 +124,7 @@ public class KartaController {
         if (!dataSnaSybase.equals(dataSnaPos)) {
             // call a method
             System.out.println(dataSnaSybase + "  > " + dataSnaPos + " = " + dataSnaSybase.equals(dataSnaPos)+" НЗА -");
-            arestDAOSybase.findArestDataSna(dataSnaPos);
+//            arestDAOSybase.findArestDataSna(dataSnaPos);
             //updateArest
         } else {
             System.out.println(dataSnaSybase + " else > " + dataSnaPos + " = " + dataSnaSybase.equals(dataSnaPos));
@@ -132,6 +132,7 @@ public class KartaController {
 
         model.addAttribute("dataSnaPos", dataSnaPos);
         model.addAttribute("dataSnaSybase", dataSnaSybase);
+        model.addAttribute("records", records);
         return "karta/test";
     }
 }

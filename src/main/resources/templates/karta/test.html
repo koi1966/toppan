@@ -31,7 +31,11 @@
     </tr>
     <tr th:each="dataSnaSybase:${dataSnaSybase}">
         <td id="col2"><a th:text="${dataSnaSybase}"></a></td>
-
+        <br>
+    </tr>
+    <tr th:each="records:${records}">
+        <td id="col3"><a th:text="${records}"></a></td>
+        <br>
     </tr>
 </table>
 <oo>Carefully Styled Heading</oo>
