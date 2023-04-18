@@ -21,13 +21,12 @@ public class ArestDAOSybase {
 
     public void findArestDataSna(Timestamp dataSnaPos) throws SQLException {
 
-        PreparedStatement preparedStatement = connectionSa.prepareStatement("SELECT * from arest WHERE data_sna > ?");
+        PreparedStatement preparedStatement = connectionSa.prepareStatement("SELECT * from arest WHERE data_sna > ? ORDER BY data_sna");
         preparedStatement.setObject(1, dataSnaPos);
 
         try (ResultSet resultSet = preparedStatement.executeQuery()) {
             service.arestSybase(resultSet);
 //            arestDAOPostgres.updateArest();
-
         }
 
     }

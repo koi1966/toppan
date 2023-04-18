@@ -17,7 +17,10 @@
     </tr>
 
     <tr th:each="dataSnaPos:${dataSnaPos}">
-        <td id="col1"><a th:text="${dataSnaPos}"></a></td>
+<!--        <td id="col1"><a th:text="${dataSnaPos}"></a></td>-->
+        <p> Мах. дата  в  Sybase : <b th:text="${dataSnaSybase}"> </b></p>
+        <p> Мах. дата в Postgres : <b th:text="${dataSnaPos}"> </b></p>
+        <p> Різниця  в  записах  : <b th:text="${records}"> </b></p>
 
 <!--        <td><p class="a"-->
 <!--               th:text="${AmtHyst.getMarka() +' рік вип. '+AmtHyst.getData_v() +', '+ AmtHyst.getColor()}"></p>-->
@@ -28,17 +31,17 @@
 <!--            <p th:text="${'Vin '+AmtHyst.getKart_id()}"></p></td>-->
 
 <!--        <td><a th:text="${AmtHyst.getData_oper()}"></a></td>-->
-    </tr>
-    <tr th:each="dataSnaSybase:${dataSnaSybase}">
-        <td id="col2"><a th:text="${dataSnaSybase}"></a></td>
-        <br>
-    </tr>
-    <tr th:each="records:${records}">
-        <td id="col3"><a th:text="${records}"></a></td>
-        <br>
-    </tr>
+<!--    </tr>-->
+<!--    <tr th:each="dataSnaSybase:${dataSnaSybase}">-->
+<!--        <td id="col2"><a th:text="${dataSnaSybase}"></a></td>-->
+<!--        <br>-->
+<!--    </tr>-->
+<!--    <tr th:each="records:${records}">-->
+<!--        <td id="col3"><a th:text="${records}"></a></td>-->
+<!--        <br>-->
+<!--    </tr>-->
 </table>
-<oo>Carefully Styled Heading</oo>
-<h5>Carefully Styled Heading</h5>
+<!--<oo>Carefully Styled Heading</oo>-->
+<h5>Sync table "arest" completed</h5>
 </body>
 </html>
