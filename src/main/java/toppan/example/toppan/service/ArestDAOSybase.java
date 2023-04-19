@@ -26,7 +26,6 @@ public class ArestDAOSybase {
 
         try (ResultSet resultSet = preparedStatement.executeQuery()) {
             service.arestSybase(resultSet);
-//            arestDAOPostgres.updateArest();
         }
 
     }
