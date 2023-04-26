@@ -37,8 +37,8 @@ public interface ArestRepository extends CrudRepository<Arest, Long> {
                     @Param("oper_out") String oper_out,
                     @Param("out_nom") String out_nom,
                     @Param("who_sha") String who_sha,
-                    @Param("ish_answer1") String ish_answer1,
-                    @Param("ish_answer2") String ish_answer2
+                    @Param("ish_answer1") Integer ish_answer1,
+                    @Param("ish_answer2") Integer ish_answer2
     );
 
     @Query(nativeQuery = true,

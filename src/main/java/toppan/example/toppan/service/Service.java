@@ -14,12 +14,11 @@ import java.util.List;
 public class Service {
     private final ArestRepository arestRepository;
     private final KartaRepository kartaRepository;
-    private final ArestDAOPostgres arestDAOPostgres;
 
-    public Service(KartaRepository kartaRepository, ArestDAOPostgres arestDAOPostgres,
+    public Service(KartaRepository kartaRepository,
                    ArestRepository arestRepository) {
         this.kartaRepository = kartaRepository;
-        this.arestDAOPostgres = arestDAOPostgres;
+
         this.arestRepository = arestRepository;
     }
 
@@ -30,16 +29,12 @@ public class Service {
     public void arestSybase(ResultSet resultSet) throws SQLException {
 
         while (resultSet.next()) {
-
-            int record = arestRepository.updateArest(resultSet.getTimestamp("data_sna"), resultSet.getTimestamp("time_fix"),
+            arestRepository.updateArest(resultSet.getTimestamp("data_sna"), resultSet.getTimestamp("time_fix"),
                     resultSet.getString("Kart_id"), resultSet.getString("commenta"), resultSet.getTimestamp("data_out"),
                     resultSet.getTimestamp("k_data2"), resultSet.getString("k_nom2"), resultSet.getString("oper_out"),
-                    resultSet.getString("out_nom"), resultSet.getString("who_sha"), resultSet.getString("ish_answer1"),
-                    resultSet.getString("ish_answer2")
+                    resultSet.getString("out_nom"), resultSet.getString("who_sha"), resultSet.getInt("ish_answer1"),
+                    resultSet.getInt("ish_answer2")
             );
-
         }
-
     }
-
 }
