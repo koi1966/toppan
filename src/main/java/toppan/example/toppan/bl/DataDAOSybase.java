@@ -14,21 +14,44 @@ public class DataDAOSybase {
   private static final String USERNAME = "view_user";
   private static final String PASSWORD = "view_user";
 
-  public static Connection connectionSa;
+  private Connection connectionSa;
+//  public static Connection connectionSa;
 
-  static {
+  public Connection getConnectionSa() {
     try {
-      Class.forName("net.sourceforge.jtds.jdbc.Driver");
-    } catch (ClassNotFoundException e) {
-      e.printStackTrace();
+      if (!connectionSa.isClosed()) {
+        return connectionSa;
+      }
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
     }
     try {
+      Class.forName("net.sourceforge.jtds.jdbc.Driver");
       connectionSa = DriverManager.getConnection(URL, USERNAME, PASSWORD);
       System.out.println("connectionSa-Ok");
-
+      return connectionSa;
     } catch (SQLException throwables) {
       throwables.printStackTrace();
       System.out.println("connectionSa-Error");
+    } catch (Exception e) {
+      e.printStackTrace();
     }
+    return null;
   }
+
+//  static {
+//    try {
+//      Class.forName("net.sourceforge.jtds.jdbc.Driver");
+//    } catch (ClassNotFoundException e) {
+//      e.printStackTrace();
+//    }
+//    try {
+//      connectionSa = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+//      System.out.println("connectionSa-Ok");
+//
+//    } catch (SQLException throwables) {
+//      throwables.printStackTrace();
+//      System.out.println("connectionSa-Error");
+//    }
+//  }
 }
