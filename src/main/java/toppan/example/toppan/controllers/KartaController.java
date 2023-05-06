@@ -119,12 +119,12 @@ public class KartaController {
 
         if (recordSyb != recordPos) {
 
-
+        //  look for a solution this mated
         }
 
         if (!dataSnaSybase.equals(dataSnaPos)) {
             // call a method
-            System.out.println(dataSnaSybase + "  > " + dataSnaPos + " = " + dataSnaSybase.equals(dataSnaPos)+" НЗА -");
+            System.out.println(dataSnaSybase + "  > " + dataSnaPos + " = " + dataSnaSybase.equals(dataSnaPos) + " НЗА -");
             arestDAOSybase.findArestDataSna(dataSnaPos);
             //updateArest
         } else {

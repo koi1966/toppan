@@ -27,7 +27,7 @@ public class ArestDAOSybase {
         try (ResultSet resultSet = preparedStatement.executeQuery()) {
             service.arestSybase(resultSet);
         }
-
+        connectionSa.close();
     }
 
     public long countArestDataSna() throws SQLException {

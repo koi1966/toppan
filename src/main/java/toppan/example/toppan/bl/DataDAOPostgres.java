@@ -1,12 +1,10 @@
 package toppan.example.toppan.bl;
 
-import org.springframework.stereotype.Component;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-@Component
+//@Component
 public class DataDAOPostgres {
 //        private static final String URL = "jdbc:postgresql://localhost:5432/rsc1840";
     private static final String URL = "jdbc:postgresql://10.6.1.1:5432/rsc1840";
