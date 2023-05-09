@@ -37,9 +37,24 @@ public class ArestDAOSybase {
 //            arestDAOPostgres.updateArest();
            coun = resultSet.getLong("coun");
         }
+        connectionSa.close();
         return coun;
     }
 
+    public Timestamp maxData_snaArestSybase() throws SQLException {
+        final Connection connectionSa = dataDAOSybase.getConnectionSa();
+        Timestamp dataSnaSybase = null;
 
+        PreparedStatement preparedStatement = connectionSa.prepareStatement("select max(data_sna) as data_sna from dbo.arest where data_sna is not null");
+
+        try (ResultSet resultSet = preparedStatement.executeQuery()) {
+
+            while (resultSet.next()) {
+                dataSnaSybase = resultSet.getTimestamp("data_sna");
+            }
+        }
+        connectionSa.close();
+        return dataSnaSybase;
+    }
 
 }

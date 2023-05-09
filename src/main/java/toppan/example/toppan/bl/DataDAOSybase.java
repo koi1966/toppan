@@ -9,22 +9,16 @@ import java.sql.SQLException;
 @Component
 public class DataDAOSybase {
 
-
   private static final String URL = "jdbc:jtds:sybase://zhytomyr:5000/gai";
   private static final String USERNAME = "view_user";
   private static final String PASSWORD = "view_user";
 
   private Connection connectionSa;
-//  public static Connection connectionSa;
 
-  public Connection getConnectionSa() {
-    try {
-      if (!connectionSa.isClosed()) {
-        return connectionSa;
-      }
-    } catch (SQLException e) {
-      throw new RuntimeException(e);
-    }
+  public Connection getConnectionSa() throws SQLException {
+//    if (!connectionSa.isClosed()) {
+//      return connectionSa;
+//    }
     try {
       Class.forName("net.sourceforge.jtds.jdbc.Driver");
       connectionSa = DriverManager.getConnection(URL, USERNAME, PASSWORD);

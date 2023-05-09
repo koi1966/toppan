@@ -91,23 +91,6 @@ public class KartaController {
         return "karta/searchKarta";
     }
 
-    @GetMapping("/a")
-    public String migrationArest() {
-//        final List<ArestSybase> arestSybase = kartaDAOSybase.searchArest(, );
-//    System.out.println(karta.toString());
-        return null;
-    }
-
-    //    @PostMapping(value = "/arest", params = "action=print_month")
-//    @PostMapping(value = "/arestupdate", params = "action=update_arest")
-//    public String arestupdate(@RequestParam("data_first") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
-//                              @RequestParam("data_last") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to
-//    ) throws SQLException {
-//        log.info("Generate report , date from: {}, to: {}", from, to);
-//        kartaDAOSybase.updateArest(from, to);
-//        return "redirect:/";
-//    }
-
     @GetMapping(value = "/arestupdate")
     public String arestupdate(Model model) throws SQLException {
 
@@ -115,12 +98,12 @@ public class KartaController {
         long recordSyb = arestDAOSybase.countArestDataSna();
         long records = recordSyb - recordPos;
         Timestamp dataSnaPos = arestRepository.maxDataSnaArestPostgres();
-        Timestamp dataSnaSybase = kartaDAOSybase.maxData_snaArestSybase();
+        Timestamp dataSnaSybase = arestDAOSybase.maxData_snaArestSybase();
 
-        if (recordSyb != recordPos) {
-
-        //  look for a solution this mated
-        }
+//        if (recordSyb != recordPos) {
+//
+//        //  look for a solution this mated
+//        }
 
         if (!dataSnaSybase.equals(dataSnaPos)) {
             // call a method

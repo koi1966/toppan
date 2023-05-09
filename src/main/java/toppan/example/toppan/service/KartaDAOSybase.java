@@ -7,33 +7,32 @@ package toppan.example.toppan.service;
 //        from karta2
 //        where karta2.id = karta.id);
 
+import toppan.example.toppan.bl.DataDAOSybase;
 import toppan.example.toppan.models.ArestSybase;
 import toppan.example.toppan.models.KartaSybase;
 import toppan.example.toppan.models.OperSybase;
 import org.springframework.stereotype.Component;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import static toppan.example.toppan.bl.DataDAOSybase.connectionSa;
+//import static toppan.example.toppan.bl.DataDAOSybase.connectionSa;
 
 
 @Component
 public class KartaDAOSybase {
-
+    private final DataDAOSybase dataDAOSybase;
     private final KartaDAOPostgres kartaDAOPostgres;
 
-    public KartaDAOSybase(KartaDAOPostgres kartaDAOPostgres) {
+    public KartaDAOSybase(DataDAOSybase dataDAOSybase, KartaDAOPostgres kartaDAOPostgres) {
+        this.dataDAOSybase = dataDAOSybase;
         this.kartaDAOPostgres = kartaDAOPostgres;
     }
 
     public List<KartaSybase> searchKarta() throws SQLException {
-
+        final Connection connectionSa = dataDAOSybase.getConnectionSa();
         List<KartaSybase> kartaSybaseAMTList = new ArrayList<>();
 
         PreparedStatement preparedStatement = connectionSa.prepareStatement("SELECT * from karta WHERE id BETWEEN ? AND ?");
@@ -141,104 +140,45 @@ public class KartaDAOSybase {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
+        connectionSa.close();
         return kartaSybaseAMTList;
     }
 
-    public List<ArestSybase> updateArest(LocalDate from, LocalDate to) throws SQLException {
-        List<ArestSybase> arestSybaseList = new ArrayList<>();
-
-
-        PreparedStatement preparedStatement = connectionSa.prepareStatement("SELECT * from arest WHERE data_sna BETWEEN ? AND ?");
-        preparedStatement.setObject(1, from);
-        preparedStatement.setObject(2, to);
-
-        try (ResultSet resultSet = preparedStatement.executeQuery()) {
-
-            while (resultSet.next()) {
-                ArestSybase arestSybase = new ArestSybase();
-//                arestSybase.setId(resultSet.getLong("id"));
-                arestSybase.setData_arest(resultSet.getTimestamp("data_arest"));
-                arestSybase.setKart_id(resultSet.getString("Kart_id"));
-                arestSybase.setWho_na(resultSet.getString("who_na"));
-                arestSybase.setIn_nom(resultSet.getString("in_nom"));
-                arestSybase.setData_in(resultSet.getTimestamp("data_in"));
-                arestSybase.setData_sna(resultSet.getTimestamp("data_sna"));
-                arestSybase.setWho_sha(resultSet.getString("who_sha"));
-                arestSybase.setOut_nom(resultSet.getString("out_nom"));
-//                try {
-                arestSybase.setData_out(resultSet.getTimestamp("data_out"));
-//                } catch (NullPointerException e) {
-//                    System.out.println(e.getMessage());
-//                    arestSybase.setData_out(Date.valueOf("1900-01-01"));
-//                }
-                arestSybase.setData_out(resultSet.getTimestamp("data_out"));
-                arestSybase.setOper_in(resultSet.getString("oper_in"));
-
-                arestSybase.setOper_out(resultSet.getString("oper_out"));
-
-                arestSybase.setVlad(resultSet.getString("vlad"));
-                try {
-                    arestSybase.setIsh_answer1(resultSet.getInt("ish_answer1"));
-                } catch (NullPointerException e) {
-                    System.out.println(e.getMessage());
-                    arestSybase.setIsh_answer1(0);
-                }
-                try {
-                    arestSybase.setIsh_answer1(resultSet.getInt("ish_answer2"));
-                } catch (NullPointerException e) {
-                    System.out.println(e.getMessage());
-                    arestSybase.setIsh_answer2(0);
-                }
-                arestSybase.setK_nom1(resultSet.getString("k_nom1"));
-                arestSybase.setK_data1(resultSet.getTimestamp("k_data1"));
-                arestSybase.setK_nom2(resultSet.getString("k_nom2"));
-                arestSybase.setK_data2(resultSet.getTimestamp("k_data2"));
-                arestSybase.setCommenta(resultSet.getString("commenta"));
-                arestSybase.setTime_fix(resultSet.getTimestamp("time_fix"));
-
-                kartaDAOPostgres.addArest(arestSybase);
-            }
-        }
-
-        return arestSybaseList;
-    }
-
-    public List<OperSybase> searchOper() throws SQLException {
-
-        List<ArestSybase> arestSybaseList = new ArrayList<>();
-
-        PreparedStatement preparedStatement = connectionSa.prepareStatement("SELECT * from oper");
-
-        try (ResultSet resultSet = preparedStatement.executeQuery()) {
-            while (resultSet.next()) {
-                OperSybase operSybase = new OperSybase();
-                operSybase.setOper_id(resultSet.getString("oper_id"));
-                operSybase.setSod_id(resultSet.getString("sod_id"));
-                operSybase.setOper(resultSet.getString("oper"));
-                operSybase.setCh_field(resultSet.getString("ch_field"));
-                operSybase.setRegistration(resultSet.getInt("registration"));
-                operSybase.setVydacha(resultSet.getInt("vydacha"));
-                operSybase.setTip_registr(resultSet.getInt("tip_registr"));
-                operSybase.setIzjat(resultSet.getInt("izjat"));
-                operSybase.setZapros(resultSet.getInt("zapros"));
-                operSybase.setCommenta(resultSet.getString("commenta"));
-                operSybase.setOper_nic(resultSet.getInt("oper_nic"));
-                operSybase.setOsn_para(resultSet.getString("osn_para"));
-
-                kartaDAOPostgres.addOper(operSybase);
-            }
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        return null;
-    }
+//    public List<OperSybase> searchOper() throws SQLException {
+//        final Connection connectionSa = dataDAOSybase.getConnectionSa();
+//        List<ArestSybase> arestSybaseList = new ArrayList<>();
+//
+//        PreparedStatement preparedStatement = connectionSa.prepareStatement("SELECT * from oper");
+//
+//        try (ResultSet resultSet = preparedStatement.executeQuery()) {
+//            while (resultSet.next()) {
+//                OperSybase operSybase = new OperSybase();
+//                operSybase.setOper_id(resultSet.getString("oper_id"));
+//                operSybase.setSod_id(resultSet.getString("sod_id"));
+//                operSybase.setOper(resultSet.getString("oper"));
+//                operSybase.setCh_field(resultSet.getString("ch_field"));
+//                operSybase.setRegistration(resultSet.getInt("registration"));
+//                operSybase.setVydacha(resultSet.getInt("vydacha"));
+//                operSybase.setTip_registr(resultSet.getInt("tip_registr"));
+//                operSybase.setIzjat(resultSet.getInt("izjat"));
+//                operSybase.setZapros(resultSet.getInt("zapros"));
+//                operSybase.setCommenta(resultSet.getString("commenta"));
+//                operSybase.setOper_nic(resultSet.getInt("oper_nic"));
+//                operSybase.setOsn_para(resultSet.getString("osn_para"));
+//
+//                kartaDAOPostgres.addOper(operSybase);
+//            }
+//
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
+//
+//        return null;
+//    }
 
     public Timestamp maxData_snaArestSybase() throws SQLException {
+        final Connection connectionSa = dataDAOSybase.getConnectionSa();
         Timestamp dataSnaSybase = null;
-//        String dataSnaSybase;
 
         PreparedStatement preparedStatement = connectionSa.prepareStatement("select max(data_sna) as data_sna from dbo.arest where data_sna is not null");
 
@@ -248,7 +188,7 @@ public class KartaDAOSybase {
                 dataSnaSybase = resultSet.getTimestamp("data_sna");
             }
         }
-
+        connectionSa.close();
         return dataSnaSybase;
     }
 
