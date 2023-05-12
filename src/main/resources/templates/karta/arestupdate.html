@@ -4,11 +4,12 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>History</title>
-    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+    <title>Арест</title>
+<!--    <link th:href="@{/css/style.css}" rel="stylesheet"/>-->
 
 </head>
 <body>
+<header th:insert="blocks/header.html :: header"></header>
 <table>
     <tr>
 <!--        <th>Власник</th>-->
@@ -21,25 +22,10 @@
         <p> Мах. дата  в  Sybase : <b th:text="${dataSnaSybase}"> </b></p>
         <p> Мах. дата в Postgres : <b th:text="${dataSnaPos}"> </b></p>
         <p> Різниця  в  записах  : <b th:text="${records}"> </b></p>
-
+    </tr>
 <!--        <td><p class="a"-->
 <!--               th:text="${AmtHyst.getMarka() +' рік вип. '+AmtHyst.getData_v() +', '+ AmtHyst.getColor()}"></p>-->
 
-<!--            <p th:text="${AmtHyst.getNum_cuz!=null}? ${'Kуз.'+AmtHyst.getNum_cuz}:''"></p>-->
-<!--            <p th:text="${AmtHyst.getNum_shas!=null}? ${'Шас. '+AmtHyst.getNum_shas}:''"></p>-->
-<!--            <p th:text="${AmtHyst.getNum_dv!=null}? ${'Дв. '+AmtHyst.getNum_dv}:''"></p>-->
-<!--            <p th:text="${'Vin '+AmtHyst.getKart_id()}"></p></td>-->
-
-<!--        <td><a th:text="${AmtHyst.getData_oper()}"></a></td>-->
-<!--    </tr>-->
-<!--    <tr th:each="dataSnaSybase:${dataSnaSybase}">-->
-<!--        <td id="col2"><a th:text="${dataSnaSybase}"></a></td>-->
-<!--        <br>-->
-<!--    </tr>-->
-<!--    <tr th:each="records:${records}">-->
-<!--        <td id="col3"><a th:text="${records}"></a></td>-->
-<!--        <br>-->
-<!--    </tr>-->
 </table>
 <!--<oo>Carefully Styled Heading</oo>-->
 <h5>Sync table "arest" completed</h5>

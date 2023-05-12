@@ -105,53 +105,53 @@ public class KartaDAO {
 
         if (check.equals("on")) {
             SQLa = SQLa +
-            "and karta.data_oper = (select max(kk.data_oper) from karta kk where kk.kart_id = karta.kart_id ) ";
+                    "and karta.data_oper = (select max(kk.data_oper) from karta kk where kk.kart_id = karta.kart_id ) ";
         }
         SQLa = SQLa + "and substring(karta.code_oper,1,2)=oper.oper_id ";
         SQLa = SQLa + "ORDER BY kart_id, Data_oper";
-
+//        int rowcount = 0;
         try {
             assert statement != null;
-            try(ResultSet resultSet = statement.executeQuery(SQLa))
+            try (ResultSet resultSet = statement.executeQuery(SQLa)) {
+                while (resultSet.next()) {
+//                    rowcount++;
+                    Karta AMT = new Karta();
+                    AMT.setKart_id(resultSet.getString("Kart_id"));
+                    AMT.setRegion(resultSet.getString("Region"));
+                    AMT.setId(resultSet.getLong("id"));
+                    AMT.setFamily(resultSet.getString("Family"));
+                    AMT.setRajon(resultSet.getString("Rajon"));
+                    AMT.setStreet(resultSet.getString("Street"));
+                    AMT.setHouse(resultSet.getString("House"));
+                    AMT.setKv(resultSet.getString("Kv"));
+                    AMT.setFname(resultSet.getString("Fname"));
+                    AMT.setData_oper(resultSet.getTimestamp("Data_oper"));
+                    AMT.setSec_name(resultSet.getString("Sec_name"));
+                    AMT.setColor(resultSet.getString("Color"));
+                    AMT.setData_v(resultSet.getInt("Data_v"));
+                    AMT.setMarka(resultSet.getString("Marka"));
+                    AMT.setModel(resultSet.getString("Model"));
+                    AMT.setZnak(resultSet.getString("Znak"));
+                    AMT.setTeh_pasp(resultSet.getString("Teh_pasp"));
+                    AMT.setNum_cuz(resultSet.getString("Num_cuz"));
+                    AMT.setCode_oper(resultSet.getString("oper"));
+                    AMT.setCuzov(resultSet.getString("cuzov"));
 
-        {
-            while (resultSet.next()) {
-                Karta AMT = new Karta();
-                AMT.setKart_id(resultSet.getString("Kart_id"));
-                AMT.setId(resultSet.getLong("id"));
-                AMT.setFamily(resultSet.getString("Family"));
-                AMT.setFname(resultSet.getString("Fname"));
-                AMT.setData_oper(resultSet.getTimestamp("Data_oper"));
-                AMT.setSec_name(resultSet.getString("Sec_name"));
-                AMT.setColor(resultSet.getString("Color"));
-                AMT.setData_v(resultSet.getInt("Data_v"));
-                AMT.setMarka(resultSet.getString("Marka"));
-                AMT.setModel(resultSet.getString("Model"));
-                AMT.setZnak(resultSet.getString("Znak"));
-                AMT.setTeh_pasp(resultSet.getString("Teh_pasp"));
-                AMT.setNum_cuz(resultSet.getString("Num_cuz"));
-                AMT.setCode_oper(resultSet.getString("oper"));
-                AMT.setCuzov(resultSet.getString("cuzov"));
-
-
-                kart.add(AMT);
+                    kart.add(AMT);
+                }
             }
+        } catch (
+                SQLException throwables) {
+            throwables.printStackTrace();
         }
-        } catch(
-    SQLException throwables)
-
-    {
-        throwables.printStackTrace();
-    }
-
         return kart;
-}
+    }
 
     public List<Karta> AmtHistory(long id) {
         List<Karta> kartHistory = new ArrayList<>();
 
         String SQL =
-                "select karta.id,kart_id,data_oper,data_v,znak,kv,teh_pasp,family,fname,sec_name,born,pasport,permis,house,street," +
+                "select karta.id,region,kart_id,data_oper,data_v,znak,kv,teh_pasp,family,fname,sec_name,born,pasport,permis,house,street," +
                         "teh_pasp,color,(marka ||' '|| model) as marka,reverse(karta.num_cuz) as num_cuz,reverse(karta.num_shas) as num_shas," +
                         "reverse(karta.num_dv) as num_dv,power,volume,door,fuel,tip,annot,cuzov,city,rajon,obl,znak, oper.* " +
                         "from karta, oper " +
@@ -166,6 +166,7 @@ public class KartaDAO {
                     Karta AMTh = new Karta();
                     AMTh.setId(resultSet.getLong("id"));
                     AMTh.setKart_id(resultSet.getString("Kart_id"));
+                    AMTh.setRegion(resultSet.getString("Region"));
                     AMTh.setData_oper(resultSet.getTimestamp("Data_oper"));
                     AMTh.setZnak(resultSet.getString("Znak"));
                     AMTh.setTeh_pasp(resultSet.getString("Teh_pasp"));
@@ -182,17 +183,13 @@ public class KartaDAO {
                     AMTh.setSec_name(resultSet.getString("Sec_name"));
                     AMTh.setPasport(resultSet.getString("Pasport"));
                     AMTh.setPermis(resultSet.getString("Permis"));
-
                     AMTh.setAnnot(resultSet.getString("Annot"));
-
                     AMTh.setPower(resultSet.getString("Power"));
                     AMTh.setVolume(resultSet.getString("Volume"));
                     AMTh.setDoor(resultSet.getString("Door"));
                     AMTh.setFuel(resultSet.getString("Fuel"));
                     AMTh.setTip(resultSet.getString("Tip"));
                     AMTh.setCuzov(resultSet.getString("Cuzov"));
-
-
                     AMTh.setObl(resultSet.getString("obl"));
                     AMTh.setRajon(resultSet.getString("rajon"));
                     AMTh.setCity(resultSet.getString("city"));
@@ -200,17 +197,14 @@ public class KartaDAO {
                     AMTh.setHouse(resultSet.getString("house"));
                     AMTh.setKv(resultSet.getString("kv"));
                     AMTh.setCode_oper(resultSet.getString("oper"));
-
                     kartHistory.add(AMTh);
                 }
             }
-
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
         return kartHistory;
     }
-
 
     public List<Karta> kartaList(String znak) {
 

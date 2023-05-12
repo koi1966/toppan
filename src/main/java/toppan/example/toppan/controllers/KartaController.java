@@ -14,7 +14,6 @@ import toppan.example.toppan.models.repo.ArestRepository;
 import toppan.example.toppan.service.ArestDAOPostgres;
 import toppan.example.toppan.service.ArestDAOSybase;
 import toppan.example.toppan.service.KartaDAO;
-import toppan.example.toppan.service.KartaDAOSybase;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -25,14 +24,12 @@ import java.util.List;
 @RequestMapping("/karta")
 public class KartaController {
     private final KartaDAO kartaDAO;
-    private final KartaDAOSybase kartaDAOSybase;
     private final ArestDAOSybase arestDAOSybase;
     private final ArestRepository arestRepository;
     private final Mapper mapper = Mappers.getMapper(Mapper.class);
 
-    public KartaController(KartaDAO kartaDAO, KartaDAOSybase kartaDAOSybase, ArestDAOSybase arestDAOSybase, ArestRepository arestRepository) {
+    public KartaController(KartaDAO kartaDAO, ArestDAOSybase arestDAOSybase, ArestRepository arestRepository) {
         this.kartaDAO = kartaDAO;
-        this.kartaDAOSybase = kartaDAOSybase;
         this.arestDAOSybase = arestDAOSybase;
         this.arestRepository = arestRepository;
     }
@@ -48,6 +45,7 @@ public class KartaController {
     public String search(@ModelAttribute("karta") Karta kar, @ModelAttribute("lastOper") String check, Model model) {
         log.info("All users age > {}", check);
         final List<Karta> kartaAMTList = kartaDAO.search(kar, check);
+        model.addAttribute("kartaSize", kartaAMTList.size());
         model.addAttribute("kartaList", kartaAMTList);
         return "karta/viewKarta";
     }
@@ -81,7 +79,7 @@ public class KartaController {
     public String testKarta() {
         log.info("See html test !!!");
 
-        return "karta/test";
+        return "karta/arestupdate";
     }
 
     @GetMapping("/searchKarta")
@@ -100,11 +98,6 @@ public class KartaController {
         Timestamp dataSnaPos = arestRepository.maxDataSnaArestPostgres();
         Timestamp dataSnaSybase = arestDAOSybase.maxData_snaArestSybase();
 
-//        if (recordSyb != recordPos) {
-//
-//        //  look for a solution this mated
-//        }
-
         if (!dataSnaSybase.equals(dataSnaPos)) {
             // call a method
             System.out.println(dataSnaSybase + "  > " + dataSnaPos + " = " + dataSnaSybase.equals(dataSnaPos) + " НЗА -");
@@ -117,6 +110,6 @@ public class KartaController {
         model.addAttribute("dataSnaPos", dataSnaPos);
         model.addAttribute("dataSnaSybase", dataSnaSybase);
         model.addAttribute("records", records);
-        return "karta/test";
+        return "karta/arestupdate";
     }
 }

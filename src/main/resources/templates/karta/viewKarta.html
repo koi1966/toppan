@@ -14,11 +14,11 @@
         }
 
         p {
-            line-height: 0.9;
+            line-height: 0.1;
         }
 
         a {
-            line-height: 0.9;
+            line-height: 0.1;
         }
 
         th, td { /* ячейки таблиці */
@@ -45,37 +45,47 @@
 <div>
     <table>
         <tr>
+            <p th:text="${' Записів : ' + kartaSize}" ></p>
             <th>Дата операции</th>
             <th>ДНЗ / свідоцтво</th>
-            <th> VIN</th>
-            <th>Марка модель</th>
+            <th>VIN / Марка модель </th>
             <th>Власник</th>
         </tr>
         <tr th:each="kart : ${kartaList}">
             <td>
-                <a class="a" th:text="${#dates.format(kart.getData_oper, 'dd.MM.yyyy')}"></a>
+                <p th:text="${kart.getRegion}" ></p>
+                <a class="a"
+                   th:href="@{/karta/{id}(id=${kart.getId})}"
+                   th:text="${#dates.format(kart.getData_oper, 'dd.MM.yyyy')}"></a>
             </td>
             <td>
-                <a th:href="@{/karta/{id}(id=${kart.getId})}"
-                   th:text="${kart.getZnak +'  СпР : '+ kart.getTeh_pasp}"></a>
-                <p th:href="@{/karta/{id}(id=${kart.getId})}"
-                   th:text="${' ТО : '+ kart.getCode_oper}"></p>
+                <p>
+                    <span th:text="${'VIN: '+kart.getKart_id()}?: ''">-</span>
+                </p>
+                <p> <span th:text="${'ТО: '+ kart.getCode_oper}?:''" > </span> </p>
+            </td>
+<!--            <td>-->
+<!--                <p th:text="${kart.getKart_id}"></p>-->
+<!--            </td>-->
+            <td>
+                <span th:text="${kart.getMarka()}?: ''">-</span>
+                <span th:text="${kart.getModel()}?: ''">-</span>
+<!--                <p th:text="${'р.в. '+kart.getData_v()}?: ''">-</p>-->
+                <p th:text="${'Куз :'+ kart.getCuzov}?: ''">-</p>
             </td>
             <td>
-                <a th:href="@{/karta/{id}(id=${kart.getId})}"
-                   th:text="${kart.getKart_id}"></a>
-            </td>
+                <p>
+                    <span th:text="${kart.getFamily}?: ''">-</span>
+                    <span th:text="${kart.getFname}?: ''">-</span>
+                    <span th:text="${kart.getSec_name}?: ''">-</span>
 
-            <td><a th:href="@{/karta/{id}(id=${kart.getId})}"
-                   th:text="${kart.getMarka+' ' + kart.getModel +'  р.в. '+kart.getData_v}"></a>
-                <a th:href="@{/karta/{id}(id=${kart.getId})}"
-                   th:text="${' Куз : '+ kart.getCuzov}"></a>
-            </td>
-            <td>
-                <a th:href="@{/karta/{id}(id=${kart.getId})}"
-                   th:text="${kart.getFamily + ' ' + kart.getFname+' '+ kart.getSec_name}"></a>
-            </td>
+                </p>
+                <p> <span th:text="${kart.getRajon}?: ''">-</span>
+                    <span th:text="${','+kart.getStreet}?: ''">-</span>
+                    <span th:text="${'буд. '+kart.getHouse}?: ''">-</span>
+                </p>
 
+            </td>
         </tr>
     </table>
 

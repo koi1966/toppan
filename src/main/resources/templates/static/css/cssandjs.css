@@ -5,11 +5,14 @@
     color: brown;
 }
 
-strong {
+.strong {
     font-weight: 700;
     background-color: yellow;
 }
 
-p {
+.p {
     font-family: sans-serif;
+}
+.c{
+    color: blue;
 }
