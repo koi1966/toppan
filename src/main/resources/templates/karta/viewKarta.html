@@ -11,14 +11,23 @@
             font-style: normal;
             /*font-size: revert;*/
             /*    font-weight: bold;*/
+            padding: -5px;
         }
 
         p {
-            line-height: 0.5;
+            line-height: 0.7;
         }
 
         a {
-            line-height: 0.5;
+            line-height: 0.1;
+            padding: -5px;
+        }
+
+        th { /* заголовок */
+            background: #bdd7a3; /* Цвет фона ячейки */
+            vertical-align: center;
+            text-align: center;
+            padding: 5px; /* Убираем поля вокруг текста */
         }
 
         th, td { /* ячейки таблиці */
@@ -29,14 +38,12 @@
             background: #f1f1f5;
             /*  padding: -5px;  !* поля вокруг текста *!*/
             border-bottom: 1px solid #5b90d0;
-            padding: 15px; /* Убираем поля вокруг текста */
+            padding: -5px; /* Убираем поля вокруг текста */
             /*td{ cursor: default;  как сделать таблицу неактивной } */
         }
 
-        th { /* заголовок */
-            background: #bdd7a3; /* Цвет фона ячейки */
-            vertical-align: center;
-            padding: 15px; /* Убираем поля вокруг текста */
+        b {
+            color: #1810e0;
         }
     </style>
 </head>
@@ -47,8 +54,8 @@
         <tr>
             <p th:text="${' Записів : ' + kartaSize}" ></p>
             <th>Дата операции</th>
-            <th>ДНЗ / свідоцтво</th>
-            <th>VIN / Марка модель </th>
+            <th>VIN / ДНЗ / свідоцтво</th>
+            <th>Марка модель </th>
             <th>Власник</th>
         </tr>
         <tr th:each="kart : ${kartaList}">
@@ -56,22 +63,31 @@
                 <p th:text="${kart.getRegion}" ></p>
                 <a class="a"
                    th:href="@{/karta/{id}(id=${kart.getId})}"
-                   th:text="${#dates.format(kart.getData_oper, 'dd.MM.yyyy')}"></a>
+                   th:text="${#dates.format(kart.getData_oper, 'dd.MM.yyyy')}">
+                </a>
             </td>
             <td>
-                <p>
-                    <span th:text="${'VIN: '+kart.getKart_id()}?: ''">-</span>
+                <p><b >VIN :</b>
+                    <span th:text="${kart.getKart_id()}?: ''">-</span>
                 </p>
-                <p> <span th:text="${'ТО: '+ kart.getCode_oper}?:''" > </span> </p>
+                <p>
+                    <b >ТО :</b>
+                    <span th:text="${kart.getCode_oper}?:''" > </span>
+                </p>
             </td>
 <!--            <td>-->
 <!--                <p th:text="${kart.getKart_id}"></p>-->
 <!--            </td>-->
             <td>
-                <span th:text="${kart.getMarka()}?: ''">-</span>
-                <span th:text="${kart.getModel()}?: ''">-</span>
-<!--                <p th:text="${'р.в. '+kart.getData_v()}?: ''">-</p>-->
-                <p th:text="${'Куз :'+ kart.getCuzov}?: ''">-</p>
+                <span th:text="${kart.getMarka}?: ''">-</span>
+                <span th:text="${kart.getModel}?: ''">-</span>
+                <p><b>ДНЗ :</b>
+                <span th:text="${kart.getZnak}?: ''">-</span>
+                </p>
+                <p>
+                <b>Тип ТЗ :</b>
+                <span th:text="${kart.getTip}?: ''">-</span>
+                </p>
             </td>
             <td>
                 <p>
@@ -88,7 +104,6 @@
             </td>
         </tr>
     </table>
-
 
     <a></a>
     <br/>

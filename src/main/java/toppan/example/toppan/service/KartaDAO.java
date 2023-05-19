@@ -109,12 +109,11 @@ public class KartaDAO {
         }
         SQLa = SQLa + "and substring(karta.code_oper,1,2)=oper.oper_id ";
         SQLa = SQLa + "ORDER BY kart_id, Data_oper";
-//        int rowcount = 0;
+
         try {
             assert statement != null;
             try (ResultSet resultSet = statement.executeQuery(SQLa)) {
                 while (resultSet.next()) {
-//                    rowcount++;
                     Karta AMT = new Karta();
                     AMT.setKart_id(resultSet.getString("Kart_id"));
                     AMT.setRegion(resultSet.getString("Region"));
@@ -136,6 +135,7 @@ public class KartaDAO {
                     AMT.setNum_cuz(resultSet.getString("Num_cuz"));
                     AMT.setCode_oper(resultSet.getString("oper"));
                     AMT.setCuzov(resultSet.getString("cuzov"));
+                    AMT.setTip(resultSet.getString("tip"));
 
                     kart.add(AMT);
                 }
@@ -144,8 +144,12 @@ public class KartaDAO {
                 SQLException throwables) {
             throwables.printStackTrace();
         }
+
+
         return kart;
     }
+
+
 
     public List<Karta> AmtHistory(long id) {
         List<Karta> kartHistory = new ArrayList<>();
