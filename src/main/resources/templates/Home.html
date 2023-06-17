@@ -13,7 +13,11 @@
         <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"></path>
     </symbol>
 </svg>
-
+<div>
+    <form action="/logout" method="post">
+        <input type="submit" value="Sign Out"/>
+    </form>
+</div>
 <div>
     <header th:insert="blocks/header.html :: header"></header>
 
@@ -38,24 +42,10 @@
                 <!--                        <a href="../printer/toppan" class="btn btn-secondary my-2">2</a>-->
             </p>
         </div>
-        <!--        </section>-->
-
-        <!--        <div class="album py-5 bg-light">-->
-        <!--            <div class="container">-->
-
-        <!--                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">-->
-
-        <!--                </div>-->
-        <!--                <textarea> qwww</textarea>-->
-        <!--                <h1 class="fw-light">ШО то тут тоже нарисуем .. потом</h1>-->
-        <!--            </div>-->
-        <!--        </div>-->
 
     </main>
     <div th:insert="blocks/footer.html :: footer"></div>
 
-    <!--</body>-->
-    <!--<p th:text="'Улыбнись ' + ${title} + '!'"/>-->
 </div>
 </body>
 </html>

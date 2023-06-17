@@ -112,4 +112,5 @@ public class KartaController {
         model.addAttribute("records", records);
         return "karta/arestupdate";
     }
+
 }

@@ -1,5 +1,6 @@
 package toppan.example.toppan.config;
 
+import com.fasterxml.jackson.databind.annotation.NoClass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,44 +12,57 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-//    @Autowired
-//    private DataSource dataSource;
+public class WebSecurityConfig extends  WebSecurityConfigurerAdapter {
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.inMemoryAuthentication()
+                    .withUser("Oleg")
+                    .password("123")
+                    .roles("ADMIN")
+                .and()
+                .withUser("Alex")
+                .password("123")
+                .roles("USER");
+//        super.configure(auth);
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                    .antMatchers("/").permitAll()
-//                .antMatchers("/", "/registration").permitAll()
-                    .anyRequest().authenticated()
-                .and()
-                    .formLogin()
-                    .loginPage("/login")
-                    .permitAll()
-                .and()
-                    .logout()
-                    .permitAll();
-    }
+                    .antMatchers("/karta/arestupdate").hasRole("ADMIN")
+                    .antMatchers("/user").hasAnyRole("USER","ADMIN")
+                .antMatchers("/**").permitAll()
 
-    @Bean
-    @Override
-    public UserDetailsService userDetailsService() {
-        UserDetails user =
-                User.withDefaultPasswordEncoder()
-                        .username("u")
-                        .password("p")
-                        .roles("USER")
-                        .build();
-
-        return new InMemoryUserDetailsManager(user);
+                .and()
+                    .formLogin();
+//                    .loginPage("/login")
+//                    .permitAll()
+//                .and()
+//                    .logout()
+//                    .permitAll();
     }
+//
+//    @Bean
+//    @Override
+//    public UserDetailsService userDetailsService() {
+//        UserDetails user =
+//                User.withDefaultPasswordEncoder()
+//                        .username("u")
+//                        .password("p")
+//                        .roles("USER")
+//                        .build();
+//
+//        return new InMemoryUserDetailsManager(user);
+//    }
 
 //    @Override
 //    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -58,4 +72,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .usersByUsernameQuery("select username, password, active from usr where username=?")
 //                .authoritiesByUsernameQuery("select u.username, ur.roles from usr u inner join user_role ur on u.id = ur.user_id where u.username=?");
 //    }
+
+    @Bean
+    public PasswordEncoder encoder(){
+        return NoOpPasswordEncoder.getInstance();
+    }
 }

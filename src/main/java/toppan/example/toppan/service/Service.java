@@ -18,7 +18,6 @@ public class Service {
     public Service(KartaRepository kartaRepository,
                    ArestRepository arestRepository) {
         this.kartaRepository = kartaRepository;
-
         this.arestRepository = arestRepository;
     }
 
