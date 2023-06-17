@@ -20,4 +20,16 @@ public class MainController {
         model.addAttribute("title", "Про РСЦ ГСЦ в Житомирскій області");
         return "about";
     }
+
+    @GetMapping("/user")
+    public String user() {
+
+        return "<h2> Hey, user </h2> ";
+    }
+
+    @GetMapping("/admin")
+    public String admin() {
+
+        return "<h2> Hey, admin </h2> ";
+    }
 }
