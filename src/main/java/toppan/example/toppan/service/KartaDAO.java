@@ -40,14 +40,32 @@ public class KartaDAO {
         String SqlEquals = "SELECT karta.*, oper.oper from karta, oper where ";
 
         if (!kar.getZnak().isEmpty()) {
-
             SQLa = SQLa + "znak like '" + kar.getZnak().toUpperCase() + "' ";
         }
 
+        if (!kar.getMarka().isEmpty()) {
+            if (!StringEquals.equalsSQL(SQLa, SqlEquals)) {
+                SQLa = SQLa + "and ";
+            }
+            SQLa = SQLa + "karta.marka like '" + kar.getMarka().toUpperCase() + "' ";
+        }
+
+        if (!kar.getModel().isEmpty()) {
+            if (!StringEquals.equalsSQL(SQLa, SqlEquals)) {
+                SQLa = SQLa + "and ";
+            }
+            SQLa = SQLa + "karta.model like '" + kar.getModel().toUpperCase() + "' ";
+        }
+
+        if (!kar.getTeh_pasp().isEmpty()) {
+            if (!StringEquals.equalsSQL(SQLa, SqlEquals)) {
+                SQLa = SQLa + "and ";
+            }
+            SQLa = SQLa + "karta.teh_pasp like '" + kar.getTeh_pasp().toUpperCase() + "' ";
+        }
 
         if (!kar.getKart_id().isEmpty()) {
             if (!StringEquals.equalsSQL(SQLa, SqlEquals)) {
-
                 SQLa = SQLa + "and ";
             }
             SQLa = SQLa + "kart_id like '" + kar.getKart_id().toUpperCase() + "' ";
@@ -64,7 +82,6 @@ public class KartaDAO {
             if (!StringEquals.equalsSQL(SQLa, SqlEquals)) {
                 SQLa = SQLa + "and ";
             }
-
             SQLa = SQLa + "num_shas like reverse('" + kar.getNum_shas().toUpperCase() + "') ";
         }
 
@@ -145,10 +162,8 @@ public class KartaDAO {
             throwables.printStackTrace();
         }
 
-
         return kart;
     }
-
 
 
     public List<Karta> AmtHistory(long id) {

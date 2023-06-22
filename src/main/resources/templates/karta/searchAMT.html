@@ -13,12 +13,16 @@
 <form th:method="POST" th:action="@{/karta/}" th:object="${karta}">
     <label for="Znak">Номерний знак: </label>
     <input style="margin-left: 56px" class="tab" type="text" th:field="*{znak}" id="Znak"/>
-
-    <br>
+    <br/><br/>
+    <label for="marka">Марка : </label>
+    <input style="margin-left: 117px" type="text" th:field="*{marka}" id="marka"/>
+    <br/>
+    <label for="model">Модель : </label>
+    <input style="margin-left: 107px" type="text" th:field="*{model}" id="model"/>
+    <br/><br/>
     <label for="teh_pasp">Свідоцтво про реєстр : </label>
     <input style="margin-left: 3px" type="text" th:field="*{teh_pasp}" id="teh_pasp"/>
     <br/>
-
     <label for="kart_id">Vin : </label>
     <input style="margin-left: 141px" type="text" th:field="*{kart_id}" id="kart_id"/>
     <br/>
@@ -50,14 +54,10 @@
     <br/>
     <label >Тільки остання операція за ТЗ:</label>
 
-    
-    <!--/*@thymesVar id="lastOper" type=""*/-->
     <input type="checkbox" name="lastOper" th:checked="${lastOper}" />
 
     <br/>
     <input type="submit" value="Пошук"/>
-
-    <!--    <oo>Carefully Styled Heading</oo>-->
 
 </form>
 
