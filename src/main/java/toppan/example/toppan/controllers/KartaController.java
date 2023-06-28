@@ -17,6 +17,7 @@ import toppan.example.toppan.service.KartaDAO;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 @Slf4j
@@ -35,8 +36,8 @@ public class KartaController {
     }
 
     @GetMapping("/searchAMT")
-    public String searchAMT(@ModelAttribute("karta") Karta karta) {
-
+    public String searchAMT(@ModelAttribute("karta") Karta karta, Model model) {
+        model.addAttribute("standardDate", new Date());
         return "karta/searchAMT";
     }
 
@@ -112,4 +113,5 @@ public class KartaController {
         model.addAttribute("records", records);
         return "karta/arestupdate";
     }
+
 }
