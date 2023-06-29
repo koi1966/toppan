@@ -3,6 +3,7 @@ package toppan.example.toppan.controllers;
 import lombok.extern.slf4j.Slf4j;
 import org.mapstruct.factory.Mappers;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ import toppan.example.toppan.service.KartaDAO;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -36,6 +38,7 @@ public class KartaController {
     }
 
     @GetMapping("/searchAMT")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     public String searchAMT(@ModelAttribute("karta") Karta karta, Model model) {
         model.addAttribute("standardDate", new Date());
         return "karta/searchAMT";
@@ -43,9 +46,13 @@ public class KartaController {
 
     // Получить с html формы поля для обработки @PostMapping
     @PostMapping()
-    public String search(@ModelAttribute("karta") Karta kar, @ModelAttribute("lastOper") String check, Model model) {
-        log.info("All users age > {}", check);
-        final List<Karta> kartaAMTList = kartaDAO.search(kar, check);
+//    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    public String search(@ModelAttribute("karta") Karta kar,
+                         @ModelAttribute("lastOper") String check,
+                         @RequestParam(value = "data_bor",defaultValue = "1901-01-01") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate data_born,
+                         Model model) {
+        log.info("@RequestParam - data_b > {}", data_born);
+        final List<Karta> kartaAMTList = kartaDAO.search(kar, check,data_born);
         model.addAttribute("kartaSize", kartaAMTList.size());
         model.addAttribute("kartaList", kartaAMTList);
         return "karta/viewKarta";

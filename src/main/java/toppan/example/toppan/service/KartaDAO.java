@@ -10,10 +10,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 //import static sun.security.util.ArrayUtil.reverse;
+import static org.apache.logging.log4j.ThreadContext.isEmpty;
 import static toppan.example.toppan.bl.DataDAOPostgres.connectionPos;
 
 @Component
@@ -25,7 +27,7 @@ public class KartaDAO {
         this.kartaRepository = kartaRepository;
     }
 
-    public List<Karta> search(Karta kar, String check) {
+    public List<Karta> search(Karta kar, String check, LocalDate data_born) {
 
         List<Karta> kart = new ArrayList<>();
 
@@ -111,6 +113,13 @@ public class KartaDAO {
                 SQLa = SQLa + "and ";
             }
             SQLa = SQLa + "sec_name like '" + kar.getSec_name().toUpperCase() + "' ";
+        }
+//        data_born
+        if (!data_born.toString().equals("1901-01-01")) {
+            if (!StringEquals.equalsSQL(SQLa, SqlEquals)) {
+                SQLa = SQLa + "and ";
+            }
+            SQLa = SQLa + "born like '" + data_born + "' ";
         }
 
         if (!kar.getPasport().isEmpty()) {
