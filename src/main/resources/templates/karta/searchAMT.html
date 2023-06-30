@@ -47,9 +47,7 @@
     <input style="margin-left: 87px" class="tab" type="text" th:field="*{sec_name}" id="sec_name"/>
     <br/>
     <label for="data_bor">Дата народження :</label>
-<!--    <input style="margin-left: 87px" name="data_bor" class="tab" type="date" th:value="${data_bor}" id="data_bor"/>-->
-    <input style="margin-left: 87px" name="data_bor" class="tab" type="date" th:text="*{born}" id="data_bor"/>
-<!--    th:text="${data_bor} ? '1900-01-01' : '1901-02-02'"-->
+    <input style="margin-left: 34px" name="data_bor" class="tab" type="date" th:text="*{born}" id="data_bor"/>
     <br/>
     <label for="pasport">ІПН/ЄДРПОУ</label>
     <input style="margin-left: 74px" class="tab" type="text" th:field="*{pasport}" id="pasport"/>

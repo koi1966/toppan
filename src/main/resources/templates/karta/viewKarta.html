@@ -94,8 +94,11 @@
                     <span th:text="${kart.getFamily}?: ''">-</span>
                     <span th:text="${kart.getFname}?: ''">-</span>
                     <span th:text="${kart.getSec_name}?: ''">-</span>
-
                 </p>
+                <b>Рік нар: </b>
+                <span th:text="${#dates.format(kart.getBorn, 'dd.MM.yyyy')}?:''">-</span>
+                </p>
+
                 <p> <span th:text="${kart.getRajon}?: ''">-</span>
                     <span th:text="${','+kart.getStreet}?: ''">-</span>
                     <span th:text="${'буд. '+kart.getHouse}?: ''">-</span>

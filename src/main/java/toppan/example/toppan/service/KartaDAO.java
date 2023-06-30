@@ -114,12 +114,12 @@ public class KartaDAO {
             }
             SQLa = SQLa + "sec_name like '" + kar.getSec_name().toUpperCase() + "' ";
         }
-//        data_born
-        if (!data_born.toString().equals("1901-01-01")) {
+
+        if (!data_born.toString().equals("1901-01-01")){
             if (!StringEquals.equalsSQL(SQLa, SqlEquals)) {
                 SQLa = SQLa + "and ";
             }
-            SQLa = SQLa + "born like '" + data_born + "' ";
+            SQLa = SQLa + "born = '" + data_born + "' ";
         }
 
         if (!kar.getPasport().isEmpty()) {
@@ -162,6 +162,7 @@ public class KartaDAO {
                     AMT.setCode_oper(resultSet.getString("oper"));
                     AMT.setCuzov(resultSet.getString("cuzov"));
                     AMT.setTip(resultSet.getString("tip"));
+                    AMT.setBorn(resultSet.getTimestamp("born"));
 
                     kart.add(AMT);
                 }
