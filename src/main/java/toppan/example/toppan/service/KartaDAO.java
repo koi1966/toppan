@@ -176,6 +176,9 @@ public class KartaDAO {
     }
 
 
+
+
+
     public List<Karta> AmtHistory(long id) {
         List<Karta> kartHistory = new ArrayList<>();
 
