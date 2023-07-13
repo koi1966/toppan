@@ -18,11 +18,11 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 import javax.sql.DataSource;
 
-@Configuration
-@EnableWebSecurity
+//@Configuration
+//@EnableWebSecurity
 public class WebSecurityConfig extends  WebSecurityConfigurerAdapter {
 
-    @Override
+//    @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
                     .withUser("Oleg")
@@ -35,7 +35,7 @@ public class WebSecurityConfig extends  WebSecurityConfigurerAdapter {
 //        super.configure(auth);
     }
 
-    @Override
+//    @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeRequests()

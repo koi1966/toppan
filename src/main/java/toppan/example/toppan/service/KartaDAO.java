@@ -180,8 +180,9 @@ public class KartaDAO {
         List<Karta> kartHistory = new ArrayList<>();
 
         String SQL =
-                "select karta.id,region,kart_id,data_oper,data_v,znak,kv,teh_pasp,family,fname,sec_name,born,pasport,permis,house,street," +
-                        "teh_pasp,color,(marka ||' '|| model) as marka,reverse(karta.num_cuz) as num_cuz,reverse(karta.num_shas) as num_shas," +
+                "select karta.id,region,kart_id,data_oper,data_v,znak,kv,teh_pasp,family,fname,sec_name,born,pasport," +
+                        "permis,house,street,place,masa1,masa,teh_pasp,color,(marka ||' '|| model) as marka," +
+                        "reverse(karta.num_cuz) as num_cuz,reverse(karta.num_shas) as num_shas," +
                         "reverse(karta.num_dv) as num_dv,power,volume,door,fuel,tip,annot,cuzov,city,rajon,obl,znak, oper.* " +
                         "from karta, oper " +
                         "where kart_id in (Select k2.kart_id from karta k2 where k2.id=?) " +
@@ -226,6 +227,9 @@ public class KartaDAO {
                     AMTh.setHouse(resultSet.getString("house"));
                     AMTh.setKv(resultSet.getString("kv"));
                     AMTh.setCode_oper(resultSet.getString("oper"));
+                    AMTh.setCode_oper(resultSet.getString("masa"));
+                    AMTh.setCode_oper(resultSet.getString("masa1"));
+                    AMTh.setCode_oper(resultSet.getString("plase"));
                     kartHistory.add(AMTh);
                 }
             }
