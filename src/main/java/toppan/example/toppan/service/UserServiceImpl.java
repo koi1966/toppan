@@ -1,6 +1,5 @@
 package toppan.example.toppan.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import toppan.example.toppan.models.Role;
@@ -19,9 +18,10 @@ public class UserServiceImpl implements UserService{
     private final RoleDao roleDao;
 //    @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
-    public UserServiceImpl(UserDao userDao, RoleDao roleDao) {
+    public UserServiceImpl(UserDao userDao, RoleDao roleDao, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userDao = userDao;
         this.roleDao = roleDao;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @Override
