@@ -19,6 +19,7 @@ import java.util.Set;
 **/
 public class UserDetailsServiceImpl implements UserDetailsService {
 
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
     private UserDao userDao;
 
