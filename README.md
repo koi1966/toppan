@@ -29,3 +29,5 @@ where not exists (
 select 1
 from karta2
 where karta2.id = karta.id);
+
+28.18

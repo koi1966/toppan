@@ -102,16 +102,8 @@ public class KartaDAOPostgres {
 
     public void addArest(ArestSybase arestSybase) {
 
-        PreparedStatement statementPostgres = null;
-
-//        try {
-//            statementPostgres = connectionPos.prepareStatement("INSERT INTO arest (data_arest," +
-//                    "kart_id,who_na,in_nom,data_in,data_sna,who_sha,out_nom,data_out,oper_in,oper_out,vlad,ish_answer1," +
-//                    "ish_answer2,k_nom1,k_data1,k_nom2,k_data2,commenta,time_fix) Values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?," +
-//                    "?,?,?,?,?)");
-
             try {
-                statementPostgres = connectionPos.prepareStatement("INSERT INTO arest (data_arest," +
+                PreparedStatement statementPostgres = connectionPos.prepareStatement("INSERT INTO arest (data_arest," +
                         "kart_id,who_na,in_nom,data_in,data_sna,who_sha,out_nom,data_out,oper_in,oper_out,vlad,ish_answer1," +
                         "ish_answer2,k_nom1,k_data1,k_nom2,k_data2,commenta,time_fix) Values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?," +
                         "?,?,?,?,?)");
@@ -160,10 +152,9 @@ public class KartaDAOPostgres {
     }
 
     public void addOper(OperSybase operSybase) {
-        PreparedStatement statementPostgres = null;
 
         try {
-            statementPostgres = connectionPos.prepareStatement("INSERT INTO oper (" +
+            PreparedStatement statementPostgres = connectionPos.prepareStatement("INSERT INTO oper (" +
                     "oper_id,sod_id,oper,ch_field,registration,vydacha,tip_registr,izjat,zapros,commenta,oper_nic,osn_para) " +
                     "Values (?,?,?,?,?,?,?,?,?,?,?,?)");
 

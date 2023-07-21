@@ -1,12 +1,5 @@
 package toppan.example.toppan.service;
 
-//select karta.*
-//        from karta
-//        where not exists (
-//        select 1
-//        from karta2
-//        where karta2.id = karta.id);
-
 import toppan.example.toppan.bl.DataDAOSybase;
 import toppan.example.toppan.models.ArestSybase;
 import toppan.example.toppan.models.KartaSybase;
@@ -17,9 +10,6 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
-//import static toppan.example.toppan.bl.DataDAOSybase.connectionSa;
-
 
 @Component
 public class KartaDAOSybase {
