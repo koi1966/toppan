@@ -109,11 +109,13 @@
                 <p> Марка : <b th:text="${AmtHyst.getMarka}?: ''"> </b></p>
                 <p> ДНЗ : <b th:text="${AmtHyst.getZnak}?: ''"> </b></p>
                 <p> СпР : <b th:text="${AmtHyst.getTeh_pasp}?: ''"> </b></p>
+                <p> Рік вип : <b th:text="${AmtHyst.getData_v}?: ''"> </b></p>
                 <p> № Куз : <b th:text="${AmtHyst.getNum_cuz}?: ''"> </b></p>
                 <p> № Шас : <b th:text="${AmtHyst.getNum_shas}?: ''"> </b></p>
                 <p> № Дв : <b th:text="${AmtHyst.getNum_dv}?: ''"> </b></p>
                 <p> Vin : <b th:text="${AmtHyst.getKart_id}?: ''"> </b></p>
             </td>
+
             <td id="col_2">
                 <p> Тип ТЗ: <b th:text="${AmtHyst.getTip}?:''"> </b></p>
                 <p> Тип кузова: <b th:text="${AmtHyst.getCuzov}?:''"> </b></p>
@@ -137,7 +139,6 @@
                 <p> Рік нар: <b th:text="${#dates.format(AmtHyst.getBorn, 'dd.MM.yyyy')}?:''"> </b></p>
                 <p> Паспорт: <b th:text="${AmtHyst.getPasport()}?:''"> </b></p>
                 <p> ПосВодія: <b th:text="${AmtHyst.getPermis()}?:''"> </b></p>
-
                 <p> Обл: <b th:text="${AmtHyst.getObl}?:''"> </b></p>
                 <p> Рай: <b th:text="${AmtHyst.getRajon}?:''"> </b></p>
                 <p> МістоСело: <b th:text="${AmtHyst.getCity}?:''"> </b></p>

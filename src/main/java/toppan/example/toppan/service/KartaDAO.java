@@ -140,9 +140,9 @@ public class KartaDAO {
             try (ResultSet resultSet = statement.executeQuery(SQLa)) {
                 while (resultSet.next()) {
                     Karta AMT = new Karta();
+                    AMT.setId(resultSet.getLong("id"));
                     AMT.setKart_id(resultSet.getString("Kart_id"));
                     AMT.setRegion(resultSet.getString("Region"));
-                    AMT.setId(resultSet.getLong("id"));
                     AMT.setFamily(resultSet.getString("Family"));
                     AMT.setRajon(resultSet.getString("Rajon"));
                     AMT.setStreet(resultSet.getString("Street"));
@@ -177,10 +177,6 @@ public class KartaDAO {
         return kart;
     }
 
-
-
-
-
     public List<Karta> AmtHistory(long id) {
         List<Karta> kartHistory = new ArrayList<>();
 
@@ -188,7 +184,7 @@ public class KartaDAO {
                 "select karta.id,region,kart_id,data_oper,data_v,znak,kv,teh_pasp,family,fname,sec_name,born,pasport," +
                         "permis,house,street,masa1,masa,place,teh_pasp,color,(marka ||' '|| model) as marka," +
                         "reverse(karta.num_cuz) as num_cuz,reverse(karta.num_shas) as num_shas,reverse(karta.num_dv) as num_dv," +
-                        "power,volume,door,fuel,tip,annot,cuzov,city,rajon,obl,znak, oper.* " +
+                        "power,volume,door,fuel,tip,annot,cuzov,city,rajon,obl,znak,data_v,oper.* " +
                         "from karta, oper " +
                         "where kart_id in (Select k2.kart_id from karta k2 where k2.id=?) " +
                         "and substring(karta.code_oper,1,2)=oper.oper_id ORDER BY data_oper DESC";
