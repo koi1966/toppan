@@ -12,14 +12,11 @@
 
 <!--    <style type="text/css">-->
     <style >
+
         * {
             margin: 0;
             padding: 0;
         }
-
-        /*p {*/
-        /*    padding: 1px;*/
-        /*}*/
 
         #left {
             position: absolute;
@@ -49,6 +46,7 @@
         th { /* заголовок */
             background: #bdd7a3; /* Цвет фона ячейки */
             vertical-align: center;
+            text-align: center;
             padding: 15px; /* Убираем поля вокруг текста */
         }
 
@@ -76,22 +74,21 @@
             color: #1810e0;
         }
 
+        span {
+            color: #1810e0;
+        }
+
         #col_a {
+            background: rgba(236, 190, 190, 0.87); /* Солір фона первой колонки */
+        }
+
+        #col_b {
             background: rgba(236, 190, 190, 0.87); /* Солір фона первой колонки */
         }
 
         p.a {
             margin: 1px 0;
-            /*margin-top: 0.5em; !* Отступ сверху *!*/
-            /*margin-bottom: 1em; !* Отступ снизу *!*/
         }
-
-        /*p.b {*/
-        /*    margin: 1px 0;*/
-        /*    color: #6f93dc;*/
-        /*    font-style: italic;*/
-        /*    font-weight: bold;*/
-        /*}*/
 
     </style>
 </head>
@@ -131,9 +128,8 @@
 
             <td id="col_3">
                 <a> <b th:text="${#dates.format(AmtHyst.getData_oper, 'dd.MM.yyyy  HH-mm')}"></b></a>
-                                <br>
+                <br>
                 <p> ТО: <b th:text="${AmtHyst.getCode_oper()}?:''"> </b></p>
-<!--                                <p> <b th:text="${AmtHyst.getCode_oper}"> </b></p>-->
             </td>
 
             <td id="col_4"><b th:text="${AmtHyst.getFamily+' '+ AmtHyst.getFname+' '+ AmtHyst.getSec_name}"></b>
@@ -151,26 +147,40 @@
         </tr>
     </table>
 </div>
-<!-- Арест -->
+
+                <!-- Арест -->
 
 <div id="right">
     <table class="tab1">
         <tr>
-            <th id="col_a" class="th1">Арест власника ТЗ</th>
-            <th id="col_b" class="th1">Арешт</th>
-            <th class="th1">Зняття арешту</th>
+            <th id="col_a" class="th1">Власник ТЗ</th>
+            <th id="col_b" class="th1">Арешт ТЗ</th>
+            <th id="col_c" class="th1">Зняття арешту</th>
         </tr>
         <tr th:each="AmtArest:${arest}">
-            <td id="col1"><p th:text="${'Власник ТЗ: '+AmtArest.getVlad()}"></p></td>
+            <td id="col1">
+                <p> Власник ТЗ: <span th:text="${AmtArest.getVlad}?:''"> </span></p>
+                <br>
+                <p class="a" th:text="${AmtArest.getCommenta!=null}? ${'Примітка: '}:''"></p>
+                <b th:text="${AmtArest.getCommenta!=null}? ${AmtArest.getCommenta}:''" ></b>
+            </td>
 
-            <td id="col2"><a th:text="${'Накладено: '+ AmtArest.getWho_na()}"></a>
-                <p class="a" th:text="${'внесено: '+AmtArest.getData_arest()}"></p>
-                <p class="a" th:text="${'Вихід. № '+AmtArest.getIn_nom()}"></p>
-                <p class="a" th:text="${'Дата вихід :'+AmtArest.getData_in()}"></p></td>
+            <td id="col2">
+                <p> накладено: <b th:text="${AmtArest.getWho_na}?:''"> </b></p>
+                <p> внесено: <b th:text="${AmtArest.getData_arest}?:''"> </b></p>
+                <p> Вихід. № : <b th:text="${AmtArest.getIn_nom}?:''"> </b></p>
+                <p> Дата вихід: <b th:text="${AmtArest.getData_in}?:''"> </b></p>
+            </td>
 
-            <td id="col3"><a th:text="${AmtArest.getWho_sha!=null}? ${'Зняв: '+AmtArest.getWho_sha}:''"></a>
-                <p class="a" th:text="${AmtArest.getOut_nom!=null}? ${'Вихідний: '+AmtArest.getOut_nom}:''"></p>
-                <p class="a" th:text="${AmtArest.getData_out!=null}? ${'Дата зняття : '+AmtArest.getData_out}:''"></p>
+            <td id="col3">
+                <p class="a" th:text="${AmtArest.getWho_sha!=null}? ${'Зняв: '}:''"></p>
+                <b th:text="${AmtArest.getWho_sha!=null}? ${AmtArest.getWho_sha}:''" ></b>
+
+                <p class="a" th:text="${AmtArest.getOut_nom!=null}? ${'Вихідний: '}:''"></p>
+                <b th:text="${AmtArest.getOut_nom!=null}? ${AmtArest.getOut_nom}:''" ></b>
+
+                <p class="a" th:text="${AmtArest.getOut_nom!=null}? ${'Дата зняття:'}:''"></p>
+                <b th:text="${AmtArest.getData_out!=null}? ${AmtArest.getData_out}:''" ></b>
             </td>
         </tr>
     </table>

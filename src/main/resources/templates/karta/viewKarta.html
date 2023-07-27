@@ -23,13 +23,6 @@
             padding: -5px;
         }
 
-        th { /* заголовок */
-            background: #bdd7a3; /* Цвет фона ячейки */
-            vertical-align: center;
-            text-align: center;
-            padding: 5px; /* Убираем поля вокруг текста */
-        }
-
         th, td { /* ячейки таблиці */
             border: 1px solid black; /* Параметры рамки */
             /*text-align: center; !* Выравнивание по центру *!*/
@@ -42,6 +35,13 @@
             /*td{ cursor: default;  как сделать таблицу неактивной } */
         }
 
+        th { /* заголовок */
+            background: #bdd7a3; /* Цвет фона ячейки */
+            vertical-align: center;
+            text-align: center;
+            padding: 5px; /* Убираем поля вокруг текста */
+        }
+
         b {
             color: #1810e0;
         }
@@ -52,7 +52,6 @@
 <div>
     <table><p th:text="${' Записів : ' + kartaSize}" ></p>
         <tr>
-
             <th>Дата операции</th>
             <th>VIN / ДНЗ / свідоцтво</th>
             <th>Марка модель </th>
