@@ -12,7 +12,7 @@ import toppan.example.toppan.service.UserService;
  * Validator for {@link net.proselyte.springsecurityapp.model.User} class,
  * implements {@link Validator} interface.
  */
-@Component
+//@Component
 public class UserValidator implements Validator {
 
     private final UserService userService;
