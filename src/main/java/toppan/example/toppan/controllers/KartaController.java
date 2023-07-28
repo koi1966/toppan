@@ -77,14 +77,14 @@ public class KartaController {
 
     @GetMapping("/test")
     public String testKarta() {
-        log.info("See html test !!!");
+        log.info("See this html test !!!");
 
         return "karta/arestupdate";
     }
 
     @GetMapping("/searchKarta")
     public String testKarta2() {
-        log.info("See is test !!!");
+        log.info("See this test !!!");
 
         return "karta/searchKarta";
     }
