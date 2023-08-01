@@ -1,6 +1,5 @@
 package toppan.example.toppan.validator;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
@@ -12,7 +11,7 @@ import toppan.example.toppan.service.UserService;
  * Validator for {@link net.proselyte.springsecurityapp.model.User} class,
  * implements {@link Validator} interface.
  */
-//@Component
+@Component
 public class UserValidator implements Validator {
 
     private final UserService userService;
