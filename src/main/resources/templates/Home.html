@@ -1,29 +1,29 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title th:text="${title}"/>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta charset="UTF-8">
+    <title>Add CSS and JS to Thymeleaf</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet" />
 
 </head>
+<!--    <link rel="stylesheet" type="text/css" media="all"-->
+<!--          href="static/css/style.css" th:href="@{src/main/resources/templates/static/css/style.css}" />-->
+
 <body data-hasqtip="0">
 
-<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
-    <symbol id="check" viewBox="0 0 16 16">
-        <title>Check</title>
-        <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"></path>
-    </symbol>
-</svg>
-<!--<div>-->
-<!--    <form action="/logout" method="post">-->
-<!--        <input type="submit" value="Sign Out"/>-->
-<!--    </form>-->
-<!--</div>-->
+<!--<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">-->
+<!--    <symbol id="check" viewBox="0 0 16 16">-->
+<!--        <title>Check</title>-->
+<!--        <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"></path>-->
+<!--    </symbol>-->
+<!--</svg>-->
+
 <div>
     <header th:insert="blocks/header.html :: header"></header>
 
     <main>
+        <div th:class="header">
 
-        <div>
             <h1 class="fw-light">Невеличка інструкція</h1>
             <a> Довідки про відсутність/наявність судимості</a>
             <a>1. Довідки щоденні :</a>
@@ -43,10 +43,32 @@
                 <!--                        <a href="../printer/toppan" class="btn btn-secondary my-2">2</a>-->
             </p>
         </div>
+                </section>
+
+                <div class="album py-5 bg-light">
+                    <div >
+                        <div >
+<!--                            <img src="/templates/static/imeges/ZHytomyr.png" alt="Bose logo">-->
+                            <img th:src="@{/static/imeges/zhytomyr.png}" alt="55"/>
+                            <img src="static/imeges/zhytomyr.png" alt="44"/>
+<!--                            <img src="static/imeges/zhytomyr.png" alt="999"/>-->
+                            ddddd
+                        </div>
+
+                        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+                        </div>
+
+                        <textarea> qwww</textarea>
+                        <h1 class="fw-light">ШО то тут тоже нарисуем .. потом</h1>
+                    </div>
+                </div>
 
     </main>
     <div th:insert="blocks/footer.html :: footer"></div>
 
+    <!--</body>-->
+    <!--<p th:text="'Улыбнись ' + ${title} + '!'"/>-->
 </div>
 </body>
 </html>
