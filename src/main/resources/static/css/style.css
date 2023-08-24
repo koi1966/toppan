@@ -1,4 +1,4 @@
-header {
+ .headerr {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -7,22 +7,19 @@ header {
     padding: 64px 120px;
     background-repeat: no-repeat;
     background-size: cover;
-}
+     background-image: url("/imeges/ZHytomyr.jpg");
+     width: 640px;
+     height: 360px;
+ }
 
-header {
-    background-image: url("/templates/static/imeges/zhytomyr.png");
-    width: 640px;
-    height: 360px;
-}
-
-header__top {
+ .header__top {
     display: flex;
     justify-content: space-between;
-}
+ }
 
-h2 {
+ .h1 {
     font-family: sans-serif;
     font-size: 1.5em;
     text-transform: uppercase;
-}
+ }
 
