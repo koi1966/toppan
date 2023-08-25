@@ -1,4 +1,4 @@
- .headerr {
+ .header {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -9,9 +9,14 @@
     background-size: cover;
      background-image: url("/imeges/ZHytomyr.jpg");
      width: 640px;
-     height: 360px;
+     /*height: 360px;*/
+     /*width: 100%;*/
+     height: 100%;
  }
-
+ .img {
+     width: 100%;
+     height: 100%;
+ }
  .header__top {
     display: flex;
     justify-content: space-between;
