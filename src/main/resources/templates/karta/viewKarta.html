@@ -23,13 +23,6 @@
             padding: -5px;
         }
 
-        th { /* заголовок */
-            background: #bdd7a3; /* Цвет фона ячейки */
-            vertical-align: center;
-            text-align: center;
-            padding: 5px; /* Убираем поля вокруг текста */
-        }
-
         th, td { /* ячейки таблиці */
             border: 1px solid black; /* Параметры рамки */
             /*text-align: center; !* Выравнивание по центру *!*/
@@ -42,6 +35,13 @@
             /*td{ cursor: default;  как сделать таблицу неактивной } */
         }
 
+        th { /* заголовок */
+            background: #bdd7a3; /* Цвет фона ячейки */
+            vertical-align: center;
+            text-align: center;
+            padding: 5px; /* Убираем поля вокруг текста */
+        }
+
         b {
             color: #1810e0;
         }
@@ -50,9 +50,8 @@
 <body>
 <header th:insert="blocks/header.html :: header"></header>
 <div>
-    <table>
+    <table><p th:text="${' Записів : ' + kartaSize}" ></p>
         <tr>
-            <p th:text="${' Записів : ' + kartaSize}" ></p>
             <th>Дата операции</th>
             <th>VIN / ДНЗ / свідоцтво</th>
             <th>Марка модель </th>
@@ -97,13 +96,11 @@
                 </p>
                 <b>Рік нар: </b>
                 <span th:text="${#dates.format(kart.getBorn, 'dd.MM.yyyy')}?:''">-</span>
-                </p>
 
                 <p> <span th:text="${kart.getRajon}?: ''">-</span>
                     <span th:text="${','+kart.getStreet}?: ''">-</span>
                     <span th:text="${'буд. '+kart.getHouse}?: ''">-</span>
                 </p>
-
             </td>
         </tr>
     </table>

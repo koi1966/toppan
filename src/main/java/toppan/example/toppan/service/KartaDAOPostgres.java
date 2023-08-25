@@ -1,15 +1,13 @@
 package toppan.example.toppan.service;
 
-import toppan.example.toppan.models.Arest;
+import org.springframework.stereotype.Component;
 import toppan.example.toppan.models.ArestSybase;
 import toppan.example.toppan.models.KartaSybase;
 import toppan.example.toppan.models.OperSybase;
-import org.springframework.stereotype.Component;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.List;
 
 import static toppan.example.toppan.bl.DataDAOPostgres.connectionPos;
 

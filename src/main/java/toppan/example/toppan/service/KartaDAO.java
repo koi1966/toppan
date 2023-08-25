@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 //import static sun.security.util.ArrayUtil.reverse;
-import static org.apache.logging.log4j.ThreadContext.isEmpty;
 import static toppan.example.toppan.bl.DataDAOPostgres.connectionPos;
 
 @Component
@@ -141,9 +140,9 @@ public class KartaDAO {
             try (ResultSet resultSet = statement.executeQuery(SQLa)) {
                 while (resultSet.next()) {
                     Karta AMT = new Karta();
+                    AMT.setId(resultSet.getLong("id"));
                     AMT.setKart_id(resultSet.getString("Kart_id"));
                     AMT.setRegion(resultSet.getString("Region"));
-                    AMT.setId(resultSet.getLong("id"));
                     AMT.setFamily(resultSet.getString("Family"));
                     AMT.setRajon(resultSet.getString("Rajon"));
                     AMT.setStreet(resultSet.getString("Street"));
@@ -163,6 +162,9 @@ public class KartaDAO {
                     AMT.setCuzov(resultSet.getString("cuzov"));
                     AMT.setTip(resultSet.getString("tip"));
                     AMT.setBorn(resultSet.getTimestamp("born"));
+                    AMT.setMasa1(resultSet.getInt("masa1"));
+                    AMT.setMasa(resultSet.getInt("masa"));
+                    AMT.setPlace(resultSet.getString("place"));
 
                     kart.add(AMT);
                 }
@@ -175,15 +177,14 @@ public class KartaDAO {
         return kart;
     }
 
-
     public List<Karta> AmtHistory(long id) {
         List<Karta> kartHistory = new ArrayList<>();
 
         String SQL =
                 "select karta.id,region,kart_id,data_oper,data_v,znak,kv,teh_pasp,family,fname,sec_name,born,pasport," +
-                        "permis,house,street,place,masa1,masa,teh_pasp,color,(marka ||' '|| model) as marka," +
-                        "reverse(karta.num_cuz) as num_cuz,reverse(karta.num_shas) as num_shas," +
-                        "reverse(karta.num_dv) as num_dv,power,volume,door,fuel,tip,annot,cuzov,city,rajon,obl,znak, oper.* " +
+                        "permis,house,street,masa1,masa,place,teh_pasp,color,(marka ||' '|| model) as marka," +
+                        "reverse(karta.num_cuz) as num_cuz,reverse(karta.num_shas) as num_shas,reverse(karta.num_dv) as num_dv," +
+                        "power,volume,door,fuel,tip,annot,cuzov,city,rajon,obl,znak,data_v,oper.* " +
                         "from karta, oper " +
                         "where kart_id in (Select k2.kart_id from karta k2 where k2.id=?) " +
                         "and substring(karta.code_oper,1,2)=oper.oper_id ORDER BY data_oper DESC";
@@ -227,9 +228,9 @@ public class KartaDAO {
                     AMTh.setHouse(resultSet.getString("house"));
                     AMTh.setKv(resultSet.getString("kv"));
                     AMTh.setCode_oper(resultSet.getString("oper"));
-                    AMTh.setCode_oper(resultSet.getString("masa"));
-                    AMTh.setCode_oper(resultSet.getString("masa1"));
-                    AMTh.setCode_oper(resultSet.getString("plase"));
+                    AMTh.setMasa1(resultSet.getInt("masa1"));
+                    AMTh.setMasa(resultSet.getInt("masa"));
+                    AMTh.setPlace(resultSet.getString("place"));
                     kartHistory.add(AMTh);
                 }
             }

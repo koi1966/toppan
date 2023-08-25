@@ -1,22 +1,21 @@
 <!DOCTYPE html>
 <html lang="en"
+
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <!--    <head>-->
+
     <title>Історія && Арест АМТ</title>
-    <link rel="stylesheet" th:href="@{css/login_css.css}">
+    <link rel="stylesheet" th:href="@{../../static/css/cssandjs.css}">
 
     <title>Історія && Арест </title>
 
-    <style type="text/css">
+<!--    <style type="text/css">-->
+    <style >
+
         * {
             margin: 0;
             padding: 0;
-        }
-
-        p {
-            padding: 1px;
         }
 
         #left {
@@ -47,6 +46,7 @@
         th { /* заголовок */
             background: #bdd7a3; /* Цвет фона ячейки */
             vertical-align: center;
+            text-align: center;
             padding: 15px; /* Убираем поля вокруг текста */
         }
 
@@ -56,7 +56,7 @@
         }
 
         #col_2 {
-            width: 5%; /* Ширина второй  колонки */
+            width: 7%; /* Ширина второй  колонки */
             background: #fcfbfb; /* Цвет фона третьей колонки */
         }
 
@@ -67,28 +67,27 @@
 
         #col_4 {
             width: 21%; /* Ширина первой колонки */
-            background: rgba(250, 248, 248, 0.87); /* Цвет фона первой колонки */
+            background: rgba(250, 248, 248, 0.87); /* Солір фона первой колонки */
         }
 
         b {
             color: #1810e0;
         }
 
+        span {
+            color: #1810e0;
+        }
+
         #col_a {
-            background: rgba(236, 190, 190, 0.87); /* Цвет фона первой колонки */
+            background: rgba(236, 190, 190, 0.87); /* Солір фона первой колонки */
+        }
+
+        #col_b {
+            background: rgba(236, 190, 190, 0.87); /* Солір фона первой колонки */
         }
 
         p.a {
             margin: 1px 0;
-            /*margin-top: 0.5em; !* Отступ сверху *!*/
-            /*margin-bottom: 1em; !* Отступ снизу *!*/
-        }
-
-        p.b {
-            margin: 1px 0;
-            color: #6f93dc;
-            font-style: italic;
-            font-weight: bold;
         }
 
     </style>
@@ -104,76 +103,84 @@
         </tr>
         <tr th:each="AmtHyst:${Amthystory}">
             <td id="col_1">
-
                 <p> Марка : <b th:text="${AmtHyst.getMarka}?: ''"> </b></p>
                 <p> ДНЗ : <b th:text="${AmtHyst.getZnak}?: ''"> </b></p>
+                <p> Рік вип : <b th:text="${AmtHyst.getData_v}?: ''"> </b></p>
                 <p> СпР : <b th:text="${AmtHyst.getTeh_pasp}?: ''"> </b></p>
+                <p> Рік вип : <b th:text="${AmtHyst.getData_v}?: ''"> </b></p>
                 <p> № Куз : <b th:text="${AmtHyst.getNum_cuz}?: ''"> </b></p>
                 <p> № Шас : <b th:text="${AmtHyst.getNum_shas}?: ''"> </b></p>
                 <p> № Дв : <b th:text="${AmtHyst.getNum_dv}?: ''"> </b></p>
                 <p> Vin : <b th:text="${AmtHyst.getKart_id}?: ''"> </b></p>
             </td>
-            <td id="col_2">
 
-                <p> м³ : <b th:text="${AmtHyst.getVolume}?: ''"> </b></p>
-                <p> Двер: <b th:text="${AmtHyst.getDoor}?: ''"> </b></p>
-                <p> Пал : <b th:text="${AmtHyst.getFuel}?:''"> </b></p>
-                <p> Колір ТЗ: <b th:text="${AmtHyst.getColor}?:''"> </b></p>
+            <td id="col_2">
                 <p> Тип ТЗ: <b th:text="${AmtHyst.getTip}?:''"> </b></p>
                 <p> Тип кузова: <b th:text="${AmtHyst.getCuzov}?:''"> </b></p>
+                <p> Місць: <b th:text="${AmtHyst.getPlace}?:''"> </b></p>
+                <p> Двер: <b th:text="${AmtHyst.getDoor}?: ''"> </b></p>
+                <p> Колір ТЗ: <b th:text="${AmtHyst.getColor}?:''"> </b></p>
+                <p> Пал : <b th:text="${AmtHyst.getFuel}?:''"> </b></p>
+                <p> Двиг. м³ : <b th:text="${AmtHyst.getVolume}?: ''"> </b></p>
                 <p> Вл. маса: <b th:text="${AmtHyst.getMasa1}?:''"> </b></p>
                 <p> Пов.маса: <b th:text="${AmtHyst.getMasa}?:''"> </b></p>
-                <p> Місць: <b th:text="${AmtHyst.getPlace}?:''"> </b></p>
             </td>
 
             <td id="col_3">
                 <a> <b th:text="${#dates.format(AmtHyst.getData_oper, 'dd.MM.yyyy  HH-mm')}"></b></a>
-                                <br>
+                <br>
                 <p> ТО: <b th:text="${AmtHyst.getCode_oper()}?:''"> </b></p>
-<!--                                <p> <b th:text="${AmtHyst.getCode_oper}"> </b></p>-->
             </td>
 
             <td id="col_4"><b th:text="${AmtHyst.getFamily+' '+ AmtHyst.getFname+' '+ AmtHyst.getSec_name}"></b>
                 <p> Рік нар: <b th:text="${#dates.format(AmtHyst.getBorn, 'dd.MM.yyyy')}?:''"> </b></p>
                 <p> Паспорт: <b th:text="${AmtHyst.getPasport()}?:''"> </b></p>
                 <p> ПосВодія: <b th:text="${AmtHyst.getPermis()}?:''"> </b></p>
-
                 <p> Обл: <b th:text="${AmtHyst.getObl}?:''"> </b></p>
                 <p> Рай: <b th:text="${AmtHyst.getRajon}?:''"> </b></p>
                 <p> МістоСело: <b th:text="${AmtHyst.getCity}?:''"> </b></p>
-
-<!--                <span th:text="${kart.getFamily}?: ''">-</span>-->
-                <p> вул: <b th:text="${AmtHyst.getStreet}?:''"> </b>
-
-                </p>
+                <p> вул: <b th:text="${AmtHyst.getStreet}?:''"> </b>  </p>
                 <p> буд: <b th:text="${AmtHyst.getHouse}?:''"> </b></p>
                 <p> кв.: <b th:text="${AmtHyst.getKv}?:''"> </b></p>
                 <p> Примітка: <b th:text="${AmtHyst.getAnnot}?:''"> </b></p>
             </td>
-
         </tr>
     </table>
 </div>
-<!-- Арест -->
+
+                <!-- Арест -->
 
 <div id="right">
     <table class="tab1">
         <tr>
-            <th id="col_a" class="th1">Арест власника ТЗ</th>
-            <th id="col_b" class="th1">Арешт</th>
-            <th class="th1">Зняття арешту</th>
+            <th id="col_a" class="th1">Власник ТЗ</th>
+            <th id="col_b" class="th1">Арешт ТЗ</th>
+            <th id="col_c" class="th1">Зняття арешту</th>
         </tr>
         <tr th:each="AmtArest:${arest}">
-            <td id="col1"><p th:text="${'Власник ТЗ: '+AmtArest.getVlad()}"></p></td>
+            <td id="col1">
+                <p> Власник ТЗ: <span th:text="${AmtArest.getVlad}?:''"> </span></p>
+                <br>
+                <p class="a" th:text="${AmtArest.getCommenta!=null}? ${'Примітка: '}:''"></p>
+                <b th:text="${AmtArest.getCommenta!=null}? ${AmtArest.getCommenta}:''" ></b>
+            </td>
 
-            <td id="col2"><a th:text="${'Накладено: '+ AmtArest.getWho_na()}"></a>
-                <p class="a" th:text="${'внесено: '+AmtArest.getData_arest()}"></p>
-                <p class="a" th:text="${'Вихід. № '+AmtArest.getIn_nom()}"></p>
-                <p class="a" th:text="${'Дата вихід :'+AmtArest.getData_in()}"></p></td>
+            <td id="col2">
+                <p> накладено: <b th:text="${AmtArest.getWho_na}?:''"> </b></p>
+                <p> внесено: <b th:text="${AmtArest.getData_arest}?:''"> </b></p>
+                <p> Вихід. № : <b th:text="${AmtArest.getIn_nom}?:''"> </b></p>
+                <p> Дата вихід: <b th:text="${AmtArest.getData_in}?:''"> </b></p>
+            </td>
 
-            <td id="col3"><a th:text="${AmtArest.getWho_sha!=null}? ${'Зняв: '+AmtArest.getWho_sha}:''"></a>
-                <p class="a" th:text="${AmtArest.getOut_nom!=null}? ${'Вихідний: '+AmtArest.getOut_nom}:''"></p>
-                <p class="a" th:text="${AmtArest.getData_out!=null}? ${'Дата зняття : '+AmtArest.getData_out}:''"></p>
+            <td id="col3">
+                <p class="a" th:text="${AmtArest.getWho_sha!=null}? ${'Зняв: '}:''"></p>
+                <b th:text="${AmtArest.getWho_sha!=null}? ${AmtArest.getWho_sha}:''" ></b>
+
+                <p class="a" th:text="${AmtArest.getOut_nom!=null}? ${'Вихідний: '}:''"></p>
+                <b th:text="${AmtArest.getOut_nom!=null}? ${AmtArest.getOut_nom}:''" ></b>
+
+                <p class="a" th:text="${AmtArest.getOut_nom!=null}? ${'Дата зняття:'}:''"></p>
+                <b th:text="${AmtArest.getData_out!=null}? ${AmtArest.getData_out}:''" ></b>
             </td>
         </tr>
     </table>

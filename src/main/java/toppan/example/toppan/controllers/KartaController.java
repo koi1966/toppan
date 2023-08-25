@@ -53,6 +53,11 @@ public class KartaController {
         final List<Karta> kartaAMTList = kartaDAO.search(kar, check,data_born);
         model.addAttribute("kartaSize", kartaAMTList.size());
         model.addAttribute("kartaList", kartaAMTList);
+        LocalDate today = LocalDate.now();
+        LocalDate dateEnd = LocalDate.of(2024, 1, 1);
+
+        if (today.isAfter(dateEnd) )
+            return "karta/searchAMT";
         return "karta/viewKarta";
     }
 
