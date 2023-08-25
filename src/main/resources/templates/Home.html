@@ -1,76 +1,76 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <title>Add CSS and JS to Thymeleaf</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>РСЦ ГСЦ МВС в Житомирській області</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css" />
-
+    </head>
 
 </head>
-<!--    <link rel="stylesheet" type="text/css" media="all"-->
-<!--          href="static/css/style.css" th:href="@{src/main/resources/templates/static/css/style.css}" />-->
 
-<body data-hasqtip="0">
+<body data-hasqtip="0" >
 
-<!--<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">-->
-<!--    <symbol id="check" viewBox="0 0 16 16">-->
-<!--        <title>Check</title>-->
-<!--        <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"></path>-->
-<!--    </symbol>-->
-<!--</svg>-->
+<header class="header" th:insert="blocks/header.html :: header">
+<!--<header class="header" th:insert="blocks/header.html :: header">-->
 
-<div>
-    <header th:insert="blocks/header.html :: header"></header>
+<!--    <div class="header__top">-->
+<!--        -->
+<!--        <a href="#menu">-->
+<!--            <img src="/imeges/Site_HSC_MIA.png" alt="GSC logo">-->
+<!--        </a>-->
+<!--    </div>-->
 
-    <main>
-        <div th:class="headerr">
+</header>
 
-            <h1 class="fw-light">Невеличка інструкція</h1>
-            <a> Довідки про відсутність/наявність судимості</a>
-            <a>1. Довідки щоденні :</a>
-            <h5> - при відкритті цієї сторінки автоматично виконується пошук з початку тижня по день відкритя сторінки
-                Вашого ТСЦ.</h5>
-            <h5> - якщо внесено помилкові данні потрібно лівою кнопкою миші клацнути на заголовку помилково внесеного дня
-                відкриється вікно для корегування.</h5>
-            <h5> За необхідності відкорегували та зберегти зміни. Відкорегована інформація відразу відобразиться.</h5>
-            <h5>2. Для формування тижневого звіту в пошуковому вікні вибрати своє ТСЦ, вказати період формування звіту
-                та натиснути "Формування та друк тижневого звіту"</h5>
-            <h5> На Вашу електронну адресу прийде сформований звіт.</h5>
-            <h5>2. Звіт щоденний - заповнюється щодня, підрозділ ТСЦ та дата вноситься автоматично, є можливість змінити
-                дату </h5>
-            <h5 class="lead text-muted"> .</h5>
-            <p>
-                <a href="#" class="btn btn-primary my-2">З пропозиціями звертайтесь до розробника - Климчука Олега</a>
-                <!--                        <a href="../printer/toppan" class="btn btn-secondary my-2">2</a>-->
-            </p>
+<div class="menu" id="menu">
+    <div class="menu__top">
+        <img src="images/logo.png" alt="Що далі ?">
+        <a href="#home">
+            <img
+                    src="images/icons/Icon-Close.png"
+                    alt="Close"
+            >
+        </a>
+    </div>
 
-        </div>
-                </section>
-
-                <div class="album py-5 bg-light">
-                    <div th:class="headerr">
-                        <div >
-<!--                            <img src="/templates/static/imeges/ZHytomyr.png" alt="Bose logo">-->
-<!--                            <img th:src="@{/static/imeges/zhytomyr.png}" alt="55"/>-->
-<!--                            <img src="imeges/ZHytomyr.jpg" alt="44"/>-->
-<!--                            <img src="static/imeges/zhytomyr.png" alt="999"/>-->
-                            ddddd
-                        </div>
-
-                        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-
-                        </div>
-
-                        <textarea> qwww</textarea>
-                        <h1 class="fw-light">ШО то тут тоже нарисуем .. потом</h1>
-                    </div>
-                </div>
-
-    </main>
-    <div th:insert="blocks/footer.html :: footer"></div>
-
-    <!--</body>-->
-    <!--<p th:text="'Улыбнись ' + ${title} + '!'"/>-->
+    <nav class="nav">
+        <a href="#home" class="nav__link">Home</a>
+        <a href="#recommended" class="nav__link">ТСЦ ..звіт щоденний</a>
+        <a href="/karta/searchAMT" class="nav__link">Компан</a>
+        <a href="#how-to-buy" class="nav__link">Арест</a>
+    </nav>
 </div>
+
+<main>
+    <section >
+        <h2>
+            Recommended
+        </h2>
+    </section>
+
+    <section >
+<!--        <h2>-->
+<!--            Browse Bose <br>products by category-->
+<!--        </h2>-->
+    </section>
+
+    <section >
+<!--        <h2>-->
+<!--            Why buy direct <br>from Bose-->
+<!--        </h2>-->
+    </section>
+
+</main>
+
+<footer>
+
+</footer>
+
 </body>
 </html>

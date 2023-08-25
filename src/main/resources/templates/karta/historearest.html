@@ -107,7 +107,6 @@
                 <p> ДНЗ : <b th:text="${AmtHyst.getZnak}?: ''"> </b></p>
                 <p> Рік вип : <b th:text="${AmtHyst.getData_v}?: ''"> </b></p>
                 <p> СпР : <b th:text="${AmtHyst.getTeh_pasp}?: ''"> </b></p>
-                <p> Рік вип : <b th:text="${AmtHyst.getData_v}?: ''"> </b></p>
                 <p> № Куз : <b th:text="${AmtHyst.getNum_cuz}?: ''"> </b></p>
                 <p> № Шас : <b th:text="${AmtHyst.getNum_shas}?: ''"> </b></p>
                 <p> № Дв : <b th:text="${AmtHyst.getNum_dv}?: ''"> </b></p>
@@ -127,6 +126,13 @@
             </td>
 
             <td id="col_3">
+
+                <p> Введення :<b th:switch="${AmtHyst.getRegim}">
+                    <span th:case="'0'">Автоматичне</span>
+                    <span th:case="'1'">Ручне</span>
+                </b> </p>
+                <br>
+                <br>
                 <a> <b th:text="${#dates.format(AmtHyst.getData_oper, 'dd.MM.yyyy  HH-mm')}"></b></a>
                 <br>
                 <p> ТО: <b th:text="${AmtHyst.getCode_oper()}?:''"> </b></p>

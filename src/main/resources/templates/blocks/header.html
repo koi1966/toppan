@@ -1,6 +1,5 @@
-<div th:fragment="header">
+<div th:fragment="header" xmlns:opacity="http://www.w3.org/1999/xhtml">
     <div>
-        <!--    <link rel="stylesheet" href="main.css">-->
         <style>
             body {
                 font-family: sans-serif;
@@ -53,23 +52,19 @@
                 flex-direction: column;
                 position: absolute;
             }
+
+
         </style>
 
 
-        <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
-
-            <span class="fs-3">РСЦ ГСЦ МВС в Житомирській області.,
-
-                <!--                Today in Zhytomyr:-->
-                <!--                <span-->
-                <!--                    th:text="${#dates.format(standardDate, 'dd-MMMM-yyyy HH:mm')}">-->
-                <!--                </span>-->
-
-            </span>
-
-        </a>
-
         <nav class="d-inline-flex mt-0 mt-md-0 ms-md-auto">
+<!--            <div class="header__top">-->
+
+<!--                <a href="#menu">-->
+<!--                    <img src="/imeges/Site_HSC_MIA.png" alt="GSC logo">-->
+<!--                </a>-->
+<!--            </div>-->
+            <div class="header__top">
             <ul>
                 <li><a class="me-3 py-2 text-dark text-decoration-none" href="/">About</a></li>
 
@@ -109,7 +104,18 @@
                     </ul>
                 </li>
 
+
             </ul>
+
+
+                <a class="img" href="https://hsc.gov.ua/">
+                    <img src="/imeges/Site_HSC_MIA.png"
+                         width="60"
+                         height="60"
+                         alt="Головний ">
+                </a>
+
+            </div>
         </nav>
     </div>
 </div>

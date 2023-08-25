@@ -165,7 +165,7 @@ public class KartaDAO {
                     AMT.setMasa1(resultSet.getInt("masa1"));
                     AMT.setMasa(resultSet.getInt("masa"));
                     AMT.setPlace(resultSet.getString("place"));
-
+                    AMT.setTom(resultSet.getString("tom"));
                     kart.add(AMT);
                 }
             }
@@ -184,7 +184,7 @@ public class KartaDAO {
                 "select karta.id,region,kart_id,data_oper,data_v,znak,kv,teh_pasp,family,fname,sec_name,born,pasport," +
                         "permis,house,street,masa1,masa,place,teh_pasp,color,(marka ||' '|| model) as marka," +
                         "reverse(karta.num_cuz) as num_cuz,reverse(karta.num_shas) as num_shas,reverse(karta.num_dv) as num_dv," +
-                        "power,volume,door,fuel,tip,annot,cuzov,city,rajon,obl,znak,data_v,oper.* " +
+                        "power,volume,door,fuel,tip,tom,regim,annot,cuzov,city,rajon,obl,znak,data_v,oper.* " +
                         "from karta, oper " +
                         "where kart_id in (Select k2.kart_id from karta k2 where k2.id=?) " +
                         "and substring(karta.code_oper,1,2)=oper.oper_id ORDER BY data_oper DESC";
@@ -231,6 +231,9 @@ public class KartaDAO {
                     AMTh.setMasa1(resultSet.getInt("masa1"));
                     AMTh.setMasa(resultSet.getInt("masa"));
                     AMTh.setPlace(resultSet.getString("place"));
+                    AMTh.setTom(resultSet.getString("tom"));
+                    AMTh.setRegim(resultSet.getInt("regim"));
+
                     kartHistory.add(AMTh);
                 }
             }
