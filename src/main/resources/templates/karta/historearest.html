@@ -10,8 +10,8 @@
 
     <title>Історія && Арест </title>
 
-<!--    <style type="text/css">-->
-    <style >
+    <!--    <style type="text/css">-->
+    <style>
 
         * {
             margin: 0;
@@ -91,8 +91,19 @@
         }
 
     </style>
+    <script>
+        $(function($){
+            $(".action-print").click(function(){
+                window.print();
+                return false;
+            });
+        });
+    </script>
 </head>
 <body>
+<div >
+    <p ><a href="#" class="action-print">Распечатать</a></p>
+</div>
 <div id="left">
     <table class="tab1">
         <tr>
@@ -130,7 +141,7 @@
                 <p> Введення :<b th:switch="${AmtHyst.getRegim}">
                     <span th:case="'0'">Автоматичне</span>
                     <span th:case="'1'">Ручне</span>
-                </b> </p>
+                </b></p>
                 <br>
                 <br>
                 <a> <b th:text="${#dates.format(AmtHyst.getData_oper, 'dd.MM.yyyy  HH-mm')}"></b></a>
@@ -145,7 +156,7 @@
                 <p> Обл: <b th:text="${AmtHyst.getObl}?:''"> </b></p>
                 <p> Рай: <b th:text="${AmtHyst.getRajon}?:''"> </b></p>
                 <p> МістоСело: <b th:text="${AmtHyst.getCity}?:''"> </b></p>
-                <p> вул: <b th:text="${AmtHyst.getStreet}?:''"> </b>  </p>
+                <p> вул: <b th:text="${AmtHyst.getStreet}?:''"> </b></p>
                 <p> буд: <b th:text="${AmtHyst.getHouse}?:''"> </b></p>
                 <p> кв.: <b th:text="${AmtHyst.getKv}?:''"> </b></p>
                 <p> Примітка: <b th:text="${AmtHyst.getAnnot}?:''"> </b></p>
@@ -154,7 +165,7 @@
     </table>
 </div>
 
-                <!-- Арест -->
+<!-- Арест -->
 
 <div id="right">
     <table class="tab1">
@@ -168,28 +179,33 @@
                 <p> Власник ТЗ: <span th:text="${AmtArest.getVlad}?:''"> </span></p>
                 <br>
                 <p class="a" th:text="${AmtArest.getCommenta!=null}? ${'Примітка: '}:''"></p>
-                <b th:text="${AmtArest.getCommenta!=null}? ${AmtArest.getCommenta}:''" ></b>
+                <b th:text="${AmtArest.getCommenta!=null}? ${AmtArest.getCommenta}:''"></b>
             </td>
 
             <td id="col2">
-                <p> накладено: <b th:text="${AmtArest.getWho_na}?:''"> </b></p>
-                <p> внесено: <b th:text="${AmtArest.getData_arest}?:''"> </b></p>
+                <p> Накладено: <b th:text="${AmtArest.getWho_na}?:''"> </b></p>
+                <p> Дана арест: <b th:text="${#dates.format(AmtArest.getData_arest, 'dd.MM.yyyy  HH-mm')}?:''"> </b></p>
+                <br>
                 <p> Вихід. № : <b th:text="${AmtArest.getIn_nom}?:''"> </b></p>
-                <p> Дата вихід: <b th:text="${AmtArest.getData_in}?:''"> </b></p>
+                <p> Дата : <b th:text="${#dates.format(AmtArest.getData_in, 'dd.MM.yyyy')}?:''"> </b></p>
+                <br>
+                <p> Вхід. № : <b th:text="${AmtArest.getK_nom1}?:''"> </b></p>
+                <p> Дата : <b th:text="${#dates.format(AmtArest.getK_data1, 'dd.MM.yyyy')}?:''"> </b></p>
             </td>
 
             <td id="col3">
                 <p class="a" th:text="${AmtArest.getWho_sha!=null}? ${'Зняв: '}:''"></p>
-                <b th:text="${AmtArest.getWho_sha!=null}? ${AmtArest.getWho_sha}:''" ></b>
+                <b th:text="${AmtArest.getWho_sha!=null}? ${AmtArest.getWho_sha}:''"></b>
 
                 <p class="a" th:text="${AmtArest.getOut_nom!=null}? ${'Вихідний: '}:''"></p>
-                <b th:text="${AmtArest.getOut_nom!=null}? ${AmtArest.getOut_nom}:''" ></b>
+                <b th:text="${AmtArest.getOut_nom!=null}? ${AmtArest.getOut_nom}:''"></b>
 
                 <p class="a" th:text="${AmtArest.getOut_nom!=null}? ${'Дата зняття:'}:''"></p>
-                <b th:text="${AmtArest.getData_out!=null}? ${AmtArest.getData_out}:''" ></b>
+                <b th:text="${AmtArest.getData_out!=null}? ${AmtArest.getData_out}:''"></b>
             </td>
         </tr>
     </table>
 </div>
+
 </body>
 </html>

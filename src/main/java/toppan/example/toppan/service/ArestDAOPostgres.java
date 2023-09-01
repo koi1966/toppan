@@ -22,6 +22,12 @@ public class ArestDAOPostgres {
         List<Arest> ArAMT = new ArrayList<>();
         String SQL = "select * from arest where kart_id =? ORDER BY data_arest";
 
+        if (!SQL.isEmpty()) {
+
+        } else  {
+
+        }
+
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = connectionPos.prepareStatement(SQL);
