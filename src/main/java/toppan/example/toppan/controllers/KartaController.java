@@ -49,12 +49,12 @@ public class KartaController {
                          @ModelAttribute("lastOper") String check,
                          @RequestParam(value = "data_bor",defaultValue = "1901-01-01") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate data_born,
                          Model model) {
-//        log.info("@RequestParam - data_b > {}", data_born);
+
         final List<Karta> kartaAMTList = kartaDAO.search(kar, check,data_born);
         model.addAttribute("kartaSize", kartaAMTList.size());
         model.addAttribute("kartaList", kartaAMTList);
         LocalDate today = LocalDate.now();
-        LocalDate dateEnd = LocalDate.of(2024, 1, 1);
+        LocalDate dateEnd = LocalDate.of(2024, 3, 8);
 
         if (today.isAfter(dateEnd) )
             return "karta/searchAMT";

@@ -22,12 +22,18 @@ Statistics and analysis of the use of the Toppan CP500 printer.
 
 Для навчання я використовую IntelliJ IDEA 2021.3.1 (Ultimate Edition)
 
-
+// ====================
 select karta.*
 from karta
 where not exists (
 select 1
 from karta2
 where karta2.id = karta.id);
+// ====================
+INSERT INTO marka (id, marka)
+SELECT ROW_NUMBER() OVER(ORDER BY karta.marka ASC) AS id, karta.marka
+FROM karta
+group by karta.marka;
+// ====================
 
 28.18
