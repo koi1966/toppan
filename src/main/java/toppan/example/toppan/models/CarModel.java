@@ -5,14 +5,18 @@ import lombok.Data;
 import javax.persistence.*;
 
 @Data
-@Entity
-public class marka {
+@Entity(name = "model")
+public class CarModel {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String marka;
 
-    public marka() {
+    @ManyToOne
+    private CarMarka marka;
+    private String model;
+
+    public CarModel() {
     }
-
 }
+
