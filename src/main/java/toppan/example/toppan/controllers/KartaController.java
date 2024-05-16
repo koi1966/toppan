@@ -54,7 +54,7 @@ public class KartaController {
         model.addAttribute("kartaSize", kartaAMTList.size());
         model.addAttribute("kartaList", kartaAMTList);
         LocalDate today = LocalDate.now();
-        LocalDate dateEnd = LocalDate.of(2024, 7, 8);
+        LocalDate dateEnd = LocalDate.of(2024, 10, 8);
 
         if (today.isAfter(dateEnd) )
             return "karta/search";
