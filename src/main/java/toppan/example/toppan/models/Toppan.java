@@ -2,8 +2,8 @@ package toppan.example.toppan.models;
 
 import lombok.extern.slf4j.Slf4j;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
 @Slf4j   // Логер
 @Entity
