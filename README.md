@@ -1,6 +1,20 @@
 # toppan
 Statistics and analysis of the use of the Toppan CP500 printer.
 
+I am learning java and deepening my knowledge.
+
+I have experience working with Oracle, Sybase databases, I am learning Mongodb
+I decided to switch to Java. I'm currently employed, but I'm aiming to switch from administration (which I've been doing for the past 7 years) to Java programming. As a Java developer, I learn, and the best way to learn is through project implementation. I came up with three projects to explore databases.
+
+The first test project (https://github.com/koi1966/test.database.sybase) - training with - statement = connectionSa.createStatement with Tomcat and our Sybase Adaptive Server Enterprise.
+
+I am implementing the second project (toppan - https://github.com/koi1966/toppan ) - automating some reports on educational work / using - spring-boot, hibernate, postgresql with sending the report to Email. Finished working project, improvement .. correction of the class created by me according to the principles of class design (S.O.L.I.D.)
+
+I have no commercial experience as a Java developer, but I have the desire and I will not let you down.
+
+For training I use IntelliJ IDEA 2021.3.1 (Ultimate Edition)
+
+
 Вивчаю java, поглиблюю зання..
 
 Маю досвід по роботі з Pascal та базами даних Sybase. 
