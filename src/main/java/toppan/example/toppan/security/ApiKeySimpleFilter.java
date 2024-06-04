@@ -1,8 +1,10 @@
 package toppan.example.toppan.security;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -17,7 +19,10 @@ import java.util.prefs.BackingStoreException;
 
 @Slf4j
 @Component
+//@RequiredArgsConstructor
 public class ApiKeySimpleFilter extends OncePerRequestFilter {
+
+
 
     @Override
     protected void doFilterInternal(final HttpServletRequest request,
@@ -27,11 +32,17 @@ public class ApiKeySimpleFilter extends OncePerRequestFilter {
 
         final String apiKey = request.getHeader("x-api-key");
 
+        if (apiKey == null || apiKey.isBlank()) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+        
         if ("valid-key".equals(apiKey)) {
             log.debug("Valid API KEY provided");
 
             SecurityContextHolder.getContext().setAuthentication(
-                    new UsernamePasswordAuthenticationToken("user",null, List.of())
+                    new UsernamePasswordAuthenticationToken("user",null,
+                            List.of(new SimpleGrantedAuthority(ClientStatus.REGULAR.name())))
             );
 
             filterChain.doFilter(request, response);
