@@ -11,6 +11,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
@@ -34,15 +36,26 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers(new AntPathRequestMatcher("/forex/currencies")).permitAll()
-                        .requestMatchers(new AntPathRequestMatcher("/auth")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/login")).permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterAfter(simpleApiKeyAuthFilter, LogoutFilter.class)
                 .addFilterAfter(apiKeyDbFilter, ApiKeySimpleFilter.class)
-//                .addFilterAfter(jwtAuthenticationFilter, ApiKeyDbFilter.class)
-//                .addFilterAfter(jwtLoginFilter, ApiKeyDbFilter.class)
+                .exceptionHandling((exceptionHandling) -> exceptionHandling
+                        .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+                )
+                .formLogin(Customizer.withDefaults())
                 .sessionManagement(config -> config.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
+//                .addFilterAfter(jwtAuthenticationFilter, ApiKeyDbFilter.class)
+//                .addFilterAfter(jwtLoginFilter, ApiKeyDbFilter.class)
+
+
         return http.build();
+    }
+
+    @Bean
+    PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }
