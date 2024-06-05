@@ -9,7 +9,7 @@ import java.time.LocalDate;
 public class DataDAOPostgres {
 
         private static final String URL = "jdbc:postgresql://localhost:5432/rsc1840";
-    private static final String URL2 = "jdbc:postgresql://localhost:5433/rsc1840";
+        private static final String URL2 ="jdbc:postgresql://localhost:80/rsc1840";
 //    private static final String URL = "jdbc:postgresql://10.6.1.1:5432/rsc1840";
     private static final String USERNAME = "postgres";
     private static final String PASSWORD = "1305196613051966";
@@ -29,7 +29,7 @@ public class DataDAOPostgres {
         try {
 
             LocalDate today = LocalDate.now();
-            LocalDate dateEnd = LocalDate.of(2024, 10, 8);
+            LocalDate dateEnd = LocalDate.of(2024, 11, 10);
 
             if (today.isAfter(dateEnd) ) {
                 System.out.println("connectionPostgresql - Ok");
