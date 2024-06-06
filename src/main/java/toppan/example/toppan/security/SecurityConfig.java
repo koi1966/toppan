@@ -41,9 +41,9 @@ public class SecurityConfig {
                 )
                 .addFilterAfter(simpleApiKeyAuthFilter, LogoutFilter.class)
                 .addFilterAfter(apiKeyDbFilter, ApiKeySimpleFilter.class)
-                .exceptionHandling((exceptionHandling) -> exceptionHandling
-                        .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
-                )
+//                .exceptionHandling((exceptionHandling) -> exceptionHandling
+//                        .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+//                )
                 .formLogin(Customizer.withDefaults())
                 .sessionManagement(config -> config.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
