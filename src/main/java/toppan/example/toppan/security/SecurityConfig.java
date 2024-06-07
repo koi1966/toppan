@@ -1,11 +1,13 @@
 package toppan.example.toppan.security;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -17,6 +19,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import toppan.example.toppan.jwt.JwtLoginFilter;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
@@ -24,14 +27,14 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableWebSecurity
 @EnableMethodSecurity
 @RequiredArgsConstructor
-@EnableConfigurationProperties({ SecurityProperties.class })
+@EnableConfigurationProperties({SecurityProperties.class})
 public class SecurityConfig {
 
     private final ApiKeySimpleFilter simpleApiKeyAuthFilter;
     private final ApiKeyDbFilter apiKeyDbFilter;
 
     @Bean
-    SecurityFilterChain securityFilterChain(final HttpSecurity http) throws Exception {
+    SecurityFilterChain securityFilterChain(final HttpSecurity http, final JwtLoginFilter jwtLoginFilter) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((requests) -> requests
@@ -41,10 +44,12 @@ public class SecurityConfig {
                 )
                 .addFilterAfter(simpleApiKeyAuthFilter, LogoutFilter.class)
                 .addFilterAfter(apiKeyDbFilter, ApiKeySimpleFilter.class)
+                .addFilterAfter(jwtLoginFilter, ApiKeyDbFilter.class)
+
 //                .exceptionHandling((exceptionHandling) -> exceptionHandling
 //                        .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
 //                )
-                .formLogin(Customizer.withDefaults())
+//                .formLogin(Customizer.withDefaults())
                 .sessionManagement(config -> config.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
 //                .addFilterAfter(jwtAuthenticationFilter, ApiKeyDbFilter.class)
@@ -57,5 +62,16 @@ public class SecurityConfig {
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public JwtLoginFilter jwtLoginFilter(
+            final ObjectMapper objectMapper,
+            final AuthenticationConfiguration config,
+//            final JwtService jwtService
+    ) throws Exception {
+        final JwtLoginFilter filter = new JwtLoginFilter(objectMapper);
+        filter.setAuthenticationManager(config.getAuthenticationManager());
+        return filter;
     }
 }
