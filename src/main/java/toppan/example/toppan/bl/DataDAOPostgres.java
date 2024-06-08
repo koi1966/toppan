@@ -6,8 +6,8 @@ import java.sql.SQLException;
 
 //@Component
 public class DataDAOPostgres {
-//        private static final String URL = "jdbc:postgresql://localhost:5432/rsc1840";
-    private static final String URL = "jdbc:postgresql://10.6.1.1:5432/rsc1840";
+        private static final String URL = "jdbc:postgresql://localhost:5432/rsc1840";
+//    private static final String URL = "jdbc:postgresql://10.6.1.1:5432/rsc1840";
     private static final String USERNAME = "postgres";
     private static final String PASSWORD = "1305196613051966";
 

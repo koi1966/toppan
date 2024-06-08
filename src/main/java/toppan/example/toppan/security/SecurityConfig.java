@@ -67,8 +67,8 @@ public class SecurityConfig {
     @Bean
     public JwtLoginFilter jwtLoginFilter(
             final ObjectMapper objectMapper,
-            final AuthenticationConfiguration config,
-//            final JwtService jwtService
+            final AuthenticationConfiguration config
+
     ) throws Exception {
         final JwtLoginFilter filter = new JwtLoginFilter(objectMapper);
         filter.setAuthenticationManager(config.getAuthenticationManager());

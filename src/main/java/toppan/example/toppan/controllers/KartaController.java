@@ -30,7 +30,8 @@ public class KartaController {
     private final ArestRepository arestRepository;
     private final Mapper mapper = Mappers.getMapper(Mapper.class);
 
-    public KartaController(KartaDAO kartaDAO, ArestDAOSybase arestDAOSybase, ArestRepository arestRepository) {
+    public KartaController(KartaDAO kartaDAO, ArestDAOSybase arestDAOSybase,
+                           ArestRepository arestRepository) {
         this.kartaDAO = kartaDAO;
         this.arestDAOSybase = arestDAOSybase;
         this.arestRepository = arestRepository;
@@ -101,7 +102,7 @@ public class KartaController {
     }
 
     @GetMapping(value = "/arestupdate")
-    public String arestupdate(Model model) throws SQLException {
+    public String arestUpdate(Model model) throws SQLException {
 
         long recordPos = arestRepository.countDataSnaIsNotNull();
         long recordSyb = arestDAOSybase.countArestDataSna();

@@ -23,14 +23,14 @@ import java.io.IOException;
 public class JwtLoginFilter extends AbstractAuthenticationProcessingFilter {
 
     private static final AntPathRequestMatcher DEFAULT_ANT_PATH_REQUEST_MATCHER =
-            new AntPathRequestMatcher("/auth","POST");
+            new AntPathRequestMatcher("/auth", "POST");
 
-private final ObjectMapper objectMapper ;
+    private final ObjectMapper objectMapper;
 
 
     public JwtLoginFilter(ObjectMapper objectMapper) {
         super(DEFAULT_ANT_PATH_REQUEST_MATCHER);
-        this.objectMapper = objectMapper ;
+        this.objectMapper = objectMapper;
     }
 
     @Override
@@ -57,12 +57,11 @@ private final ObjectMapper objectMapper ;
             final HttpServletRequest request,
             final HttpServletResponse response,
             final FilterChain chain,
-//            final Authentication authentication
             final Authentication authResult
     ) throws IOException {
-log . debug("Success username auth. Return JWT token.`");
+        log.debug("Success username auth. Return JWT token.`");
 
-        final String token = jwtService.generateToken(authentication);
+        final String token = "jwtService.generateToken(authentication)";
 
         response.setStatus(HttpServletResponse.SC_OK);
         response.setContentType("application/json");
