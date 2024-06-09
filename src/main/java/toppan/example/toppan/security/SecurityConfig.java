@@ -5,8 +5,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,45 +14,50 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import toppan.example.toppan.jwt.JwtAuthenticationFilter;
 import toppan.example.toppan.jwt.JwtLoginFilter;
-
-import static org.springframework.security.config.Customizer.withDefaults;
+import toppan.example.toppan.jwt.JwtProperties;
+import toppan.example.toppan.jwt.JwtService;
 
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
 @RequiredArgsConstructor
-@EnableConfigurationProperties({SecurityProperties.class})
+@EnableConfigurationProperties({SecurityProperties.class, JwtProperties.class})
 public class SecurityConfig {
 
     private final ApiKeySimpleFilter simpleApiKeyAuthFilter;
     private final ApiKeyDbFilter apiKeyDbFilter;
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+
 
     @Bean
     SecurityFilterChain securityFilterChain(final HttpSecurity http, final JwtLoginFilter jwtLoginFilter) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers(new AntPathRequestMatcher("/forex/currencies")).permitAll()
-                        .requestMatchers(new AntPathRequestMatcher("/login")).permitAll()
-                        .anyRequest().authenticated()
+                                .requestMatchers(new AntPathRequestMatcher("/forex/currencies")).permitAll()
+//                        .requestMatchers(new AntPathRequestMatcher("/karta/searchAMT")).permitAll()
+//                        .requestMatchers(new AntPathRequestMatcher("/**")).permitAll()
+                                .requestMatchers(new AntPathRequestMatcher("/auth")).permitAll()
+                                .anyRequest().authenticated()
                 )
                 .addFilterAfter(simpleApiKeyAuthFilter, LogoutFilter.class)
                 .addFilterAfter(apiKeyDbFilter, ApiKeySimpleFilter.class)
-                .addFilterAfter(jwtLoginFilter, ApiKeyDbFilter.class)
-
+                .addFilterAfter(jwtAuthenticationFilter, ApiKeyDbFilter.class)
+                .addFilterAfter(jwtLoginFilter, JwtAuthenticationFilter.class)
+//
+// Steitleas
 //                .exceptionHandling((exceptionHandling) -> exceptionHandling
 //                        .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
 //                )
-//                .formLogin(Customizer.withDefaults())
+//                .formLogin(Customizer.withDefaults());
                 .sessionManagement(config -> config.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
 //                .addFilterAfter(jwtAuthenticationFilter, ApiKeyDbFilter.class)
 //                .addFilterAfter(jwtLoginFilter, ApiKeyDbFilter.class)
-
 
         return http.build();
     }
@@ -65,13 +68,13 @@ public class SecurityConfig {
     }
 
     @Bean
-    public JwtLoginFilter jwtLoginFilter(
+    JwtLoginFilter jwtLoginFilter(
             final ObjectMapper objectMapper,
-            final AuthenticationConfiguration config
-
+            final AuthenticationConfiguration configuration,
+            final JwtService jwtService
     ) throws Exception {
-        final JwtLoginFilter filter = new JwtLoginFilter(objectMapper);
-        filter.setAuthenticationManager(config.getAuthenticationManager());
-        return filter;
+        final JwtLoginFilter jwtLoginFilter = new JwtLoginFilter(objectMapper, jwtService);
+        jwtLoginFilter.setAuthenticationManager(configuration.getAuthenticationManager());
+        return jwtLoginFilter;
     }
 }

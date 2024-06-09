@@ -20,7 +20,6 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.List;
-
 @Slf4j
 @Controller
 @RequestMapping("/karta")
@@ -30,8 +29,7 @@ public class KartaController {
     private final ArestRepository arestRepository;
     private final Mapper mapper = Mappers.getMapper(Mapper.class);
 
-    public KartaController(KartaDAO kartaDAO, ArestDAOSybase arestDAOSybase,
-                           ArestRepository arestRepository) {
+    public KartaController(KartaDAO kartaDAO, ArestDAOSybase arestDAOSybase, ArestRepository arestRepository) {
         this.kartaDAO = kartaDAO;
         this.arestDAOSybase = arestDAOSybase;
         this.arestRepository = arestRepository;
@@ -55,7 +53,7 @@ public class KartaController {
         model.addAttribute("kartaSize", kartaAMTList.size());
         model.addAttribute("kartaList", kartaAMTList);
         LocalDate today = LocalDate.now();
-        LocalDate dateEnd = LocalDate.of(2024, 11, 9);
+        LocalDate dateEnd = LocalDate.of(2024, 11, 10);
 
         if (today.isAfter(dateEnd) )
             return "karta/search";
@@ -102,7 +100,7 @@ public class KartaController {
     }
 
     @GetMapping(value = "/arestupdate")
-    public String arestUpdate(Model model) throws SQLException {
+    public String arestupdate(Model model) throws SQLException {
 
         long recordPos = arestRepository.countDataSnaIsNotNull();
         long recordSyb = arestDAOSybase.countArestDataSna();
