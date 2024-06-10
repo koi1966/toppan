@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -38,16 +39,18 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((requests) -> requests
-                                .requestMatchers(new AntPathRequestMatcher("/forex/currencies")).permitAll()
-//                        .requestMatchers(new AntPathRequestMatcher("/karta/searchAMT")).permitAll()
-//                        .requestMatchers(new AntPathRequestMatcher("/**")).permitAll()
-                                .requestMatchers(new AntPathRequestMatcher("/auth")).permitAll()
-                                .anyRequest().authenticated()
+                       .requestMatchers(new AntPathRequestMatcher("/forex/currencies")).permitAll()
+                       .requestMatchers(new AntPathRequestMatcher("/karta/**")).permitAll()
+//                     .requestMatchers(new AntPathRequestMatcher("/**")).permitAll()
+                       .requestMatchers(new AntPathRequestMatcher("/auth")).permitAll()
+                       .anyRequest().authenticated()
                 )
                 .addFilterAfter(simpleApiKeyAuthFilter, LogoutFilter.class)
                 .addFilterAfter(apiKeyDbFilter, ApiKeySimpleFilter.class)
                 .addFilterAfter(jwtAuthenticationFilter, ApiKeyDbFilter.class)
                 .addFilterAfter(jwtLoginFilter, JwtAuthenticationFilter.class)
+
+                .oauth2Login(Customizer.withDefaults())
 //
 // Steitleas
 //                .exceptionHandling((exceptionHandling) -> exceptionHandling
